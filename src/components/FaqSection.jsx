@@ -133,7 +133,7 @@ import arrow from "@/images/acc-plus.svg";
 import minus from "@/images/acc-minus.svg";
 import faqStar from "@/images/faq-star.svg";
 
-const FaqSection = ({ data, openIndex,onFaqChange  }) => {
+const FaqSection = ({ data, openIndex,onFaqChange,className = ""  }) => {
   const faqRef = useRef(null);
   const [activeKey, setActiveKey] = useState(null);
   const [showAll, setShowAll] = useState(false);
@@ -175,7 +175,7 @@ const FaqSection = ({ data, openIndex,onFaqChange  }) => {
 
 
   return (
-    <section ref={faqRef} className="section-padding faq-sec">
+    <section ref={faqRef} className={`faq-sec ${className}`}>
       <Image src={faqStar} alt="faq-bg" className="faq-star" />
       <div className="container">
         <div className="row">

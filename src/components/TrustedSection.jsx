@@ -97,9 +97,9 @@ const AnimatedCount = ({ count, id }) => {
   );
 };
 
-const TrustedSection = ({ data = defaultData, removeHeading = false }) => {
+const TrustedSection = ({ data = defaultData, removeHeading = false, className = "" }) => {
   return (
-    <section className="section-padding">
+    <section className={`section-padding trust-sec ${className}`}>
       <div className="container">
         {data?.heading && !removeHeading && (
           <div className="row">

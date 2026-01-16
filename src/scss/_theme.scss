@@ -17,7 +17,8 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
     object-fit: cover;
     object-position: center;
 }
-@mixin card{
+
+@mixin card {
     // background: rgba($color: #AFB1B1, $alpha: 0.2);
     // background: rgba(175, 177, 177, 0.2);
     background: #323333;
@@ -26,12 +27,14 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
     // backdrop-filter: blur(28px) ;
     // -webkit-backdrop-filter: blur(28px); 
 }
-@mixin overlayCard{
+
+@mixin overlayCard {
     background: rgba($color: #373838, $alpha: 0.2);
     border: 1px solid rgba($color: $yellow, $alpha: 0.15);
     border-radius: 20px;
 }
-@mixin normalBtn{
+
+@mixin normalBtn {
     background: transparent;
     border: none;
     outline: none;
@@ -39,7 +42,7 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
     cursor: pointer;
 }
 
-:root{
+:root {
     /* Color styles */
     --breakout--secondary-100: rgba(220, 221, 221, 1);
 
@@ -134,132 +137,141 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
 
 .scrollable-container {
     overflow-y: auto;
-  
+
     // Scrollbar track
     &::-webkit-scrollbar {
-      width: 6px; // You can adjust width
+        width: 6px; // You can adjust width
     }
-  
+
     &::-webkit-scrollbar-track {
-      background: transparent; // Or use a subtle color
+        background: transparent; // Or use a subtle color
     }
-  
+
     // Scrollbar thumb (the draggable part)
     &::-webkit-scrollbar-thumb {
-      background-color: #888; // Light gray thumb
-      border-radius: 10px;
+        background-color: #888; // Light gray thumb
+        border-radius: 10px;
     }
-  
+
     // On hover
     &::-webkit-scrollbar-thumb:hover {
-      background-color: #aaa; // Slightly lighter on hover
+        background-color: #aaa; // Slightly lighter on hover
     }
-  }
-  
+}
 
-@font-face{
+
+@font-face {
     font-family: 'sharp-semibold-20';
     src: url('/fonts/SharpGrotesk-SemiBold20.otf') format('opentype');
 }
-@font-face{
+
+@font-face {
     font-family: 'sharp-book-20';
     src: url('/fonts/SharpGrotesk-Book20.otf') format('opentype');
 }
-@font-face{
+
+@font-face {
     font-family: 'sharp-medium-20';
     src: url('/fonts/SharpGrotesk-Medium20.otf') format('opentype');
 }
-@font-face{
+
+@font-face {
     font-family: 'sharp-light-20';
     src: url('/fonts/SharpGrotesk-Light20.otf') format('opentype');
 }
 
 
-.sec-head{
+.sec-head {
     font-family: 'sharp-semibold-20', sans-serif;
     font-size: 72px;
     line-height: 100%;
 
-    &.not-bold{
+    &.not-bold {
         font-family: 'sharp-medium-20', sans-serif;
-        span{
+
+        span {
             font-family: 'sharp-medium-20', sans-serif;
         }
     }
 
-    span, a{
+    span,
+    a {
         font-family: 'sharp-semibold-20', sans-serif;
         color: var(--breakout--primary----500);
     }
 
-    &.sm{
+    &.sm {
         font-size: 48px;
     }
 
-    &.book-20{
+    &.book-20 {
         font-family: 'sharp-book-20', sans-serif;
         font-size: 20px;
 
-        span{
+        span {
             font-family: 'sharp-book-20', sans-serif;
         }
     }
-    &.book-16{
+
+    &.book-16 {
         font-family: 'sharp-book-20', sans-serif;
         font-size: 16px;
 
-        span{
+        span {
             font-family: 'sharp-book-20', sans-serif;
         }
     }
 
-    &.medium-20{
+    &.medium-20 {
         font-size: 20px;
         font-family: 'sharp-medium-20', sans-serif;
         line-height: 130%;
 
-        span{
+        span {
             font-family: 'sharp-medium-20', sans-serif;
         }
     }
 
-    &.title{
+    &.title {
         font-size: 20px;
         font-family: 'sharp-medium-20', sans-serif;
     }
 
-    &.medium{
+    &.medium {
         font-family: 'sharp-medium-20', sans-serif;
         font-size: 36px;
 
-        span{
+        span {
             font-family: 'sharp-medium-20', sans-serif;
         }
     }
-    
-    &.h3{
+
+    &.h3 {
         font-size: 24px;
         font-family: 'sharp-medium-20', sans-serif;
         line-height: 120%;
     }
 }
-.para{
+
+.para {
     font-family: 'sharp-book-20', sans-serif;
     font-size: 18px;
 
-    @media(min-width: 1400px){
+    @media(min-width: 1400px) {
         font-size: 21px;
     }
 
-    span, a{
+    span,
+    a {
         color: var(--breakout--primary----500);
     }
 
-    &.big{
+    &.big {
         font-size: 24px;
     }
 }
-.main-btn{
+
+.main-btn {
     background: linear-gradient(#F87E00, #FFAE00);
     padding: 15px 20px;
     padding-bottom: 16px;
@@ -273,38 +285,39 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
     align-items: center;
     border: 1px solid rgba($color: $yellow, $alpha: 0.15) !important;
     transition: 0.3s ease-in-out;
+    justify-content: center;
 
-    &:hover{
+    &:hover {
         transform: translateY(-2px);
     }
 
-    &.dark-btn{
+    &.dark-btn {
         background: rgba($color: #F3F4F4, $alpha: 0.1);
         backdrop-filter: blur(28px);
         border: 1px solid rgba($color: $yellow, $alpha: 0.15) !important;
         // padding-top: 1.2em;
 
-        &:hover{
+        &:hover {
             background: $yellow !important;
 
-            span{
+            span {
                 color: #000 !important;
             }
         }
     }
 
-    &.white-border{
+    &.white-border {
         border: 1px solid rgba($color: $white, $alpha: 0.15) !important;
     }
 
-    &.link-btn{
+    &.link-btn {
         background: transparent !important;
         border: none !important;
         outline: none !important;
         box-shadow: none !important;
         padding: 0 !important;
 
-        span{
+        span {
             color: $yellow;
             text-decoration: underline;
             font-style: italic;
@@ -312,22 +325,22 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
         }
     }
 
-    &.yellow-text{
+    &.yellow-text {
         background: transparent !important;
 
-        span{
+        span {
             color: $yellow;
         }
     }
 
-    &.sm{
+    &.sm {
 
-        span{
+        span {
             font-size: 14px;
         }
     }
 
-    &.wide{
+    &.wide {
         width: 100%;
         max-width: 100%;
         display: flex;
@@ -335,11 +348,11 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
         text-align: center;
     }
 
-    &.wide-sm{
+    &.wide-sm {
         padding: 13px 45px;
     }
 
-    span{
+    span {
         font-family: 'sharp-medium-20', sans-serif;
         font-size: 16px;
         line-height: 100%;
@@ -347,26 +360,29 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
         color: white;
     }
 
-    &.center{
+    &.center {
         margin: 0 auto;
     }
 }
-.text-transform-uppercase{
+
+.text-transform-uppercase {
     text-transform: uppercase;
 }
-.section-padding{
-    padding: 5em 0px;
-}
-.black-gr-div{
+
+// .section-padding{
+//     padding: 5em 0px;
+// }
+.black-gr-div {
     background: linear-gradient(to bottom, #040707, #272727);
 }
-.big-text{
+
+.big-text {
     color: rgba($color: #fff, $alpha: 1);
     font-family: 'sharp-medium-20', sans-serif;
     font-size: 36px;
     line-height: 120%;
 
-    p{
+    p {
         display: inline-block;
         padding: 0px 10px;
     }
@@ -375,21 +391,22 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
     //     color: $yellow;
     // }
 }
-.form-group{
+
+.form-group {
     position: relative;
     margin-bottom: 15px;
 
-  
 
-    .input-group{
+
+    .input-group {
         position: relative;
         display: block;
 
-        .select-group{
+        .select-group {
             position: relative;
             width: 100%;
 
-            select{
+            select {
                 appearance: none;
                 -webkit-appearance: none;
                 -moz-appearance: none;
@@ -398,14 +415,14 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
                 outline: none;
                 width: 100% !important;
 
-                option{
+                option {
                     font-family: 'sharp-book-20', sans-serif;
                     font-size: 16px;
                     color: #272727;
                 }
             }
 
-            >img{
+            >img {
                 position: absolute;
                 right: 0;
                 top: 50%;
@@ -417,7 +434,9 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
             }
         }
 
-        input, textarea, select{
+        input,
+        textarea,
+        select {
             width: 100%;
             font-family: 'sharp-book-20', sans-serif;
             font-size: 16px;
@@ -428,26 +447,30 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
             background: transparent;
             border-bottom: 1px solid rgba($color: #fff, $alpha: 1);
             padding: 15px 0px;
+            box-shadow: none !important;
+            border-radius: 0 !important;
 
-            &::placeholder{
+            &::placeholder {
                 color: #999B9B;
             }
         }
     }
 
-    &.style-2{
+    &.style-2 {
 
-        .input-group{
+        .input-group {
 
-            input,select,textarea{
+            input,
+            select,
+            textarea {
                 border-radius: 100px !important;
                 @include card;
                 padding: 15px 18px;
             }
 
-            .select-group{
-    
-                select{
+            .select-group {
+
+                select {
                     border-radius: 100px !important;
                     @include card;
                     padding: 15px 18px;
@@ -456,19 +479,21 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
                     backdrop-filter: blur(28px) !important;
                 }
 
-                img{
+                img {
                     right: 18px;
                 }
             }
         }
     }
 }
-.search-group{
+
+.search-group {
+    
     position: relative;
 
-    .input-group{
+    .input-group {
 
-        >img{
+        >img {
             position: absolute;
             right: 18px;
             top: 50%;
@@ -480,4 +505,3 @@ $border: 1px solid rgba($color: $yellow, $alpha: 0.15);
     }
 
 }
-

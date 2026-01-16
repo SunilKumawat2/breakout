@@ -75,7 +75,7 @@ const HmTextSecBk = ({ text, home = false }) => {
 
   return (
     <section
-      className={`hm-text-sec text-illus-sec section-padding ${
+      className={`hm-text-sec text-illus-sec ${
         home ? "pb-0" : ""
       }`}
     >

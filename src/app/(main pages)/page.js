@@ -394,7 +394,7 @@ export default function Home() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-12 col-12">
-            <div className="cus-card mt-5 py-3 px-3">
+            <div className="cus-card">
               <p
                 className="para mb-0"
                 style={{ fontStyle: "italic", cursor: "pointer" }}
@@ -413,7 +413,7 @@ export default function Home() {
       </div>
       <div className="black-gr-div" id="kuch-bhi">
         {data && data?.countersection && (
-          <TrustedSection data={data?.countersection} />
+          <TrustedSection className="pb-0" data={data?.countersection} />
         )}
         <LogoSec className="pb-0 pt-80" title={"In the <span>News</span>"} />
         <Image
@@ -424,8 +424,10 @@ export default function Home() {
         />
       </div>
       <div className="black-gr-div">
-        <VisitLocations />
-        {data && data?.faqsection && <FaqSection data={data?.faqsection} />}
+        {/* <VisitLocations /> */}
+        <div className="home-faq">
+          {data && data?.faqsection && <FaqSection className="sec-padding-top" data={data?.faqsection} />}
+        </div>
         <section className="looking-sec section-padding d-none">
           <div className="container">
             <motion.div
