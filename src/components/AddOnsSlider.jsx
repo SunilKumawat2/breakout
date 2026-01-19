@@ -57,7 +57,7 @@ const AddOnsSlider = ({ data }) => {
     fetchActivities();
   },[])
   return (
-    <section className="blog-slider section-padding">
+    <section className="blog-slider-sec section-padding">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
@@ -74,7 +74,7 @@ const AddOnsSlider = ({ data }) => {
           </div>
         </div>
       </div>
-      <div className="row mt-5">
+      <div className="row">
         <div className="col-lg-12">
           <div className="blog-slider">
             <Swiper
