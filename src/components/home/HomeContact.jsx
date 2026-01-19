@@ -27,6 +27,7 @@ const defaultLookingForOptions = [
 const HomeContact = ({
   home = false,
   img,
+  className = "",
   privacyLine = true,
   noTextBottom = true,
   noImage = false,
@@ -145,7 +146,7 @@ const HomeContact = ({
   });
 
   return (
-    <section className="hm-contact-sec section-padding pb-0" id="book-now">
+    <section className={`hm-contact-sec section-padding pb-0 ${className}`} id="book-now">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">

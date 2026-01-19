@@ -82,12 +82,19 @@ const InnerPageBanner = ({ banner, bdayInner }) => {
                     >
                       <span>{btn.title}</span>
                     </Link>
+                    {/* {btn.enc && (
+                      <div className="btn-group-item-enc">{btn.enc}</div>
+                    )} */}
+                  </div>
+                ))}
+              </div>
+                {banner.btns?.map((btn, index) => (
+                  <div key={index}>
                     {btn.enc && (
                       <div className="btn-group-item-enc">{btn.enc}</div>
                     )}
                   </div>
                 ))}
-              </div>
             </div>
           </div>
         </div>

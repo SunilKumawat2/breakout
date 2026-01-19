@@ -55,7 +55,7 @@ const LogoSec = ({ title, logos = null, className = "", link = true }) => {
           </div>
         </div>
       </div>
-      <div className="logo-slider-wrapper mt-5">
+      <div className="logo-slider-wrapper">
         <div
           className={`logo-slider-inner `}
           style={{ animationDuration: `${animationDuration}s` }}

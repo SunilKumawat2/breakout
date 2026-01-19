@@ -35,7 +35,7 @@ import HmTextlocationkoramangala from "@/components/home/HmTextSecLocationkorama
 
 const page = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
-  console.log("sjdfhjsghdfjsdf",openFaqIndex)
+  console.log("sjdfhjsghdfjsdf", openFaqIndex)
   const banner = {
     title:
       'Escape Room in <br className="d-none d-lg-block" /> <span>Koramangala</span>',
@@ -109,9 +109,9 @@ const page = () => {
     fetchLocation();
   }, [id]);
 
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  },[])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <>
@@ -124,7 +124,7 @@ const page = () => {
           <HmTextlocationkoramangala text={location?.textsection?.description} />
         )}
         {location && location?.escaperooms?.extreme?.length > 0 && (
-          <section className="section-padding esc-sec">
+          <section className="esc-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -134,7 +134,7 @@ const page = () => {
                   </h3>
                 </div>
               </div>
-              <div className="row row-gap-25 mt-5">
+              <div className="row row-gap-25">
                 {location?.escaperooms?.extreme?.map((item, index) => (
                   <div className="col-lg-4 col-12" key={index}>
                     <EscapeRoomCard room={item} />
@@ -147,7 +147,7 @@ const page = () => {
 
         {location && location?.escaperooms?.ultra?.length > 0 && (
           <>
-            <section id="escape-rooms" className="section-padding esc-sec">
+            <section id="escape-rooms" className="section-padding esc-sec pb-0">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 text-center">
@@ -157,7 +157,7 @@ const page = () => {
                     </h3>
                   </div>
                 </div>
-                <div className="row row-gap-25 mt-5">
+                <div className="row row-gap-25">
                   {location?.escaperooms?.ultra?.map((item, index) => (
                     <div className="col-lg-4 col-12" key={index}>
                       <EscapeRoomCard room={item} />
@@ -168,13 +168,16 @@ const page = () => {
             </section>
           </>
         )}
-        <Image src={hmIllus} alt="illus3" className="illus-3 w-100 h-auto" />
+        <Image src={hmIllus} alt="illus3" className="illus-image" />
       </div>
 
       <div className="black-gr-div">
-        {location && location?.googlereviews && (
+        <div className="sec-padding-top">
+          {location && location?.googlereviews && (
           <GReviewSlider commonStars={false} data={location?.googlereviews} />
         )}
+        </div>
+        
         {/* <section className="section-padding namecard-sec">
           <div className="container">
             <div className="row row-gap-25">
@@ -204,14 +207,14 @@ const page = () => {
           }} />
         )}
         {location && location?.imagecardssection?.card?.length > 0 && (
-          <section className="section-padding overlay-sec">
+          <section className="overlay-sec">
             <div className="container">
               <div className="row">
                 <div className="col-12">
                   <div className="overlay-box">
-                    <div className="row">
+                    <div className="overlay-box-row">
                       {location?.imagecardssection?.card?.map((item, index) => (
-                        <div className="col-lg-6 col-12" key={index}>
+                        <div className="col-overlay-box" key={index}>
                           <div className="overlay-box-item">
                             <div className="ovr-img">
                               {item?.image && (
@@ -254,21 +257,28 @@ const page = () => {
             </div>
           </section>
         )}
+        <Image src={hmIllus} alt="illus3" className="illus-image" />
+      </div>
+
+      <div className="black-gr-div">
 
         <OurLocationSec
+          className="sec-padding-top"
           title={`About Our Breakout®  <span>${location?.title} Location</span>`}
           slug={location?.slug}
           locationTitle={location?.title}
         // slug={location?.locationdetails}
         />
-        {location && location?.googlereviews && (
-          <GReviewSlider commonStars={false} data={location?.googlereviews} />
-        )}
+        <div className="col-lg-12 col-12 pt-80">
+          {location && location?.googlereviews && (
+            <GReviewSlider commonStars={false} data={location?.googlereviews} />
+          )}
+        </div>
         {location && location?.videotestimonials && (
-          <Videotestimonials data={location?.videotestimonials} />
+          <Videotestimonials className="pt-80" data={location?.videotestimonials} />
         )}
 
-        <VisitLocations title="Escape Rooms In <span>Bangalore</span>" />
+        <VisitLocations className="section-padding" title="Escape Rooms In <span>Bangalore</span>" />
         {location && location?.faqsection && (
           <FaqSection
             title="FAQs for <span>Your Adventure</span>"
@@ -281,7 +291,7 @@ const page = () => {
           />
         )}
         {/* <FaqSection title="FAQs for <span>Your Adventure</span>" /> */}
-        <BlogSlider title="Read <span>Blogs</span>" />
+        <BlogSlider className="pb-0" title="Read <span>Blogs</span>" />
         <HomeContact />
       </div>
     </>
