@@ -324,7 +324,7 @@ const page = () => {
                   />
                 </div>
               </div>
-              <div className="row mt-5">
+              <div className="row">
                 <div className="col-lg-12">
                   <div className="row row-gap-25">
                     {corporate?.keyresourcessection?.images &&
