@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css/navigation";
 import "swiper/css";
 import "swiper/css/pagination";
 import BlogCard from "./BlogCard";
@@ -13,9 +14,13 @@ import cv3 from "@/images/cv3.jpg";
 import cv4 from "@/images/cv4.jpg";
 import cv5 from "@/images/cv5.jpg";
 import cv6 from "@/images/cv6.jpg";
-
+import swiperPrev from "@/images/swiper-prev.svg";
+import swiperNext from "@/images/swiper-next.svg";
 import Link from "next/link";
+import api from "@/app/helpers/api";
+
 const AddOnsSlider = ({ data }) => {
+  const [activities, setActivities] = useState(null);
   const addOns = [
     {
       image: cv1,
@@ -42,6 +47,15 @@ const AddOnsSlider = ({ data }) => {
       title: "Photography",
     },
   ];
+
+  const fetchActivities = async () => {
+    const res = await api.get(`/activity-listing`);
+    setActivities(res.data.data);
+  };
+
+  useEffect(()=>{
+    fetchActivities();
+  },[])
   return (
     <section className="blog-slider section-padding">
       <div className="container">
@@ -64,15 +78,17 @@ const AddOnsSlider = ({ data }) => {
         <div className="col-lg-12">
           <div className="blog-slider">
             <Swiper
-              modules={[Pagination]}
+              modules={[Pagination, Navigation]}
               pagination={{
                 clickable: true,
               }}
-              loop={true}
-              centeredSlides={true}
+              navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              }}
               slidesPerView={1}
               spaceBetween={20}
-              initialSlide={3}
+              loop={true}
               breakpoints={{
                 0: {
                   slidesPerView: 1.5,
@@ -89,11 +105,11 @@ const AddOnsSlider = ({ data }) => {
               }}
               className="blog-swiper"
             >
-              {data?.images &&
+              {/* {data?.images &&
                 data?.images?.length > 0 &&
                 data?.images?.map((item, index) => (
                   <SwiperSlide key={index}>
-                    <div className="blog-card">
+                    <Link href={`/activities/${item?.slug}`} className="blog-card" >
                       <div className="blog-card-img">
                         {item.image && (
                           <Image
@@ -109,10 +125,42 @@ const AddOnsSlider = ({ data }) => {
                           dangerouslySetInnerHTML={{ __html: item.heading }}
                         />
                       </div>
-                    </div>
+                    </Link>
+                  </SwiperSlide>
+                ))} */}
+                 {activities&&
+                activities?.length > 0 &&
+                activities?.map((item, index) => (
+                  <SwiperSlide key={index}>
+                    <Link href={`/activities/${item?.slug}`} className="blog-card" >
+                      <div className="blog-card-img">
+                        {item?.bannersection?.image && (
+                          <Image
+                          src={item?.bannersection?.image}
+                          alt={item?.title}
+                            width={500}
+                            height={500}
+                            // alt={item.heading}
+                          />
+                        )}
+                      </div>
+                      <div className="blog-card-content">
+                        <h3
+                          dangerouslySetInnerHTML={{ __html: item.heading }}
+                        />
+                      </div>
+                    </Link>
                   </SwiperSlide>
                 ))}
             </Swiper>
+            <div className="swiper-button-prev custom-prev">
+              <Image src={swiperPrev} alt="Previous" />
+            </div>
+
+            <div className="swiper-button-next custom-next">
+              <Image src={swiperNext} alt="Next" />
+            </div>
+
           </div>
         </div>
       </div>

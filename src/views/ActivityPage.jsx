@@ -24,7 +24,7 @@ import activityIllus from "@/images/activity-illus.svg";
 import PartyExpertCon from "@/components/PartyExpertCon";
 import activity2Illus from "@/images/activity2-illus.svg";
 import activity3Illus from "@/images/activity3-illus.svg";
-import PartyEpertForActivity from "@/components/PartyEpertForActivity";
+import ConnectContact from "@/components/ConnectContact";
 
 const ActivityPage = () => {
   const { id } = useParams();
@@ -134,8 +134,13 @@ const ActivityPage = () => {
         </section>
         <VisitLocations isVirtual={false} />
         {/* <PartyExpertCon /> */}
-        <PartyEpertForActivity
+        {/* <PartyEpertForActivity
           title={"<span>Running Out of Time?</span> Talk to a Party Expert Now"}
+        /> */}
+          <ConnectContact
+          noTextBottom={false}
+          privacyLine={true}
+          noImage={true}
         />
         <Image src={activity3Illus} className="w-100 h-auto" alt="illus3" />
       </div>

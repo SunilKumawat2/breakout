@@ -42,7 +42,6 @@ const EscapeRoomCard = ({ room, hasVirtual = false }) => {
           <ul>
             {!hasVirtual && (
               <li>
-                {/* <Image src={age} className="w-100 h-auto" alt="age" /> */}
                 <span style={{ fontSize: "18px", color: "#FFAE00" }}>Age</span>
                 <span>{room?.bannersection?.age_group || "Age 10+"}</span>
               </li>

@@ -83,6 +83,7 @@ import ConnectContact from "@/components/ConnectContact";
 
 const page = () => {
   const [corporate, setCorporate] = useState(null);
+  console.log("sdjkfsdfhjdsf", corporate)
   const [brandLogos, setBrandLogos] = useState(null);
   const [innerList, setInnerList] = useState(null);
   useEffect(() => {
@@ -162,6 +163,14 @@ const page = () => {
       title: "Seamless Execution",
     },
   ];
+
+  const handleFreeConsultationCardClick = (item) => {
+    if (item.heading === "Free Consultation with Expert") {
+      const section = document.getElementById("get-in-touch");
+      section?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
 
   return (
     <>
@@ -323,7 +332,7 @@ const page = () => {
                       corporate?.keyresourcessection?.images?.map(
                         (item, index) => (
                           <div className="col-lg-3 col-12" key={index}>
-                            <div className="blog-card">
+                            <div className="blog-card" onClick={() => handleFreeConsultationCardClick(item)}>
                               <div className="blog-card-img">
                                 {item.image && (
                                   <Image
@@ -398,12 +407,15 @@ const page = () => {
             <Videotestimonials data={corporate?.videotestimonials} />
           )}
         <OurLocationSec title="Our <span>Locations</span>" />
-        <FaqSection />
-        <ConnectContact
-          noTextBottom={false}
-          privacyLine={true}
-          noImage={true}
-        />
+        <FaqSection data={corporate?.faqsection} />
+        <div id="get-in-touch">
+          <ConnectContact
+            noTextBottom={false}
+            privacyLine={true}
+            noImage={true}
+          />
+        </div>
+
         <BlogSlider />
         <LogoSec title="In The <span>News</span>" />
         {corporate && corporate?.footersection && (

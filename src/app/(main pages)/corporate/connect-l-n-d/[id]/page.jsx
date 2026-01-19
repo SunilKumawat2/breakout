@@ -27,6 +27,7 @@ const page = () => {
   const { id } = useParams();
   const [escapeRooms, setEscapeRooms] = useState(null);
   const [activities, setActivities] = useState(null);
+  console.log("sdfjkhskdfhksdhf",activities)
 
   const [room, setRoom] = useState(null);
 
