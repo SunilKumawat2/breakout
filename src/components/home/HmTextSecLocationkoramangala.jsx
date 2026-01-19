@@ -6,7 +6,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 
-const HmTextlocationkoramangala = ({ text, home = false }) => {
+const HmTextlocationkoramangala = ({ text,className = "", home = false }) => {
   const textRef = useRef(null);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const HmTextlocationkoramangala = ({ text, home = false }) => {
   return (
     <section
       className={`hm-text-sec text-illus-sec section-padding ${
-        home ? "pb-0" : ""
+        home ? "pb-0" : "",className
       }`}
     >
       <div className="container">

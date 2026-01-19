@@ -304,7 +304,7 @@ a {
 }
 
 .row-gap-25 {
-    row-gap: 25px;
+    row-gap: 80px;
 }
 
 .looking-card {
@@ -1257,24 +1257,25 @@ a {
 
         .btn-group-item {
             position: relative;
-
-            .btn-group-item-enc {
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                width: 100%;
-                transform: translateY(110%) translateX(-50%);
-                min-width: max-content;
-
-                span {
-                    min-width: max-content;
-                    color: #4A4C4C;
-                    font-size: 12px;
-                    font-family: 'sharp-medium-20', sans-serif;
-                }
-
-            }
         }
+    }
+
+    .btn-group-item-enc {
+        // position: absolute;
+        // bottom: 0;
+        // left: 50%;
+        // width: 100%;
+        // transform: translateY(110%) translateX(-50%);
+        // min-width: max-content;
+        text-align: center;
+
+        span {
+            min-width: max-content;
+            color: #4A4C4C;
+            font-size: 12px;
+            font-family: 'sharp-medium-20', sans-serif;
+        }
+
     }
 }
 
@@ -1379,7 +1380,7 @@ a {
     }
 }
 
-.blog-slider {
+.blog-slider-sec {
     overflow: hidden;
 }
 
@@ -1400,6 +1401,7 @@ a {
 
     .swiper {
         padding-bottom: 30px !important;
+        overflow: visible !important;
 
         .swiper-pagination {
             bottom: 0px !important;
@@ -1452,7 +1454,6 @@ a {
 .overlay-box {
     position: relative;
     @include overlayCard;
-    padding: 2.5em 2em;
 }
 
 .overlay-box-item {
@@ -2891,7 +2892,7 @@ a {
 // }
 
 .g-review-swiper {
-    max-width: calc(100% - 72px) !important;
+    max-width: calc(100% - 120px) !important;
     margin: 0 auto !important;
 
     .swiper-slide {
@@ -3556,8 +3557,41 @@ textarea:hover {
     padding-left: 20px;
     padding-right: 20px;
 }
-.mob-trust-ratings{
+
+.mob-trust-ratings {
     display: none;
 }
-// new css start 
 
+.g-review-swiper .swiper-button-prev {
+    left: 0 !important;
+}
+
+.g-review-swiper .swiper-button-next {
+    right: 0 !important;
+}
+
+.overlay-box-row {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 108px;
+    row-gap: 28px;
+    flex-wrap: wrap;
+}
+
+.col-overlay-box {
+    width: calc(50% - 54px);
+}
+
+.overlay-box {
+    padding: 32px 64px;
+}
+
+.row>* {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+.row{
+    margin-left: -15px;
+    margin-right: -15px;
+}
+// new css start 

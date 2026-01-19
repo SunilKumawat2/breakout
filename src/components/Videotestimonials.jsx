@@ -11,7 +11,7 @@ import videoPoster from "@/images/video-poster.jpg";
 import playBtn from "@/images/play-btn.svg";
 import pauseBtn from "@/images/pause-btn.svg";
 
-const Videotestimonials = ({ data }) => {
+const Videotestimonials = ({ data,className = "", }) => {
   const videoRef = useRef([]);
   const swiperRef = useRef(null); // Swiper instance ref
   const [playingVideo, setPlayingVideo] = useState(null);
@@ -105,7 +105,7 @@ const Videotestimonials = ({ data }) => {
   }, [activeIndex, playingVideo]);
 
   return (
-    <section className="blog-slider section-padding pb-0">
+    <section className={`blog-slider-sec section-padding pb-0 ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
@@ -114,8 +114,8 @@ const Videotestimonials = ({ data }) => {
             </h2>
           </div>
         </div>
-      </div>
-      <div className="row mt-5">
+      
+      <div className="row">
         <div className="col-lg-12">
           <div className="blog-slider video-slider">
             <Swiper
@@ -123,7 +123,7 @@ const Videotestimonials = ({ data }) => {
               pagination={{ clickable: true }}
               centeredSlides={true}
               slidesPerView={1}
-              spaceBetween={20}
+              spaceBetween={0}
               initialSlide={4}
               slideToClickedSlide={true}  
               loop={data1?.length >= 4}
@@ -131,7 +131,7 @@ const Videotestimonials = ({ data }) => {
                 0: { slidesPerView: 1.2 },
                 640: { slidesPerView: 1.5 },
                 992: { slidesPerView: 3.5 },
-                1400: { slidesPerView: 3.2 },
+                1400: { slidesPerView: 3 },
               }}
               className="blog-swiper"
               onSwiper={(swiper) => {
@@ -187,6 +187,7 @@ const Videotestimonials = ({ data }) => {
             </Swiper>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

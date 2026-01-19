@@ -98,10 +98,10 @@ const page = () => {
           </div>
         </section> */}
         {rooms?.iconsection?.description && (
-          <HmTextSec text={rooms?.iconsection?.description} />
+          <HmTextSec className="sec-padding-top" text={rooms?.iconsection?.description} />
         )}
         {rooms?.iconsection && (
-          <section className="section-padding">
+          <section className="sec-padding-top">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -141,14 +141,14 @@ const page = () => {
           </section>
         )}
         {rooms?.iconsection && (
-          <TrustedSection removeHeading={true} data={rooms?.iconsection} />
+          <TrustedSection className="pb-0" removeHeading={true} data={rooms?.iconsection} />
         )}
-        <LogoSec title="In the <span>News</span>" />
+        <LogoSec className="pb-0" title="In the <span>News</span>" />
         <Image src={hmIllus} alt="illus3" className="illus-3 w-100 h-auto" />
       </div>
       <div className="black-gr-div">
-        <VisitLocations />
-        <section className="section-padding esc-sec">
+        <VisitLocations className="sec-padding-top"/>
+        <section className="section-padding esc-sec pb-0">
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center">
@@ -157,7 +157,7 @@ const page = () => {
                 </h3>
               </div>
             </div>
-            <div className="row row-gap-25 mt-5">
+            <div className="row row-gap-25">
               {escapeRooms &&
                 escapeRooms.map((room, index) => (
                   <div className="col-lg-4 col-12" key={index}>
@@ -183,17 +183,20 @@ const page = () => {
         </section> */}
 
       <div className="black-gr-div">
-        {(rooms?.googlereviews || rooms?.googlereviews?.length > 0) && (
+        <div className="sec-padding-top">
+{(rooms?.googlereviews || rooms?.googlereviews?.length > 0) && (
           <GlobalReviewWidget
             reviews={rooms?.googlereviews}
             data={rooms?.imagesection}
           />
         )}
+        </div>
+        
         {rooms?.videotestimonials && (
           <Videotestimonials data={rooms?.videotestimonials} />
         )}
-        {rooms?.faqsection && <FaqSection data={rooms?.faqsection} />}
-        <BlogSlider />
+        {rooms?.faqsection && <FaqSection className="section-padding" data={rooms?.faqsection} />}
+        <BlogSlider className="py-0"/>
         {rooms?.footersection && (
           <HomeContact textData={rooms?.footersection} />
         )}

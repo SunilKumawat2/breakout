@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import BlogCard from "./BlogCard";
 import { useGlobalContext } from "@/context/GlobalContext";
 
-const BlogSlider = () => {
+const BlogSlider = ({ className = "", }) => {
   const { blogs } = useGlobalContext();
 
   // Detect the max slides per view from breakpoints:
@@ -30,15 +30,14 @@ const BlogSlider = () => {
   }, [blogs]);
 
   return (
-    <section className="blog-slider section-padding">
+    <section className={`blog-slider-sec section-padding ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
-            <h2 className="sec-head sm-head medium">Blogs</h2>
+            <h2 className="sec-head sm-head medium">Read <span>Blogs</span></h2>
           </div>
         </div>
-      </div>
-      <div className="row mt-5">
+      <div className="row">
         <div className="col-lg-12">
           <div className="blog-slider">
             <Swiper
@@ -77,6 +76,7 @@ const BlogSlider = () => {
             </Swiper>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

@@ -12,7 +12,7 @@ import swiperNext from "@/images/swiper-next.svg";
 import star from "@/images/star.svg";
 import starStroke from "@/images/star-stroke.svg";
 
-const GReviewSlider = ({ commonStars = true, data }) => {
+const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -49,11 +49,11 @@ const GReviewSlider = ({ commonStars = true, data }) => {
   const reviews = data?.length > 0 ? data : dummyData;
 
   return (
-    <section className="g-review-slider section-padding">
       <div className="container">
+            <section className={`g-review-slider position-relative ${className}`}>
         <div className="row">
           <div className="col-lg-12">
-            <div className="g-review-swiper position-relative">
+            <div className="g-review-swiper">
               <Swiper
                 modules={[Navigation]}
                 navigation={{
@@ -108,8 +108,9 @@ const GReviewSlider = ({ commonStars = true, data }) => {
             </ul>
           </div>
         )}
-      </div>
     </section>
+      </div>
+
   );
 };
 
