@@ -6,7 +6,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 
-const HmTextSecBk = ({ text, home = false }) => {
+const HmTextSecBk = ({ text,className = "", home = false }) => {
   const textRef = useRef(null);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const HmTextSecBk = ({ text, home = false }) => {
   return (
     <section
       className={`hm-text-sec text-illus-sec ${
-        home ? "pb-0" : ""
+        home ? "pb-0" : "",className
       }`}
     >
       <div className="container">

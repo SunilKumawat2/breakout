@@ -10,9 +10,10 @@ const GlobalReviewWidget = ({
   title = "<span>Capturing</span> Happiness",
   data,
   reviews,
+  className = "",
 }) => {
   return (
-    <section className="b-inv-g-review-widget section-padding">
+    <section className={`b-inv-g-review-widget ${className}`}>
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-12 col-12">
@@ -36,8 +37,8 @@ const GlobalReviewWidget = ({
           </div>
         </div>
         <div className="row justify-content-center">
-          <div className="col-lg-10 col-12">
-            <GReviewSlider commonStars={false} data={reviews} />
+          <div className="col-lg-12 col-12 pt-80">
+            <GReviewSlider className="" commonStars={false} data={reviews} />
           </div>
         </div>
       </div>

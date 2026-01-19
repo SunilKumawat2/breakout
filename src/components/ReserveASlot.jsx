@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { CommonModal } from "@/components/CommonModal";
 import Link from "next/link";
 
-const ReserveASlot = ({ room, onCheckEligibility }) => {
+const ReserveASlot = ({ room, onCheckEligibility,className = "", }) => {
   const {
     availableSlots,
     fetchAvailableSlots,
@@ -220,7 +220,7 @@ const ReserveASlot = ({ room, onCheckEligibility }) => {
   };
 
   return (
-    <section className="section-padding">
+    <section className={`section-padding ${className}`} >
       <CommonModal show={show} handleClose={() => setShow(false)}>
         <div className="esc-modal-content">
           <h3 className="sec-head h3 yellow-text">Terms and Conditions</h3>
@@ -275,9 +275,9 @@ const ReserveASlot = ({ room, onCheckEligibility }) => {
               </h2>
             </div>
           </div>
-          <div className="col-12 mt-4">
+          <div className="col-12">
             <p className="para">Pricing</p>
-            <div className="cus-card pick-card">
+            <div className="cus-card pick-card mt-0">
               <div className="row row-gap-25">
                 {room?.pricing &&
                   room?.pricing?.length > 0 &&

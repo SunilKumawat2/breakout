@@ -9,7 +9,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import api from "@/helpers/api";
 import LocBefore from "@/images/loc-before.svg";
 
-const OurLocationSec = ({ title, slug = false, locationTitle = "" }) => {
+const OurLocationSec = ({ title, slug = false, locationTitle = "", className = "", }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [locationOptions, setLocationOptions] = useState([]);
   const [locationData, setLocationData] = useState(slug || null);
@@ -81,7 +81,7 @@ const OurLocationSec = ({ title, slug = false, locationTitle = "" }) => {
   };
 
   return (
-    <section className="loc-det-sec section-padding">
+    <section className={`loc-det-sec ${className}`} >
       <div className="container">
         <div className="row">
           <div className="col-lg-12 col-12">
@@ -91,14 +91,14 @@ const OurLocationSec = ({ title, slug = false, locationTitle = "" }) => {
             ></h3>
           </div>
           {!slug && (
-            <div className="col-lg-4 col-12 mt-5">
+            <div className="col-lg-4 col-12">
               <div className="loc-selector">
                 <Select
                   value={
                     selectedLocation
                       ? locationOptions?.find(
-                          (item) => item?.value === selectedLocation
-                        )
+                        (item) => item?.value === selectedLocation
+                      )
                       : null
                   }
                   onChange={(e) => setSelectedLocation(e?.value)}
@@ -111,7 +111,7 @@ const OurLocationSec = ({ title, slug = false, locationTitle = "" }) => {
             </div>
           )}
           <div className="col-12">
-            <div className="loc-det-box">
+            <div className="loc-det-box mt-0">
               <div className="row row-gap-25">
                 <div className="col-lg-6 col-12">
                   <div className="loc-left">

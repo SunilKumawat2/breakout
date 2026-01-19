@@ -14,7 +14,7 @@ import GoVirtual from "@/images/go-virtual.jpg";
 import "swiper/css";
 import "swiper/css/pagination";
 
-const VisitLocations = ({ title = null, desc = null, isVirtual = true }) => {
+const VisitLocations = ({ title = null, desc = null,className = "", isVirtual = true }) => {
   const { escaperoomLocations, loading, errors } = useGlobalContext();
 console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
   // const [rooms, setRooms] = useState([]);
@@ -46,7 +46,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
   }, []);
 
   return (
-    <section className="section-padding loc-section">
+      <section className={`loc-section ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center col-12">
@@ -65,7 +65,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
           </div>
         </div>
         {!isMobile ? (
-          <div className="row mt-5 row-gap-25">
+          <div className="row row-gap-25">
             {escaperoomLocations &&
               escaperoomLocations.map((item, index) => (
                 <div className="col-lg-4 col-12" key={index}>
@@ -79,7 +79,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
             )}
           </div>
         ) : (
-          <div className="row mt-5 row-gap-25">
+          <div className="row row-gap-25">
             <div className="col-12">
               <Swiper
                 modules={[Pagination]}

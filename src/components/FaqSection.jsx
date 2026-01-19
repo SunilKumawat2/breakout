@@ -176,11 +176,11 @@ const FaqSection = ({ data, openIndex,onFaqChange,className = ""  }) => {
 
   return (
     <section ref={faqRef} className={`faq-sec ${className}`}>
-      <Image src={faqStar} alt="faq-bg" className="faq-star" />
       <div className="container">
         <div className="row">
           <div className="col-lg-12 col-12">
-            <div className="esc-content text-center">
+            <div className="esc-content text-center position-relative">
+      <Image src={faqStar} alt="faq-bg" className="faq-star" />
               <h2 className="sec-head sm-head medium">
                 FAQs for <span>Your Adventure</span>
               </h2>
