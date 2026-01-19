@@ -1,83 +1,297 @@
-import React from "react";
+// "use client";
+// import React, { useEffect, useState } from "react";
+// import Image from "next/image";
+// import logo from "@/images/logo.png";
+// import fb from "@/images/fb.svg";
+// import yt from "@/images/yt.svg";
+// import ins from "@/images/ins.svg";
+// import lin from "@/images/lin.svg";
+
+// import Link from "next/link";
+// import phoneIcon from "@/images/phone-icc.svg";
+// import mailIcon from "@/images/mail-icc.svg";
+// import api from "@/helpers/api";
+// import { useGlobalContext } from "@/context/GlobalContext";
+
+// const Footer = () => {
+//   const policyLinks = [
+//     {
+//       title: "Privacy Policy",
+//       link: "/privacy-policy",
+//     },
+//     {
+//       title: "Terms and Conditions",
+//       link: "/terms-and-conditions",
+//     },
+//     {
+//       title: "Refund Policy",
+//       link: "/refund-policy",
+//     },
+//   ];
+//   const ftColumns = [
+//     {
+//       title: "Escape Room",
+//       links: [
+//         {
+//           title: "Koramangala",
+//           link: "#",
+//         },
+//         {
+//           title: "JP Nagar",
+//           link: "#",
+//         },
+//         {
+//           title: "Whitefield",
+//           link: "#",
+//         },
+//       ],
+//     },
+//     {
+//       title: "Parties",
+//       links: [
+//         {
+//           title: "Birthdays",
+//           link: "#",
+//         },
+//         {
+//           title: "Farewells",
+//           link: "#",
+//         },
+//         {
+//           title: "Bachelor(ette)",
+//           link: "#",
+//         },
+//       ],
+//     },
+//     {
+//       title: "Corporate",
+//       links: [
+//         {
+//           title: "Unwind",
+//           link: "#",
+//         },
+//         {
+//           title: "Retreats",
+//           link: "#",
+//         },
+//         {
+//           title: "Connect",
+//           link: "#",
+//         },
+//       ],
+//     },
+//   ];
+//   const { escaperoomLocations, loading, errors } = useGlobalContext();
+//   const [menuItems, setMenuItems] = useState(ftColumns);
+//   useEffect(() => {
+//     const fetchBirthdayList = async () => {
+//       const response = await api.get("/birthday-listing");
+//       setMenuItems((prevMenuItems) =>
+//         prevMenuItems.map((item) => {
+//           if (item.title === "Parties") {
+//             return {
+//               ...item,
+//               subItems: item.links.map((subItem) => {
+//                 if (subItem.title === "Birthdays") {
+//                   return {
+//                     ...subItem,
+//                     links: response?.data?.data.map((birthdayItem) => ({
+//                       title: birthdayItem.title,
+//                       link: `/parties/birthday/${birthdayItem.slug}`,
+//                     })),
+//                   };
+//                 }
+//                 return subItem;
+//               }),
+//             };
+//           }
+//           return item;
+//         })
+//       );
+//     };
+//     fetchBirthdayList();
+//     if (escaperoomLocations) {
+//       setMenuItems(
+//         ftColumns.map((item) => {
+//           if (item.title === "Escape Rooms") {
+//             return {
+//               ...item,
+//               links: [
+//                 ...escaperoomLocations.map((loc) => ({
+//                   title: loc.title,
+//                   link: `/location/${loc.slug}`,
+//                 })),
+//                 {
+//                   title: "Virtual Rooms",
+//                   link: "/virtual-game",
+//                 },
+//               ],
+//             };
+//           }
+
+//           return item;
+//         })
+//       );
+//     }
+//   }, [escaperoomLocations]);
+//   return (
+//     <footer className="main-footer">
+//       <div className="container">
+//         <div className="ft-inner">
+//           <div className="row flex-lg-row-reverse row-gap-25">
+//             <div className="col-lg-3 col-12">
+//               <div className="ft-logo-col">
+//                 <Link href="/" className="ft-logo">
+//                   <Image src={logo} alt="logo" />
+//                 </Link>
+//                 <ul className="ft-contact-list">
+//                   <li>
+//                     <Link href="mailto:info@breakout.in">
+//                       <Image src={mailIcon} alt="mail" />
+//                       <span>info@breakout.in</span>
+//                     </Link>
+//                   </li>
+//                   <li>
+//                     <Link href="tel:+919742386781">
+//                       <Image src={phoneIcon} alt="phone" />
+//                       <span>+91 974 238 6781</span>
+//                     </Link>
+//                   </li>
+//                 </ul>
+
+//                 <ul className="soc-links">
+//                   <li>
+//                     <Link href="/">
+//                       <Image src={fb} alt="fb" />
+//                     </Link>
+//                   </li>
+//                   <li>
+//                     <Link href="/">
+//                       <Image src={yt} alt="yt" />
+//                     </Link>
+//                   </li>
+//                   <li>
+//                     <Link href="/">
+//                       <Image src={ins} alt="insta" />
+//                     </Link>
+//                   </li>
+//                   <li>
+//                     <Link href="/">
+//                       <Image src={lin} alt="lin" />
+//                     </Link>
+//                   </li>
+//                 </ul>
+//               </div>
+//             </div>
+//             <div className="col-lg-9 col-12">
+//               <div className="row row-gap-25">
+//                 {menuItems.map((item, index) => (
+//                   <div className="col-lg-4 col-6" key={index}>
+//                     <h4 className="ft-head">{item.title}</h4>
+//                     <ul className="ft-list">
+//                       {item.links.map((link, index) => (
+//                         <li key={index}>
+//                           <Link href={link.link}>{link.title}</Link>
+//                         </li>
+//                       ))}
+//                     </ul>
+//                   </div>
+//                 ))}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="ft-btm">
+//           <p>&copy; {new Date().getFullYear()} Breakout all rights reserved.</p>
+//           <ul className="ft-policy-list">
+//             {policyLinks.map((link, index) => (
+//               <li key={index}>
+//                 <Link href={link.link}>{link.title}</Link>
+//               </li>
+//             ))}
+//           </ul>
+//         </div>
+//       </div>
+//     </footer>
+//   );
+// };
+
+// export default Footer;
+
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+
 import logo from "@/images/logo.png";
 import fb from "@/images/fb.svg";
 import yt from "@/images/yt.svg";
 import ins from "@/images/ins.svg";
 import lin from "@/images/lin.svg";
-
-import Link from "next/link";
 import phoneIcon from "@/images/phone-icc.svg";
 import mailIcon from "@/images/mail-icc.svg";
 
+import { useGlobalContext } from "@/context/GlobalContext";
+
 const Footer = () => {
   const policyLinks = [
-    {
-      title: "Privacy Policy",
-      link: "/privacy-policy",
-    },
-    {
-      title: "Terms and Conditions",
-      link: "/terms-and-conditions",
-    },
-    {
-      title: "Refund Policy",
-      link: "/refund-policy",
-    },
+    { title: "Privacy Policy", link: "/privacy-policy" },
+    { title: "Terms and Conditions", link: "/terms-and-conditions" },
+    { title: "Refund Policy", link: "/refund-policy" },
   ];
-  const ftColumns = [
+
+  const initialColumns = [
     {
       title: "Escape Room",
-      links: [
-        {
-          title: "Koramangala",
-          link: "#",
-        },
-        {
-          title: "JP Nagar",
-          link: "#",
-        },
-        {
-          title: "Whitefield",
-          link: "#",
-        },
-      ],
+      links: [],
     },
     {
       title: "Parties",
       links: [
-        {
-          title: "Birthdays",
-          link: "#",
-        },
-        {
-          title: "Farewells",
-          link: "#",
-        },
-        {
-          title: "Bachelor(ette)",
-          link: "#",
-        },
+        { title: "Birthdays", link: "/parties/birthday" },
+        { title: "Farewells", link: "/parties/farewell" },
+        { title: "Bachelor(ette)", link: "/parties/bachelor" },
       ],
     },
     {
       title: "Corporate",
       links: [
-        {
-          title: "Unwind",
-          link: "#",
-        },
-        {
-          title: "Retreats",
-          link: "#",
-        },
-        {
-          title: "Connect",
-          link: "#",
-        },
+        { title: "Unwind", link: "/corporate/unwind" },
+        { title: "Retreats", link: "/corporate/retreat" },
+        { title: "Connect", link: "/corporate/connect-l-n-d" },
       ],
     },
   ];
+
+  const { escaperoomLocations } = useGlobalContext();
+  const [menuItems, setMenuItems] = useState(initialColumns);
+
+  // 🔹 Inject Escape Room locations
+  useEffect(() => {
+    if (!escaperoomLocations?.length) return;
+
+    setMenuItems((prev) =>
+      prev.map((item) => {
+        if (item.title === "Escape Room") {
+          return {
+            ...item,
+            links: [
+              ...escaperoomLocations.map((loc) => ({
+                title: loc.title,
+                link: `/location/${loc.slug}`,
+              })),
+              {
+                title: "Virtual Rooms",
+                link: "/virtual-game",
+              },
+            ],
+          };
+        }
+        return item;
+      })
+    );
+  }, [escaperoomLocations]);
+
   return (
     <footer className="main-footer">
       <div className="container">
@@ -88,6 +302,7 @@ const Footer = () => {
                 <Link href="/" className="ft-logo">
                   <Image src={logo} alt="logo" />
                 </Link>
+
                 <ul className="ft-contact-list">
                   <li>
                     <Link href="mailto:info@breakout.in">
@@ -104,37 +319,22 @@ const Footer = () => {
                 </ul>
 
                 <ul className="soc-links">
-                  <li>
-                    <Link href="/">
-                      <Image src={fb} alt="fb" />
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/">
-                      <Image src={yt} alt="yt" />
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/">
-                      <Image src={ins} alt="insta" />
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/">
-                      <Image src={lin} alt="lin" />
-                    </Link>
-                  </li>
+                  <li><Link href="/"><Image src={fb} alt="fb" /></Link></li>
+                  <li><Link href="/"><Image src={yt} alt="yt" /></Link></li>
+                  <li><Link href="/"><Image src={ins} alt="insta" /></Link></li>
+                  <li><Link href="/"><Image src={lin} alt="lin" /></Link></li>
                 </ul>
               </div>
             </div>
+
             <div className="col-lg-9 col-12">
               <div className="row row-gap-25">
-                {ftColumns.map((item, index) => (
+                {menuItems.map((item, index) => (
                   <div className="col-lg-4 col-6" key={index}>
                     <h4 className="ft-head">{item.title}</h4>
                     <ul className="ft-list">
-                      {item.links.map((link, index) => (
-                        <li key={index}>
+                      {item.links.map((link, idx) => (
+                        <li key={idx}>
                           <Link href={link.link}>{link.title}</Link>
                         </li>
                       ))}
@@ -145,6 +345,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
+
         <div className="ft-btm">
           <p>&copy; {new Date().getFullYear()} Breakout all rights reserved.</p>
           <ul className="ft-policy-list">
