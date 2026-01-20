@@ -47,7 +47,7 @@ const LogoSec = ({ title, logos = null, className = "", link = true }) => {
         <div className="row">
           <div className="col-lg-12 text-center col-12">
             <h2
-              className="sec-head medium sm-head"
+              className="sec-head medium sm-head mb-0"
               dangerouslySetInnerHTML={{
                 __html: title || "Featured <span>in</span>",
               }}

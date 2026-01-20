@@ -180,7 +180,7 @@ const page = () => {
         </section> */}
 
         {data?.bannersection?.content && (
-          <HmTextSec text={data?.bannersection?.content} />
+          <HmTextSec className="pt-80" text={data?.bannersection?.content} />
         )}
         {data?.bannersection?.note && (
           <div className="container">
@@ -194,7 +194,7 @@ const page = () => {
             </div>
           </div>
         )}
-        {data?.countersection && <TrustedSection data={data?.countersection} />}
+        {data?.countersection && <TrustedSection className="pb-0" data={data?.countersection} />}
 
         {/* <section className="section-padding bday-count-sec pb-0">
           <div className="container">
@@ -208,12 +208,12 @@ const page = () => {
           </div>
         </section> */}
 
-        <PartyExpertCon />
+        <PartyExpertCon className="pt-80"/>
 
         <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
       </div>
 
-      <section className="section-padding bday-sec">
+      <section className="pt-80 bday-sec">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">
@@ -222,7 +222,7 @@ const page = () => {
               </h3>
             </div>
           </div>
-          <div className="row mt-5 row-gap-25">
+          <div className="row row-gap-25">
             {birthdayList?.length > 0 &&
               birthdayList?.map((bd, index) => (
                 <div className="col-lg-4 col-12" key={index}>
@@ -256,10 +256,10 @@ const page = () => {
 
         {data?.partyinclusions && (
           <section
-            className="section-padding bday-sec"
+            className="section-padding bday-sec pb-0"
             style={{ overflow: "hidden" }}
           >
-            <div className="">
+            <div className="blog-slider-sec">
               <div className="row">
                 <div className="col-lg-12 text-center">
                   <h3
@@ -276,13 +276,15 @@ const page = () => {
           </section>
         )}
 
-        <Image src={bdayIllus} alt="illus3" className="illus-3 w-100 h-auto" />
+        <Image src={bdayIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
         {/* <PartyExpertCon /> */}
-        {data?.slidersection && <ReadyToGoPlans data={data?.slidersection} />}
+        {data?.slidersection && <ReadyToGoPlans className="pb-0" data={data?.slidersection} />}
         {data?.googlereviews && (
+          <div className="pt-80">
           <GReviewSlider commonStars={false} data={data?.googlereviews} />
+          </div>
         )}
         {data?.imagesection && (
           <>
@@ -322,16 +324,16 @@ const page = () => {
           </>
         )}
         {data?.videotestimonials && (
-          <Videotestimonials data={data?.videotestimonials} />
+          <Videotestimonials className="pt-0" data={data?.videotestimonials} />
         )}
 
-        <Image src={movieIllus} className={"w-100 h-auto"} alt="bday" />
+        <Image src={movieIllus} className={"illus-image"} alt="bday" />
       </div>
       <div className="black-gr-div">
-        {data?.faqsection && <FaqSection data={data?.faqsection} />}
-        <OurLocationSec title="About Our <span>Our Location</span>" />
-        <BlogSlider />
-        <LogoSec />
+        {data?.faqsection && <FaqSection className="pt-80" data={data?.faqsection} />}
+        <OurLocationSec className="sec-padding-top" title="About Our <span>Our Location</span>" />
+        <BlogSlider className=""/>
+        <LogoSec className="pt-80 pb-0" title={"In the <span>News</span>"}/>
         {data?.footersection && (
           <PartyGetInTouch
             img={nightIllus}

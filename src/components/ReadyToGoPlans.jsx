@@ -16,10 +16,12 @@ import bd5 from "@/images/bd5.jpg";
 import bd6 from "@/images/bd6.jpg";
 import bd7 from "@/images/bd7.jpg";
 import Link from "next/link";
-import swiperPrev from "@/images/swiper-prev.svg";
-import swiperNext from "@/images/swiper-next.svg";
+// import swiperPrev from "@/images/swiper-prev.svg";
+// import swiperNext from "@/images/swiper-next.svg";
+import swiperPrev from "@/images/chev-left.svg";
+import swiperNext from "@/images/chev-right.svg";
 
-const ReadyToGoPlans = ({ data }) => {
+const ReadyToGoPlans = ({ data,className="" }) => {
   const [active, setActive] = useState(null);
   let data1 = data;
   if (data) {
@@ -45,7 +47,7 @@ const ReadyToGoPlans = ({ data }) => {
   }
   const totalSlides = data1?.images?.length || 0;
   return (
-    <section className="blog-slider section-padding">
+    <section className={`blog-slider-sec section-padding ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
@@ -63,7 +65,7 @@ const ReadyToGoPlans = ({ data }) => {
             )}
           </div>
         </div>
-        <div className="row mt-5">
+        <div className="row">
           <div className="col-lg-12">
             <div className="blog-slider">
               <Swiper
@@ -109,7 +111,8 @@ const ReadyToGoPlans = ({ data }) => {
                       <div
                         className={`blog-card click-anim-card ${active === index ? "active" : ""
                           }`}
-                        onClick={() => setActive(index)}
+                        onMouseEnter={() => setActive(index)}
+                        onMouseLeave={() => setActive(!index)}
                       >
                         <div className="blog-card-img">
                           {item.image && (
@@ -134,10 +137,10 @@ const ReadyToGoPlans = ({ data }) => {
                     </SwiperSlide>
                   ))}
               </Swiper>
-              <div className="swiper-button-prev">
+              <div className="swiper-button-prev go-plan">
                 <Image src={swiperPrev} alt="arrow" />
               </div>
-              <div className="swiper-button-next">
+              <div className="swiper-button-next go-plan">
                 <Image src={swiperNext} alt="arrow" />
               </div>
             </div>

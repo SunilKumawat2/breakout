@@ -9,7 +9,7 @@ import PartyCard from "./PartyCard";
 const PartyInclutions = ({ data }) => {
   return (
     <>
-      <div className="row mt-5">
+      <div className="row">
         <div className="col-lg-12">
           <div className="blog-slider">
             <Swiper

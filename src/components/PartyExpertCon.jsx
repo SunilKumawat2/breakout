@@ -9,12 +9,12 @@ import Link from "next/link";
 import Image from "next/image";
 
 
-const PartyExpertCon = ({ title }) => {
+const PartyExpertCon = ({ title,className="" }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
   return (
-    <section className="hm-contact-sec section-padding pb-0">
+    <section className={`hm-contact-sec section-padding pb-0 ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
@@ -26,7 +26,7 @@ const PartyExpertCon = ({ title }) => {
             />
           </div>
         </div>
-        <div className="row mt-5">
+        <div className="row">
           <div className="col-lg-12">
             <div className="hm-con-form-card">
               <div className="row align-items-center justify-content-between">
@@ -39,7 +39,7 @@ const PartyExpertCon = ({ title }) => {
                     details.
                   </p>
                 </div>
-                <div className="col-lg-7 col-12">
+                <div className="col-lg-6 col-12">
                   {/* <div className="hm-con-form-card-head">
                     
                     
@@ -80,7 +80,7 @@ const PartyExpertCon = ({ title }) => {
                       </li>
                     </ul>
                   </div>
-                  <div className="btn-wrap d-flex gap-2 mt-4 align-items-center justify-content-center">
+                  <div className="btn-wrap d-flex gap-4 mt-4 align-items-center justify-content-center">
                     <Link href="tel:+919876543210" className="main-btn wide">
                       <span>Call Now</span>
                     </Link>

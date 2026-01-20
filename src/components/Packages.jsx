@@ -7,7 +7,7 @@ import Link from "next/link";
 import keyImg from "@/images/key.svg";
 import { CommonModal } from "@/components/CommonModal";
 
-const Packages = ({ packages, hasEventImg = false, category = "" }) => {
+const Packages = ({ packages, hasEventImg = false, category = "",className="" }) => {
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [modalType, setModalType] = useState("both"); 
@@ -97,7 +97,7 @@ const Packages = ({ packages, hasEventImg = false, category = "" }) => {
 
 
   return (
-    <section className="section-padding">
+    <section className={`section-padding ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
@@ -115,12 +115,12 @@ const Packages = ({ packages, hasEventImg = false, category = "" }) => {
             )}
           </div>
         </div>
-        <div className="row">
-          <div className="col-12">
+        <div className="row justify-content-center">
+          <div className="col-lg-10">
             <div className="package-container">
               {packages?.pricing?.columns?.length > 0 && (
                 <div
-                  className={`package-header `}
+                  className={`package-header mt-0`}
                   style={{ gridTemplateColumns: gridCol }}
                 >
                   <div className="package-header-cell">

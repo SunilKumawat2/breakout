@@ -7,8 +7,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import BlogCard from "./BlogCard";
 import { useGlobalContext } from "@/context/GlobalContext";
-import swiperPrev from "@/images/swiper-prev.svg";
-import swiperNext from "@/images/swiper-next.svg";
+// import swiperPrev from "@/images/swiper-prev.svg";
+// import swiperNext from "@/images/swiper-next.svg";
+import swiperPrev from "@/images/chev-left.svg";
+import swiperNext from "@/images/chev-right.svg";
 import Image from "next/image";
 
 const BlogSlider = ({ className = "", }) => {
@@ -81,11 +83,11 @@ const BlogSlider = ({ className = "", }) => {
                   </SwiperSlide>
                 ))}
             </Swiper>
-            <div className="swiper-button-prev custom-prev">
+            <div className="swiper-button-prev custom-prev go-plan">
               <Image src={swiperPrev} alt="Previous" />
             </div>
 
-            <div className="swiper-button-next custom-next">
+            <div className="swiper-button-next custom-next go-plan">
               <Image src={swiperNext} alt="Next" />
             </div>
           </div>

@@ -48,6 +48,7 @@ const PartyGetInTouch = ({
   data,
   home = false,
   noImage = false,
+  className=""
 }) => {
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -60,7 +61,7 @@ const PartyGetInTouch = ({
       ...base,
       background: "rgba(243, 244, 244, 0.1)",
       borderColor: state.isFocused ? "#FFAE00" : "rgba(255, 174, 0, 0.15)",
-      borderRadius: "20px",
+      borderRadius: "30px",
       padding: "8px",
       color: "#FFFFFF",
       cursor: "pointer",
@@ -156,7 +157,7 @@ const PartyGetInTouch = ({
   });
 
   return (
-    <section className={`section-padding pb-0 ${img ? "pb-0" : ""}`}>
+    <section className={`section-padding pb-0 ${img ? "pb-0" : ""} ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 col-12">
@@ -166,7 +167,7 @@ const PartyGetInTouch = ({
               </h2>
             </div>
           </div>
-          <div className="col-12 mt-4">
+          <div className="col-12">
             <div className="bday-form-card">
               <form onSubmit={formik.handleSubmit} autoComplete="off">
                 <div className="form-field ">
@@ -352,11 +353,11 @@ const PartyGetInTouch = ({
                     <div className="col-lg-12 col-12">
                       <div className="">
                         <button
-                          className="main-btn dark-btn"
+                          className="main-btn"
                           type="submit"
                           disabled={loading}
                         >
-                          <span className="yellow-text">
+                          <span className="">
                             {loading ? "Booking..." : "Book a call"}
                           </span>
                         </button>
@@ -382,8 +383,8 @@ const PartyGetInTouch = ({
           </p>
         )}
       </div>
-      {noTextBottom && (
-        <section className="section-padding pb-0">
+      {/* {noTextBottom && (
+        <section className="">
           <div className="container">
             <div className="row text-center justify-content-center">
               <div className="col-lg-9 col-12">
@@ -405,7 +406,7 @@ const PartyGetInTouch = ({
             </div>
           </div>
         </section>
-      )}
+      )} */}
       {!noImage ? (
         !img ? (
           home ? (

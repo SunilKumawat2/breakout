@@ -1529,8 +1529,9 @@ a {
 
 .bday-page-banner {
     position: relative;
-    min-height: calc(100vh - 90px);
+    // min-height: calc(100vh - 90px);
     display: flex;
+    min-height: 705px;
     flex-direction: column;
     justify-content: center;
 
@@ -1578,7 +1579,8 @@ a {
 .bday-text-wrap {
     position: relative;
     @include card;
-    padding: 1.5em 1.5em;
+    padding: 24px;
+    margin-top: 40px;
 
     p {
         margin-bottom: 0;
@@ -2620,8 +2622,8 @@ a {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    margin-top: 4.5em;
-    margin-bottom: 2em;
+    margin-top: 40px;
+    // margin-bottom: 2em;
 
     >* {
 
@@ -3590,8 +3592,46 @@ textarea:hover {
     padding-left: 16px;
     padding-right: 16px;
 }
-.row{
+
+.row {
     margin-left: -15px;
     margin-right: -15px;
 }
+
+.bday-form-card .select__indicator {
+    background-color: transparent !important;
+    color: #FFAE00 !important;
+}
+
+.bday-form-card .select__indicator::before {
+    display: none !important;
+}
+
+.blog-slider .swiper-button-next,
+.blog-slider .swiper-button-prev {
+    opacity: 1 !important;
+    z-index: 2;
+    pointer-events: all !important;
+    cursor: pointer !important;
+}
+
+
+.swiper-button-next.go-plan,
+.swiper-button-prev.go-plan {
+    background-color: #272727 !important;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.swiper-button-next.go-plan img,
+.swiper-button-prev.go-plan img {
+    max-width: 14px;
+}
+
+.loc-selector {
+    margin-bottom: 24px;
+}
+
 // new css start 

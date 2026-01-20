@@ -139,7 +139,7 @@ const page = () => {
         )}
 
         {party && party?.countersection && (
-          <TrustedSection data={party?.countersection} removeHeading={true} />
+          <TrustedSection className="" data={party?.countersection} removeHeading={true} />
         )}
 
         {/* <section className="section-padding bday-count-sec pb-0">
@@ -155,7 +155,7 @@ const page = () => {
         </section> */}
 
         {party && party?.imagecardsection && (
-          <section className="section-padding bday-sec">
+          <section className="bday-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -168,7 +168,7 @@ const page = () => {
                   />
                 </div>
               </div>
-              <div className="row mt-5 row-gap-25 justify-content-center">
+              <div className="row row-gap-25 justify-content-center">
                 <div className="col-lg-8 col-12">
                   <div className="row row-gap-25">
                     {party?.imagecardsection?.images &&
@@ -203,12 +203,12 @@ const page = () => {
           </section>
         )}
 
-        <Image src={farewellIllus} className={"w-100 h-auto"} alt="bday" />
+        <Image src={farewellIllus} className={"illus-image"} alt="bday" />
       </div>
 
       <div className="black-gr-div">
         {party && party?.partyinclusions && (
-          <section className="section-padding bday-sec">
+          <section className="sec-padding-top bday-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -222,7 +222,7 @@ const page = () => {
                   />
                 </div>
               </div>
-              <div className="row mt-5 row-gap-25">
+              <div className="row row-gap-25">
                 {party?.partyinclusions?.images &&
                   party?.partyinclusions?.images?.length > 0 &&
                   party?.partyinclusions?.images?.map((bd, index) => (
@@ -290,23 +290,25 @@ const page = () => {
         {party &&
           party?.packagesection &&
           party?.packagesection?.pricing?.columns?.length > 0 && (
-            <Packages packages={party?.packagesection} />
+            <Packages className="pb-0" packages={party?.packagesection} />
           )}
 
         {party && party?.googlereviews && (
+          <div className="pt-80">
           <GReviewSlider commonStars={false} data={party?.googlereviews} />
+          </div>
         )}
 
-        <Image src={bdayIllus} alt="illus3" className="illus-3 w-100 h-auto" />
+        <Image src={bdayIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
-        <PartyExpertCon />
+        <PartyExpertCon className="sec-padding-top"/>
         {party && party?.slidersection && (
           <ReadyToGoPlans data={party?.slidersection} />
         )}
         {party && party?.imagesection && (
           <>
-            <section className="section-padding">
+            <section className="capture-sec">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 text-center">
@@ -344,14 +346,14 @@ const page = () => {
         {party && party?.videotestimonials && (
           <Videotestimonials data={party?.videotestimonials} />
         )}
-        <Image src={loveIllus} className={"w-100 h-auto mt-5"} alt="bday" />
+        <Image src={loveIllus} className={"illus-image"} alt="bday" />
       </div>
       <div className="black-gr-div">
         {/* {JSON.stringify(party?.slug)} */}
-        <OurLocationSec title="About Our <span>Our Location</span>" />
-        {party && party?.faqsection && <FaqSection data={party?.faqsection} />}
+        <OurLocationSec className="sec-padding-top" title="About Our <span>Our Location</span>" />
+        {party && party?.faqsection && <FaqSection className="section-padding pb-0" data={party?.faqsection} />}
         <BlogSlider />
-        <LogoSec />
+        <LogoSec className="py-0"/>
         {party && party?.footersection && (
           <PartyGetInTouch
             img={nightIllus}
