@@ -304,6 +304,7 @@ const page = () => {
           </section>
         )}
         {corporate && corporate?.slidersection && (
+          
           <AddOnsSlider data={corporate?.slidersection} />
         )}
         <PartyExpertCon title="<span>Add MAGIC</span> to your workplace" />
