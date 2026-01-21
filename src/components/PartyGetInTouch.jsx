@@ -413,14 +413,14 @@ const PartyGetInTouch = ({
             <Image
               src={illus}
               alt="illus"
-              className="hm-contact-illus w-100 h-auto"
+              className="hm-contact-illus"
               style={{ marginBottom: "-1px" }}
             />
           ) : (
             <Image
               src={illus4}
               alt="illus"
-              className="hm-contact-illus w-100 h-auto"
+              className="hm-contact-illus"
               style={{ marginBottom: "-1px" }}
             />
           )
@@ -428,7 +428,7 @@ const PartyGetInTouch = ({
           <Image
             src={img}
             alt="illus"
-            className="hm-contact-illus w-100 h-auto"
+            className="hm-contact-illus"
             style={{ marginBottom: "-1px" }}
           />
         )

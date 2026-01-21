@@ -189,7 +189,7 @@ const FaqSection = ({ data, openIndex,onFaqChange,className = ""  }) => {
         </div>
 
         <div className="row justify-content-center">
-  <div className="col-lg-12 col-12 mt-4">
+  <div className="col-lg-12 col-12">
     <Accordion
       className="acc"
       activeKey={activeKey}

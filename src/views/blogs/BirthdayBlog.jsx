@@ -263,7 +263,7 @@ const BirthdayBlog = ({ blogData }) => {
             </div>
           </div>
         </section>
-        <Image src={bdayblogIllus} className="w-100 h-auto" alt="hm-illus" />
+        <Image src={bdayblogIllus} className="illus-image" alt="hm-illus" />
       </div>
     </>
   );

@@ -63,6 +63,7 @@ import BirthdayBlog from "@/views/blogs/BirthdayBlog";
 import { useSearchParams } from "next/navigation";
 const page = () => {
   const [blogData, setBlogData] = useState(null);
+  console.log("sfghsdgfhsdgfj",blogData)
   const { id } = useParams();
   const searchParams = useSearchParams();
   const type = searchParams.get("type");

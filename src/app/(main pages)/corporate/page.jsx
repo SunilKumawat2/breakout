@@ -30,7 +30,7 @@ import OurLocationSec from "@/components/OurLocationSec";
 import api from "@/app/helpers/api";
 
 import { useEffect, useState } from "react";
-import illus4 from "@/images/illus4.svg";
+import illus4 from "@/images/illus-party-bottom.svg";
 import BirthdayGetInTouch from "@/components/BirthdayGetInTouch";
 
 export default function Home() {
@@ -153,7 +153,7 @@ export default function Home() {
                     }}
                   />
                   <p
-                    className="para big"
+                    className="para big mb-40"
                     dangerouslySetInnerHTML={{
                       __html: data?.bannersection?.description,
                     }}
@@ -161,7 +161,7 @@ export default function Home() {
                 </div>
               </motion.div>
               <motion.div
-                className="row row-gap-25 mt-4"
+                className="row row-gap-25"
                 variants={staggerContainer}
                 initial="initial"
                 animate="animate"
@@ -200,10 +200,10 @@ export default function Home() {
           <HmTextSec home={true} text={data?.bannersection?.content} />
         )}
         {data?.bannersection?.note && (
-          <div className="container pb-5">
+          <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-12 col-12">
-                <div className="cus-card mt-5 py-3 px-3">
+                <div className="cus-card">
                   <p
                     className="para mb-0"
                     style={{ fontStyle: "italic", cursor: "pointer" }}
@@ -216,27 +216,28 @@ export default function Home() {
           </div>
         )}
 
-        <Image src={MovieIllus} className="w-100 h-auto " alt="illus-home" />
+        <Image src={MovieIllus} className="illus-image" alt="illus-home" />
       </div>
       <div className="black-gr-div">
-        {data?.countersection && <TrustedSection data={data?.countersection} />}
-        <LogoSec
+        {data?.countersection && <TrustedSection className="sec-padding-top pb-0" data={data?.countersection} />}
+        <LogoSec className="pt-80 pb-0"
           title={"<span>Brands</span> Hosted"}
           logo={data?.brandlogos}
           link={false}
         />
         <Image
           src={IllusHome}
-          className="w-100 h-auto "
+          className="illus-image"
           style={{ marginBottom: "-1px" }}
           alt="illus-home"
         />
       </div>
       <div className="black-gr-div">
-        {/* <OurLocationSec title="Choose a <span>Location</span>" /> */}
-        {data?.faqsection && <FaqSection data={data?.faqsection} />}
+        <OurLocationSec className="sec-padding-top" title="Choose a <span>Location</span>" />
+        {data?.faqsection && <FaqSection className="section-padding pb-0" data={data?.faqsection} />}
         {data?.footersection && (
           <BirthdayGetInTouch
+          className="p"
             img={illus4}
             textData={data?.footersection}
             noTextBottom={true}
