@@ -1,8 +1,153 @@
-import React from "react";
+// import React from "react";
+// import Image from "next/image";
+// import selectDrop from "@/images/select-drop.svg";
+
+// const BrochureDownloadForm = () => {
+//   return (
+//     <section className="brochure-download-form section-padding">
+//       <div className="container">
+//         <div className="row">
+//           <div className="col-12">
+//             <h3 className="sec-head medium">
+//               Get <span>Brochure</span>
+//             </h3>
+//           </div>
+//         </div>
+//         <div className="download-form-div mt-5">
+//           <div className="row ">
+//             <div className="col-lg-6 col-12">
+//               <div className="form-group">
+//                 <div className="input-group">
+//                   <input type="text" placeholder="Name" />
+//                 </div>
+//               </div>
+//             </div>
+//             <div className="col-lg-6 col-12">
+//               <div className="form-group">
+//                 <div className="input-group">
+//                   <input type="text" placeholder="Phone" />
+//                 </div>
+//               </div>
+//             </div>
+//             <div className="col-lg-4 col-12">
+//               <div className="form-group style-2">
+//                 <label className="label-text">I’m looking for</label>
+//                 <div className="input-group">
+//                   <div className="select-group">
+//                     <select name="" id="">
+//                       <option value="">Select event type</option>
+//                       <option value="">Select Country</option>
+//                       <option value="">Select Country</option>
+//                       <option value="">Select Country</option>
+//                     </select>
+//                     <Image src={selectDrop} alt="select" />
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//             <div className="col-lg-4 col-12">
+//               <div className="form-group style-2">
+//                 <label className="label-text">For</label>
+//                 <div className="input-group">
+//                   <div className="select-group">
+//                     <select name="" id="">
+//                       <option value="">Select age range</option>
+//                       <option value="">Select Country</option>
+//                       <option value="">Select Country</option>
+//                       <option value="">Select Country</option>
+//                     </select>
+//                     <Image src={selectDrop} alt="select" />
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//             <div className="col-lg-4 col-12">
+//               <div className="form-group style-2">
+//                 <label className="label-text">Attendees Count</label>
+//                 <div className="input-group">
+//                   <div className="select-group">
+//                     <select name="" id="">
+//                       <option value="">Select number of attendees</option>
+//                       <option value="">Select Country</option>
+//                       <option value="">Select Country</option>
+//                       <option value="">Select Country</option>
+//                     </select>
+//                     <Image src={selectDrop} alt="select" />
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//             <div className="col-12 mt-4">
+//               <button className="main-btn">
+//                 <span>Download Brochure</span>
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default BrochureDownloadForm;
+
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import selectDrop from "@/images/select-drop.svg";
 
 const BrochureDownloadForm = () => {
+  /* ================= CALENDAR LOGIC ================= */
+  const today = new Date();
+  const [year, setYear] = useState(today.getFullYear());
+  const [month, setMonth] = useState(today.getMonth());
+  const [startIndex, setStartIndex] = useState(0);
+  const [days, setDays] = useState([]);
+  const [showMonthYear, setShowMonthYear] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  
+
+  useEffect(() => {
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    const arr = Array.from({ length: totalDays }, (_, i) => i + 1);
+    setDays(arr);
+
+    if (
+      year === today.getFullYear() &&
+      month === today.getMonth()
+    ) {
+      setStartIndex(today.getDate() - 1);
+    } else {
+      setStartIndex(0);
+    }
+  }, [year, month]);
+
+  const visibleDays = days.slice(startIndex, startIndex + 7);
+
+  const nextDays = () => {
+    if (startIndex + 7 < days.length) {
+      setStartIndex(startIndex + 7);
+    }
+  };
+
+  const prevDays = () => {
+    if (startIndex - 7 >= 0) {
+      setStartIndex(startIndex - 7);
+    }
+  };
+
+  const handleDateSelect = (day) => {
+    const dateObj = new Date(year, month, day);
+  
+    setSelectedDate(dateObj);
+  
+    // 🔥 Console test
+    console.log("Selected Date Object:", dateObj);
+    console.log("Formatted Date:", dateObj.toISOString().split("T")[0]);
+  };
+  
+  /* ================= UI ================= */
   return (
     <section className="brochure-download-form section-padding">
       <div className="container">
@@ -13,8 +158,13 @@ const BrochureDownloadForm = () => {
             </h3>
           </div>
         </div>
+
         <div className="download-form-div mt-5">
           <div className="row ">
+
+
+
+            {/* ================= FORM (UNCHANGED) ================= */}
             <div className="col-lg-6 col-12">
               <div className="form-group">
                 <div className="input-group">
@@ -22,6 +172,7 @@ const BrochureDownloadForm = () => {
                 </div>
               </div>
             </div>
+
             <div className="col-lg-6 col-12">
               <div className="form-group">
                 <div className="input-group">
@@ -29,59 +180,146 @@ const BrochureDownloadForm = () => {
                 </div>
               </div>
             </div>
+            {/* ================= CALENDAR ================= */}
+            <div className="col-12 mb-4">
+              <div className="calendar-wrapper">
+                <div className="calendar-header">
+                  <div
+                    className="month-year-select"
+                    onClick={() => setShowMonthYear(!showMonthYear)}
+                  >
+                    <span>
+                      {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
+                    </span>
+                    <Image src={selectDrop} alt="arrow" />
+                  </div>
+
+                  {showMonthYear && (
+                    <div className="month-year-dropdown">
+                      <div className="months">
+                        {Array.from({ length: 12 }).map((_, i) => (
+                          <div
+                            key={i}
+                            className={`option ${month === i ? "active" : ""}`}
+                            onClick={() => {
+                              setMonth(i);
+                              setShowMonthYear(false);
+                            }}
+                          >
+                            {new Date(0, i).toLocaleString("default", { month: "long" })}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="years">
+                        {[2024, 2025, 2026, 2027].map((y) => (
+                          <div
+                            key={y}
+                            className={`option ${year === y ? "active" : ""}`}
+                            onClick={() => {
+                              setYear(y);
+                              setShowMonthYear(false);
+                            }}
+                          >
+                            {y}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+
+
+                <div className="calendar-days">
+                  <button className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+                    ‹
+                  </button>
+
+                  {visibleDays.map((day) => {
+                    const isToday =
+                      day === today.getDate() &&
+                      month === today.getMonth() &&
+                      year === today.getFullYear();
+
+                    return (
+                      <div
+                      key={day}
+                      onClick={() => handleDateSelect(day)}
+                      className={`day ${
+                        selectedDate &&
+                        selectedDate.getDate() === day &&
+                        selectedDate.getMonth() === month &&
+                        selectedDate.getFullYear() === year
+                          ? "active"
+                          : ""
+                      }`}
+                    >
+                      {day}
+                    </div>
+                    
+                    );
+                  })}
+
+                  <button
+                    className="arrow"
+                    onClick={nextDays}
+                    disabled={startIndex + 7 >= days.length}
+                  >
+                    ›
+                  </button>
+                </div>
+
+              </div>
+            </div>
             <div className="col-lg-4 col-12">
               <div className="form-group style-2">
                 <label className="label-text">I’m looking for</label>
                 <div className="input-group">
                   <div className="select-group">
-                    <select name="" id="">
-                      <option value="">Select event type</option>
-                      <option value="">Select Country</option>
-                      <option value="">Select Country</option>
-                      <option value="">Select Country</option>
+                    <select>
+                      <option>Select event type</option>
                     </select>
                     <Image src={selectDrop} alt="select" />
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="col-lg-4 col-12">
               <div className="form-group style-2">
                 <label className="label-text">For</label>
                 <div className="input-group">
                   <div className="select-group">
-                    <select name="" id="">
-                      <option value="">Select age range</option>
-                      <option value="">Select Country</option>
-                      <option value="">Select Country</option>
-                      <option value="">Select Country</option>
+                    <select>
+                      <option>Select age range</option>
                     </select>
                     <Image src={selectDrop} alt="select" />
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="col-lg-4 col-12">
               <div className="form-group style-2">
                 <label className="label-text">Attendees Count</label>
                 <div className="input-group">
                   <div className="select-group">
-                    <select name="" id="">
-                      <option value="">Select number of attendees</option>
-                      <option value="">Select Country</option>
-                      <option value="">Select Country</option>
-                      <option value="">Select Country</option>
+                    <select>
+                      <option>Select number of attendees</option>
                     </select>
                     <Image src={selectDrop} alt="select" />
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="col-12 mt-4">
               <button className="main-btn">
                 <span>Download Brochure</span>
               </button>
             </div>
+
           </div>
         </div>
       </div>

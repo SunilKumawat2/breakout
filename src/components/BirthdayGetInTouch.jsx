@@ -43,6 +43,7 @@ function validate(values) {
 
 const BirthdayGetInTouch = ({
   img,
+  className="",
   privacyLine = false,
   noTextBottom = false,
   textData,
@@ -138,7 +139,7 @@ const BirthdayGetInTouch = ({
   });
 
   return (
-    <section className={`section-padding ${img ? "pb-0" : ""}`} id="book-now">
+    <section className={`section-padding ${img ? "pb-0" : ""} ${className}`} id="book-now">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 col-12">
@@ -148,7 +149,7 @@ const BirthdayGetInTouch = ({
               </h2>
             </div>
           </div>
-          <div className="col-12 mt-4">
+          <div className="col-12">
             <div className="bday-form-card">
               <form
                 className="form-field"
@@ -385,7 +386,7 @@ const BirthdayGetInTouch = ({
           </section>
         )}
       </div>
-      {img && <Image src={img} alt="illus" className="w-100 h-auto" />}
+      {img && <Image src={img} alt="illus" className="illus-image" />}
     </section>
   );
 };

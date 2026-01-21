@@ -540,7 +540,7 @@ const handleSubItemClick = (cardTitle) => {
                     }}
                   />
                   <p
-                    className="para big"
+                    className="para big mb-40"
                     dangerouslySetInnerHTML={{
                       __html: data?.bannersection?.description,
                     }}
@@ -549,7 +549,7 @@ const handleSubItemClick = (cardTitle) => {
               </motion.div>
 
               <motion.div
-                className="row row-gap-25 mt-4"
+                className="row row-gap-25"
                 variants={staggerContainer}
                 initial="initial"
                 animate="animate"
@@ -618,16 +618,16 @@ const handleSubItemClick = (cardTitle) => {
           />
         )}
 
-        <Image src={MovieIllus} className="w-100 h-auto" alt="illus-home" />
+        <Image src={MovieIllus} className="illus-image" alt="illus-home" />
       </div>
 
       {/* ================= MIDDLE SECTION ================= */}
       <div className="black-gr-div">
-        {data?.countersection && <TrustedSection data={data?.countersection} />}
-        <LogoSec className="pb-0" />
+        {data?.countersection && <TrustedSection className="sec-padding-top pb-0" data={data?.countersection} />}
+        <LogoSec className="pb-0 pt-80" />
         <Image
           src={IllusHome}
-          className="w-100 h-auto"
+          className="illus-image"
           style={{ marginBottom: "-1px" }}
           alt="illus-home"
         />
@@ -635,8 +635,8 @@ const handleSubItemClick = (cardTitle) => {
 
       {/* ================= FOOTER SECTION ================= */}
       <div className="black-gr-div">
-        <OurLocationSec title="Choose a <span>Location</span>" />
-        {data?.faqsection && <FaqSection data={data?.faqsection} />}
+        <OurLocationSec className="sec-padding-top" title="Choose a <span>Location</span>" />
+        {data?.faqsection && <FaqSection className="section-padding pb-0" data={data?.faqsection} />}
         {data?.footersection && (
           <PartyGetInTouch data={data?.footersection} img={IllusPartyBottom} />
         )}
