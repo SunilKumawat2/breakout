@@ -126,15 +126,16 @@ const InnerPageBanner = ({ banner, bdayInner }) => {
 
     
       <CommonModal show={showTrailer} handleClose={() => setShowTrailer(false)}>
-        <div className="video-wrapper">
-          <video
-            src={banner.image}
-            controls
-            autoPlay
-            playsInline
-          />
-        </div>
-      </CommonModal>
+  <div className="video-wrapper">
+    <video
+      src={banner.image}
+      controls
+      autoPlay
+      playsInline
+    />
+  </div>
+</CommonModal>
+
 
 
     </header>
