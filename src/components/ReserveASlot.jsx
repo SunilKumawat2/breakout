@@ -309,7 +309,19 @@ const ReserveASlot = ({ room, onCheckEligibility,className = "", }) => {
                 >
                   Check eligibility Criteria
                 </span>
+               
               </p>
+              <p className="para"> Kids Pricing. <span
+                  className="yellow-text"
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    fontStyle: "italic",
+                  }}
+                  onClick={onCheckEligibility}
+                >
+                  Check here
+                </span></p>
             </div>
             <button
               className="main-btn mt-4 dark-btn sm"

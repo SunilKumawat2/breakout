@@ -39,6 +39,7 @@ export default function Home() {
   const scoreCard = HomePageData.scoreCard;
 
   const [data, setData] = useState(null);
+  console.log("Home_Home_Home", data)
   const [cards, setCards] = useState([]);
   const [brandLogos, setBrandLogos] = useState(null);
 
@@ -52,7 +53,7 @@ export default function Home() {
     const fetchData = async () => {
       const response = await api.get("/corporate-archive");
       setData(response?.data?.data);
-      console.log("sjdfkhsdkfhsdhfk",response?.data?.data)
+      console.log("sjdfkhsdkfhsdhfk", response?.data?.data)
       setCards([
         {
           title: "Unwind",
@@ -199,8 +200,8 @@ export default function Home() {
         {data?.bannersection?.content && (
           <HmTextSec home={true} text={data?.bannersection?.content} />
         )}
-        {data?.bannersection?.note && (
-          <div className="container">
+        {/* {data?.bannersection?.note && (
+          <div className="container pb-5">
             <div className="row justify-content-center">
               <div className="col-lg-12 col-12">
                 <div className="cus-card">
@@ -214,9 +215,31 @@ export default function Home() {
               </div>
             </div>
           </div>
+        )} */}
+        {data?.bannersection?.note && (
+          <div className="container pb-5">
+            <div className="row justify-content-center">
+              <div className="col-lg-12 col-12">
+                <div className="cus-card mt-5 py-3 px-3">
+                  <p
+                    className="para mb-0"
+                    style={{ fontStyle: "italic" }}
+                    dangerouslySetInnerHTML={{
+                      __html: data?.bannersection?.note.replace(
+                        /<a /g,
+                        '<a target="_blank" rel="noopener noreferrer" '
+                      ),
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
-        <Image src={MovieIllus} className="illus-image" alt="illus-home" />
+
+
+        <Image src={MovieIllus} className="w-100 h-auto " alt="illus-home" />
       </div>
       <div className="black-gr-div">
         {data?.countersection && <TrustedSection className="sec-padding-top pb-0" data={data?.countersection} />}
@@ -233,8 +256,8 @@ export default function Home() {
         />
       </div>
       <div className="black-gr-div">
-        <OurLocationSec className="sec-padding-top" title="Choose a <span>Location</span>" />
-        {data?.faqsection && <FaqSection className="section-padding pb-0" data={data?.faqsection} />}
+        <OurLocationSec title="Choose a <span>Location</span>" /><br/>
+        {data?.faqsection && <FaqSection data={data?.faqsection} />}
         {data?.footersection && (
           <BirthdayGetInTouch
           className="p"

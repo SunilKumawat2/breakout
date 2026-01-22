@@ -17,13 +17,22 @@ const EscapeRoomCard = ({ room, hasVirtual = false }) => {
     <div
       className="esc-card"
       style={{ cursor: "pointer" }}
-      onClick={() =>
+      // onClick={() =>
+      //   router.push(
+      //     `/${hasVirtual ? "virtual-game" : "escape-rooms"}/${
+      //       room?.slug || "murder-mystery"
+      //     }`
+      //   )
+      // }
+      onClick={() => {
+        sessionStorage.setItem("scrollToEscapeRooms", "true");
+        sessionStorage.setItem("scrollToEscapeRooms_ultra", "true");
         router.push(
           `/${hasVirtual ? "virtual-game" : "escape-rooms"}/${
             room?.slug || "murder-mystery"
           }`
-        )
-      }
+        );
+      }}
     >
       <div className="esc-card-img">
         {room?.bannersection?.image && (

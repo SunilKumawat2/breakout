@@ -1,8 +1,15 @@
-import React from "react";
+"use client";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import locIcon from "@/images/loc-icon.svg";
+import { CommonModal } from "./CommonModal";
+
 const InnerPageBanner = ({ banner, bdayInner }) => {
+  const [showTrailer, setShowTrailer] = useState(false);
+  const [videoUrl, setVideoUrl] = useState("");
+  const trailerBtnRef = useRef(null);
+
   const renderImageOrVideo = (image) => {
     if (typeof image === "string" && image) {
       if (
@@ -71,34 +78,65 @@ const InnerPageBanner = ({ banner, bdayInner }) => {
                 />
               )}
               <div className="btn-group">
-                {banner.btns?.map((btn, index) => (
-                  <div className="btn-group-item" key={index}>
-                    <Link
-                      href={btn.link}
-                      className={`main-btn ${
-                        (index + 1) % 2 === 0 && "dark-btn yellow-text"
-                      }`}
-                      key={index}
-                    >
-                      <span>{btn.title}</span>
-                    </Link>
-                    {/* {btn.enc && (
-                      <div className="btn-group-item-enc">{btn.enc}</div>
-                    )} */}
-                  </div>
-                ))}
+                {banner?.btns?.map((btn, index) => {
+                  const isWatchTrailer = btn.title === "Watch Trailer";
+
+                  return (
+                    <div className="btn-group-item" key={index}>
+                      {isWatchTrailer ? (
+                        <button
+                          ref={trailerBtnRef}
+                          type="button"
+                          className={`main-btn ${(index + 1) % 2 === 0 && "dark-btn yellow-text"
+                            }`}
+                          onClick={() => {
+                            setVideoUrl(btn.link);
+                            setShowTrailer((prev) => !prev);
+                          }}
+                        >
+                          <span>{btn.title}</span>
+                        </button>
+                      ) : (
+                        <Link
+                          href={btn.link}
+                          className={`main-btn ${(index + 1) % 2 === 0 && "dark-btn yellow-text"
+                            }`}
+                        >
+                          <span>{btn.title}</span>
+                        </Link>
+                      )}
+                    </div>
+                  );
+                })}
+
               </div>
-                {banner.btns?.map((btn, index) => (
-                  <div key={index}>
-                    {btn.enc && (
-                      <div className="btn-group-item-enc">{btn.enc}</div>
-                    )}
-                  </div>
-                ))}
+
+
+              {banner.btns?.map((btn, index) => (
+                <div key={index}>
+                  {btn.enc && (
+                    <div className="btn-group-item-enc">{btn.enc}</div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
+
+    
+      <CommonModal show={showTrailer} handleClose={() => setShowTrailer(false)}>
+        <div className="video-wrapper">
+          <video
+            src={banner.image}
+            controls
+            autoPlay
+            playsInline
+          />
+        </div>
+      </CommonModal>
+
+
     </header>
   );
 };

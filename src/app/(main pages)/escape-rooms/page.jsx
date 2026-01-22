@@ -66,9 +66,28 @@ const page = () => {
     },
   ];
 
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  },[])
+  useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
+  
+    if (shouldScroll === "true" && escapeRooms?.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("escape-rooms-section");
+  
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+  
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("scrollToEscapeRooms");
+      }, 500);
+    }
+  }, [escapeRooms]);
+  
+  
 
   return (
     <>
@@ -148,7 +167,7 @@ const page = () => {
       </div>
       <div className="black-gr-div">
         <VisitLocations className="sec-padding-top"/>
-        <section className="section-padding esc-sec pb-0">
+        <section className="section-padding esc-sec pb-0" id="escape-rooms-section">
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center">

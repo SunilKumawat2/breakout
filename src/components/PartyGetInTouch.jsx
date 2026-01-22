@@ -112,7 +112,7 @@ const PartyGetInTouch = ({
       date: null,
       iWantTo: null,
       at: null,
-      forCount: null,
+      // forCount: null,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
@@ -122,7 +122,7 @@ const PartyGetInTouch = ({
       date: Yup.date().required("Please select a date").nullable(false),
       iWantTo: Yup.object().nullable().required("Please select an option"),
       at: Yup.object().nullable().required("Please select a location"),
-      forCount: Yup.object().nullable().required("Please select a group size"),
+      forCount: Yup.object().nullable(),
     }),
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
@@ -134,7 +134,7 @@ const PartyGetInTouch = ({
           date: values.date ? values.date.toISOString().split("T")[0] : "",
           iWantTo: values.iWantTo.value,
           at: values.at.value,
-          forCount: values.forCount.value,
+          forCount: values.forCount ? values.forCount.value : null,
           page: page,
         };
         await axios.post("/api/contactFormClickup", JSON.stringify(sendData));
@@ -342,11 +342,11 @@ const PartyGetInTouch = ({
                             }
                           />
                         </div>
-                        {formik.touched.forCount && formik.errors.forCount && (
+                        {/* {formik.touched.forCount && formik.errors.forCount && (
                           <div className="invalid-feedback d-block">
                             {formik.errors.forCount}
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
 

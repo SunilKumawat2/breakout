@@ -55,6 +55,8 @@ const page = () => {
       image: loc3,
     },
   ];
+
+
   return (
     <>
       <div className="black-gr-div">
@@ -88,7 +90,7 @@ const page = () => {
       {room?.faqsection && <FaqSection data={room?.faqsection} />}
       {/* <FaqSection /> */}
       <div className="black-gr-div">
-        <section className="section-padding esc-section">
+        <section className="section-padding esc-section" id="escape-rooms-section">
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center col-12">

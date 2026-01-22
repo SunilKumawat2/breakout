@@ -45,8 +45,8 @@ const Banner = ({ room, corporate = false }) => {
             className="para mt-4"
             dangerouslySetInnerHTML={{ __html: popupDescription || "" }}
           ></p>
-          <Link href={"#book-now"} className="main-btn">
-            <span>Book Now</span>
+          <Link onClick={() => setShow(false)} href="" className="main-btn">
+            <span >Book Now</span>
           </Link>
         </div>
       </CommonModal>

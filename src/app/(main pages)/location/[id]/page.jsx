@@ -78,7 +78,7 @@ const page = () => {
   const { id } = useParams();
 
   const [location, setLocation] = useState(null);
-
+  console.log("setLocation_setLocation", location)
   useEffect(() => {
     const fetchLocation = async () => {
       const res = await api.get(`/escaperoom-location/${id}`);
@@ -109,9 +109,72 @@ const page = () => {
     fetchLocation();
   }, [id]);
 
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
+  // }, [])
+
+
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
+    const shouldScroll_Ultra = sessionStorage.getItem("scrollToEscapeRooms_ultra");
+    console.log("sjkdfhjksdhfshf_shouldScroll", shouldScroll)
+    console.log("sjkdfhjksdhfshf_shouldScroll_123", shouldScroll_Ultra)
+    if (shouldScroll === "true" && location?.escaperooms?.extreme?.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("escape-rooms");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("scrollToEscapeRooms");
+      }, 500);
+    }
+    else if (shouldScroll_Ultra === "true" && location?.escaperooms?.extreme?.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("escape-rooms-ultra");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("scrollToEscapeRooms_ultra");
+      }, 500);
+    }
+  }, [location]);
+
+
+  useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("location_know_more");
+  
+    if (shouldScroll === "true" && location?.imagecardssection?.card?.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("loction-know-more-section");
+  
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+  
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("location_know_more");
+      }, 500);
+    }
+  }, [location]);
+
 
   return (
     <>
@@ -124,7 +187,7 @@ const page = () => {
           <HmTextlocationkoramangala text={location?.textsection?.description} />
         )}
         {location && location?.escaperooms?.extreme?.length > 0 && (
-          <section className="esc-sec">
+          <section className="esc-sec" id="escape-rooms">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -147,7 +210,7 @@ const page = () => {
 
         {location && location?.escaperooms?.ultra?.length > 0 && (
           <>
-            <section id="escape-rooms" className="section-padding esc-sec pb-0">
+            <section id="escape-rooms-ultra" className="section-padding esc-sec pb-0">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 text-center">
@@ -174,10 +237,10 @@ const page = () => {
       <div className="black-gr-div">
         <div className="sec-padding-top">
           {location && location?.googlereviews && (
-          <GReviewSlider commonStars={false} data={location?.googlereviews} />
-        )}
+            <GReviewSlider commonStars={false} data={location?.googlereviews} />
+          )}
         </div>
-        
+
         {/* <section className="section-padding namecard-sec">
           <div className="container">
             <div className="row row-gap-25">
@@ -213,7 +276,7 @@ const page = () => {
                 <div className="col-12">
                   <div className="overlay-box">
                     <div className="overlay-box-row">
-                      {location?.imagecardssection?.card?.map((item, index) => (
+                      {/* {location?.imagecardssection?.card?.map((item, index) => (
                         <div className="col-overlay-box" key={index}>
                           <div className="overlay-box-item">
                             <div className="ovr-img">
@@ -227,11 +290,6 @@ const page = () => {
                                 />
                               )}
                             </div>
-                            {/* <Image
-                              src={fdImg1}
-                              alt="fd-img1"
-                              className="w-100 h-auto"
-                            /> */}
                             <h3
                               className="sec-head h3"
                               dangerouslySetInnerHTML={{
@@ -245,11 +303,50 @@ const page = () => {
                               }}
                             />
                             <Link href={item?.cta_link} className="link-btn">
+                              <span onClick={()=>sessionStorage.setItem("location_know_more",true)}>{item?.cta_label}</span>
+                            </Link>
+                          </div>
+                        </div>
+                      ))} */}
+                      {location?.imagecardssection?.card?.map((item, index) => (
+                        <div className="col-overlay-box" id="loction-know-more-section" key={index}>
+                          <div className="overlay-box-item">
+                            <div className="ovr-img">
+                              {item?.image && (
+                                <Image
+                                  src={item?.image}
+                                  alt="fd-img1"
+                                  className="w-100 h-auto"
+                                  width={1000}
+                                  height={1000}
+                                />
+                              )}
+                            </div>
+
+                            <h3
+                              className="sec-head h3"
+                              dangerouslySetInnerHTML={{ __html: item?.heading }}
+                            />
+
+                            <p
+                              className="para"
+                              dangerouslySetInnerHTML={{ __html: item?.description }}
+                            />
+
+                            <Link
+                              href={item?.cta_link}
+                              // href={"/parties"}
+                              className="link-btn"
+                              onClick={() =>
+                                sessionStorage.setItem("location_know_more", "true")
+                              }
+                            >
                               <span>{item?.cta_label}</span>
                             </Link>
                           </div>
                         </div>
                       ))}
+
                     </div>
                   </div>
                 </div>
@@ -292,7 +389,7 @@ const page = () => {
         )}
         {/* <FaqSection title="FAQs for <span>Your Adventure</span>" /> */}
         <BlogSlider className="pb-0" title="Read <span>Blogs</span>" />
-        <HomeContact />
+        <HomeContact textData={location?.footersection} />
       </div>
     </>
   );
