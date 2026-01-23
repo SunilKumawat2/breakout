@@ -31,7 +31,7 @@ function splitHeadingTemplate(template) {
 }
 
 // React component for animated heading, renders <h3>
-function WordByWordAnimation({ headingTemplate, className = "sec-head" }) {
+function WordByWordAnimation({ headingTemplate,className="" }) {
   const phrasesList = extractPhrasesFromHeading(headingTemplate);
   const animatedPhrases = phrasesList.length > 0 ? phrasesList : [];
 
@@ -59,7 +59,7 @@ function WordByWordAnimation({ headingTemplate, className = "sec-head" }) {
   if (!animatedPhrases.length) {
     return (
       <h3
-        className={className}
+        className={`${className}`}
         dangerouslySetInnerHTML={{ __html: headingTemplate || "" }}
       />
     );
@@ -68,7 +68,7 @@ function WordByWordAnimation({ headingTemplate, className = "sec-head" }) {
   // Otherwise, render animated <span> in place of <span>
   return (
     <h3
-      className={className}
+      className={`${className}`}
       style={{ position: "relative", display: "inline-block" }}
     >
       {/* Render before text/HTML */}

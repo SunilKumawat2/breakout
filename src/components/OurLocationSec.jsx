@@ -9,7 +9,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import api from "@/helpers/api";
 import LocBefore from "@/images/loc-before.svg";
 
-const OurLocationSec = ({ title, slug = false, locationTitle = "", className = "", }) => {
+const OurLocationSec = ({ title, slug = "", locationTitle = "", className = "", }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [locationOptions, setLocationOptions] = useState([]);
   const [locationData, setLocationData] = useState(slug || null);
@@ -22,14 +22,12 @@ const OurLocationSec = ({ title, slug = false, locationTitle = "", className = "
           label: item?.title,
         }))
       );
-      setSelectedLocation(slug || escaperoomLocations[0]?.slug);
+      setSelectedLocation(slug);
       console.log("locationOptions", escaperoomLocations);
     }
   }, [escaperoomLocations, slug]);
 
   useEffect(() => {
-    // const slugToFetch = slug || selectedLocation;
-    console.log("selectedLocation", selectedLocation);
     if (selectedLocation) {
       const fetchLocation = async () => {
         const res = await api.get(`/escaperoom-location/${selectedLocation}`);
@@ -46,7 +44,7 @@ const OurLocationSec = ({ title, slug = false, locationTitle = "", className = "
       ...base,
       background: "rgba(243, 244, 244, 0.1)",
       borderColor: state.isFocused ? "#FFAE00" : "rgba(255, 174, 0, 0.15)",
-      borderRadius: "20px",
+      borderRadius: "30px",
       padding: "8px",
       color: "#FFFFFF",
       cursor: "pointer",
@@ -91,7 +89,7 @@ const OurLocationSec = ({ title, slug = false, locationTitle = "", className = "
               dangerouslySetInnerHTML={{ __html: title }}
             ></h3>
           </div>
-          {!slug && (
+          {locationOptions.length > 0 && (
             <div className="col-lg-4 col-12">
               <div className="loc-selector">
                 <Select

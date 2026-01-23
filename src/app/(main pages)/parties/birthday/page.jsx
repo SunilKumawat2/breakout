@@ -72,6 +72,7 @@ import api from "@/app/helpers/api";
 import GReviewSlider from "@/components/GReviewSlider";
 import PhotographicStyledImage from "@/components/PhotographicStyledImage";
 import PartyGetInTouch from "@/components/PartyGetInTouch";
+import { sendError } from "next/dist/server/api-utils";
 
 const page = () => {
   const hmText =
@@ -146,6 +147,7 @@ const page = () => {
   ];
 
   const [data, setData] = useState(null);
+  console.log("fdhfdashdafhd",data)
   const [birthdayList, setBirthdayList] = useState(null);
 
   useEffect(() => {
@@ -160,6 +162,27 @@ const page = () => {
     fetchBirthdayList();
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("Its_a_brithday_of_my");
+  
+    if (shouldScroll === "true" && birthdayList?.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("Its-a-brithday-of-my-section");
+  
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+  
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("Its_a_brithday_of_my");
+      }, 500);
+    }
+  }, [birthdayList]);
   return (
     <>
       {data?.bannersection && (
@@ -213,7 +236,7 @@ const page = () => {
         <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
       </div>
 
-      <section className="pt-80 bday-sec">
+      <section className="pt-80 bday-sec" id="Its-a-brithday-of-my-section">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">
@@ -222,10 +245,10 @@ const page = () => {
               </h3>
             </div>
           </div>
-          <div className="row row-gap-25">
+          <div className="row row-gap-25" >
             {birthdayList?.length > 0 &&
               birthdayList?.map((bd, index) => (
-                <div className="col-lg-4 col-12" key={index}>
+                <div className="col-lg-4 col-12"  onClick={()=>sessionStorage.setItem("Its_a_brithday_of_my",true)} key={index}>
                   <Link
                     href={`/parties/birthday/${bd.slug}`}
                     className="location-card"

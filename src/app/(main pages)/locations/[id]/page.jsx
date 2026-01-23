@@ -76,7 +76,7 @@ const page = () => {
   ];
 
   const { id } = useParams();
-
+console.log("sdmfhsdkfhskdjhfkskd",id)
   const [location, setLocation] = useState(null);
   console.log("setLocation_setLocation", location)
   useEffect(() => {
@@ -156,19 +156,19 @@ const page = () => {
 
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("location_know_more");
-  
+
     if (shouldScroll === "true" && location?.imagecardssection?.card?.length > 0) {
       // wait for DOM paint
       setTimeout(() => {
         const section = document.getElementById("loction-know-more-section");
-  
+
         if (section) {
           section.scrollIntoView({
             behavior: "auto", // use "smooth" if you want animation
             block: "start",
           });
         }
-  
+
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("location_know_more");
       }, 500);
@@ -359,12 +359,15 @@ const page = () => {
 
       <div className="black-gr-div">
 
-        <OurLocationSec
+        {/* <OurLocationSec
           className="sec-padding-top"
           title={`About Our Breakout®  <span>${location?.title} Location</span>`}
           slug={location?.slug}
           locationTitle={location?.title}
-        // slug={location?.locationdetails}
+        /> */}
+        <OurLocationSec
+          title={`About Our Breakout®  <span>${location?.title} Location</span>`}
+         slug={id}
         />
         <div className="col-lg-12 col-12 pt-80">
           {location && location?.googlereviews && (

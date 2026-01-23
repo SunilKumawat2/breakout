@@ -316,11 +316,11 @@ const BirthdayGetInTouch = ({
                   <div className="col-lg-12 col-12">
                     <div className="">
                       <button
-                        className="main-btn dark-btn"
+                        className="main-btn"
                         type="submit"
                         disabled={formik.isSubmitting}
                       >
-                        <span className="yellow-text">
+                        <span className="">
                           {formik.isSubmitting
                             ? "Booking…"
                             : submitStatus === "success"

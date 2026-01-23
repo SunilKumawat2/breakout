@@ -74,6 +74,7 @@ import { useRouter, usePathname } from "next/navigation";
 const page = () => {
   const { id } = useParams();
   const [party, setParty] = useState(null);
+  console.log("setParty_setParty",party)
   const router = useRouter();
   const pathname = usePathname();
   useEffect(() => {

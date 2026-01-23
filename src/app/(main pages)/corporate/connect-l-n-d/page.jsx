@@ -178,6 +178,7 @@ const page = () => {
         <InnerPageBanner banner={corporate?.bannersection} bdayInner={true} />
       )}
       <LogoSec
+      className="pt-80"
         title="Brands that <span>loved M.A.G.I.C</span>"
         logos={brandLogos}
         link={false}
@@ -210,7 +211,7 @@ const page = () => {
       </section>
 
       <div className="black-gr-div">
-        {corporate && corporate?.contentsection && (
+        {/* {corporate && corporate?.contentsection && (
           <section className="section-padding pb-0">
             <div className="container">
               <div className="row">
@@ -225,19 +226,19 @@ const page = () => {
               </div>
             </div>
           </section>
-        )}
+        )} */}
 
         {corporate &&
           corporate?.googlereviews &&
           corporate?.googlereviews?.length > 0 && (
-            <GReviewSlider
+            <GReviewSlider className="section-padding pb-0"
               commonStars={false}
               data={corporate?.googlereviews}
             />
           )}
 
         {corporate && corporate?.countersection && (
-          <TrustedSection data={corporate?.countersection} />
+          <TrustedSection className="pb-0" data={corporate?.countersection} />
         )}
 
         {/* 
@@ -255,12 +256,12 @@ const page = () => {
 
         {/* <PartyExpertCon /> */}
 
-        <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
+        <Image src={bdayIllus} className={"illus-image"} alt="bday" />
       </div>
 
       <div className="black-gr-div">
         {innerList && innerList?.length > 0 && (
-          <section className="section-padding bday-sec">
+          <section className="sec-padding-top bday-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -273,7 +274,7 @@ const page = () => {
                   />
                 </div>
               </div>
-              <div className="row mt-5 row-gap-25">
+              <div className="row row-gap-25">
                 {/* {JSON.stringify(innerList)} */}
                 {innerList &&
                   innerList?.length > 0 &&
@@ -305,15 +306,15 @@ const page = () => {
         )}
         {corporate && corporate?.slidersection && (
           
-          <AddOnsSlider data={corporate?.slidersection} />
+          <AddOnsSlider className="pb-0 section-padding" data={corporate?.slidersection} />
         )}
         <PartyExpertCon title="<span>Add MAGIC</span> to your workplace" />
 
-        <Image src={corpIllus} alt="illus3" className="illus-3 w-100 h-auto" />
+        <Image src={corpIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
         {corporate?.keyresourcessection && (
-          <section className="section-padding">
+          <section className="sec-padding-top">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -366,7 +367,7 @@ const page = () => {
 
         {corporate && corporate?.imagesection && (
           <>
-            <section className="section-padding">
+            <section className="section-padding pb-0">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 text-center">
@@ -407,7 +408,7 @@ const page = () => {
           corporate?.videotestimonials?.length > 0 && (
             <Videotestimonials data={corporate?.videotestimonials} />
           )}
-        <OurLocationSec title="Our <span>Locations</span>" />
+        <OurLocationSec className="section-padding" title="Our <span>Locations</span>" />
         <FaqSection data={corporate?.faqsection} />
         <div id="get-in-touch">
           <ConnectContact
@@ -417,10 +418,10 @@ const page = () => {
           />
         </div>
 
-        <BlogSlider />
-        <LogoSec title="In The <span>News</span>" />
+        <BlogSlider className="pb-0"/>
+        <LogoSec className="pb-0 pt-80" title="In The <span>News</span>" />
         {corporate && corporate?.footersection && (
-          <section className="section-padding">
+          <section className="section-padding pb-0">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -441,7 +442,7 @@ const page = () => {
             </div>
           </section>
         )}
-        <Image src={peopleIllus} className={"w-100 h-auto mt-5"} alt="bday" />
+        <Image src={peopleIllus} className={"illus-image"} alt="bday" />
       </div>
     </>
   );

@@ -11,7 +11,7 @@ import videoPoster from "@/images/video-poster.jpg";
 import playBtn from "@/images/play-btn.svg";
 import pauseBtn from "@/images/pause-btn.svg";
 
-const Videotestimonials = ({ data,className = "", }) => {
+const Videotestimonials = ({ data, className = "", }) => {
   const videoRef = useRef([]);
   const swiperRef = useRef(null); // Swiper instance ref
   const [playingVideo, setPlayingVideo] = useState(null);
@@ -114,18 +114,18 @@ const Videotestimonials = ({ data,className = "", }) => {
             </h2>
           </div>
         </div>
-      
-      <div className="row">
+      </div>
+      <div className="row mx-0">
         <div className="col-lg-12">
           <div className="blog-slider video-slider">
             <Swiper
-              modules={[Pagination]}
-              pagination={{ clickable: true }}
+              // modules={[Pagination]}
+              // pagination={{ clickable: true }}
               centeredSlides={true}
               slidesPerView={1}
               spaceBetween={0}
               initialSlide={4}
-              slideToClickedSlide={true}  
+              slideToClickedSlide={true}
               loop={data1?.length >= 4}
               breakpoints={{
                 0: { slidesPerView: 1.2 },
@@ -188,7 +188,7 @@ const Videotestimonials = ({ data,className = "", }) => {
           </div>
         </div>
       </div>
-      </div>
+
     </section>
   );
 };

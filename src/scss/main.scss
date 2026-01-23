@@ -374,6 +374,7 @@ a {
     display: flex;
     align-items: center;
     gap: 12px;
+    width: 50%;
 
     li {
 
@@ -388,7 +389,7 @@ a {
     display: flex;
     align-items: center;
     // justify-content: space-between;
-    gap: 15px;
+    gap: 24px;
 
     ul {
         padding-left: 0 !important;
@@ -1708,7 +1709,7 @@ a {
 
 .video-test-card {
     // border: $border;
-    padding: 1.5em;
+    // padding: 1.5em;
     border-radius: 20px;
     position: relative;
 
@@ -1718,7 +1719,7 @@ a {
         inset: 0;
         z-index: 0;
         border-radius: 20px;
-        padding: 1px;
+        padding: 1px 2px 1px 1px;
         /* border thickness */
         background: radial-gradient(70% 70% at 100% 100%, rgba($color: #FFAE00, $alpha: 0.85), rgba($color: #fff, $alpha: 0.1));
         -webkit-mask:
@@ -1757,7 +1758,10 @@ a {
 .video-test-content {
     position: absolute;
     bottom: 1.5em;
-    width: calc(100% - 3em);
+    // width: calc(100% - 3em);
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     z-index: 2;
@@ -1792,9 +1796,8 @@ a {
 
 .package-header,
 .package-row {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr 1fr 1fr;
-    gap: 15px;
+    display: flex;
+    gap: 32px;
 }
 
 .package-header {
@@ -2622,7 +2625,7 @@ a {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    margin-top: 40px;
+    margin: 40px 0;
     // margin-bottom: 2em;
 
     >* {
@@ -3564,6 +3567,14 @@ textarea:hover {
     padding-right: 20px;
 }
 
+@media(max-width:1220px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+        max-width: 100% !important;
+    }
+}
+
 .mob-trust-ratings {
     display: none;
 }
@@ -3638,7 +3649,37 @@ textarea:hover {
     margin-bottom: 24px;
 }
 
+.video-slider .swiper-slide.swiper-slide-active .video-test-card {
+    padding: 20px;
+}
+
+.package-row-cell,
+.package-header-cell {
+    width: 100%;
+}
+
+.why-card img {
+    height: 125px;
+}
+
+.video-slider .swiper-slide.swiper-slide-active .video-test-content {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    width: auto;
+}
+
+.loc-selector .css-1u9des2-indicatorSeparator {
+	display: none;
+}
+.corp-retreat .col-head{
+    display: flex;
+    flex-direction: column-reverse;
+
+}
 // new css start 
+
+// Sunil's CSS start
 .video-wrapper {
     width: 100%;
     max-width: 900px;          /* modal ke liye safe width */
@@ -3656,4 +3697,3 @@ textarea:hover {
     object-fit: contain;       /* 🔥 NO CUTTING */
     border-radius: 8px;
   }
-  
