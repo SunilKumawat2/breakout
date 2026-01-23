@@ -21,7 +21,7 @@ const defaultLookingForOptions = [
   { value: "Escape Rooms", label: "Escape Rooms" },
   { value: "Farewells", label: "Farewells" },
   { value: "Bachelor(ette)", label: "Bachelor(ette)" },
-  { value: "Things to do", label: "Things to do" },
+  { value: "Virtual", label: "Virtual" },
   { value: "Others", label: "Others" },
 ];
 const HomeContact = ({

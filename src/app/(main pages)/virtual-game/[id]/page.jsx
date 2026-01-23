@@ -57,8 +57,8 @@ const page = () => {
   useEffect(() => {
     setBreadcrumbs([
       { label: "Home", link: "/" },
-      { label: "Virtual Games", link: "/virtual" },
-      { label: room?.title, link: `/virtual/${id}` },
+      { label: "Virtual Games", link: "/virtual-game" },
+      { label: room?.title, link: `/virtual-game/${id}` },
     ]);
   }, [room]);
 

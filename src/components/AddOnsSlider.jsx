@@ -19,7 +19,7 @@ import swiperNext from "@/images/swiper-next.svg";
 import Link from "next/link";
 import api from "@/app/helpers/api";
 
-const AddOnsSlider = ({ data,className="" }) => {
+const AddOnsSlider = ({ data }) => {
   const [activities, setActivities] = useState(null);
   const addOns = [
     {
@@ -57,7 +57,7 @@ const AddOnsSlider = ({ data,className="" }) => {
     fetchActivities();
   },[])
   return (
-    <section className={`blog-slider-sec ${className}`}>
+    <section className="blog-slider-sec section-padding">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
@@ -67,7 +67,7 @@ const AddOnsSlider = ({ data,className="" }) => {
             />
             {data?.description && (
               <p
-                className="para medium-20"
+                className="para medium-20 mt-3"
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
             )}

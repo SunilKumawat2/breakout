@@ -33,7 +33,7 @@ const validate = (values) => {
   return errors;
 };
 
-const BirthdayGetInTouch = ({ img,className="" }) => {
+const BirthdayGetInTouch = ({ img }) => {
   const [submitStatus, setSubmitStatus] = useState(null);
   const page = usePathname();
 
@@ -139,7 +139,7 @@ const BirthdayGetInTouch = ({ img,className="" }) => {
   });
 
   return (
-    <section className={`${img ? "pb-0" : ""} ${className}`}>
+    <section className={`section-padding ${img ? "pb-0" : ""}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 col-12">
@@ -149,9 +149,9 @@ const BirthdayGetInTouch = ({ img,className="" }) => {
               </h2>
             </div>
           </div>
-          <div className="col-12">
+          <div className="col-12 mt-4">
             <div className="bday-form-card style-2">
-              <div className="row row-gap-25 mb-40">
+              <div className="row row-gap-25 mb-4">
                 <div className="col-lg-6 col-12">
                   <p className="para">
                     Created for building successful relationship, Business
@@ -166,7 +166,7 @@ const BirthdayGetInTouch = ({ img,className="" }) => {
                   </p>
                 </div>
               </div>
-              <div className="row row-gap-25 mb-3">
+              <div className="row row-gap-25 mb-5">
                 {data.map((item, index) => (
                   <div className="col-lg-4 col-md-6 col-12" key={index}>
                     <div className="bx-card-wrap">

@@ -85,7 +85,7 @@ const ConnectContact = ({
             </h2>
           </div>
         </div>
-        <div className="row">
+        <div className="row mt-5">
           <div className="col-lg-12">
             <div className="hm-con-form-card">
               <form onSubmit={formik.handleSubmit} autoComplete="off">

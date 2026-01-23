@@ -280,14 +280,14 @@ export default function Home() {
                           <li key={index}
                             onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
                             }>
-                            <Link href={`/locations/${link.slug}`}>
+                            <Link href={`/location/${link.slug}`}>
                               <span>{link.title}</span>
                               <Image src={whArrow} alt={link.title} />
                             </Link>
                           </li>
                         ))}
                       <li>
-                        <Link href={`/virtual`}>
+                        <Link href={`/virtual-game`}>
                           <span>Virtual Rooms</span>
                           <Image src={whArrow} alt={"Virtual Rooms"} />
                         </Link>
@@ -424,10 +424,9 @@ export default function Home() {
         />
       </div>
       <div className="black-gr-div">
-        <VisitLocations />
+        {/* <VisitLocations /> */}
         <div className="home-faq">
-          {data && data?.faqsection && 
-          <FaqSection className="sec-padding-top" data={data?.faqsection} />}
+          {data && data?.faqsection && <FaqSection className="sec-padding-top" data={data?.faqsection} />}
         </div>
         <section className="looking-sec section-padding d-none">
           <div className="container">

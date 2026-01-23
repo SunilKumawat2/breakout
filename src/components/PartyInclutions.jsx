@@ -1,14 +1,10 @@
 "use client";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
-import "swiper/css/navigation";
+import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import PartyCard from "./PartyCard";
-import swiperPrev from "@/images/swiper-prev.svg";
-import swiperNext from "@/images/swiper-next.svg";
-import Image from "next/image";
 
 const PartyInclutions = ({ data }) => {
   return (
@@ -17,19 +13,14 @@ const PartyInclutions = ({ data }) => {
         <div className="col-lg-12">
           <div className="blog-slider">
             <Swiper
-              modules={[Pagination, Navigation]}
+              modules={[Pagination]}
               pagination={{
                 clickable: true,
-              }}
-              navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
               }}
               centeredSlides={true}
               slidesPerView={1}
               spaceBetween={20}
-              // initialSlide={4}
-              loop={true}
+              initialSlide={4}
               breakpoints={{
                 0: {
                   slidesPerView: 1.5,
@@ -53,13 +44,6 @@ const PartyInclutions = ({ data }) => {
                   </SwiperSlide>
                 ))}
             </Swiper>
-            <div className="swiper-button-prev custom-prev">
-              <Image src={swiperPrev} alt="Previous" />
-            </div>
-
-            <div className="swiper-button-next custom-next">
-              <Image src={swiperNext} alt="Next" />
-            </div>
           </div>
         </div>
       </div>

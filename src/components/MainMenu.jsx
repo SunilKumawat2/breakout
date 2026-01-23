@@ -165,11 +165,11 @@ const MainMenu = ({ closeMenu }) => {
               subItems: [
                 ...escaperoomLocations.map((loc) => ({
                   title: loc.title,
-                  link: `/locations/${loc.slug}`,
+                  link: `/location/${loc.slug}`,
                 })),
                 {
                   title: "Virtual Rooms",
-                  link: "/virtual",
+                  link: "/virtual-game",
                 },
               ],
             };

@@ -49,7 +49,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
       <section className={`loc-section ${className}`}>
       <div className="container">
         <div className="row">
-          <div className="col-lg-12 text-center col-head">
+          <div className="col-lg-12 text-center col-12">
             <h2
               className="sec-head sm-head medium"
               dangerouslySetInnerHTML={{
@@ -58,7 +58,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
             />
             {desc && (
               <p
-                className="para medium-20 mb-4"
+                className="para medium-20 mt-3"
                 dangerouslySetInnerHTML={{ __html: desc }}
               />
             )}

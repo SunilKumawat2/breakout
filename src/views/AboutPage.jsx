@@ -94,7 +94,6 @@ import abImg3 from "@/images/gal3.png";
 
 const AboutPage = () => {
   const [corporate, setCorporate] = useState(null);
-  console.log("sldfjsdfhskdhfksdkf",corporate)
   const [brandLogos, setBrandLogos] = useState(null);
   const [collapse, setCollapse] = useState("desktop");
   const { escaperoomLocations, loading, errors } = useGlobalContext();
@@ -210,7 +209,7 @@ const AboutPage = () => {
           <div className="container">
             <div className="row align-items-center">
               <div className="col-lg-6 col-12">
-                {/* <div className="vis-img">
+                <div className="vis-img">
                   {corporate?.visionsection?.image && (
                     <Image
                       src={corporate?.visionsection?.image}
@@ -219,17 +218,8 @@ const AboutPage = () => {
                       height={500}
                       className="w-100 h-auto"
                     />
-                   
                   )}
-                </div> */}
-                 <div className="video-wrapper">
-                    <video
-                      src={corporate?.visionsection?.image}
-                      controls
-                      autoPlay
-                      playsInline
-                    />
-                  </div>
+                </div>
               </div>
               <div className="col-lg-6 col-12">
                 <div className="vis-con">
@@ -501,14 +491,14 @@ const AboutPage = () => {
                       {escaperoomLocations &&
                         escaperoomLocations?.map((link, index) => (
                           <li key={index}>
-                            <Link href={`/locations/${link.slug}`}>
+                            <Link href={`/location/${link.slug}`}>
                               <span>{link.title}</span>
                               <Image src={whArrow} alt={link.title} />
                             </Link>
                           </li>
                         ))}
                       <li>
-                        <Link href={`/virtual`}>
+                        <Link href={`/virtual-game`}>
                           <span>Virtual Rooms</span>
                           <Image src={whArrow} alt={"Virtual Rooms"} />
                         </Link>

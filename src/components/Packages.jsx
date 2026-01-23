@@ -120,7 +120,9 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
             <div className="package-container">
               {packages?.pricing?.columns?.length > 0 && (
                 <div
-                  className={`package-header mt-0`}>
+                  className={`package-header mt-0`}
+                  style={{ gridTemplateColumns: gridCol }}
+                >
                   <div className="package-header-cell">
                     {hasEventImg ? (
                       <Image src={keyImg} width={80} height={80} alt={"key"} />

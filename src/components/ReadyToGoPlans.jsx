@@ -71,15 +71,15 @@ const ReadyToGoPlans = ({ data,className="" }) => {
               <Swiper
                 modules={[Pagination, Navigation]}
                 pagination={{ clickable: true }}
-                watchOverflow={true}
+                watchOverflow={false}
                 loop={true}
-                // allowSlideNext={true}
-                // allowSlidePrev={true}
+                allowSlideNext={true}
+                allowSlidePrev={true}
                 navigation={{
                   nextEl: ".swiper-button-next",
                   prevEl: ".swiper-button-prev",
                 }}
-                centeredSlides={true}
+                centeredSlides={false}
                 slidesPerView={1}
                 spaceBetween={20}
                 breakpoints={{

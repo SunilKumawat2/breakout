@@ -4,10 +4,10 @@ import Link from "next/link";
 
 const LocationCard = ({ location, isVirtual = false }) => {
   const href = isVirtual
-  ? "/virtual"
-  : `/locations/${location.slug}`;
+  ? "/virtual-game"
+  : `/location/${location.slug}`;
   return (
-    // <Link href={`/locations/${location.slug}`} className="location-card">
+    // <Link href={`/location/${location.slug}`} className="location-card">
     //   <div className="location-card-img">
     //     {location.image && location.image != "" && (
     //       <Image
