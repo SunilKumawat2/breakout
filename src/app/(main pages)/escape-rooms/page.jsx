@@ -35,15 +35,15 @@ const page = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try{
+      try {
         const res1 = await api.get("/escaperoom-archive");
         setRooms(res1.data.data);
 
         const res2 = await api.get("/escaperooms");
         setEscapeRooms(res2.data.data);
-      }catch(error){
+      } catch (error) {
         console.error("API Error:", error);
-      }finally{
+      } finally {
         setLoading(false); // ✅ stop loader when both calls finish
       }
     };
@@ -68,26 +68,26 @@ const page = () => {
 
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
-  
+
     if (shouldScroll === "true" && escapeRooms?.length > 0) {
       // wait for DOM paint
       setTimeout(() => {
         const section = document.getElementById("escape-rooms-section");
-  
+
         if (section) {
           section.scrollIntoView({
             behavior: "auto", // use "smooth" if you want animation
             block: "start",
           });
         }
-  
+
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("scrollToEscapeRooms");
       }, 500);
     }
   }, [escapeRooms]);
-  
-  
+
+
 
   return (
     <>
@@ -98,13 +98,13 @@ const page = () => {
         />
       )} */}
       {!rooms?.bannersection ? (
-  <SmoothScrolling />
-) : (
-  <InnerPageBanner
-    banner={{ ...rooms?.bannersection, btns: bannerLinks }}
-    bdayInner={true}
-  />
-)}
+        <SmoothScrolling />
+      ) : (
+        <InnerPageBanner
+          banner={{ ...rooms?.bannersection, btns: bannerLinks }}
+          bdayInner={true}
+        />
+      )}
 
       <div className="black-gr-div">
         {/* <section className="section-padding">
@@ -166,7 +166,7 @@ const page = () => {
         <Image src={hmIllus} alt="illus3" className="illus-3 w-100 h-auto" />
       </div>
       <div className="black-gr-div">
-        <VisitLocations className="sec-padding-top"/>
+        <VisitLocations className="sec-padding-top" />
         <section className="section-padding esc-sec pb-0" id="escape-rooms-section">
           <div className="container">
             <div className="row">
@@ -203,19 +203,19 @@ const page = () => {
 
       <div className="black-gr-div">
         <div className="sec-padding-top">
-{(rooms?.googlereviews || rooms?.googlereviews?.length > 0) && (
-          <GlobalReviewWidget
-            reviews={rooms?.googlereviews}
-            data={rooms?.imagesection}
-          />
-        )}
+          {(rooms?.googlereviews || rooms?.googlereviews?.length > 0) && (
+            <GlobalReviewWidget
+              reviews={rooms?.googlereviews}
+              data={rooms?.imagesection}
+            />
+          )}
         </div>
-        
+
         {rooms?.videotestimonials && (
           <Videotestimonials data={rooms?.videotestimonials} />
         )}
         {rooms?.faqsection && <FaqSection className="section-padding" data={rooms?.faqsection} />}
-        <BlogSlider className="py-0"/>
+        <BlogSlider className="py-0" />
         {rooms?.footersection && (
           <HomeContact textData={rooms?.footersection} />
         )}

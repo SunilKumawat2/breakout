@@ -6,49 +6,87 @@ import tLink from "@/images/t-link.svg";
 import tX from "@/images/t-x.svg";
 import tEmail from "@/images/t-email.svg";
 import tShare from "@/images/t-share.svg";
+import Link from "next/link";
 
 const TeamCard = ({ type, data }) => {
   const renderSocialLinks = (data) => {
     if (
-      data?.whatsapp == "" &&
-      data?.instagram == "" &&
-      data?.linkedin == "" &&
-      data?.twitter == "" &&
-      data?.gmail == "" &&
-      data?.link == ""
+      !data?.whatsapp &&
+      !data?.instagram &&
+      !data?.linkedin &&
+      !data?.twitter &&
+      !data?.gmail &&
+      !data?.link
     )
       return null;
+  
     return (
-      <ul>
-        {data?.whatsapp != "" && (
+      <ul className="social-links">
+        {data?.whatsapp && (
           <li>
-            <Image src={tWh} alt="tWh" />
+            <Link
+              href={`https://wa.me/${data.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image src={tWh} alt="WhatsApp" />
+            </Link>
           </li>
         )}
-        {data?.instagram != "" && (
+  
+        {data?.instagram && (
           <li>
-            <Image src={tIns} alt="tIns" />
+            <Link
+              href={data.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image src={tIns} alt="Instagram" />
+            </Link>
           </li>
         )}
-        {data?.linkedin != "" && (
+  
+        {data?.linkedin && (
           <li>
-            <Image src={tLink} alt="tLink" />
+            <Link
+              href={data.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image src={tLink} alt="LinkedIn" />
+            </Link>
           </li>
         )}
-
-        {data?.twitter != "" && (
+  
+        {data?.twitter && (
           <li>
-            <Image src={tX} alt="tX" />
+            <Link
+              href={data.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image src={tX} alt="Twitter / X" />
+            </Link>
           </li>
         )}
-        {data?.gmail != "" && (
+  
+        {data?.gmail && (
           <li>
-            <Image src={tEmail} alt="tEmail" />
+            <a href={`mailto:${data.gmail}`}>
+              <Image src={tEmail} alt="Email" />
+            </a>
           </li>
         )}
-        {data?.link != "" && (
+  
+        {data?.link && (
           <li>
-            <Image src={tShare} alt="tShare" />
+            <Link
+              href={data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image src={tShare} alt="Website" />
+            </Link>
           </li>
         )}
       </ul>

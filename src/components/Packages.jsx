@@ -116,7 +116,7 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
           </div>
         </div>
         <div className="row justify-content-center">
-          <div className="col-lg-10">
+          <div className="col-lg-12">
             <div className="package-container">
               {packages?.pricing?.columns?.length > 0 && (
                 <div

@@ -7,7 +7,6 @@ import api from "@/helpers/api";
 export async function getData() {
   try {
     const data = await api.get(`/terms-of-service`);
-    // console.log("data privacy", data?.data?.data);
     return data?.data?.data;
   } catch (error) {
     console.error("Error fetching privacy policy:", error);
@@ -34,13 +33,13 @@ const page = async () => {
               <h1
                 className="sec-head pb-5 medium sm-head mb-5 text-center yellow-text"
                 dangerouslySetInnerHTML={{
-                  __html: data?.heading || "Privacy Policy",
+                  __html: data?.heading || "Terms of Service",
                 }}
               />
               <div
                 className="main-con mt-5 para"
                 dangerouslySetInnerHTML={{
-                  __html: data?.content || "Privacy Policy",
+                  __html: data?.content || "Terms of Service",
                 }}
               />
             </div>

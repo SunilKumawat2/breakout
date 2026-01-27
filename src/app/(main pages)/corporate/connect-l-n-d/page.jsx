@@ -197,15 +197,17 @@ const page = () => {
                   className="underline-big-text"
                   dangerouslySetInnerHTML={{
                     __html: corporate?.contentsection?.note,
-                  }}
+                  }}Page 
                 />
               </div>
+              {corporate?.contentsection?.footer && (
               <p
                 className="sec-head medium-20 mt-5"
                 dangerouslySetInnerHTML={{
-                  __html: corporate?.contentsection?.footer,
+                  __html: corporate.contentsection.footer,
                 }}
               />
+            )}
             </div>
           </div>
         </div>

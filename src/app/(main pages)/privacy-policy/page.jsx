@@ -7,7 +7,6 @@ import api from "@/helpers/api";
 export async function getData() {
   try {
     const data = await api.get(`/privacy-policy`);
-    // console.log("data privacy", data?.data?.data);
     return data?.data?.data;
   } catch (error) {
     console.error("Error fetching privacy policy:", error);

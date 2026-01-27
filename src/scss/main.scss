@@ -1895,7 +1895,7 @@ a {
     @include card;
     border: none !important;
     border-radius: 0px !important;
-    padding: 1.3em;
+    // padding: 1.3em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1913,7 +1913,7 @@ a {
     flex-direction: column;
     border-radius: 20px !important;
     border: $border !important;
-    padding: 1.5em 1.5em;
+    // padding: 1.5em 1.5em;
 
     &:not(:first-child) {
 
@@ -1929,6 +1929,7 @@ a {
         font-family: 'sharp-medium-20', sans-serif;
         margin-bottom: 12px;
         width: 100%;
+        overflow-wrap: anywhere;
     }
 
     p {
@@ -3659,9 +3660,15 @@ textarea:hover {
     padding: 20px;
 }
 
+.package-row-cell:first-child,
+.package-header-cell:first-child {
+    width: 25%;
+}
+
 .package-row-cell,
 .package-header-cell {
-    width: 100%;
+    width: 16%;
+    padding: 24px 16px;
 }
 
 .why-card img {
@@ -3715,6 +3722,7 @@ textarea:hover {
     justify-content: center;
     background-color: #F3F4F41A;
     position: relative;
+    cursor: pointer;
 }
 
 .calendar-days .arrow {
@@ -3727,9 +3735,15 @@ textarea:hover {
     color: #FFAE00;
     font-size: 22px;
     display: inline-flex;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
     // padding-bottom: 5px;
+}
+
+.calendar-days .arrow:disabled,.calendar-days .arrow.disabled  {
+    opacity: 50%;
+    cursor: not-allowed;
 }
 
 .calendar-days .arrow img {
@@ -3759,6 +3773,13 @@ textarea:hover {
     position: relative;
 }
 
+.day.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+  
+
 .calendar-days-outer .month-year-dropdown {
     position: absolute;
     width: 100%;
@@ -3786,7 +3807,8 @@ textarea:hover {
 }
 
 .calendar-days-outer .month-year-dropdown .months .option.active,
-.calendar-days-outer .month-year-dropdown .years .option.active {
+.calendar-days-outer .month-year-dropdown .years .option.active,
+.calendar-days .day.active {
     color: #FFAE00;
 }
 

@@ -206,6 +206,27 @@ export default function Home() {
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("home_about_us_heading_key");
+
+    if (shouldScroll === "true" && data?.bannersection?.content) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("home-about-us-heading");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("home_about_us_heading_key");
+      }, 500);
+    }
+  }, [data]);
+
+  useEffect(() => {
     const fetchData = async () => {
       const response = await api.get("/home-page");
       console.log("sjkdfgjsdgfjsdf", response.data.data)
@@ -219,7 +240,7 @@ export default function Home() {
     return <div className="loading-container"></div>;
   }
 
-
+ 
 
   return (
     <>
@@ -317,21 +338,21 @@ export default function Home() {
                     </h3>
                     <ul className={collapse === "parties" ? "active" : ""}>
                       <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
-                            }>
+                      }>
                         <Link href={`/parties/birthday`}>
                           <span>Birthday</span>
                           <Image src={whArrow} alt={"Birthday"} />
                         </Link>
                       </li>
                       <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
-                            }>
+                      }>
                         <Link href={`/parties/bachelor`}>
                           <span>Bachelor(ette)</span>
                           <Image src={whArrow} alt={"Bachelor(ette)"} />
                         </Link>
                       </li>
                       <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
-                            }>
+                      }>
                         <Link href={`/parties/farewell`}>
                           <span>Farewell</span>
                           <Image src={whArrow} alt={"Farewell"} />
@@ -362,21 +383,21 @@ export default function Home() {
                     </h3>
                     <ul className={collapse === "corporate" ? "active" : ""}>
                       <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
-                            }>
+                      }>
                         <Link href={`/corporate/unwind`}>
                           <span>Unwind</span>
                           <Image src={whArrow} alt={"Unwind"} />
                         </Link>
                       </li>
                       <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
-                            }>
+                      }>
                         <Link href={`/corporate/retreat`}>
                           <span>Retreat</span>
                           <Image src={whArrow} alt={"Retreat"} />
                         </Link>
                       </li>
                       <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
-                            }>
+                      }>
                         <Link href={`/corporate/connect-l-n-d`}>
                           <span>Connect L&D</span>
                           <Image src={whArrow} alt={"Connect L&D"} />
@@ -390,12 +411,13 @@ export default function Home() {
           </div>
         </header>
       )}
-      <HmTextSec home={true} text={data?.bannersection?.content|| hmText} />
-      <div className="container">
+      <HmTextSec home={true} text={data?.bannersection?.content || hmText} />
+      <div className="container" id="home-about-us-heading">
         <div className="row justify-content-center">
           <div className="col-lg-12 col-12">
             <div className="cus-card">
               <p
+                onClick={() => sessionStorage.setItem("home_about_us_heading_key",true)}
                 className="para mb-0"
                 style={{ fontStyle: "italic", cursor: "pointer" }}
               >
