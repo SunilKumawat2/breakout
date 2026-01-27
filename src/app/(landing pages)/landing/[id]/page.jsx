@@ -75,6 +75,7 @@ const boxItems = [
 const Page = async ({ params }) => {
   const { id } = params;
   const { rooms, brands } = await getData(id);
+  console.log("rooms?.contentsection?.content",rooms)
   const escapeRoomsExtreme =
     rooms?.escapeRooms?.filter((room) => room?.tag === "Extreme") || [];
   const escapeRoomsUltra =
@@ -193,7 +194,10 @@ const Page = async ({ params }) => {
                   </h3>
                 </div>
               </div>
-              {escapeRoomsExtreme && escapeRoomsExtreme?.length > 0 && (
+              {
+                id != "escape-room-bangalore-page" && (
+                  <>
+                   {escapeRoomsExtreme && escapeRoomsExtreme?.length > 0 && (
                 <div className="row row-gap-25 mt-5">
                   <div className="col-12">
                     <h3 className="sec-head medium sm-head text-center">
@@ -221,6 +225,24 @@ const Page = async ({ params }) => {
                   ))}
                 </div>
               )}
+                  </>
+                )
+              }
+             
+
+              {
+                id == "escape-room-bangalore-page" && (
+                  <div className="row row-gap-25 mt-5">
+                  <div className="col-12">
+                  </div>
+                  {rooms?.escapeRooms?.map((room, index) => (
+                    <div className="col-lg-4 col-12" key={index}>
+                      <EscapeRoomCard room={room} />
+                    </div>
+                  ))}
+                </div>
+                )
+              }
             </div>
           </section>
           {rooms?.cardsection &&

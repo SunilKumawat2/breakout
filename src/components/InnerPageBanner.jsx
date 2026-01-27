@@ -50,24 +50,24 @@ const InnerPageBanner = ({ banner, bdayInner }) => {
             <div className="inner-page-banner-content">
               {banner.heading && (
                 <h1
-                  className="sec-head"
+                  className="sec-head mb-3"
                   dangerouslySetInnerHTML={{ __html: banner.heading || "" }}
                 />
               )}
               {banner.description && !bdayInner ? (
-                <h3 className="sec-head medium-20">
+                <h3 className="sec-head medium-20 mb-3">
                   <Image src={locIcon} alt="loc-icon" />
                   {banner.description || ""}
                 </h3>
               ) : (
                 <h3
-                  className="sec-head medium-20"
+                  className="sec-head medium-20 mb-3"
                   dangerouslySetInnerHTML={{ __html: banner.description || "" }}
                 />
               )}
               {banner.subTitle && (
                 <h3
-                  className="sec-head medium"
+                  className="sec-head medium mb-3"
                   dangerouslySetInnerHTML={{ __html: banner.subTitle || "" }}
                 />
               )}

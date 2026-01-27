@@ -17,6 +17,7 @@ const ConnectContact = ({
   noTextBottom = true,
   noImage = false,
   textData,
+  className=""
 }) => {
   const defaultData = {
     heading: "Best Escape Room in Bangalore for Ultimate Thrills",
@@ -76,7 +77,7 @@ const ConnectContact = ({
   });
 
   return (
-    <section className="hm-contact-sec section-padding pb-0" id="book-now">
+    <section className={`hm-contact-sec section-padding pb-0 ${className}`} id="book-now">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
@@ -225,14 +226,14 @@ const ConnectContact = ({
             <Image
               src={illus}
               alt="illus"
-              className="hm-contact-illus w-100 h-auto"
+              className="hm-contact-illus"
               style={{ marginBottom: "-1px" }}
             />
           ) : (
             <Image
               src={illus4}
               alt="illus"
-              className="hm-contact-illus w-100 h-auto"
+              className="hm-contact-illus"
               style={{ marginBottom: "-1px" }}
             />
           )
@@ -240,7 +241,7 @@ const ConnectContact = ({
           <Image
             src={img}
             alt="illus"
-            className="hm-contact-illus w-100 h-auto"
+            className="hm-contact-illus"
             style={{ marginBottom: "-1px" }}
           />
         )

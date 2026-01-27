@@ -14,12 +14,14 @@ import cv3 from "@/images/cv3.jpg";
 import cv4 from "@/images/cv4.jpg";
 import cv5 from "@/images/cv5.jpg";
 import cv6 from "@/images/cv6.jpg";
-import swiperPrev from "@/images/swiper-prev.svg";
-import swiperNext from "@/images/swiper-next.svg";
+// import swiperPrev from "@/images/swiper-prev.svg";
+// import swiperNext from "@/images/swiper-next.svg";
+import swiperPrev from "@/images/chev-left.svg";
+import swiperNext from "@/images/chev-right.svg";
 import Link from "next/link";
 import api from "@/app/helpers/api";
 
-const AddOnsSlider = ({ data }) => {
+const AddOnsSlider = ({ data,className="" }) => {
   const [activities, setActivities] = useState(null);
   const addOns = [
     {
@@ -57,12 +59,12 @@ const AddOnsSlider = ({ data }) => {
     fetchActivities();
   },[])
   return (
-    <section className="blog-slider-sec section-padding">
+    <section className={`blog-slider-sec ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
             <h2
-              className="sec-head sm-head medium"
+              className="sec-head sm-head medium mb-0"
               dangerouslySetInnerHTML={{ __html: data?.heading }}
             />
             {data?.description && (
@@ -74,7 +76,7 @@ const AddOnsSlider = ({ data }) => {
           </div>
         </div>
       </div>
-      <div className="row">
+      <div className="row mt-40">
         <div className="col-lg-12">
           <div className="blog-slider">
             <Swiper
@@ -153,11 +155,11 @@ const AddOnsSlider = ({ data }) => {
                   </SwiperSlide>
                 ))}
             </Swiper>
-            <div className="swiper-button-prev custom-prev">
+            <div className="swiper-button-prev custom-prev go-plan">
               <Image src={swiperPrev} alt="Previous" />
             </div>
 
-            <div className="swiper-button-next custom-next">
+            <div className="swiper-button-next custom-next go-plan">
               <Image src={swiperNext} alt="Next" />
             </div>
 

@@ -117,12 +117,12 @@ const page = () => {
 
       <div className="black-gr-div">
         {corporate && corporate?.contentsection && (
-          <section className="section-padding pb-0">
+          <section className="pt-80">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
                   {/* <h3 className="sec-head">{animatedHeading}</h3> */}
-                  <WordByWordAnimation headingTemplate={headingTemplate} />
+                  <WordByWordAnimation className="sec-head mb-0" headingTemplate={headingTemplate} />
                 </div>
               </div>
             </div>
@@ -132,14 +132,17 @@ const page = () => {
         {corporate &&
           corporate?.googlereviews &&
           corporate?.googlereviews?.length > 0 && (
-            <GReviewSlider
+            <div className="pt-80">
+          <GReviewSlider
               commonStars={false}
               data={corporate?.googlereviews}
             />
+          </div>
+            
           )}
 
         {corporate && corporate?.contentsection && (
-          <HmTextSec text={corporate?.contentsection?.content} />
+          <HmTextSec className="pt-80" text={corporate?.contentsection?.content} />
         )}
         <section>
           <div className="container">
@@ -154,7 +157,7 @@ const page = () => {
                   />
                 </div>
                 <p
-                  className="sec-head medium-20 mt-5"
+                  className="sec-head medium-20 pt-80"
                   dangerouslySetInnerHTML={{
                     __html: corporate?.contentsection?.footer,
                   }}
@@ -165,7 +168,7 @@ const page = () => {
         </section>
 
         {corporate && corporate?.countersection && (
-          <TrustedSection data={corporate?.countersection} />
+          <TrustedSection className="pb-0" data={corporate?.countersection} />
         )}
 
         {/* 
@@ -182,6 +185,7 @@ const page = () => {
         </section> */}
 
         <LogoSec
+          className="pt-80 pb-0"
           title="Brands <span>Hosted</span>"
           link={false}
           logos={brandLogos}
@@ -189,12 +193,12 @@ const page = () => {
 
         <PartyExpertCon />
 
-        <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
+        <Image src={bdayIllus} className={"illus-image"} alt="bday" />
       </div>
 
       <div className="black-gr-div">
         {corporate && corporate?.imagecardsection && (
-          <section className="section-padding bday-sec">
+          <section className="sec-padding-top bday-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -206,7 +210,7 @@ const page = () => {
                   />
                 </div>
               </div>
-              <div className="row mt-5 row-gap-25">
+              <div className="row row-gap-25">
                 {corporate?.imagecardsection?.images &&
                   corporate?.imagecardsection?.images?.length > 0 &&
                   corporate?.imagecardsection?.images?.map((bd, index) => (
@@ -247,7 +251,7 @@ const page = () => {
                   />
                 </div>
               </div>
-              <div className="row mt-5 row-gap-25">
+              <div className="row row-gap-25">
                 {corporate?.choicessection?.images &&
                   corporate?.choicessection?.images?.length > 0 &&
                   corporate?.choicessection?.images?.map((bd, index) => (
@@ -278,7 +282,7 @@ const page = () => {
         {corporate &&
           corporate?.readytotransformyourteamsection &&
           corporate?.readytotransformyourteamsection?.heading && (
-            <section className="section-padding">
+            <section className="">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 ">
@@ -291,7 +295,7 @@ const page = () => {
                       }}
                     />
                     <p
-                      className="sec-head medium-20 mt-4"
+                      className="sec-head medium-20"
                       dangerouslySetInnerHTML={{
                         __html:
                           corporate?.readytotransformyourteamsection
@@ -305,16 +309,17 @@ const page = () => {
           )}
         {/* <HomeContact noTextBottom={false} privacyLine={false} noImage={true} /> */}
         <BirthdayGetInTouch
+         className="pt-80 pb-0"
           noImage={true}
           privacyLine={true}
           atOptions={atOptions}
         />
 
-        <Image src={corpIllus} alt="illus3" className="illus-3 w-100 h-auto" />
+        <Image src={corpIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
         {corporate && corporate?.whychooseussection && (
-          <section className="section-padding">
+          <section className="whychoose sec-padding-top">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -326,7 +331,7 @@ const page = () => {
                   />
                 </div>
               </div>
-              <div className="why-choose-grid grid-5 mt-5">
+              <div className="why-choose-grid grid-5">
                 {corporate?.whychooseussection?.images &&
                   corporate?.whychooseussection?.images?.length > 0 &&
                   corporate?.whychooseussection?.images?.map((item, index) => (
@@ -349,7 +354,7 @@ const page = () => {
 
         {corporate && corporate?.imagesection && (
           <>
-            <section className="section-padding">
+            <section className="section-padding pb-0">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 text-center">
@@ -386,24 +391,24 @@ const page = () => {
         )}
 
         {corporate && corporate?.videotestimonials && (
-          <Videotestimonials data={corporate?.videotestimonials} />
+          <Videotestimonials className="pb-0" data={corporate?.videotestimonials} />
         )}
 
-        <Image src={peopleIllus} className={"w-100 h-auto mt-5"} alt="bday" />
+        <Image src={peopleIllus} className={"illus-image"} alt="bday" />
       </div>
       <div className="black-gr-div">
         {corporate && corporate?.faqsection && (
-          <FaqSection data={corporate?.faqsection} />
+          <FaqSection className="sec-padding-top" data={corporate?.faqsection} />
         )}
 
-        <VisitLocations
+        <VisitLocations className="section-padding corp-retreat"
           title="Select Your <span>Preferred Location</span>"
           desc="Still considering hosting an experience at one of Breakout® experiential centers?"
           isVirtual={false}
         />
 
         {corporate && corporate?.footersection && (
-          <section className="section-padding">
+          <section className="">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -424,7 +429,7 @@ const page = () => {
             </div>
           </section>
         )}
-        <Image src={trophyIllus} className={"w-100 h-auto mt-5"} alt="bday" />
+        <Image src={trophyIllus} className={"illus-image"} alt="bday" />
       </div>
     </>
   );

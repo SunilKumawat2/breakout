@@ -217,10 +217,10 @@ export default function Home() {
           </div>
         )} */}
         {data?.bannersection?.note && (
-          <div className="container pb-5">
+          <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-12 col-12">
-                <div className="cus-card mt-5 py-3 px-3">
+                <div className="cus-card">
                   <p
                     className="para mb-0"
                     style={{ fontStyle: "italic" }}
@@ -236,10 +236,7 @@ export default function Home() {
             </div>
           </div>
         )}
-
-
-
-        <Image src={MovieIllus} className="w-100 h-auto " alt="illus-home" />
+        <Image src={MovieIllus} className="illus-image" alt="illus-home" />
       </div>
       <div className="black-gr-div">
         {data?.countersection && <TrustedSection className="sec-padding-top pb-0" data={data?.countersection} />}
@@ -256,8 +253,8 @@ export default function Home() {
         />
       </div>
       <div className="black-gr-div">
-        <OurLocationSec title="Choose a <span>Location</span>" /><br/>
-        {data?.faqsection && <FaqSection data={data?.faqsection} />}
+        <OurLocationSec className="sec-padding-top" title="Choose a <span>Location</span>" />
+        {data?.faqsection && <FaqSection className="section-padding pb-0" data={data?.faqsection} />}
         {data?.footersection && (
           <BirthdayGetInTouch
           className="p"

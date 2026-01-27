@@ -359,12 +359,17 @@ const page = () => {
 
       <div className="black-gr-div">
 
-        <OurLocationSec
+        {/* <OurLocationSec
           className="sec-padding-top"
           title={`About Our Breakout®  <span>${location?.title} Location</span>`}
           slug={location?.slug}
           locationTitle={location?.title}
         // slug={location?.locationdetails}
+        /> */}
+         <OurLocationSec
+          className="sec-padding-top"
+          title={`About Our Breakout®  <span>${location?.title} Location</span>`}
+          slug={location?.slug}
         />
         <div className="col-lg-12 col-12 pt-80">
           {location && location?.googlereviews && (

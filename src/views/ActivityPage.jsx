@@ -42,6 +42,7 @@ const ActivityPage = () => {
     const fetchEscapeRoom = async () => {
       const res = await api.get(`/activity/${id}`);
       setRoom(res.data.data);
+      console.log("sadfmshdmfndhsjkfsdf_bhf",res.data.data)
     };
     fetchEscapeRoom();
   }, [id]);
@@ -102,6 +103,7 @@ const ActivityPage = () => {
         )}
         <PartyExpertCon />
         {/* <ReserveASlot room={room?.pricingsection} /> */}
+        <br/>
         {room?.imagesection && (
           <GlobalReviewWidget
             data={room?.imagesection}

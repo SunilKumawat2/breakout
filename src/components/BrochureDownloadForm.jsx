@@ -95,6 +95,9 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import selectDrop from "@/images/select-drop.svg";
+import arrowPrev from "@/images/chev-left.svg";
+import arrowNext from "@/images/chev-right.svg";
+import calenderIcon from "@/images/calendar-btn.svg";
 
 const BrochureDownloadForm = () => {
   /* ================= CALENDAR LOGIC ================= */
@@ -106,7 +109,7 @@ const BrochureDownloadForm = () => {
   const [showMonthYear, setShowMonthYear] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
-  
+
 
   useEffect(() => {
     const totalDays = new Date(year, month + 1, 0).getDate();
@@ -139,14 +142,14 @@ const BrochureDownloadForm = () => {
 
   const handleDateSelect = (day) => {
     const dateObj = new Date(year, month, day);
-  
+
     setSelectedDate(dateObj);
-  
+
     // 🔥 Console test
     console.log("Selected Date Object:", dateObj);
     console.log("Formatted Date:", dateObj.toISOString().split("T")[0]);
   };
-  
+
   /* ================= UI ================= */
   return (
     <section className="brochure-download-form section-padding">
@@ -181,17 +184,69 @@ const BrochureDownloadForm = () => {
               </div>
             </div>
             {/* ================= CALENDAR ================= */}
-            <div className="col-12 mb-4">
+            <div className="col-12 mb-4 mt-3">
               <div className="calendar-wrapper">
                 <div className="calendar-header">
                   <div
-                    className="month-year-select"
-                    onClick={() => setShowMonthYear(!showMonthYear)}
+                    className="month-year-select mb-3"
+                    // onClick={() => setShowMonthYear(!showMonthYear)}
                   >
                     <span>
                       {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
                     </span>
-                    <Image src={selectDrop} alt="arrow" />
+                    {/* <Image src={selectDrop} alt="arrow" /> */}
+                  </div>
+
+                  
+                </div>
+
+
+                <div className="calendar-days-outer">
+                  <div className="calendar-days">
+                    <button className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+                      {/* ‹ */}
+                      <Image src={arrowPrev} alt="Previous" />
+                    </button>
+
+                    {visibleDays.map((day) => {
+                      const isToday =
+                        day === today.getDate() &&
+                        month === today.getMonth() &&
+                        year === today.getFullYear();
+
+                      return (
+                        <div
+                          key={day}
+                          onClick={() => handleDateSelect(day)}
+                          className={`day ${selectedDate &&
+                              selectedDate.getDate() === day &&
+                              selectedDate.getMonth() === month &&
+                              selectedDate.getFullYear() === year
+                              ? "active"
+                              : ""
+                            }`}
+                        >
+                          {day}
+                        </div>
+
+                      );
+                    })}
+
+                    <button
+                      className="arrow"
+                      onClick={nextDays}
+                      disabled={startIndex + 7 >= days.length}
+                    >
+                      {/* › */}
+                      <Image src={arrowNext} alt="Next" />
+                    </button>
+                    <button
+                      className="calender-btn"
+                      onClick={() => setShowMonthYear(!showMonthYear)}
+                    >
+                      {/* › */}
+                      <Image src={calenderIcon} alt="Calender Icon" />
+                    </button>
                   </div>
 
                   {showMonthYear && (
@@ -227,49 +282,8 @@ const BrochureDownloadForm = () => {
                       </div>
                     </div>
                   )}
+
                 </div>
-
-
-
-                <div className="calendar-days">
-                  <button className="arrow" onClick={prevDays} disabled={startIndex === 0}>
-                    ‹
-                  </button>
-
-                  {visibleDays.map((day) => {
-                    const isToday =
-                      day === today.getDate() &&
-                      month === today.getMonth() &&
-                      year === today.getFullYear();
-
-                    return (
-                      <div
-                      key={day}
-                      onClick={() => handleDateSelect(day)}
-                      className={`day ${
-                        selectedDate &&
-                        selectedDate.getDate() === day &&
-                        selectedDate.getMonth() === month &&
-                        selectedDate.getFullYear() === year
-                          ? "active"
-                          : ""
-                      }`}
-                    >
-                      {day}
-                    </div>
-                    
-                    );
-                  })}
-
-                  <button
-                    className="arrow"
-                    onClick={nextDays}
-                    disabled={startIndex + 7 >= days.length}
-                  >
-                    ›
-                  </button>
-                </div>
-
               </div>
             </div>
             <div className="col-lg-4 col-12">

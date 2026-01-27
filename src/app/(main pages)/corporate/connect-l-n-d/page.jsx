@@ -26,12 +26,13 @@ import wh from "@/images/wh.svg";
 import locPlace from "@/images/loc-place.svg";
 import BirthdayBanner from "@/components/BirthdayBanner";
 import bdayIllus from "@/images/bday-illus.svg";
+import connectIllus from "@/images/connect-illus.svg";
 
 import whicon from "@/images/wh-icon.svg";
 import phicon from "@/images/phone.svg";
 import mailicon from "@/images/mail-icon.svg";
 
-import corpIllus from "@/images/corp-illus.svg";
+import corpIllus from "@/images/money-illus.svg";
 
 import c1 from "@/images/c1.jpg";
 import c2 from "@/images/c2.jpg";
@@ -72,7 +73,7 @@ import coupleIllus from "@/images/couple-illus.svg";
 import loveIllus from "@/images/love-illus.svg";
 import AddOnsSlider from "@/components/AddOnsSlider";
 import BreakoutXForm from "@/components/BreakoutXForm";
-import peopleIllus from "@/images/people-illus.svg";
+import peopleIllus from "@/images/contact-bottom-illus.svg";
 import trophyIllus from "@/images/trophy-illus.svg";
 import api from "@/helpers/api";
 import GReviewCard from "@/components/GReviewCard";
@@ -178,6 +179,7 @@ const page = () => {
         <InnerPageBanner banner={corporate?.bannersection} bdayInner={true} />
       )}
       <LogoSec
+      className="pt-80"
         title="Brands that <span>loved M.A.G.I.C</span>"
         logos={brandLogos}
         link={false}
@@ -186,7 +188,7 @@ const page = () => {
         <HmTextSec text={corporate?.contentsection?.content} />
       )}
 
-      <section>
+      <section className="section-padding pt-0">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 ">
@@ -210,7 +212,7 @@ const page = () => {
       </section>
 
       <div className="black-gr-div">
-        {corporate && corporate?.contentsection && (
+        {/* {corporate && corporate?.contentsection && (
           <section className="section-padding pb-0">
             <div className="container">
               <div className="row">
@@ -225,7 +227,7 @@ const page = () => {
               </div>
             </div>
           </section>
-        )}
+        )} */}
 
         {corporate &&
           corporate?.googlereviews &&
@@ -237,7 +239,7 @@ const page = () => {
           )}
 
         {corporate && corporate?.countersection && (
-          <TrustedSection data={corporate?.countersection} />
+          <TrustedSection className="pb-0" data={corporate?.countersection} />
         )}
 
         {/* 
@@ -255,12 +257,12 @@ const page = () => {
 
         {/* <PartyExpertCon /> */}
 
-        <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
+        <Image src={connectIllus} className={"illus-image"} alt="bday" />
       </div>
 
       <div className="black-gr-div">
         {innerList && innerList?.length > 0 && (
-          <section className="section-padding bday-sec">
+          <section className="sec-padding-top bday-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -273,7 +275,7 @@ const page = () => {
                   />
                 </div>
               </div>
-              <div className="row mt-5 row-gap-25">
+              <div className="row row-gap-25">
                 {/* {JSON.stringify(innerList)} */}
                 {innerList &&
                   innerList?.length > 0 &&
@@ -305,15 +307,15 @@ const page = () => {
         )}
         {corporate && corporate?.slidersection && (
           
-          <AddOnsSlider data={corporate?.slidersection} />
+          <AddOnsSlider className="pb-0 section-padding" data={corporate?.slidersection} />
         )}
         <PartyExpertCon title="<span>Add MAGIC</span> to your workplace" />
 
-        <Image src={corpIllus} alt="illus3" className="illus-3 w-100 h-auto" />
+        <Image src={corpIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
         {corporate?.keyresourcessection && (
-          <section className="section-padding">
+          <section className="sec-padding-top">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -345,7 +347,7 @@ const page = () => {
                                 )}
                               </div>
                               <div className="blog-card-content">
-                                <h3
+                                <h3 style={{fontSize:"16px",}}
                                   dangerouslySetInnerHTML={{
                                     __html: item.heading,
                                   }}
@@ -366,7 +368,7 @@ const page = () => {
 
         {corporate && corporate?.imagesection && (
           <>
-            <section className="section-padding">
+            <section className="section-padding pb-0">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 text-center">
@@ -407,7 +409,7 @@ const page = () => {
           corporate?.videotestimonials?.length > 0 && (
             <Videotestimonials data={corporate?.videotestimonials} />
           )}
-        <OurLocationSec title="Our <span>Locations</span>" />
+        <OurLocationSec className="section-padding" title="Our <span>Locations</span>" />
         <FaqSection data={corporate?.faqsection} />
         <div id="get-in-touch">
           <ConnectContact
@@ -417,10 +419,10 @@ const page = () => {
           />
         </div>
 
-        <BlogSlider />
-        <LogoSec title="In The <span>News</span>" />
+        <BlogSlider className="pb-0"/>
+        <LogoSec className="pb-0 pt-80" title="In The <span>News</span>" />
         {corporate && corporate?.footersection && (
-          <section className="section-padding">
+          <section className="section-padding pb-0">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -441,7 +443,7 @@ const page = () => {
             </div>
           </section>
         )}
-        <Image src={peopleIllus} className={"w-100 h-auto mt-5"} alt="bday" />
+        <Image src={peopleIllus} className={"illus-image"} alt="bday" />
       </div>
     </>
   );

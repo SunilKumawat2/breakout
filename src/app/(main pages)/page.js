@@ -196,7 +196,7 @@ export default function Home() {
   ];
 
   const hmText =
-    "At Breakout®, you can...<br />have crazy fun in our <span>cinematic escape room</span>, <br />create lifelong memories with unique <span>party celebrations</span>,<br />enhance <span>team bonding</span>, <span>engagement</span>, & <span>productivity</span> <br/>through our gamified corporate programs.<br /><br />So, do yourself a favour and breakout from the ordinary!";
+    "At Breakout®, you can...have crazy fun in our <span>cinematic escape room</span>, <br />create lifelong memories with unique <span>party celebrations</span>,<br />enhance <span>team bonding</span>, <span>engagement</span>, & <span>productivity</span> <br/>through our gamified corporate programs.<br /><br />So, do yourself a favour and breakout from the ordinary!";
 
   const [collapse, setCollapse] = useState("desktop");
 
@@ -208,7 +208,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await api.get("/home-page");
-      console.log("sjkdfgjsdgfjsdf", response)
+      console.log("sjkdfgjsdgfjsdf", response.data.data)
       setData(response.data.data);
       setPageLoading(false);
     };
@@ -390,7 +390,7 @@ export default function Home() {
           </div>
         </header>
       )}
-      <HmTextSec home={true} text={hmText} />
+      <HmTextSec home={true} text={data?.bannersection?.content|| hmText} />
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-12 col-12">

@@ -33,7 +33,7 @@ const validate = (values) => {
   return errors;
 };
 
-const BirthdayGetInTouch = ({ img }) => {
+const BirthdayGetInTouch = ({ img,className="" }) => {
   const [submitStatus, setSubmitStatus] = useState(null);
   const page = usePathname();
 
@@ -139,7 +139,7 @@ const BirthdayGetInTouch = ({ img }) => {
   });
 
   return (
-    <section className={`section-padding ${img ? "pb-0" : ""}`}>
+    <section className={`section-padding ${img ? "pb-0" : ""} ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 col-12">

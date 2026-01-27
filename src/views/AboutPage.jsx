@@ -94,6 +94,7 @@ import abImg3 from "@/images/gal3.png";
 
 const AboutPage = () => {
   const [corporate, setCorporate] = useState(null);
+ 
   const [brandLogos, setBrandLogos] = useState(null);
   const [collapse, setCollapse] = useState("desktop");
   const { escaperoomLocations, loading, errors } = useGlobalContext();
@@ -130,6 +131,7 @@ const AboutPage = () => {
     const fetchCorporate = async () => {
       const response = await api.get("about-us-page");
       setCorporate(response.data.data);
+      console.log("corporate_about_page",response)
     };
     fetchCorporate();
     const fetchBrandLogos = async () => {
@@ -286,24 +288,35 @@ const AboutPage = () => {
             <div className="row">
               <div className="col-lg-12 text-center">
                 <h3 className="sec-head medium sm-head">
-                  Every Moment We Create <span>Follows the FBI Standards</span>
+                  {
+                    corporate?.cardssection?.heading
+                  }
+                  {/* Every Moment We Create <span>Follows the FBI Standards</span> */}
                 </h3>
               </div>
             </div>
             <div className="row row-gap-25 mt-5">
-              <div className="col-lg-4 col-12">
+              {
+           corporate?.cardssection?.cards?.map((about_card_fun_result,id)=>{
+            return(
+                <div className="col-lg-4 col-12" key={id}>
                 <div className="ab-card">
-                  <Image src={icon1} alt="icon1" />
+                  <img src={about_card_fun_result?.image} alt="icon1" />
                   <h3>
-                    <span>F</span>un
+                    {/* <span>F</span>un */}
+                    {about_card_fun_result?.heading}
                   </h3>
                   <p className="para">
-                    An uplifting, immersive, and meaningful experience for
-                    everyone.
+                    {about_card_fun_result?.description}
                   </p>
                 </div>
               </div>
-              <div className="col-lg-4 col-12">
+             
+            )
+           })
+              }
+            
+              {/* <div className="col-lg-4 col-12">
                 <div className="ab-card">
                   <Image src={icon2} alt="icon2" />
                   <h3>
@@ -326,7 +339,7 @@ const AboutPage = () => {
                     everyone.
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
