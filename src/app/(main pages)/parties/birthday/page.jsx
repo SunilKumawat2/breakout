@@ -165,7 +165,7 @@ const page = () => {
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("brithday_party_birthday_of_my");
 
-    if (shouldScroll === "true" && data && birthdayList.length > 0) {
+    if (shouldScroll === "true" && birthdayList.length > 0) {
       // wait for DOM paint
       setTimeout(() => {
         const section = document.getElementById("brithday-party-birthday-of-my-section");
@@ -179,7 +179,7 @@ const page = () => {
 
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("brithday_party_birthday_of_my");
-      }, 500);
+      }, 100);
     }
   }, [birthdayList]);
 
