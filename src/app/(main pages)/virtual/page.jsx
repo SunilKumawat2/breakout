@@ -34,11 +34,26 @@ import GReviewSlider from "@/components/GReviewSlider";
 import virtualIllus2 from "@/images/virtual-illus2.svg";
 import { useRouter } from "next/navigation";
 import BirthdayGetInTouch from "@/components/BirthdayGetInTouch";
+import abImg1 from "@/images/gal1.png";
+import abImg2 from "@/images/gal2.png";
+import abImg3 from "@/images/gal3.png";
 
 const page = () => {
   const [rooms, setRooms] = useState([]);
+  console.log("escapeRooms",rooms)
   const [escapeRooms, setEscapeRooms] = useState(null);
+  console.log("escapeRooms_123",escapeRooms)
   const router = useRouter();
+
+  const [abImages, setAbImages] = useState([
+    abImg1,
+    abImg2,
+    abImg3,
+    abImg1,
+    abImg2,
+    abImg3,
+  ]);
+
 
   const lookingForOptions = [
     { value: "Virtual", label: "Virtual" },
@@ -64,6 +79,30 @@ const page = () => {
 
   const hmText =
     "In a typical escape room, your team is <span>locked in a themed room</span> You have a <span>set time.</span> You must <span>find clues,</span> solve puzzles To <span>escape</span> from the locked room.";
+
+    useEffect(() => {
+      const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
+  
+      if (shouldScroll === "true" && escapeRooms?.length > 0) {
+        // wait for DOM paint
+        setTimeout(() => {
+          const section = document.getElementById("escape-rooms-section");
+  
+          if (section) {
+            section.scrollIntoView({
+              behavior: "auto", // use "smooth" if you want animation
+              block: "start",
+            });
+          }
+  
+          // remove key so it doesn't auto-scroll again
+          sessionStorage.removeItem("scrollToEscapeRooms");
+        }, 500);
+      }
+    }, [escapeRooms]);
+  
+  
+    
 
   return (
     <>
@@ -143,22 +182,22 @@ const page = () => {
           className="illus-3 w-100 h-auto"
         />
       </div>
-      <div className="black-gr-div">
+      <div className="black-gr-div" id="escape-rooms-section">
         <section className="section-padding esc-sec">
           <div className="container">
-            <div className="row">
+            <div className="row" >
               <div className="col-lg-12 text-center">
                 <h3 className="sec-head medium sm-head">
                   Virtual <span>Escape Rooms</span>
                 </h3>
               </div>
             </div>
-            <div className="row row-gap-25 mt-5">
+            <div className="row row-gap-25 mt-5" >
               {escapeRooms &&
                 escapeRooms
                   .filter((room) => room.slug !== "code-breakers")
                   .map((room, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
+                    <div className="col-lg-4 col-12" onClick={()=> sessionStorage.setItem("scrollToEscapeRooms", true)} key={index}>
                       <EscapeRoomCard hasVirtual={true} room={room} />
                     </div>
                   ))}
@@ -223,7 +262,7 @@ const page = () => {
       </div>
 
       <div className="black-gr-div">
-        {rooms?.gallery_images && rooms?.gallery_images?.length > 0 && (
+        {rooms?.gallery_images && rooms?.gallery_images?.length > 0 ? (
           <section className="section-padding">
             <div className="" style={{ overflow: "hidden" }}>
               <div className="row">
@@ -233,7 +272,13 @@ const page = () => {
               </div>
             </div>
           </section>
-        )}
+        ):(
+        <section className="section-padding gallery-sec pb-0">
+        <StripGallery images={abImages} />
+      </section>
+        )
+      }
+        <br/>
         {rooms?.googlereviews && rooms?.googlereviews?.length > 0 && (
           <GReviewSlider commonStars={false} data={rooms?.googlereviews} />
         )}
@@ -250,6 +295,11 @@ const page = () => {
           textData={rooms?.footersection}
           LookingForOptions={lookingForOptions}
         /> */}
+        <LogoSec className="pt-80 pb-0"
+          title={"<span>In the</span> News"}
+          logo={rooms?.brandlogos}
+          link={false}
+        />
         {rooms?.footersection && (
           <BirthdayGetInTouch
             img={virtualIllus2}

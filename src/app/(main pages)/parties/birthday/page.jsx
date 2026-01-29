@@ -146,6 +146,7 @@ const page = () => {
   ];
 
   const [data, setData] = useState(null);
+  console.log("party_inclustion_data",data)
   const [birthdayList, setBirthdayList] = useState(null);
 
   useEffect(() => {
@@ -160,6 +161,28 @@ const page = () => {
     fetchBirthdayList();
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("brithday_party_birthday_of_my");
+
+    if (shouldScroll === "true" && data && birthdayList.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("brithday-party-birthday-of-my-section");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("brithday_party_birthday_of_my");
+      }, 500);
+    }
+  }, [birthdayList]);
+
   return (
     <>
       {data?.bannersection && (
@@ -208,12 +231,12 @@ const page = () => {
           </div>
         </section> */}
 
-        <PartyExpertCon className="pt-80"/>
+        <PartyExpertCon className="pt-80" />
 
         <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
       </div>
 
-      <section className="pt-80 bday-sec">
+      <section className="pt-80 bday-sec" id="brithday-party-birthday-of-my-section">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">
@@ -225,7 +248,8 @@ const page = () => {
           <div className="row row-gap-25">
             {birthdayList?.length > 0 &&
               birthdayList?.map((bd, index) => (
-                <div className="col-lg-4 col-12" key={index}>
+                <div className="col-lg-4 col-12"
+                  onClick={() => sessionStorage.setItem("brithday_party_birthday_of_my",true)} key={index}>
                   <Link
                     href={`/parties/birthday/${bd.slug}`}
                     className="location-card"
@@ -252,7 +276,7 @@ const page = () => {
       <div className="black-gr-div">
         {/* <BirthdayGetInTouch privacyLine={true} /> */}
 
-        <PartyGetInTouch noImage={true} privacyLine={true} />
+        {/* <PartyGetInTouch noImage={true} privacyLine={true} /> */}
 
         {data?.partyinclusions && (
           <section
@@ -283,7 +307,7 @@ const page = () => {
         {data?.slidersection && <ReadyToGoPlans className="pb-0" data={data?.slidersection} />}
         {data?.googlereviews && (
           <div className="pt-80">
-          <GReviewSlider commonStars={false} data={data?.googlereviews} />
+            <GReviewSlider commonStars={false} data={data?.googlereviews} />
           </div>
         )}
         {data?.imagesection && (
@@ -332,8 +356,8 @@ const page = () => {
       <div className="black-gr-div">
         {data?.faqsection && <FaqSection className="pt-80" data={data?.faqsection} />}
         <OurLocationSec className="sec-padding-top" title="About Our <span>Our Location</span>" />
-        <BlogSlider className=""/>
-        <LogoSec className="pt-80 pb-0" title={"In the <span>News</span>"}/>
+        <BlogSlider className="" />
+        <LogoSec className="pt-80 pb-0" title={"In the <span>News</span>"} />
         {data?.footersection && (
           <PartyGetInTouch
             img={nightIllus}

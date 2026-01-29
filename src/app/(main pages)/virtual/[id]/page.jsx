@@ -76,6 +76,29 @@ const page = () => {
       image: loc3,
     },
   ];
+
+  // useEffect(() => {
+  //   const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
+
+  //   if (shouldScroll === "true" && escapeRooms?.length > 0) {
+  //     // wait for DOM paint
+  //     setTimeout(() => {
+  //       const section = document.getElementById("escape-rooms-section");
+
+  //       if (section) {
+  //         section.scrollIntoView({
+  //           behavior: "auto", // use "smooth" if you want animation
+  //           block: "start",
+  //         });
+  //       }
+
+  //       // remove key so it doesn't auto-scroll again
+  //       sessionStorage.removeItem("scrollToEscapeRooms");
+  //     }, 500);
+  //   }
+  // }, [escapeRooms]);
+
+  
   return (
     <>
       <div className="black-gr-div">
@@ -121,10 +144,12 @@ const page = () => {
                   </h2>
                 </div>
               </div>
-              <div className="row mt-5 row-gap-25">
+              <div className="row mt-5 row-gap-25" id="escape-rooms-section">
                 {escapeRooms &&
                   escapeRooms.map((room, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
+                    <div className="col-lg-4 col-12" 
+                    // onClick={()=>sessionStorage.setItem("scrollToEscapeRooms",true)}
+                     key={index}>
                       <EscapeRoomCard room={room} hasVirtual={true} />
                     </div>
                   ))}

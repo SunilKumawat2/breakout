@@ -85,6 +85,7 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
   const [corporate, setCorporate] = useState([]);
+  console.log("corporate_corporate_corporate",corporate)
   const [brandLogos, setBrandLogos] = useState(null);
   useEffect(() => {
     const fetchCorporate = async () => {
@@ -214,7 +215,7 @@ const page = () => {
                 {corporate?.imagecardsection?.images &&
                   corporate?.imagecardsection?.images?.length > 0 &&
                   corporate?.imagecardsection?.images?.map((bd, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
+                    <div className="col-lg-4 col-12" key={index} >
                       <div className="location-card">
                         <div className="location-card-img">
                           {bd.image && (

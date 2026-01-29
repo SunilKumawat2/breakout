@@ -1,7 +1,8 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css/navigation";
 import "swiper/css";
 import "swiper/css/pagination";
 import BlogCard from "./BlogCard";
@@ -10,6 +11,8 @@ import Image from "next/image";
 import videoPoster from "@/images/video-poster.jpg";
 import playBtn from "@/images/play-btn.svg";
 import pauseBtn from "@/images/pause-btn.svg";
+import swiperPrev from "@/images/chev-left.svg";
+import swiperNext from "@/images/chev-right.svg";
 
 const Videotestimonials = ({ data,className = "", }) => {
   const videoRef = useRef([]);
@@ -119,14 +122,21 @@ const Videotestimonials = ({ data,className = "", }) => {
         <div className="col-lg-12">
           <div className="blog-slider video-slider">
             <Swiper
-              // modules={[Pagination]}
-              // pagination={{ clickable: true }}
+             modules={[Pagination, Navigation]}
+             pagination={{
+               clickable: true,
+             }}
               centeredSlides={true}
               slidesPerView={1}
               spaceBetween={0}
               initialSlide={4}
               slideToClickedSlide={true}  
-              loop={data1?.length >= 4}
+              // loop={data1?.length >= 4}
+              navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              }}
+              loop={true}
               breakpoints={{
                 0: { slidesPerView: 1.2 },
                 640: { slidesPerView: 1.5 },
@@ -185,6 +195,13 @@ const Videotestimonials = ({ data,className = "", }) => {
                 </SwiperSlide>
               ))}
             </Swiper>
+            <div className="swiper-button-prev custom-prev go-plan">
+              <Image src={swiperPrev} alt="Previous" />
+            </div>
+
+            <div className="swiper-button-next custom-next go-plan">
+              <Image src={swiperNext} alt="Next" />
+            </div>
           </div>
         </div>
       </div>

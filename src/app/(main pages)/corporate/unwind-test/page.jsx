@@ -66,6 +66,27 @@ const page = () => {
     },
   ];
 
+  useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
+
+    if (shouldScroll === "true" && escapeRooms?.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("escape-rooms-section");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("scrollToEscapeRooms");
+      }, 500);
+    }
+  }, [escapeRooms]);
+
   return (
     <>
       {rooms?.bannersection && (
@@ -146,10 +167,10 @@ const page = () => {
                 </h3>
               </div>
             </div>
-            <div className="row row-gap-25 mt-5">
+            <div className="row row-gap-25 mt-5" id="escape-rooms-section">
               {escapeRooms &&
                 escapeRooms.map((room, index) => (
-                  <div className="col-lg-4 col-12" key={index}>
+                  <div className="col-lg-4 col-12" onClick={()=> sessionStorage.setItem("scrollToEscapeRooms", true)} key={index}>
                     <EscapeRoomCard room={room} />
                   </div>
                 ))}

@@ -3686,10 +3686,14 @@ textarea:hover {
     display: none;
 }
 
-.corp-retreat .col-head {
+.corp-retreat .col-12 {
     display: flex;
     flex-direction: column-reverse;
 
+}
+.corp-retreat .col-12 p{
+    margin-bottom: 16px !important;
+    margin-top: 0 !important;
 }
 
 .sec-head a {

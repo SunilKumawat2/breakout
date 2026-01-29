@@ -241,7 +241,8 @@ export default function Home() {
       <div className="black-gr-div">
         {data?.countersection && <TrustedSection className="sec-padding-top pb-0" data={data?.countersection} />}
         <LogoSec className="pt-80 pb-0"
-          title={"<span>Brands</span> Hosted"}
+          // title={"<span>Brands</span> Hosted"}
+          title={"<span>In the</span> News"}
           logo={data?.brandlogos}
           link={false}
         />

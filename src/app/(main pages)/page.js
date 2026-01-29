@@ -301,14 +301,14 @@ export default function Home() {
                           <li key={index}
                             onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
                             }>
-                            <Link href={`/location/${link.slug}`}>
+                            <Link href={`/locations/${link.slug}`}>
                               <span>{link.title}</span>
                               <Image src={whArrow} alt={link.title} />
                             </Link>
                           </li>
                         ))}
                       <li>
-                        <Link href={`/virtual-game`}>
+                        <Link href={`/virtual`}>
                           <span>Virtual Rooms</span>
                           <Image src={whArrow} alt={"Virtual Rooms"} />
                         </Link>
@@ -412,10 +412,10 @@ export default function Home() {
         </header>
       )}
       <HmTextSec home={true} text={data?.bannersection?.content || hmText} />
-      <div className="container" id="home-about-us-heading">
+      <div className="container" >
         <div className="row justify-content-center">
-          <div className="col-lg-12 col-12">
-            <div className="cus-card">
+          <div className="col-lg-12 col-12" id="home-about-us-heading">
+            <div className="cus-card" >
               <p
                 onClick={() => sessionStorage.setItem("home_about_us_heading_key",true)}
                 className="para mb-0"

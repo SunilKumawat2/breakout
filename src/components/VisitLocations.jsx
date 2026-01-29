@@ -38,7 +38,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
         title: "Go Virtual",
         image: GoVirtual,
         // image: data?.image,
-        slug: "virtual-game",
+        slug: "virtual",
       });
     };
 

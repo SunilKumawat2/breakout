@@ -83,6 +83,7 @@ import WordByWordAnimation from "@/helpers/WordByWordAnimation";
 
 const page = () => {
   const [corporate, setCorporate] = useState(null);
+  console.log("corporate_corporate_123",corporate)
   const [brandLogos, setBrandLogos] = useState(null);
   useEffect(() => {
     const fetchCorporate = async () => {
@@ -256,6 +257,9 @@ const page = () => {
                   corporate?.choicessection?.images?.length > 0 &&
                   corporate?.choicessection?.images?.map((bd, index) => (
                     <div className="col-lg-4 col-12" key={index}>
+                      {
+                        bd?.heading != "Escape Rooms" && (
+                      <Link href={`escape-rooms/${bd?.slug}`}>
                       <div className="location-card">
                         <div className="location-card-img">
                           {bd.image && (
@@ -273,6 +277,32 @@ const page = () => {
                           />
                         </div>
                       </div>
+                      </Link>
+                        )
+                      }
+                      {
+                       bd?.heading == "Escape Rooms" && (
+                        <Link href="/escape-rooms">
+                        <div className="location-card">
+                          <div className="location-card-img">
+                            {bd.image && (
+                              <Image
+                                src={bd.image}
+                                width={800}
+                                height={800}
+                                alt={bd.heading}
+                              />
+                            )}
+                          </div>
+                          <div className="location-card-content">
+                            <h3
+                              dangerouslySetInnerHTML={{ __html: bd.heading }}
+                            />
+                          </div>
+                        </div>
+                        </Link>
+                          ) 
+                      }
                     </div>
                   ))}
               </div>

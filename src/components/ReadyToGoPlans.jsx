@@ -21,7 +21,7 @@ import Link from "next/link";
 import swiperPrev from "@/images/chev-left.svg";
 import swiperNext from "@/images/chev-right.svg";
 
-const ReadyToGoPlans = ({ data,className="" }) => {
+const ReadyToGoPlans = ({ data, className = "" }) => {
   const [active, setActive] = useState(null);
   let data1 = data;
   if (data) {

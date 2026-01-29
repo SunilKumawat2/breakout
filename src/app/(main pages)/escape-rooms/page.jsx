@@ -179,7 +179,7 @@ const page = () => {
             <div className="row row-gap-25">
               {escapeRooms &&
                 escapeRooms.map((room, index) => (
-                  <div className="col-lg-4 col-12" key={index}>
+                  <div className="col-lg-4 col-12" onClick={()=> sessionStorage.setItem("scrollToEscapeRooms", true)} key={index}>
                     <EscapeRoomCard room={room} />
                   </div>
                 ))}

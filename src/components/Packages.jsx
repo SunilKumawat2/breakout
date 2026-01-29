@@ -227,13 +227,13 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
                 ></p>
 
               )}
-              <Link
+              {/* <Link
                 href="#"
                 className="main-btn dark-btn"
                 onClick={() => setShow1(true)}
               >
                 <span>T&C Apply</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

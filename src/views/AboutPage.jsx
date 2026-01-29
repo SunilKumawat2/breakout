@@ -213,8 +213,8 @@ const AboutPage = () => {
             <div className="row align-items-center">
               <div className="col-lg-6 col-12">
                 <div className="vis-img">
-                  
-                  {corporate?.visionsection?.image && (
+
+                  {/* {corporate?.visionsection?.image && (
                     <Image
                       src={corporate?.visionsection?.image}
                       alt="vis-img"
@@ -222,7 +222,20 @@ const AboutPage = () => {
                       height={500}
                       className="w-100 h-auto"
                     />
-                  )}
+                  )} */}
+                  <video
+                    className="w-100 h-auto"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls={false}
+                  >
+                    <source src="/videos/founder-video.mp4" type="video/mp4" />
+                  </video>
+
+
+
                 </div>
               </div>
               <div className="col-lg-5 col-12">
@@ -514,14 +527,14 @@ const AboutPage = () => {
                       {escaperoomLocations &&
                         escaperoomLocations?.map((link, index) => (
                           <li key={index}>
-                            <Link href={`/location/${link.slug}`}>
+                            <Link href={`/locations/${link.slug}`}>
                               <span>{link.title}</span>
                               <Image src={whArrow} alt={link.title} />
                             </Link>
                           </li>
                         ))}
                       <li>
-                        <Link href={`/virtual-game`}>
+                        <Link href={`/virtual`}>
                           <span>Virtual Rooms</span>
                           <Image src={whArrow} alt={"Virtual Rooms"} />
                         </Link>
@@ -615,7 +628,7 @@ const AboutPage = () => {
             <div className="row">
               <div className="col-lg-12 text-center">
                 <h2 className="sec-head medium">Freethinkers and  <span>Affiliates</span></h2>
-                </div>
+              </div>
               <div className="col-12">
                 <div className="overlay-box">
                   <div className="row main-row">

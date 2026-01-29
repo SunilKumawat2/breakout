@@ -205,7 +205,7 @@ const Page = async ({ params }) => {
                     </h3>
                   </div>
                   {escapeRoomsExtreme?.map((room, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
+                    <div className="col-lg-4 col-12" onClick={()=> sessionStorage.setItem("scrollToEscapeRooms",true)} key={index}>
                       <EscapeRoomCard room={room} />
                     </div>
                   ))}

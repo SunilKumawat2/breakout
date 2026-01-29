@@ -19,16 +19,14 @@ const EscapeRoomCard = ({ room, hasVirtual = false }) => {
       style={{ cursor: "pointer" }}
       // onClick={() =>
       //   router.push(
-      //     `/${hasVirtual ? "virtual-game" : "escape-rooms"}/${
+      //     `/${hasVirtual ? "virtual" : "escape-rooms"}/${
       //       room?.slug || "murder-mystery"
       //     }`
       //   )
       // }
       onClick={() => {
-        sessionStorage.setItem("scrollToEscapeRooms", "true");
-        sessionStorage.setItem("scrollToEscapeRooms_ultra", "true");
         router.push(
-          `/${hasVirtual ? "virtual-game" : "escape-rooms"}/${
+          `/${hasVirtual ? "virtual" : "escape-rooms"}/${
             room?.slug || "murder-mystery"
           }`
         );

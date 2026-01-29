@@ -73,6 +73,7 @@ import { useRouter, usePathname } from "next/navigation";
 
 const page = () => {
   const { id } = useParams();
+ console.log("brithday_party",id)
   const [party, setParty] = useState(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -131,7 +132,7 @@ const page = () => {
         {party && party?.countersection && (
           <HmTextSec text={party?.countersection?.content} />
         )}
-        {party && party?.countersection && (
+        {party && party?.countersection && id != "family-friends" && (
           <div className="container">
             <div className="bday-text-wrap">
               <p

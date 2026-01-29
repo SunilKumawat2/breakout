@@ -37,6 +37,7 @@ import useScrollToTop from "@/helpers/useScrollToTop";
 const page = () => {
   // Remove scrollTo(0,0) on mount to avoid scroll jump issue
   const [party, setParty] = useState(null);
+  console.log("ksdlfgdjkshgjkdfhgkhdf",party)
   const [pageLoading, setPageLoading] = useState(true);
   useScrollToTop();
 
