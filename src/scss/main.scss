@@ -516,10 +516,10 @@ a {
 
 .imp-note-wrap {
     position: relative;
-    padding: 1.5em;
+    padding: 24px 40px;
     @include card;
     border-radius: 20px !important;
-    margin-top: 1.8em;
+    margin-top: 24px;
 
     p {
         margin-bottom: 0;
@@ -3614,8 +3614,8 @@ textarea:hover {
 }
 
 .row {
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: -16px;
+    margin-right: -16px;
 }
 
 .bday-form-card .select__indicator {

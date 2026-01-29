@@ -95,19 +95,19 @@ const page = () => {
             </div>
           </section>
         )}
-        <Image src={hmIllus} className="w-100 h-auto" alt="hm-text-bg" />
+        <Image src={hmIllus} className="illus-image" alt="hm-text-bg" />
       </div>
       <div className="black-gr-div">
-        <ReserveASlot room={room?.pricingsection} />
+        <ReserveASlot className="sec-padding-top" room={room?.pricingsection} />
         {room?.imagesection && (
           <GlobalReviewWidget
             data={room?.imagesection}
             reviews={room?.googlereviews}
           />
         )}
-        <Image src={illus3} className="w-100 h-auto" alt="illus3" />
+        <Image src={illus3} className="illus-image" alt="illus3" />
       </div>
-      {room?.faqsection && <FaqSection data={room?.faqsection} />}
+      {room?.faqsection && <FaqSection className="sec-padding-top" data={room?.faqsection} />}
       {/* <FaqSection /> */}
       <div className="black-gr-div">
         <section className="section-padding esc-section" id="escape-rooms-section">

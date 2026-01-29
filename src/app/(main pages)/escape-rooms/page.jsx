@@ -120,7 +120,7 @@ const page = () => {
           <HmTextSec className="sec-padding-top" text={rooms?.iconsection?.description} />
         )}
         {rooms?.iconsection && (
-          <section className="sec-padding-top">
+          <section className="sec-padding-top cinematic-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -130,7 +130,7 @@ const page = () => {
                       __html: rooms?.iconsection?.heading,
                     }}
                   />
-                  <div className="row row-gap-25 mt-5">
+                  <div className="row row-gap-25">
                     {rooms?.iconsection?.icons?.length > 0 &&
                       rooms?.iconsection?.icons.map((item, index) => (
                         <div className="col-lg-3 col-12" key={index}>
@@ -162,8 +162,8 @@ const page = () => {
         {rooms?.iconsection && (
           <TrustedSection className="pb-0" removeHeading={true} data={rooms?.iconsection} />
         )}
-        <LogoSec className="pb-0" title="In the <span>News</span>" />
-        <Image src={hmIllus} alt="illus3" className="illus-3 w-100 h-auto" />
+        <LogoSec className="pb-0 pt-80" title="In the <span>News</span>" />
+        <Image src={hmIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
         <VisitLocations className="sec-padding-top" />
@@ -186,7 +186,7 @@ const page = () => {
             </div>
           </div>
         </section>
-        <Image src={illus3} alt="illus3" className="illus-3 w-100 h-auto" />
+        <Image src={illus3} alt="illus3" className="illus-image" />
       </div>
       {/* <section className="section-padding counter-sec pb-0">
           <div className="container">
@@ -220,7 +220,7 @@ const page = () => {
           <HomeContact textData={rooms?.footersection} />
         )}
       </div>
-
+      
       {/* <PeakExpSec /> */}
       {/* </div> */}
     </>
