@@ -68,6 +68,7 @@ import Packages from "@/components/Packages";
 import PartyExpertCon from "@/components/PartyExpertCon";
 
 import movieIllus from "@/images/movie-illus.svg";
+import movieIllus1 from "@/images/movie-illus1.svg";
 import OurLocationSec from "@/components/OurLocationSec";
 import coupleIllus from "@/images/couple-illus.svg";
 import loveIllus from "@/images/love-illus.svg";
@@ -94,7 +95,7 @@ import abImg3 from "@/images/gal3.png";
 
 const AboutPage = () => {
   const [corporate, setCorporate] = useState(null);
- 
+
   const [brandLogos, setBrandLogos] = useState(null);
   const [collapse, setCollapse] = useState("desktop");
   const { escaperoomLocations, loading, errors } = useGlobalContext();
@@ -131,7 +132,7 @@ const AboutPage = () => {
     const fetchCorporate = async () => {
       const response = await api.get("about-us-page");
       setCorporate(response.data.data);
-      console.log("corporate_about_page",response)
+      console.log("corporate_about_page", response)
     };
     fetchCorporate();
     const fetchBrandLogos = async () => {
@@ -207,11 +208,12 @@ const AboutPage = () => {
       )}
 
       <div className="black-gr-div">
-        <section className="section-padding">
+        <section className="pt-80 vision-mission-sec">
           <div className="container">
             <div className="row align-items-center">
               <div className="col-lg-6 col-12">
                 <div className="vis-img">
+                  
                   {corporate?.visionsection?.image && (
                     <Image
                       src={corporate?.visionsection?.image}
@@ -223,30 +225,34 @@ const AboutPage = () => {
                   )}
                 </div>
               </div>
-              <div className="col-lg-6 col-12">
-                <div className="vis-con">
-                  <h3
-                    className="sec-head sm-head medium yellow-text"
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.visionsection?.heading1,
-                    }}
-                  />
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.visionsection?.description1,
-                    }}
-                  />
-                  <h3
-                    className="sec-head sm-head medium yellow-text mt-4"
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.visionsection?.heading2,
-                    }}
-                  />
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.visionsection?.description2,
-                    }}
-                  />
+              <div className="col-lg-5 col-12">
+                <div className="vis-con ms-4">
+                  <div className="text-box mb-40">
+                    <h3
+                      className="sec-head sm-head medium yellow-text mb-3"
+                      dangerouslySetInnerHTML={{
+                        __html: corporate?.visionsection?.heading1,
+                      }}
+                    />
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: corporate?.visionsection?.description1,
+                      }}
+                    />
+                  </div>
+                  <div className="text-box mb-40">
+                    <h3
+                      className="sec-head sm-head medium yellow-text mb-3"
+                      dangerouslySetInnerHTML={{
+                        __html: corporate?.visionsection?.heading2,
+                      }}
+                    />
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: corporate?.visionsection?.description2,
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -257,12 +263,12 @@ const AboutPage = () => {
           <TrustedSection data={corporate?.countersection} />
         )}
         {corporate && corporate?.contentsection && (
-          <section className="section-padding">
+          <section className="content-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 ">
                   <h3
-                    className="sec-head medium sm-head "
+                    className="sec-head medium sm-head"
                     dangerouslySetInnerHTML={{
                       __html: corporate?.contentsection?.heading,
                     }}
@@ -279,11 +285,11 @@ const AboutPage = () => {
           </section>
         )}
 
-        <Image src={movieIllus} className={"w-100 h-auto"} alt="bday" />
+        <Image src={movieIllus1} className={"illus-image"} alt="bday" />
       </div>
 
       <div className="black-gr-div">
-        <section className="section-padding">
+        <section className="movement-sec sec-padding-top">
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center">
@@ -295,27 +301,27 @@ const AboutPage = () => {
                 </h3>
               </div>
             </div>
-            <div className="row row-gap-25 mt-5">
+            <div className="row row-gap-25">
               {
-           corporate?.cardssection?.cards?.map((about_card_fun_result,id)=>{
-            return(
-                <div className="col-lg-4 col-12" key={id}>
-                <div className="ab-card">
-                  <img src={about_card_fun_result?.image} alt="icon1" />
-                  <h3>
-                    {/* <span>F</span>un */}
-                    {about_card_fun_result?.heading}
-                  </h3>
-                  <p className="para">
-                    {about_card_fun_result?.description}
-                  </p>
-                </div>
-              </div>
-             
-            )
-           })
+                corporate?.cardssection?.cards?.map((about_card_fun_result, id) => {
+                  return (
+                    <div className="col-lg-4 col-12" key={id}>
+                      <div className="ab-card">
+                        <img src={about_card_fun_result?.image} alt="icon1" />
+                        <h3>
+                          {/* <span>F</span>un */}
+                          {about_card_fun_result?.heading}
+                        </h3>
+                        <p className="para">
+                          {about_card_fun_result?.description}
+                        </p>
+                      </div>
+                    </div>
+
+                  )
+                })
               }
-            
+
               {/* <div className="col-lg-4 col-12">
                 <div className="ab-card">
                   <Image src={icon2} alt="icon2" />
@@ -344,24 +350,22 @@ const AboutPage = () => {
           </div>
         </section>
         {corporate && corporate?.ourstorysection && (
-          <section className="section-padding">
+          <section className="section-padding our-story-sec">
             <div className="container">
               <div className="row  align-items-center">
                 <div className="col-lg-5 col-12">
                   <div className="vis-img">
                     {corporate?.ourstorysection?.image && (
-                      <Image
+                      <img
                         src={corporate?.ourstorysection?.image}
                         alt="vis-img"
-                        width={800}
-                        height={800}
                         className="w-100 h-auto"
                       />
                     )}
                   </div>
                 </div>
-                <div className="col-lg-6 offset-lg-1 col-12">
-                  <div className="vis-con">
+                <div className="col-lg-7 col-12">
+                  <div className="vis-con ms-4">
                     <h3
                       className="sec-head  medium"
                       dangerouslySetInnerHTML={{
@@ -380,7 +384,7 @@ const AboutPage = () => {
           </section>
         )}
         {corporate && corporate?.ourfounderssection && (
-          <section className="section-padding">
+          <section className="founder-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -392,7 +396,7 @@ const AboutPage = () => {
                   />
                 </div>
               </div>
-              <div className="row mt-5">
+              <div className="row justify-content-center">
                 <div className="col-12">
                   <TeamCard
                     type="founder"
@@ -404,9 +408,9 @@ const AboutPage = () => {
           </section>
         )}
         {corporate && corporate?.ourleaderssection && (
-          <section className="section-padding">
+          <section className="leader-sec section-padding pb-0">
             <div className="container">
-              <div className="row">
+              <div className="row justify-content-center">
                 <div className="col-lg-12 text-center">
                   <h3
                     className="sec-head medium sm-head"
@@ -415,24 +419,27 @@ const AboutPage = () => {
                     }}
                   />
                 </div>
+                <div className="col-lg-12">
+                  <div className="row">
+                    {corporate?.ourleaderssection?.ourleaders?.length > 0 &&
+                      corporate?.ourleaderssection?.ourleaders?.map(
+                        (item, index) => (
+                          <div className="col-lg-6 col-12" key={index}>
+                            <TeamCard type="leader" data={item} />
+                          </div>
+                        )
+                      )}
+                  </div>
+                </div>
               </div>
-              <div className="row mt-5">
-                {corporate?.ourleaderssection?.ourleaders?.length > 0 &&
-                  corporate?.ourleaderssection?.ourleaders?.map(
-                    (item, index) => (
-                      <div className="col-lg-6 col-12" key={index}>
-                        <TeamCard type="leader" data={item} />
-                      </div>
-                    )
-                  )}
-              </div>
+
             </div>
           </section>
         )}
         {corporate && corporate?.ouradvisorssection && (
-          <section className="section-padding pb-0">
+          <section className="section-padding pb-0 advisor-sec">
             <div className="container">
-              <div className="row">
+              <div className="row justify-content-center">
                 <div className="col-lg-12 text-center">
                   <h3
                     className="sec-head medium sm-head"
@@ -441,29 +448,32 @@ const AboutPage = () => {
                     }}
                   />
                 </div>
+                <div className="col-lg-12">
+                  <div className="row">
+                    {corporate?.ouradvisorssection?.ouradvisors?.length > 0 &&
+                      corporate?.ouradvisorssection?.ouradvisors?.map(
+                        (item, index) => (
+                          <div className="col-12" key={index}>
+                            <TeamCard type="advisor" data={item} />
+                          </div>
+                        )
+                      )}
+                  </div>
+                </div>
               </div>
-              <div className="row mt-5">
-                {corporate?.ouradvisorssection?.ouradvisors?.length > 0 &&
-                  corporate?.ouradvisorssection?.ouradvisors?.map(
-                    (item, index) => (
-                      <div className="col-lg-6 col-12" key={index}>
-                        <TeamCard type="advisor" data={item} />
-                      </div>
-                    )
-                  )}
-              </div>
+
             </div>
           </section>
         )}
         <Image
           src={mummyIllus}
           alt="partyillus"
-          className="w-100 h-auto"
+          className="illus-image"
           style={{ marginBottom: "-1px" }}
         />
       </div>
       <div className="black-gr-div">
-        <header className="hm-header section-padding">
+        <header className="hm-header section-padding pb-0">
           <div className="container">
             <motion.div
               className="row"
@@ -471,9 +481,9 @@ const AboutPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
             >
-              <div className="col-lg-12 col-12 text-center">
+              <div className="col-lg-12 col-12 text-center mb-40">
                 {/* <Revolvingtext text="Set Your" /> */}
-                <h2 className="sec-head sm medium text-center">
+                <h2 className="sec-head sm medium text-center mb-3">
                   <span>Experience the Moment</span> with Breakout®!
                 </h2>
                 <p className="para big">
@@ -483,7 +493,7 @@ const AboutPage = () => {
               </div>
             </motion.div>
             <motion.div
-              className="row row-gap-25 mt-4"
+              className="row row-gap-25"
               variants={staggerContainer}
               initial="initial"
               animate="animate"
@@ -594,13 +604,103 @@ const AboutPage = () => {
           </div>
         </header>
 
-        <section className="section-padding">
+        <section className="section-padding gallery-sec pb-0">
           <StripGallery images={abImages} />
         </section>
 
         <HomeContact noTextBottom={false} privacyLine={false} noImage={true} />
 
-        <Image src={corpIllus} alt="illus3" className="illus-3 w-100 h-auto" />
+        <section className="overlay-sec pt-80">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <h2 className="sec-head medium">Freethinkers and  <span>Affiliates</span></h2>
+                </div>
+              <div className="col-12">
+                <div className="overlay-box">
+                  <div className="row main-row">
+                    <div className="col-12" >
+                      <div className="overlay-box-item mb-40">
+                        <h3 className="sec-head mb-3 h3">
+                          1. M/s. Breakfree Cafe
+                        </h3>
+                        <p>
+                          <strong>Address :- </strong>unit 304, No.7, Prime Square, 3rd floor, Block 4, Whitefield Main Rd, Bengaluru, Karnataka 560066
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="overlay-box-item mb-40">
+                        <h3 className="sec-head mb-3 h3">
+                          2. M/s. Escape Ventures
+                        </h3>
+                        <p>
+                          <strong>Address :- </strong>unit 306, No.7, Prime Square, 3rd floor, Block 4, Whitefield Main Rd, Bengaluru, Karnataka 560066
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="overlay-box-item mb-40">
+                        <h3 className="sec-head mb-3 h3">
+                          3. M/s. Breakfree Ventures
+                        </h3>
+                        <p>
+                          <strong>Address :- </strong>unit, 305, No.7, Prime Square, 3rd floor, Block 4, Whitefield Main Rd, Bengaluru, Karnataka 560066
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="overlay-box-item mb-40">
+                        <h3 className="sec-head mb-3 h3">
+                          4. M/s. Free Thinker Experience
+                        </h3>
+                        <p>
+                          <strong>Address :- </strong>27, NMR Building, 1st floor, Intermediate Ring Road, 100 Feet Rd, Koramangala, Bengaluru, Karnataka 560047
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="overlay-box-item mb-40">
+                        <h3 className="sec-head mb-3 h3">
+                          5. M/s. Free Thinker Services
+                        </h3>
+                        <p>
+                          <strong>Address :- </strong>2nd Floor, No. 13, 6th Cross, 100 Feet Road, Srinivagilu, Bangalore - 560 047
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="overlay-box-item mb-40">
+                        <h3 className="sec-head mb-3 h3">
+                          6. M/s. Breakout Ventures
+                        </h3>
+                        <p>
+                          <strong>Address :- </strong>2nd Floor, No 8, 24th Main Rd, 5th Phase, Ayodya Nagar, J P Nagar Phase 5, J. P. Nagar, Bengaluru, Karnataka 560078
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="overlay-box-item mb-40">
+                        <h3 className="sec-head mb-3 h3">
+                          7. M/s. The Escapist Registered and Managed by its Karta Mothi G. Venkatesan HUF
+                        </h3>
+                        <p>
+                          <strong>Address :- </strong>27, NMR Building, 2nd floor, Intermediate Ring Road, 100 Feet Rd, Koramangala, Bengaluru, Karnataka 560047
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <Image src={corpIllus} alt="illus3" className="illus-image" />
       </div>
     </>
   );

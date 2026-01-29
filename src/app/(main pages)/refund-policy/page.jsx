@@ -26,19 +26,19 @@ const page = async () => {
   //     fetchData();
   //   }, []);
   return (
-    <div className="section-padding">
+    <div className="pt-80">
       <div className="black-gr-div">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
               <h1
-                className="sec-head pb-5 medium sm-head mb-5 text-center yellow-text"
+                className="sec-head medium sm-head mb-0 text-center yellow-text"
                 dangerouslySetInnerHTML={{
                   __html: data?.heading || "Refund Policy",
                 }}
               />
               <div
-                className="main-con mt-5 para"
+                className="main-con pt-80 para"
                 dangerouslySetInnerHTML={{
                   __html: data?.content || "Refund Policy",
                 }}
@@ -46,7 +46,7 @@ const page = async () => {
             </div>
           </div>
         </div>
-        <Image src={tsIllus} alt="privacy-policy" className="w-100 h-auto" />
+        <Image src={tsIllus} alt="privacy-policy" className="illus-image" />
       </div>
     </div>
   );

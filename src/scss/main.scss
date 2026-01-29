@@ -2937,7 +2937,7 @@ a {
     }
 
     &.advisor {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
     }
 
     .team-img {
@@ -3741,7 +3741,8 @@ textarea:hover {
     // padding-bottom: 5px;
 }
 
-.calendar-days .arrow:disabled,.calendar-days .arrow.disabled  {
+.calendar-days .arrow:disabled,
+.calendar-days .arrow.disabled {
     opacity: 50%;
     cursor: not-allowed;
 }
@@ -3777,8 +3778,8 @@ textarea:hover {
     opacity: 0.4;
     pointer-events: none;
     cursor: not-allowed;
-  }
-  
+}
+
 
 .calendar-days-outer .month-year-dropdown {
     position: absolute;
@@ -3822,6 +3823,10 @@ textarea:hover {
 .calendar-days-outer .month-year-dropdown .years .option {
     width: 40%;
     cursor: pointer;
+}
+
+.overlay-box .main-row .col-12:last-child .overlay-box-item {
+    margin-bottom: 0 !important;
 }
 
 // new css start 

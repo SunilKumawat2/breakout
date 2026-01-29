@@ -98,21 +98,19 @@ const TeamCard = ({ type, data }) => {
       return (
         <div className="team-card big">
           <div className="row align-items-center row-gap-25">
-            <div className="col-lg-6 col-12">
+            <div className="col-lg-5 col-12">
               <div className="team-img">
                 {data?.image && (
-                  <Image
+                  <img
                     src={data?.image}
-                    width={800}
-                    height={800}
                     style={{ borderRadius: "18px", height: "auto" }}
                     alt="team"
                   />
                 )}
               </div>
             </div>
-            <div className="col-lg-6 col-12">
-              <div className="team-con">
+            <div className="col-lg-7 col-12">
+              <div className="team-con ms-4">
                 <h3 className="team-title">{data?.name}</h3>
                 <p className="desig">{data?.designation}</p>
                 {renderSocialLinks(data)}
@@ -133,10 +131,8 @@ const TeamCard = ({ type, data }) => {
             <div className="col-lg-6 col-12">
               <div className="team-img">
                 {data?.image && (
-                  <Image
+                  <img
                     src={data?.image}
-                    width={800}
-                    height={800}
                     alt="team"
                   />
                 )}
@@ -161,22 +157,20 @@ const TeamCard = ({ type, data }) => {
     case "advisor":
       return (
         <div className="team-card leader advisor">
-          <div className="row align-items-start row-gap-25">
-            <div className="col-lg-5 col-12">
+          <div className="row align-items-center advisor-row">
+            <div className="col-lg-2 col-12">
               <div className="team-img">
                 {data?.image && (
-                  <Image
+                  <img
                     src={data?.image}
-                    width={800}
-                    height={800}
                     alt="team"
                   />
                 )}
               </div>
             </div>
-            <div className="col-lg-7 col-12">
+            <div className="col-lg-10 col-12">
               <div className="team-con">
-                <div className="tp-team">
+                <div className="tp-team mb-3">
                   <div className="t-left">
                     <h3 className="team-title">{data?.name}</h3>
                     <p className="desig">{data?.designation}</p>
