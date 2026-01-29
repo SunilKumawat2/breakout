@@ -165,7 +165,7 @@ const page = () => {
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("brithday_party_birthday_of_my");
 
-    if (shouldScroll === "true" && birthdayList.length > 0) {
+    if (shouldScroll === "true" && data) {
       // wait for DOM paint
       setTimeout(() => {
         const section = document.getElementById("brithday-party-birthday-of-my-section");
@@ -181,7 +181,7 @@ const page = () => {
         sessionStorage.removeItem("brithday_party_birthday_of_my");
       }, 100);
     }
-  }, [birthdayList]);
+  }, [data]);
 
   return (
     <>
