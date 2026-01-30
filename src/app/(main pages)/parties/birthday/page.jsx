@@ -179,7 +179,7 @@ const page = () => {
 
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("brithday_party_birthday_of_my");
-      }, 100);
+      }, 1000);
     }
   }, [data]);
 

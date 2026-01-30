@@ -14,7 +14,7 @@ const EscapeRoomCard = ({ room, hasVirtual = false }) => {
   if (!room) return null;
 
   return (
-    <div
+    <div id="escape-rooms-section"
       className="esc-card"
       style={{ cursor: "pointer" }}
       // onClick={() =>

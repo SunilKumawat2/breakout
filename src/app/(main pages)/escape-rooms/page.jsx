@@ -83,10 +83,31 @@ const page = () => {
 
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("scrollToEscapeRooms");
-      }, 500);
+      }, 1000);
     }
   }, [escapeRooms]);
 
+
+  useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("visit_location_key");
+
+    if (shouldScroll === "true" && escapeRooms?.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("visit-location-section");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("visit_location_key");
+      }, 500);
+    }
+  }, [escapeRooms]);
 
 
   return (
@@ -166,7 +187,7 @@ const page = () => {
         <Image src={hmIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
-        <VisitLocations className="sec-padding-top" />
+        <VisitLocations className="sec-padding-top" id="visit-location-section"/>
         <section className="section-padding esc-sec pb-0" id="escape-rooms-section">
           <div className="container">
             <div className="row">
@@ -179,7 +200,8 @@ const page = () => {
             <div className="row row-gap-25">
               {escapeRooms &&
                 escapeRooms.map((room, index) => (
-                  <div className="col-lg-4 col-12" onClick={()=> sessionStorage.setItem("scrollToEscapeRooms", true)} key={index}>
+                  <div className="col-lg-4 col-12" 
+                  onClick={()=> sessionStorage.setItem("scrollToEscapeRooms", true)} key={index}>
                     <EscapeRoomCard room={room} />
                   </div>
                 ))}

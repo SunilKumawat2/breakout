@@ -222,7 +222,7 @@ export default function Home() {
 
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("home_about_us_heading_key");
-      }, 500);
+      }, 1000);
     }
   }, [data]);
 

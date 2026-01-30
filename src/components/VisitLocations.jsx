@@ -46,7 +46,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
   }, []);
 
   return (
-      <section className={`loc-section ${className}`}>
+      <section className={`loc-section ${className}`} id="visit-location-section">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center col-12">
@@ -68,13 +68,13 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
           <div className="row row-gap-25">
             {escaperoomLocations &&
               escaperoomLocations.map((item, index) => (
-                <div className="col-lg-4 col-12" key={index}>
+                <div className="col-lg-4 col-12" onClick={()=>sessionStorage.setItem("visit_location_key",true)} key={index}>
                   <LocationCard location={item} />
                 </div>
               ))}
             {virtualCard && isVirtual && (
-              <div className="col-lg-4 col-12">
-                <LocationCard location={virtualCard} isVirtual={true}/>
+              <div className="col-lg-4 col-12" onClick={()=>sessionStorage.setItem("visit_location_key",true)}>
+                <LocationCard  location={virtualCard} isVirtual={true}/>
               </div>
             )}
           </div>
