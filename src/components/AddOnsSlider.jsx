@@ -23,6 +23,7 @@ import api from "@/app/helpers/api";
 
 const AddOnsSlider = ({ data,className="" }) => {
   const [activities, setActivities] = useState(null);
+  console.log("activities_activities_activities",activities)
   const addOns = [
     {
       image: cv1,
@@ -148,7 +149,7 @@ const AddOnsSlider = ({ data,className="" }) => {
                       </div>
                       <div className="blog-card-content">
                         <h3
-                          dangerouslySetInnerHTML={{ __html: item.heading }}
+                          dangerouslySetInnerHTML={{ __html: item?.title }}
                         />
                       </div>
                     </Link>

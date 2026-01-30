@@ -192,7 +192,7 @@ const page = () => {
           logos={brandLogos}
         />
 
-        <PartyExpertCon />
+        <PartyExpertCon className="pt-80" data="corporate_unwind" />
 
         <Image src={bdayIllus} className={"illus-image"} alt="bday" />
       </div>
@@ -354,7 +354,7 @@ const page = () => {
           </section>
         )}
 
-        <PartyExpertCon />
+        {/* <PartyExpertCon /> */}
 
         {corporate && corporate?.imagesection && (
           <>

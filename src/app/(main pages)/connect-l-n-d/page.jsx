@@ -241,7 +241,7 @@ const page = () => {
         <Image src={wristIllus} alt="illus3" className="illus-3 w-100 h-auto" />
       </div>
       <div className="black-gr-div">
-        <PartyExpertCon />
+        <PartyExpertCon className="pt-80" data="connect_lnd"/>
         <GamificationSlider />
         <section className="section-padding  ph-frame-section">
           <div className="container">

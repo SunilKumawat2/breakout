@@ -50,6 +50,7 @@ import api from "@/helpers/api";
 import TrustedSection from "@/components/TrustedSection";
 import GReviewSlider from "@/components/GReviewSlider";
 import PhotographicStyledImage from "@/components/PhotographicStyledImage";
+import PartyGetInTouch from "@/components/PartyGetInTouch";
 
 const page = () => {
   const [birthdayData, setBirthdayData] = useState(null);
@@ -153,7 +154,7 @@ const page = () => {
           </div>
         </section> */}
         {/* <ReserveASlot /> */}
-        <PartyExpertCon />
+        <PartyExpertCon className="pt-80" data="birthday"/>
 
         <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
       </div>

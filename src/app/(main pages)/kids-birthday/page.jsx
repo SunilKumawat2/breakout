@@ -245,7 +245,7 @@ const page = () => {
             <Image src={partyillus} alt="illus3" className='illus-3 w-100 h-auto' />
         </div>
         <div className='black-gr-div'>
-            <PartyExpertCon />
+            <PartyExpertCon className="pt-80" data="kids_birthday"/>
             <ReadyToGoPlans />
             <Videotestimonials />
             <FaqSection />

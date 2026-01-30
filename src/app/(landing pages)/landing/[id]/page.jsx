@@ -317,7 +317,7 @@ const Page = async ({ params }) => {
             <GReviewSlider commonStars={false} data={rooms?.googlereviews} />
           )}
 
-          <HomeContact noTextBottom={false} />
+          <HomeContact page_name="landing" noTextBottom={false} />
         </div>
 
         {/* <PeakExpSec /> */}

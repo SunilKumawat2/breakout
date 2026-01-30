@@ -15,16 +15,39 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useRouter, usePathname } from "next/navigation";
 import { toast } from "react-toastify";
-const defaultLookingForOptions = [
+// const defaultLookingForOptions = [
+//   { value: "Birthdays", label: "Birthdays" },
+//   { value: "Corporate", label: "Corporate" },
+//   { value: "Escape Rooms", label: "Escape Rooms" },
+//   { value: "Farewells", label: "Farewells" },
+//   { value: "Bachelor(ette)", label: "Bachelor(ette)" },
+//   // { value: "Things to do", label: "Things to go" },
+//   { value: "Virtual", label: "Virtual" },
+//   { value: "Others", label: "Others" },
+// ];
+const landingOptions = [
   { value: "Birthdays", label: "Birthdays" },
   { value: "Corporate", label: "Corporate" },
   { value: "Escape Rooms", label: "Escape Rooms" },
   { value: "Farewells", label: "Farewells" },
   { value: "Bachelor(ette)", label: "Bachelor(ette)" },
+  { value: "Virtual", label: "Virtual" },
   { value: "Things to do", label: "Things to go" },
   { value: "Others", label: "Others" },
 ];
+
+const defaultOptions = [
+  { value: "Birthdays", label: "Birthdays" },
+  { value: "Corporate", label: "Corporate" },
+  { value: "Escape Rooms", label: "Escape Rooms" },
+  { value: "Farewells", label: "Farewells" },
+  { value: "Bachelor(ette)", label: "Bachelor(ette)" },
+  { value: "Virtual", label: "Virtual" },
+  { value: "Others", label: "Others" },
+];
+
 const HomeContact = ({
+  page_name,
   home = false,
   img,
   className = "",
@@ -32,8 +55,8 @@ const HomeContact = ({
   noTextBottom = true,
   noImage = false,
   textData,
-  LookingForOptions = defaultLookingForOptions,
 }) => {
+
   const defaultData = {
     heading: "Best Escape Room in Bangalore for Ultimate Thrills",
     description1:
@@ -44,9 +67,11 @@ const HomeContact = ({
 
   const router = useRouter();
   const page = usePathname();
-
+console.log("page_name",page_name)
   const [loading, setLoading] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const options =
+  page_name === "landing" ? landingOptions : defaultOptions;
 
   const customStyles = {
     control: (base, state) => ({
@@ -274,7 +299,7 @@ const HomeContact = ({
                           onBlur={() =>
                             formik.setFieldTouched("lookingFor", true)
                           }
-                          options={LookingForOptions}
+                          options={options}
                         />
                       </div>
                       {formik.touched.lookingFor &&

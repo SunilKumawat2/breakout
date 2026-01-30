@@ -168,7 +168,7 @@ const BirthdayBlog = ({ blogData }) => {
           <HmTextSec text={blogData?.bannersection?.content} />
         )}
 
-        <PartyExpertCon />
+        <PartyExpertCon className="pt-80" data="blog_birthday_blog"/>
 
         {blogData?.iconsection && (
           <FullSliderSec data={blogData?.iconsection} hasCardLinks={true} />

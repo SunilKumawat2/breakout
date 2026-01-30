@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { CommonModal } from "@/components/CommonModal";
 import Link from "next/link";
 
-const ReserveASlot = ({ room, onCheckEligibility,className = "", }) => {
+const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
   const {
     availableSlots,
     fetchAvailableSlots,
@@ -297,31 +297,35 @@ const ReserveASlot = ({ room, onCheckEligibility,className = "", }) => {
                   ))}
               </div>
               <p className="para mt-5 mb-0">
-                {room?.note}{" "}
-                <span
-                  className="yellow-text"
-                  style={{
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    fontStyle: "italic",
-                  }}
-                  onClick={onCheckEligibility}
-                >
-                  Check eligibility Criteria
-                </span>
-               
-              </p>
-              <p className="para"> Kids Pricing. <span
-                  className="yellow-text"
-                  style={{
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    fontStyle: "italic",
-                  }}
-                  onClick={onCheckEligibility}
-                >
-                  Check here
-                </span></p>
+  {room?.note}{" "}
+  <span
+    className="yellow-text"
+    style={{
+      cursor: "pointer",
+      textDecoration: "underline",
+      fontStyle: "italic",
+    }}
+    onClick={() => onOpenFaq(3)}   // ← index 3
+  >
+    Check eligibility Criteria
+  </span>
+</p>
+
+<p className="para">
+  Kids Pricing.{" "}
+  <span
+    className="yellow-text"
+    style={{
+      cursor: "pointer",
+      textDecoration: "underline",
+      fontStyle: "italic",
+    }}
+    onClick={() => onOpenFaq(4)}   // ← index 4
+  >
+    Check here
+  </span>
+</p>
+
             </div>
             <button
               className="main-btn mt-4 dark-btn sm"

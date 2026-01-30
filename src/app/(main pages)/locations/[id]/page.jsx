@@ -156,19 +156,19 @@ const page = () => {
 
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("location_know_more");
-  
+
     if (shouldScroll === "true" && location?.imagecardssection?.card?.length > 0) {
       // wait for DOM paint
       setTimeout(() => {
         const section = document.getElementById("loction-know-more-section");
-  
+
         if (section) {
           section.scrollIntoView({
             behavior: "auto", // use "smooth" if you want animation
             block: "start",
           });
         }
-  
+
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("location_know_more");
       }, 500);
@@ -196,7 +196,26 @@ const page = () => {
     }
   }, [location]);
 
+  useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms_ultra");
 
+    if (shouldScroll === "true" && location?.imagecardssection?.card?.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("escape-rooms-ultra");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("scrollToEscapeRooms_ultra");
+      }, 1000);
+    }
+  }, [location]);
 
   return (
     <>
@@ -221,7 +240,8 @@ const page = () => {
               </div>
               <div className="row row-gap-25">
                 {location?.escaperooms?.extreme?.map((item, index) => (
-                  <div className="col-lg-4 col-12" key={index} onClick={()=>sessionStorage.setItem("scrollToEscapeRooms",true)}>
+                  <div className="col-lg-4 col-12" key={index}
+                    onClick={() => sessionStorage.setItem("scrollToEscapeRooms", true)}>
                     <EscapeRoomCard room={item} />
                   </div>
                 ))}
@@ -244,7 +264,8 @@ const page = () => {
                 </div>
                 <div className="row row-gap-25">
                   {location?.escaperooms?.ultra?.map((item, index) => (
-                    <div className="col-lg-4 col-12" key={index} onClick={()=>sessionStorage.setItem("scrollToEscapeRooms_ultra",true)}>
+                    <div className="col-lg-4 col-12" key={index}
+                      onClick={() => sessionStorage.setItem("scrollToEscapeRooms_ultra", true)}>
                       <EscapeRoomCard room={item} />
                     </div>
                   ))}
@@ -286,10 +307,11 @@ const page = () => {
           </div>
         </section> */}
         {location && location?.pricingsection && (
-          <ReserveASlot room={location?.pricingsection} onCheckEligibility={() => {
-            // Student discount wala FAQ (index 3)
-            setOpenFaqIndex(3);
-          }} />
+          <ReserveASlot
+            room={location?.pricingsection}
+            onOpenFaq={(index) => setOpenFaqIndex(index)}
+          />
+
         )}
         {location && location?.imagecardssection?.card?.length > 0 && (
           <section className="overlay-sec">
@@ -388,16 +410,16 @@ const page = () => {
           locationTitle={location?.title}
         // slug={location?.locationdetails}
         /> */}
-         <OurLocationSec
+        <OurLocationSec
           className="sec-padding-top"
           title={`About Our Breakout®  <span>${location?.title} Location</span>`}
           slug={location?.slug}
         />
-        <div className="col-lg-12 col-12 pt-80">
+        {/* <div className="col-lg-12 col-12 pt-80">
           {location && location?.googlereviews && (
             <GReviewSlider commonStars={false} data={location?.googlereviews} />
           )}
-        </div>
+        </div> */}
         {location && location?.videotestimonials && (
           <Videotestimonials className="pt-80" data={location?.videotestimonials} />
         )}

@@ -74,7 +74,7 @@ const Packages = ({ packages, category, capacity }) => {
           </div>
         </div>
       </section>
-      <PartyExpertCon />
+      <PartyExpertCon className="pt-80" data="quato_calecultor_quiz_result"/>
       <section className="section-padding text-center">
         <div className="container">
           <div className="row">

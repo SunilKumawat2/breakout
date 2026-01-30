@@ -231,7 +231,7 @@ const page = () => {
           </div>
         </section> */}
 
-        <PartyExpertCon className="pt-80" />
+        <PartyExpertCon className="pt-80" data="birthday" />
 
         <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
       </div>

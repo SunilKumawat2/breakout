@@ -174,7 +174,7 @@ const page = () => {
           </section>
         )}
 
-        <PartyExpertCon />
+        <PartyExpertCon className="pt-80" data="virtual"/>
 
         <Image
           src={virtualIllus}

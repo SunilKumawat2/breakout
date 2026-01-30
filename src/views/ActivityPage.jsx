@@ -122,7 +122,7 @@ const ActivityPage = () => {
             </div>
           </section>
         )}
-        <PartyExpertCon />
+        <PartyExpertCon className="pt-80" data="views_activities"/>
         {/* <ReserveASlot room={room?.pricingsection} /> */}
         <br/>
         {room?.imagesection && (

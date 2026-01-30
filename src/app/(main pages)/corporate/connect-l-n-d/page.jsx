@@ -106,64 +106,7 @@ const page = () => {
     fetchInnerList();
   }, []);
 
-  const banner = {
-    title: "Fun. Bond. Unwind",
-    subTitle: "<span>Most Unique Corporate Outing Destination</span>",
-    para: "Koramangala | JP Nagar | Whitefield | Virtual | Resorts",
-  };
 
-  const hmText =
-    "<span>Looking for</span> a break? We’ve <span>got you</span> covered!It’s time to <span>recharge. Get ready</span> for an unforgettable time!";
-
-  const escRooms = [
-    {
-      image: c1,
-      title: "Escape Rooms",
-    },
-    {
-      image: c2,
-      title: "Detective Job",
-    },
-    {
-      image: c3,
-      title: "Let Loose",
-    },
-    {
-      image: c4,
-      title: "Unwind",
-    },
-    {
-      image: c5,
-      title: "Scavenger Treasure",
-    },
-    {
-      image: c6,
-      title: "Bomb Defusal",
-    },
-  ];
-
-  const whyChoose = [
-    {
-      icon: cic1,
-      title: "Engages all Hierarchies",
-    },
-    {
-      icon: cic2,
-      title: "Unique Experiences",
-    },
-    {
-      icon: cic3,
-      title: "Premium Offerings",
-    },
-    {
-      icon: cic4,
-      title: "Breakout® X Guarantees ",
-    },
-    {
-      icon: cic5,
-      title: "Seamless Execution",
-    },
-  ];
 
   const handleFreeConsultationCardClick = (item) => {
     if (item.heading === "Free Consultation with Expert") {
@@ -179,7 +122,7 @@ const page = () => {
         <InnerPageBanner banner={corporate?.bannersection} bdayInner={true} />
       )}
       <LogoSec
-      className="pt-80"
+        className="pt-80"
         title="Brands that <span>loved M.A.G.I.C</span>"
         logos={brandLogos}
         link={false}
@@ -197,17 +140,18 @@ const page = () => {
                   className="underline-big-text"
                   dangerouslySetInnerHTML={{
                     __html: corporate?.contentsection?.note,
-                  }}Page 
+                  }}
                 />
+
               </div>
               {corporate?.contentsection?.footer && (
-              <p
-                className="sec-head medium-20 mt-5"
-                dangerouslySetInnerHTML={{
-                  __html: corporate.contentsection.footer,
-                }}
-              />
-            )}
+                <p
+                  className="sec-head medium-20 mt-5"
+                  dangerouslySetInnerHTML={{
+                    __html: corporate.contentsection.footer,
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -308,7 +252,7 @@ const page = () => {
           </section>
         )}
         {corporate && corporate?.slidersection && (
-          
+
           <AddOnsSlider className="pb-0 section-padding" data={corporate?.slidersection} />
         )}
         <PartyExpertCon title="<span>Add MAGIC</span> to your workplace" />
@@ -349,7 +293,7 @@ const page = () => {
                                 )}
                               </div>
                               <div className="blog-card-content">
-                                <h3 style={{fontSize:"16px",}}
+                                <h3 style={{ fontSize: "16px", }}
                                   dangerouslySetInnerHTML={{
                                     __html: item.heading,
                                   }}
@@ -421,7 +365,7 @@ const page = () => {
           />
         </div>
 
-        <BlogSlider className="pb-0"/>
+        <BlogSlider className="pb-0" />
         <LogoSec className="pb-0 pt-80" title="In The <span>News</span>" />
         {corporate && corporate?.footersection && (
           <section className="section-padding pb-0">

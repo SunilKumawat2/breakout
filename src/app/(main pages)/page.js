@@ -448,7 +448,8 @@ export default function Home() {
       <div className="black-gr-div">
         {/* <VisitLocations /> */}
         <div className="home-faq">
-          {data && data?.faqsection && <FaqSection className="sec-padding-top" data={data?.faqsection} />}
+          {data && data?.faqsection && 
+          <FaqSection className="sec-padding-top" data={data?.faqsection} />}
         </div>
         <section className="looking-sec section-padding d-none">
           <div className="container">
@@ -527,7 +528,7 @@ export default function Home() {
           </div>
         </section>
         {data && data?.footersection && (
-          <HomeContact textData={data?.footersection} img={homePageIllus} />
+          <HomeContact page_name="home" textData={data?.footersection} img={homePageIllus} />
         )}
       </div>
     </>
