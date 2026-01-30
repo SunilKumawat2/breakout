@@ -175,6 +175,28 @@ const page = () => {
     }
   }, [location]);
 
+  useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
+
+    if (shouldScroll === "true" && location?.imagecardssection?.card?.length > 0) {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("escape-rooms-section");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("scrollToEscapeRooms");
+      }, 1000);
+    }
+  }, [location]);
+
+
 
   return (
     <>
@@ -187,7 +209,7 @@ const page = () => {
           <HmTextlocationkoramangala text={location?.textsection?.description} />
         )}
         {location && location?.escaperooms?.extreme?.length > 0 && (
-          <section className="esc-sec" id="escape-rooms">
+          <section className="esc-sec" id="escape-rooms-section">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -199,7 +221,7 @@ const page = () => {
               </div>
               <div className="row row-gap-25">
                 {location?.escaperooms?.extreme?.map((item, index) => (
-                  <div className="col-lg-4 col-12" key={index}>
+                  <div className="col-lg-4 col-12" key={index} onClick={()=>sessionStorage.setItem("scrollToEscapeRooms",true)}>
                     <EscapeRoomCard room={item} />
                   </div>
                 ))}
@@ -222,7 +244,7 @@ const page = () => {
                 </div>
                 <div className="row row-gap-25">
                   {location?.escaperooms?.ultra?.map((item, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
+                    <div className="col-lg-4 col-12" key={index} onClick={()=>sessionStorage.setItem("scrollToEscapeRooms_ultra",true)}>
                       <EscapeRoomCard room={item} />
                     </div>
                   ))}
