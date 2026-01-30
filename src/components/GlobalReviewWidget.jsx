@@ -13,9 +13,10 @@ const GlobalReviewWidget = ({
   className = "",
 }) => {
   return (
-    <section className={`b-inv-g-review-widget ${className}`}>
+    <>
       {
         data && data?.image1 && (
+          <section className={`b-inv-g-review-widget ${className}`}>
           <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-12 col-12">
@@ -44,10 +45,11 @@ const GlobalReviewWidget = ({
             </div>
           </div>
         </div>
+        </section>
         )
       }
      
-    </section>
+     </>
   );
 };
 

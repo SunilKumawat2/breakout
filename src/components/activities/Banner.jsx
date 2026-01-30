@@ -18,7 +18,7 @@ import duraIcon from "@/images/dura.svg";
 import { CommonModal } from "@/components/CommonModal";
 import { useState } from "react";
 
-const Banner = ({ room, corporate = false }) => {
+const Banner = ({ room,className = "", corporate = false }) => {
   const [show, setShow] = useState(false);
 
   // Default values if room data is not available
@@ -42,7 +42,7 @@ const Banner = ({ room, corporate = false }) => {
           </Link>
         </div>
       </CommonModal>
-      <header className="esc-header section-padding">
+      <header className={`esc-header sec-padding-top ${className}`}>
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-5 col-12 text-center">
@@ -56,7 +56,7 @@ const Banner = ({ room, corporate = false }) => {
                 />
               </div>
             </div>
-            <div className="col-lg-6 offset-lg-1 col-12">
+            <div className="col-lg-7 col-12">
               <div className="esc-banner-content">
                 {corporate ? (
                   <>

@@ -100,19 +100,19 @@ const ActivityPage = () => {
             </div>
           </section>
         )}
-        <Image src={activityIllus} className="w-100 h-auto" alt="hm-text-bg" />
+        <Image src={activityIllus} className="illus-image" alt="hm-text-bg" />
       </div>
       <div className="black-gr-div">
         {room?.contentsection?.heading && (
-          <section className="section-padding">
+          <section className="sec-padding-top">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 col-12">
-                  <h2 className="sec-head sm-head mb-5 yellow medium">
+                  <h2 className="sec-head sm-head yellow medium">
                     <span>{room?.contentsection?.heading}</span>
                   </h2>
                   <p
-                    className="para mt-3"
+                    className="para"
                     dangerouslySetInnerHTML={{
                       __html: room?.contentsection?.content || "",
                     }}
@@ -124,19 +124,19 @@ const ActivityPage = () => {
         )}
         <PartyExpertCon className="pt-80" data="views_activities"/>
         {/* <ReserveASlot room={room?.pricingsection} /> */}
-        <br/>
+        
         {room?.imagesection && (
-          <GlobalReviewWidget
+          <GlobalReviewWidget className="section-padding pb-0"
             data={room?.imagesection}
             reviews={room?.googlereviews}
           />
         )}
-        {room?.faqsection && <FaqSection data={room?.faqsection} />}
-        <Image src={activity2Illus} className="w-100 h-auto" alt="illus3" />
+        {room?.faqsection && <FaqSection className="section-padding pb-0" data={room?.faqsection} />}
+        <Image src={activity2Illus} className="illus-image" alt="illus3" />
       </div>
       {/* <FaqSection /> */}
       <div className="black-gr-div">
-        <section className="section-padding esc-section">
+        <section className="section-padding esc-section pb-0">
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center col-12">
@@ -145,7 +145,7 @@ const ActivityPage = () => {
                 </h2>
               </div>
             </div>
-            <div className="row mt-5 row-gap-25" id="escape-rooms-section">
+            <div className="row row-gap-25" id="escape-rooms-section">
               {escapeRooms &&
                 escapeRooms.map((room, index) => (
                   <div className="col-lg-4 col-12" onClick={()=>sessionStorage.setItem("scrollToEscapeRooms",true)} key={index}>
@@ -155,7 +155,7 @@ const ActivityPage = () => {
             </div>
           </div>
         </section>
-        <VisitLocations isVirtual={false} />
+        <VisitLocations className="section-padding pb-0" isVirtual={false} />
         {/* <PartyExpertCon /> */}
         {/* <PartyEpertForActivity
           title={"<span>Running Out of Time?</span> Talk to a Party Expert Now"}

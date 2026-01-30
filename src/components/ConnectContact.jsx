@@ -86,11 +86,11 @@ const ConnectContact = ({
             </h2>
           </div>
         </div>
-        <div className="row mt-5">
+        <div className="row">
           <div className="col-lg-12">
             <div className="hm-con-form-card">
               <form onSubmit={formik.handleSubmit} autoComplete="off">
-                <div className="row align-items-center justify-content-between mt-4">
+                <div className="row align-items-center justify-content-between">
                   <div className="col-lg-5 col-12">
                     <div className="form-group">
                       <div className="input-group">
