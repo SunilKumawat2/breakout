@@ -57,17 +57,23 @@ import linkIcon from "@/images/link-icon.svg";
 import whatsappIcon from "@/images/whatsapp-icon.svg";
 import instaIcon from "@/images/insta-icon.svg";
 import xIcon from "@/images/x-ixon.svg";
+import gmail from "@/images/gmail.svg";
+import linkedin from "@/images/linkedin.svg";
 import FullSliderSec from "@/components/FullSliderSec";
 import toolIllus from "@/images/tool-illus.svg";
 import BirthdayVenueWidget from "@/components/BirthdayVenueWidget";
 import bdayblogIllus from "@/images/bdayblog-illus.svg";
+import LocationCard from "@/components/LocationCard";
+import OurLocationSec from "@/components/OurLocationSec";
+import PartyGetInTouch from "@/components/PartyGetInTouch";
 
 const BirthdayBlog = ({ blogData }) => {
   // Share functionality
   const handleShare = (platform) => {
     const currentUrl = window.location.href;
     const title = blogData?.heading || "Check out this blog post";
-    const text = blogData?.description || "Interesting read!";
+    const text =
+      blogData?.description || "Interesting read! Have a look.";
 
     let shareUrl = "";
 
@@ -77,22 +83,40 @@ const BirthdayBlog = ({ blogData }) => {
           alert("Link copied to clipboard!");
         });
         return;
+
       case "whatsapp":
         shareUrl = `https://wa.me/?text=${encodeURIComponent(
           `${title} - ${currentUrl}`
         )}`;
         break;
+
       case "instagram":
-        // Instagram doesn't support direct sharing via URL, so we'll copy the link
+        // Instagram does not support direct URL sharing
         navigator.clipboard.writeText(currentUrl).then(() => {
-          alert("Link copied! You can now paste it in Instagram.");
+          alert("Link copied! Paste it in Instagram.");
         });
         return;
-      case "twitter":
+
+      case "twitter": // X
         shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
           title
         )}&url=${encodeURIComponent(currentUrl)}`;
         break;
+
+      case "linkedin":
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+          currentUrl
+        )}`;
+        break;
+
+      case "gmail":
+        shareUrl = `https://mail.google.com/mail/?view=cm&fs=1&su=${encodeURIComponent(
+          title
+        )}&body=${encodeURIComponent(`${text}\n\n${currentUrl}`)}`;
+        break;
+
+
+
       default:
         return;
     }
@@ -101,6 +125,7 @@ const BirthdayBlog = ({ blogData }) => {
       window.open(shareUrl, "_blank", "noopener,noreferrer");
     }
   };
+
 
   const hmtext =
     "Explore <span>a curated-list</span> of best party places in Bangalore to celebrate birthdays. Estimate a budget with Party Budget Calculator or discover venues with a simple discovery quiz.";
@@ -113,7 +138,7 @@ const BirthdayBlog = ({ blogData }) => {
           <div className="container">
             <div className="blog-top-inner">
               <p className="sec-head medium-20 mb-0 d-flex align-items-center gap-2">
-                Last updated on {blogData?.post_date}
+                Last updated on  <span className="yellow-text">{blogData?.post_date}  </span>
               </p>
               <div className="sec-head medium-20 d-flex align-items-center gap-3">
                 Share blog
@@ -168,26 +193,36 @@ const BirthdayBlog = ({ blogData }) => {
           <HmTextSec text={blogData?.bannersection?.content} />
         )}
 
-        <PartyExpertCon className="pt-80" data="blog_birthday_blog"/>
+        <PartyExpertCon className="pt-80" data="blog_birthday_blog" />
 
         {blogData?.iconsection && (
           <FullSliderSec data={blogData?.iconsection} hasCardLinks={true} />
         )}
 
-        <Image src={toolIllus} className="w-100 h-auto" alt="tool-illus" />
+        <Image src={toolIllus} className="illus-image" alt="tool-illus" />
       </div>
 
       <BirthdayVenueWidget />
 
       <GReviewSlider commonStars={false} />
 
+      <OurLocationSec
+        className="sec-padding-top"
+        // title={`About Our Breakout®  <span>${blogData?.title} Location</span>`}
+        slug="koramangala"
+      />
+
       {blogData?.footersection && (
-        <section className="section-padding">
+        <PartyGetInTouch data={blogData?.footersection} />
+      )}
+
+      {blogData?.footersection && (
+        <section className="section-padding Conclusion-sec pb-0">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-8 col-12 text-center">
                 <h3
-                  className="sec-head sm-head medium"
+                  className="sec-head sm-head medium yellow-text"
                   dangerouslySetInnerHTML={{
                     __html: blogData?.footersection?.heading,
                   }}
@@ -204,7 +239,7 @@ const BirthdayBlog = ({ blogData }) => {
         </section>
       )}
       <div className="black-gr-div">
-        <section className="section-padding">
+        <section className="found-sec pt-80">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
@@ -214,21 +249,12 @@ const BirthdayBlog = ({ blogData }) => {
                 />
               </div>
             </div>
-            <div className="sec-head medium-20 d-flex w-100 flex-column justify-content-center align-items-center gap-3">
+            <div className="sec-head mb-0 medium-20 d-flex w-100 flex-column justify-content-center align-items-center gap-3">
               <h3>
                 Found it useful? <span>Spread the word</span>
               </h3>
               <ul className="bl-soc-list">
-                <li>
-                  <button onClick={() => handleShare("copy")}>
-                    <Image
-                      src={linkIcon}
-                      alt="copy link"
-                      width={65}
-                      height={65}
-                    />
-                  </button>
-                </li>
+
                 <li>
                   <button onClick={() => handleShare("whatsapp")}>
                     <Image
@@ -254,6 +280,36 @@ const BirthdayBlog = ({ blogData }) => {
                     <Image
                       src={xIcon}
                       alt="share on twitter"
+                      width={65}
+                      height={65}
+                    />
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleShare("linkedin")}>
+                    <Image
+                      src={linkedin}
+                      alt="copy link"
+                      width={65}
+                      height={65}
+                    />
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleShare("gmail")}>
+                    <Image
+                      src={gmail}
+                      alt="copy link"
+                      width={65}
+                      height={65}
+                    />
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleShare("copy")}>
+                    <Image
+                      src={linkIcon}
+                      alt="copy link"
                       width={65}
                       height={65}
                     />

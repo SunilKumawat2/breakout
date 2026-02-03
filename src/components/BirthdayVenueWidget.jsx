@@ -236,7 +236,9 @@ const BirthdayVenueWidget = () => {
             )}
           </div>
         </div>
+       
       </div>
+     
     </section>
   );
 };

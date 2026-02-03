@@ -39,12 +39,12 @@ const FullSliderSec = ({ data, hasCardLinks = false }) => {
     };
   }
   return (
-    <section className="blog-slider section-padding">
+    <section className="blog-slider-sec section-padding pb-0">
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
             <h2
-              className="sec-head sm-head medium"
+              className="sec-head sm-head medium yellow-text"
               dangerouslySetInnerHTML={{
                 __html:
                   data1?.heading ||
@@ -63,7 +63,7 @@ const FullSliderSec = ({ data, hasCardLinks = false }) => {
           </div>
         </div>
       </div>
-      <div className="row mt-5">
+      <div className="row pt-80">
         <div className="col-lg-12">
           <div className="blog-slider">
             <Swiper

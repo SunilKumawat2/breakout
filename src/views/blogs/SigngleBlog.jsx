@@ -172,9 +172,7 @@ const SigngleBlog = ({ blogData }) => {
       </section>
       <OurLocationSec title="Visit a <span>Location</span>" />
       <HomeContact noTextBottom={false} privacyLine={false} noImage={true} />
-      <br />
-      <br />
-      <br />
+      
     </>
   );
 };

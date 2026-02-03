@@ -1,3 +1,4 @@
+// "use client";
 import React from "react";
 import InnerPageBanner from "@/components/InnerPageBanner";
 import Image from "next/image";
@@ -9,6 +10,7 @@ import icon2 from "@/images/icon2.svg";
 import icon3 from "@/images/icon3.svg";
 import icon4 from "@/images/icon4.svg";
 import illus3 from "@/images/illus3.svg";
+import illus from "@/images/contact-bottom-illus.svg";
 import hmIllus from "@/images/bottom-illus.svg";
 import LogoSec from "@/components/LogoSec";
 import EscapeRoomCard from "@/components/EscapeRoomCard";
@@ -90,13 +92,13 @@ const Page = async ({ params }) => {
         )}
         <div className="black-gr-div">
           {rooms?.countersection && (
-            <TrustedSection data={rooms?.countersection} />
+            <TrustedSection className="sec-padding-top pb-0" data={rooms?.countersection} />
           )}
           {rooms?.contentsection && (
-            <HmTextSec text={rooms?.contentsection?.content} />
+            <HmTextSec className="sec-padding-top pb-0" text={rooms?.contentsection?.content} />
           )}
           {rooms?.imagescardsection && (
-            <section className="section-padding">
+            <section className="sec-padding-top">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 text-center">
@@ -136,16 +138,16 @@ const Page = async ({ params }) => {
             </section>
           )}
 
-          <Image src={hmIllus} alt="illus3" className="illus-3 w-100 h-auto" />
+          <Image src={hmIllus} alt="illus3" className="illus-image" />
         </div>
         <div className="black-gr-div">
           {rooms?.idealforsection && rooms?.idealforsection?.heading !== "" && (
-            <section className="section-padding">
+            <section className="sec-padding-top">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 text-center">
                     <h3
-                      className="sec-head medium sm-head mb-5"
+                      className="sec-head medium sm-head"
                       dangerouslySetInnerHTML={{
                         __html: rooms?.idealforsection?.heading,
                       }}
@@ -177,13 +179,13 @@ const Page = async ({ params }) => {
             </section>
           )}
 
-          {brands && brands?.length > 0 && (
+          {/* {brands && brands?.length > 0 && (
             <LogoSec
               title="<span>Brands</span> Hosted"
               logos={brands}
               link={false}
             />
-          )}
+          )} */}
 
           <section className="section-padding esc-sec">
             <div className="container">
@@ -205,14 +207,15 @@ const Page = async ({ params }) => {
                     </h3>
                   </div>
                   {escapeRoomsExtreme?.map((room, index) => (
-                    <div className="col-lg-4 col-12" onClick={()=> sessionStorage.setItem("scrollToEscapeRooms",true)} key={index}>
+                    <div className="col-lg-4 col-12" 
+                    onClick={()=> sessionStorage.setItem("scrollToEscapeRooms",true)} key={index}>
                       <EscapeRoomCard room={room} />
                     </div>
                   ))}
                 </div>
               )}
               {escapeRoomsUltra && escapeRoomsUltra?.length > 0 && (
-                <div className="row row-gap-25 mt-5">
+                <div className="row row-gap-25">
                   <div className="col-12">
                     <h3 className="sec-head medium sm-head text-center">
                       At <span>Ultra</span>
@@ -232,9 +235,8 @@ const Page = async ({ params }) => {
 
               {
                 id == "escape-room-bangalore-page" && (
-                  <div className="row row-gap-25 mt-5">
-                  <div className="col-12">
-                  </div>
+                  <div className="row row-gap-25">
+                 
                   {rooms?.escapeRooms?.map((room, index) => (
                     <div className="col-lg-4 col-12" key={index}>
                       <EscapeRoomCard room={room} />
@@ -248,7 +250,7 @@ const Page = async ({ params }) => {
           {rooms?.cardsection &&
             rooms?.cardsection?.length > 0 &&
             rooms?.cardsection[0]?.heading !== "" && (
-              <section className="section-padding">
+              <section className="card-sec">
                 <div className="container">
                   <div className="cpr-card-container">
                     <div className="row row-gap-25">
@@ -286,7 +288,7 @@ const Page = async ({ params }) => {
                 </div>
               </section>
             )}
-          <Image src={illus3} alt="illus3" className="illus-3 w-100 h-auto" />
+          <Image src={illus3} alt="illus3" className="illus-image" />
         </div>
         {/* <section className="section-padding counter-sec pb-0">
           <div className="container">
@@ -303,21 +305,24 @@ const Page = async ({ params }) => {
 
         <div className="black-gr-div">
           <OurLocationSec
+          className="sec-padding-top"
             title="Choose a <span>Location</span>"
             //  slug={"koramangala"}
           />
           {rooms?.faqsection && rooms?.faqsection?.length > 0 && (
-            <FaqSection data={rooms?.faqsection} />
+            <FaqSection className="section-padding pb-0" data={rooms?.faqsection} />
           )}
 
           {rooms?.videotestimonials && (
             <Videotestimonials data={rooms?.videotestimonials} />
           )}
           {rooms?.googlereviews && rooms?.googlereviews?.length > 0 && (
+            <div className="pt-80">
             <GReviewSlider commonStars={false} data={rooms?.googlereviews} />
+            </div>
           )}
 
-          <HomeContact page_name="landing" noTextBottom={false} />
+          <HomeContact img={illus} page_name="landing" noTextBottom={false} />
         </div>
 
         {/* <PeakExpSec /> */}

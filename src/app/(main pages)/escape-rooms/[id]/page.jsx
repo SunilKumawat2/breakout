@@ -26,18 +26,20 @@ const page = () => {
   const [escapeRooms, setEscapeRooms] = useState(null);
 
   const [room, setRoom] = useState(null);
-  console.log("skjldjsdfhskfhksj_room",room)
+ 
 
   useEffect(() => {
     const fetchEscapeRooms = async () => {
       const res = await api.get(`/escaperooms`);
       setEscapeRooms(res.data.data);
+     
     };
     fetchEscapeRooms();
 
     const fetchEscapeRoom = async () => {
       const res = await api.get(`/escaperoom/${id}`);
       setRoom(res.data.data);
+      console.log("skjldjsdfhskfhksj_room_123",res.data.data)
     };
     fetchEscapeRoom();
   }, [id]);

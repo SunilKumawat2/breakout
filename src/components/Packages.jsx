@@ -195,7 +195,6 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
                         {row?.col1 && row?.col1 != "" && renderCol(row?.col1)}
                         {row?.col2 && row?.col2 != "" && renderCol(row?.col2)}
                         {row?.col3 && row?.col3 != "" && renderCol(row?.col3)}
-
                         {row?.col4 && row?.col4 != "" && renderCol(row?.col4)}
                       </div>
                     );

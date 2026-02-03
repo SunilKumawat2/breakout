@@ -121,7 +121,7 @@ const page = () => {
         <Image src={hmIllus} className="w-100 h-auto" alt="hm-text-bg" />
       </div>
       <div className="black-gr-div">
-        <PartyExpertCon className="pt-80" data="virtual_subpage"/>
+        <PartyExpertCon className="pt-80" data="virtual_subpage"/><br/><br/>
         {room?.googlereviews && room?.googlereviews.length > 0 && (
           <GReviewSlider commonStars={false} data={room?.googlereviews} />
         )}
