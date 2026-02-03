@@ -1,10 +1,13 @@
 "use client";
 import React, { useRef } from "react";
-
+import swiperPrev from "@/images/chev-left.svg";
+import swiperNext from "@/images/chev-right.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import "swiper/css";
+import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css/navigation";
+import "swiper/css";
+import "swiper/css/pagination";
+import Image from "next/image";
 
 const timeSlots = [
   "11:00am",
@@ -73,9 +76,17 @@ const SlotPicker = ({
           spaceBetween={18}
           slidesPerView="auto"
           navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
           }}
+
+          pagination={{
+            clickable: true,
+          }}
+
+          // slidesPerView={1}
+          // spaceBetween={20}
+          loop={true}
           onInit={(swiper) => {
             // Swiper navigation needs DOM elements, so assign after mount
             swiper.params.navigation.prevEl = prevRef.current;
@@ -131,6 +142,13 @@ const SlotPicker = ({
               </SwiperSlide>
             ))}
         </Swiper>
+        <div className="swiper-button-prev custom-prev go-plan">
+          <Image src={swiperPrev} alt="Previous" />
+        </div>
+
+        <div className="swiper-button-next custom-next go-plan">
+          <Image src={swiperNext} alt="Next" />
+        </div>
       </div>
       <button
         ref={nextRef}

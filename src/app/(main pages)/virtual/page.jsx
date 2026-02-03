@@ -40,7 +40,7 @@ import abImg3 from "@/images/gal3.png";
 
 const page = () => {
   const [rooms, setRooms] = useState([]);
-  console.log("escapeRooms",rooms)
+  console.log("escapeRooms_page_page",rooms)
   const [escapeRooms, setEscapeRooms] = useState(null);
   console.log("escapeRooms_123",escapeRooms)
   const router = useRouter();
@@ -109,7 +109,7 @@ const page = () => {
       {rooms?.bannersection && (
         <InnerPageBanner banner={rooms?.bannersection} bdayInner={true} />
       )}
-      <div className="black-gr-div">
+      <div className="black-gr-div mt-3">
         {rooms?.contentsection && (
           <>
             <HmTextSec text={rooms?.contentsection?.content} />

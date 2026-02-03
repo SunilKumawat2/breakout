@@ -42,7 +42,7 @@ const ActivityPage = () => {
     const fetchEscapeRoom = async () => {
       const res = await api.get(`/activity/${id}`);
       setRoom(res.data.data);
-      console.log("sadfmshdmfndhsjkfsdf_bhf",res.data.data)
+      console.log("sadfmshdmfndhsjkfsdf_bhf", res.data.data)
     };
     fetchEscapeRoom();
   }, [id]);
@@ -122,9 +122,9 @@ const ActivityPage = () => {
             </div>
           </section>
         )}
-        <PartyExpertCon className="pt-80" data="views_activities"/>
+        <PartyExpertCon className="pt-80" data="views_activities" />
         {/* <ReserveASlot room={room?.pricingsection} /> */}
-        
+
         {room?.imagesection && (
           <GlobalReviewWidget className="section-padding pb-0"
             data={room?.imagesection}
@@ -148,7 +148,7 @@ const ActivityPage = () => {
             <div className="row row-gap-25" id="escape-rooms-section">
               {escapeRooms &&
                 escapeRooms.map((room, index) => (
-                  <div className="col-lg-4 col-12" onClick={()=>sessionStorage.setItem("scrollToEscapeRooms",true)} key={index}>
+                  <div className="col-lg-4 col-12" onClick={() => sessionStorage.setItem("scrollToEscapeRooms", true)} key={index}>
                     <EscapeRoomCard room={room} />
                   </div>
                 ))}
@@ -160,7 +160,7 @@ const ActivityPage = () => {
         {/* <PartyEpertForActivity
           title={"<span>Running Out of Time?</span> Talk to a Party Expert Now"}
         /> */}
-          <ConnectContact
+        <ConnectContact
           noTextBottom={false}
           privacyLine={true}
           noImage={true}

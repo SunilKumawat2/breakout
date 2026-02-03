@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -22,6 +22,9 @@ import swiperPrev from "@/images/chev-left.svg";
 import swiperNext from "@/images/chev-right.svg";
 
 const ReadyToGoPlans = ({ data, className = "" }) => {
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+
   const [active, setActive] = useState(null);
   let data1 = data;
   if (data) {
@@ -71,17 +74,17 @@ const ReadyToGoPlans = ({ data, className = "" }) => {
               <Swiper
                 modules={[Pagination, Navigation]}
                 pagination={{ clickable: true }}
-                watchOverflow={false}
                 loop={true}
-                allowSlideNext={true}
-                allowSlidePrev={true}
-                navigation={{
-                  nextEl: ".swiper-button-next",
-                  prevEl: ".swiper-button-prev",
-                }}
-                centeredSlides={false}
                 slidesPerView={1}
                 spaceBetween={20}
+                navigation={{
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                onBeforeInit={(swiper) => {
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  swiper.params.navigation.nextEl = nextRef.current;
+                }}
                 breakpoints={{
                   0: { slidesPerView: 1 },
                   640: { slidesPerView: 2 },
@@ -90,6 +93,7 @@ const ReadyToGoPlans = ({ data, className = "" }) => {
                 }}
                 className="blog-swiper"
               >
+
 
                 {data1 &&
                   data1?.images?.length > 0 &&
@@ -137,12 +141,14 @@ const ReadyToGoPlans = ({ data, className = "" }) => {
                     </SwiperSlide>
                   ))}
               </Swiper>
-              <div className="swiper-button-prev go-plan">
-                <Image src={swiperPrev} alt="arrow" />
+              <div ref={prevRef} className="swiper-button-prev go-plan">
+                <Image src={swiperPrev} alt="prev" />
               </div>
-              <div className="swiper-button-next go-plan">
-                <Image src={swiperNext} alt="arrow" />
+
+              <div ref={nextRef} className="swiper-button-next go-plan">
+                <Image src={swiperNext} alt="next" />
               </div>
+
             </div>
           </div>
         </div>

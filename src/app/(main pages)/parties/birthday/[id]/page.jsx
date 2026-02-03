@@ -14,12 +14,12 @@ import hmIllus from "@/images/bottom-illus.svg";
 import LogoSec from "@/components/LogoSec";
 import EscapeRoomCard from "@/components/EscapeRoomCard";
 import CounterBox from "@/components/CounterBox";
-import VisitLocations from "@/components/VisitLocations";
 import PeakExpSec from "@/components/PeakExpSec";
+import VisitLocations from "@/components/VisitLocations";
 import BlogSlider from "@/components/BlogSlider";
 import HomeContact from "@/components/home/HomeContact";
-import locIcon from "@/images/loc-icon.svg";
 import ReserveASlot from "@/components/ReserveASlot";
+import locIcon from "@/images/loc-icon.svg";
 import fdImg1 from "@/images/fd-img1.png";
 import Link from "next/link";
 import wh from "@/images/wh.svg";
@@ -73,7 +73,7 @@ import { useRouter, usePathname } from "next/navigation";
 
 const page = () => {
   const { id } = useParams();
- console.log("brithday_party",id)
+  console.log("brithday_party", id)
   const [party, setParty] = useState(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -282,14 +282,14 @@ const page = () => {
           )}
         {party && party?.googlereviews && (
           <div className="pt-80">
-          <GReviewSlider commonStars={false} data={party?.googlereviews} />
+            <GReviewSlider commonStars={false} data={party?.googlereviews} />
           </div>
         )}
 
         <Image src={bdayIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
-        <PartyExpertCon className="sec-padding-top" data="birthday_party_subpage"/>
+        <PartyExpertCon className="sec-padding-top" data="birthday_party_subpage" />
         {party && party?.slidersection && (
           <ReadyToGoPlans data={party?.slidersection} />
         )}
@@ -337,9 +337,10 @@ const page = () => {
         <Image src={loveIllus} className={"illus-image"} alt="bday" />
       </div>
       <div className="black-gr-div">
-        {party && party?.faqsection && <FaqSection className="sec-padding-top" data={party?.faqsection} />}
-        <BlogSlider className="pb-0"/>
-        <LogoSec className="pt-80 pb-0"/>
+        {party && party?.faqsection &&
+          <FaqSection className="sec-padding-top" data={party?.faqsection} />}
+        <BlogSlider className="pb-0" />
+        <LogoSec className="pt-80 pb-0" />
         {party && party?.footersection && (
           <PartyGetInTouch
             img={nightIllus}

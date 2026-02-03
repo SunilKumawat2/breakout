@@ -110,7 +110,7 @@ const page = () => {
         <div className="row text-center pb-5">
           <div className="col-12">
             <h3 className="sec-head medium">
-              Resources to <span>Plan Celebrations</span>
+              Blog to <span>Plan Celebrations</span>
             </h3>
           </div>
         </div>

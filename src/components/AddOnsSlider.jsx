@@ -21,9 +21,9 @@ import swiperNext from "@/images/chev-right.svg";
 import Link from "next/link";
 import api from "@/app/helpers/api";
 
-const AddOnsSlider = ({ data,className="" }) => {
+const AddOnsSlider = ({ data, className = "" }) => {
   const [activities, setActivities] = useState(null);
-  console.log("activities_activities_activities",activities)
+  console.log("activities_activities_activities", activities)
   const addOns = [
     {
       image: cv1,
@@ -56,9 +56,9 @@ const AddOnsSlider = ({ data,className="" }) => {
     setActivities(res.data.data);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchActivities();
-  },[])
+  }, [])
   return (
     <section className={`blog-slider-sec ${className}`}>
       <div className="container">
@@ -108,7 +108,7 @@ const AddOnsSlider = ({ data,className="" }) => {
               }}
               className="blog-swiper"
             >
-              {/* {data?.images &&
+              {data?.images &&
                 data?.images?.length > 0 &&
                 data?.images?.map((item, index) => (
                   <SwiperSlide key={index}>
@@ -130,8 +130,8 @@ const AddOnsSlider = ({ data,className="" }) => {
                       </div>
                     </Link>
                   </SwiperSlide>
-                ))} */}
-                 {activities&&
+                ))}
+              {/* {activities&&
                 activities?.length > 0 &&
                 activities?.map((item, index) => (
                   <SwiperSlide key={index}>
@@ -154,7 +154,7 @@ const AddOnsSlider = ({ data,className="" }) => {
                       </div>
                     </Link>
                   </SwiperSlide>
-                ))}
+                ))} */}
             </Swiper>
             <div className="swiper-button-prev custom-prev go-plan">
               <Image src={swiperPrev} alt="Previous" />

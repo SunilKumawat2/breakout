@@ -26,6 +26,7 @@ const page = () => {
   const [escapeRooms, setEscapeRooms] = useState(null);
 
   const [room, setRoom] = useState(null);
+  console.log("skjldjsdfhskfhksj_room",room)
 
   useEffect(() => {
     const fetchEscapeRooms = async () => {

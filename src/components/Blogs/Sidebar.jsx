@@ -11,7 +11,7 @@ const Sidebar = ({
 }) => {
   return (
     <div>
-      <h3 className="sec-head medium-20 text-center">Find resource</h3>
+      <h3 className="sec-head medium-20 text-center">Find Blog</h3>
       <div className="form-group search-group style-2 mt-4">
         <div className="input-group">
           <input
@@ -23,7 +23,21 @@ const Sidebar = ({
           <Image src={search} alt="search" />
         </div>
       </div>
-      <p className="para text-center mb-0">{totalResources} resources found!</p>
+      <p className="para text-center mb-0">{totalResources} blog found!</p>
+
+      <h3 className="sec-head medium-20 text-center mt-3">Filter</h3>
+      <div className="form-group search-group style-2 mt-4">
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Search..."
+            onKeyDown={handleSearchChange}
+            ref={searchRef}
+          />
+          <Image src={search} alt="search" />
+        </div>
+      </div>
+      <p className="para text-center mb-0">{totalResources} blog found!</p>
       {/* <div className="form-group mt-5 style-2">
         <div className="input-group">
           <p className="sec-head book-20">

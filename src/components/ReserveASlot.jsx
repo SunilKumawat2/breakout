@@ -10,9 +10,11 @@ import SlotPicker from "./SlotPicker";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { toast } from "react-toastify";
 import { CommonModal } from "@/components/CommonModal";
-import Link from "next/link";
+import arrowPrev from "@/images/chev-left.svg";
+import arrowNext from "@/images/chev-right.svg";
+import calenderIcon from "@/images/calendar-btn.svg";
 
-const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
+const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
   const {
     availableSlots,
     fetchAvailableSlots,
@@ -40,6 +42,13 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [show, setShow] = useState(false);
+  /* ================= CALENDAR LOGIC ================= */
+  const today = new Date();
+  const [year, setYear] = useState(today.getFullYear());
+  const [month, setMonth] = useState(today.getMonth());
+  const [startIndex, setStartIndex] = useState(0);
+  const [days, setDays] = useState([]);
+  const [showMonthYear, setShowMonthYear] = useState(false);
 
   useEffect(() => {
     fetchThirdPartyLocations();
@@ -198,6 +207,7 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
       locationId: selectedLocation,
       gameId: selectedSlotTime?.gameId,
     };
+    
     const fetchBookingData = async () => {
       try {
         const response = await bookASlot(bookingData);
@@ -217,6 +227,62 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
       }
     };
     fetchBookingData();
+  };
+
+
+ 
+
+  useEffect(() => {
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    const arr = Array.from({ length: totalDays }, (_, i) => i + 1);
+    setDays(arr);
+
+    if (
+      year === today.getFullYear() &&
+      month === today.getMonth()
+    ) {
+      setStartIndex(today.getDate() - 1);
+    } else {
+      setStartIndex(0);
+    }
+  }, [year, month]);
+
+  const visibleDays = days.slice(startIndex, startIndex + 7);
+
+  const nextDays = () => {
+    if (startIndex + 7 < days.length) {
+      setStartIndex(startIndex + 7);
+    }
+  };
+
+  const prevDays = () => {
+    if (startIndex - 7 >= 0) {
+      setStartIndex(startIndex - 7);
+    }
+  };
+
+  const formatDate = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
+
+
+  const handleDateSelect = (day) => {
+    const dateObj = new Date(year, month, day);
+    setSelectedDate(dateObj);
+    // formik.setFieldValue("date", dateObj);
+  };
+
+  const isPastDate = (day) => {
+    const checkDate = new Date(year, month, day);
+    checkDate.setHours(0, 0, 0, 0);
+
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+
+    return checkDate < todayDate;
   };
 
   return (
@@ -297,34 +363,34 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
                   ))}
               </div>
               <p className="para mt-5 mb-0">
-  {room?.note}{" "}
-  <span
-    className="yellow-text"
-    style={{
-      cursor: "pointer",
-      textDecoration: "underline",
-      fontStyle: "italic",
-    }}
-    onClick={() => onOpenFaq(3)}   // ← index 3
-  >
-    Check eligibility Criteria
-  </span>
-</p>
+                {room?.note}{" "}
+                <span
+                  className="yellow-text"
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    fontStyle: "italic",
+                  }}
+                  onClick={() => onOpenFaq(3)}   // ← index 3
+                >
+                  Check eligibility Criteria
+                </span>
+              </p>
 
-<p className="para">
-  Kids Pricing.{" "}
-  <span
-    className="yellow-text"
-    style={{
-      cursor: "pointer",
-      textDecoration: "underline",
-      fontStyle: "italic",
-    }}
-    onClick={() => onOpenFaq(4)}   // ← index 4
-  >
-    Check here
-  </span>
-</p>
+              <p className="para">
+                Kids Pricing.{" "}
+                <span
+                  className="yellow-text"
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    fontStyle: "italic",
+                  }}
+                  onClick={() => onOpenFaq(4)}   // ← index 4
+                >
+                  Check here
+                </span>
+              </p>
 
             </div>
             <button
@@ -334,7 +400,7 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
               <span className="yellow-text">T & C applied*</span>
             </button>
             <div className="form-field mt-5">
-              <div className="row row-gap-25">
+              <div className="row">
                 <div className="col-lg-3 col-12">
                   <div className="form-group">
                     <label htmlFor="location" className="form-label">
@@ -360,9 +426,9 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
                         options={
                           thirdPartyLocations?.length > 0 && thirdPartyLocations
                             ? thirdPartyLocations?.map((location) => ({
-                                value: location.locationId,
-                                label: location.locationName,
-                              }))
+                              value: location.locationId,
+                              label: location.locationName,
+                            }))
                             : []
                         }
                       />
@@ -393,9 +459,9 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
                         options={
                           thirdPartyGames?.length > 0 && thirdPartyGames
                             ? thirdPartyGames?.map((game) => ({
-                                value: game.gameId,
-                                label: game.gameName,
-                              }))
+                              value: game.gameId,
+                              label: game.gameName,
+                            }))
                             : []
                         }
                       />
@@ -430,6 +496,106 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
                   </div>
                 </div>
 
+                {/* ================= CALENDAR ================= */}
+                <div className="col-12 mb-4 mt-3">
+                <div className="calendar-wrapper">
+                        <div className="calendar-header">
+                          <div
+                            className="month-year-select mb-3"
+                          // onClick={() => setShowMonthYear(!showMonthYear)}
+                          >
+                            <span>
+                              {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
+                            </span>
+                            {/* <Image src={selectDrop} alt="arrow" /> */}
+                          </div>
+                        </div>
+
+                        <div className="calendar-days-outer">
+                          <div className="calendar-days">
+                            <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+                              {/* ‹ */}
+                              <Image src={arrowPrev} alt="Previous" />
+                            </div>
+
+                            {visibleDays.map((day) => {
+                              const past = isPastDate(day);
+
+                              return (
+                                <div
+                                  key={day}
+                                  onClick={() => {
+                                    if (!past) handleDateSelect(day);
+                                  }}
+                                  className={`day ${past ? "disabled" : ""} ${selectedDate &&
+                                    selectedDate.getDate() === day &&
+                                    selectedDate.getMonth() === month &&
+                                    selectedDate.getFullYear() === year
+                                    ? "active"
+                                    : ""
+                                    }`}
+                                >
+                                  {day}
+                                </div>
+                              );
+                            })}
+
+
+                            <div
+                              className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
+                              onClick={nextDays}
+                              disabled={startIndex + 7 >= days.length}
+                            >
+                              {/* › */}
+                              <Image src={arrowNext} alt="Next" />
+                            </div>
+                            <div
+                              className="calender-btn"
+                              onClick={() => setShowMonthYear(!showMonthYear)}
+                            >
+                              {/* › */}
+                              <Image src={calenderIcon} alt="Calender Icon" />
+                            </div>
+                          </div>
+
+                          {showMonthYear && (
+                            <div className="month-year-dropdown">
+                              <div className="months">
+                                {Array.from({ length: 12 }).map((_, i) => (
+                                  <div
+                                    key={i}
+                                    className={`option ${month === i ? "active" : ""}`}
+                                    onClick={() => {
+                                      setMonth(i);
+                                      setShowMonthYear(false);
+                                    }}
+                                  >
+                                    {new Date(0, i).toLocaleString("default", { month: "long" })}
+                                  </div>
+                                ))}
+                              </div>
+
+                              <div className="years">
+                                {[2026, 2027, 2028, 2029,2030,2031,2032,2033].map((y) => (
+                                  <div
+                                    key={y}
+                                    className={`option ${year === y ? "active" : ""}`}
+                                    onClick={() => {
+                                      setYear(y);
+                                      setShowMonthYear(false);
+                                    }}
+                                  >
+                                    {y}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                        </div>
+                      </div>
+                </div>
+
                 <div className="col-lg-12 col-12">
                   <div className="">
                     {slotsLoading ? (
@@ -458,7 +624,7 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
                     )}
                   </div>
                 </div>
-                <div className="col-lg-3 col-12">
+                {/* <div className="col-lg-3 col-12">
                   <div className="form-group">
                     <div className="input-group">
                       <input
@@ -505,7 +671,7 @@ const ReserveASlot = ({ room, onOpenFaq,className = "", }) => {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="col-12">
                   <button
                     className="main-btn mt-4 sm"

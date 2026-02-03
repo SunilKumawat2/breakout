@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -12,7 +12,11 @@ import swiperNext from "@/images/swiper-next.svg";
 import star from "@/images/star.svg";
 import starStroke from "@/images/star-stroke.svg";
 
+
 const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -49,35 +53,32 @@ const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
   const reviews = data?.length > 0 ? data : dummyData;
 
   return (
-      <div className="container">
-            <section className={`g-review-slider position-relative ${className}`}>
+    <div className="container">
+      <section className={`g-review-slider position-relative ${className}`}>
         <div className="row">
           <div className="col-lg-12">
             <div className="g-review-swiper">
               <Swiper
                 modules={[Navigation]}
-                navigation={{
-                  nextEl: ".swiper-button-next",
-                  prevEl: ".swiper-button-prev",
-                }}
                 slidesPerView={1}
                 spaceBetween={20}
+                loop={true}
+                pagination={{ clickable: true }}
+                navigation={{
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                onBeforeInit={(swiper) => {
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  swiper.params.navigation.nextEl = nextRef.current;
+                }}
                 breakpoints={{
-                  0: {
-                    slidesPerView: 1,
-                  },
-                  640: {
-                    slidesPerView: 1,
-                  },
-                  992: {
-                    slidesPerView: 2,
-                  },
-                  1400: {
-                    slidesPerView: 2,
-                  },
+                  0: { slidesPerView: 1 },
+                  992: { slidesPerView: 2 },
                 }}
                 className="blog-swiper"
               >
+
                 {reviews.map((review, index) => (
                   <SwiperSlide key={index}>
                     <GReviewCard
@@ -89,12 +90,14 @@ const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
                   </SwiperSlide>
                 ))}
               </Swiper>
-              <div className="swiper-button-prev">
-                <Image src={swiperPrev} alt="arrow" />
+              <div ref={prevRef} className="swiper-button-prev">
+                <Image src={swiperPrev} alt="prev" />
               </div>
-              <div className="swiper-button-next">
-                <Image src={swiperNext} alt="arrow" />
+
+              <div ref={nextRef} className="swiper-button-next">
+                <Image src={swiperNext} alt="next" />
               </div>
+
             </div>
           </div>
         </div>
@@ -108,8 +111,8 @@ const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
             </ul>
           </div>
         )}
-    </section>
-      </div>
+      </section>
+    </div>
 
   );
 };

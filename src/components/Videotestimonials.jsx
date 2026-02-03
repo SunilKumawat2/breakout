@@ -122,7 +122,7 @@ const Videotestimonials = ({ data,className = "", }) => {
         <div className="col-lg-12">
           <div className="blog-slider video-slider">
             <Swiper
-             modules={[Pagination, Navigation]}
+             modules={[Navigation]}
              pagination={{
                clickable: true,
              }}

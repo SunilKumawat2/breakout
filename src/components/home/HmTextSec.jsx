@@ -1,7 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import hmIllus from "@/images/bottom-illus.svg";
-import Image from "next/image";
+import React, { useEffect, useRef} from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitType from "split-type";
