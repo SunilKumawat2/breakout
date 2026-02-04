@@ -74,9 +74,9 @@ export default function Header() {
           <ul className="r-list">
             <li>
               <Link
-                href="https://www.facebook.com/EscapeRoom.co.uk"
+                href="/book-online"
                 className="main-btn"
-                target="_blank"
+                // target="_blank"
               >
                 <span>Book Now</span>
               </Link>
