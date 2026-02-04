@@ -1,23 +1,98 @@
+// import React, { useState } from "react";
+// import Image from "next/image";
+// import venueImg from "@/images/venue.jpg";
+// import rupeeIcon from "@/images/rupee-icon.svg";
+// import strokeStarIcon from "@/images/stroke-star-icon.svg";
+// import publicIcon from "@/images/public-icon.svg";
+// import { Modal, Button } from "react-bootstrap";
+// import VenueInner from "./VenueInner";
+// import { useRouter } from "next/navigation";
+
+// const VenueCard = ({ venue, setSelectedVenue, selectedVenue, clickable }) => {
+//   const router = useRouter();
+//   const [show, setShow] = useState(false);
+//   console.log("venue", venue);
+
+//   const handleClose = () => setShow(false);
+//   // const handleShow = () => setShow(true);
+//   const handleShow = () => {
+//     if (clickable) {
+//       setSelectedVenue(venue);
+//       return;
+//     }
+//     router.push(`/resources/venue/${venue?.slug}`);
+//   };
+
+//   return (
+//     <>
+//       <article
+//         className={`venue-card ${
+//           clickable && selectedVenue?.id === venue?.id ? "selected" : ""
+//         }`}
+//         onClick={handleShow}
+//       >
+//         <div className="venue-card-img">
+//           {venue.image && (
+//             <Image
+//               src={venue.image}
+//               alt="venue-card-img"
+//               width={300}
+//               height={300}
+//             />
+//           )}
+//         </div>
+//         <div className="venue-card-content">
+//           <h3 className="venue-card-title">{venue?.name}</h3>
+//           <div className="venue-card-info">
+//             <div className="venue-card-info-item">
+//               <Image src={rupeeIcon} alt="location-icon" />
+//               <span>{venue?.price}</span>
+//             </div>
+//             <div className="venue-card-info-item">
+//               <Image src={strokeStarIcon} alt="location-icon" />
+//               <span>{venue?.rating}</span>
+//             </div>
+//             <div className="venue-card-info-item">
+//               <Image src={publicIcon} alt="location-icon" />
+//               <span>{venue?.capacity}</span>
+//             </div>
+//           </div>
+//         </div>
+//       </article>
+//       <Modal
+//         show={show}
+//         onHide={handleClose}
+//         size="xl"
+//         className="venue-modal"
+//         centered
+//       >
+//         <Modal.Body>
+//           <VenueInner handleClose={handleClose} />
+//         </Modal.Body>
+//       </Modal>
+//     </>
+//   );
+// };
+
+// export default VenueCard;
+
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import venueImg from "@/images/venue.jpg";
 import rupeeIcon from "@/images/rupee-icon.svg";
 import strokeStarIcon from "@/images/stroke-star-icon.svg";
 import publicIcon from "@/images/public-icon.svg";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import VenueInner from "./VenueInner";
 import { useRouter } from "next/navigation";
 
-const VenueCard = ({ venue, setSelectedVenue, selectedVenue, clickable }) => {
+const VenueCard = ({ venue, clickable, selectedVenue, onClick }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
-  console.log("venue", venue);
 
-  const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-  const handleShow = () => {
+  const handleClick = () => {
     if (clickable) {
-      setSelectedVenue(venue);
+      onClick?.(); // 🔥 important
       return;
     }
     router.push(`/resources/venue/${venue?.slug}`);
@@ -26,48 +101,50 @@ const VenueCard = ({ venue, setSelectedVenue, selectedVenue, clickable }) => {
   return (
     <>
       <article
-        className={`venue-card ${
-          clickable && selectedVenue?.id === venue?.id ? "selected" : ""
-        }`}
-        onClick={handleShow}
+        className={`venue-card ${clickable && selectedVenue?.id === venue?.id ? "selected" : ""
+          }`}
+        onClick={handleClick}
       >
         <div className="venue-card-img">
           {venue.image && (
             <Image
               src={venue.image}
-              alt="venue-card-img"
+              alt={venue?.name}
               width={300}
               height={300}
             />
           )}
         </div>
+
         <div className="venue-card-content">
           <h3 className="venue-card-title">{venue?.name}</h3>
+
           <div className="venue-card-info">
             <div className="venue-card-info-item">
-              <Image src={rupeeIcon} alt="location-icon" />
+              <Image src={rupeeIcon} alt="" />
               <span>{venue?.price}</span>
             </div>
             <div className="venue-card-info-item">
-              <Image src={strokeStarIcon} alt="location-icon" />
+              <Image src={strokeStarIcon} alt="" />
               <span>{venue?.rating}</span>
             </div>
             <div className="venue-card-info-item">
-              <Image src={publicIcon} alt="location-icon" />
+              <Image src={publicIcon} alt="" />
               <span>{venue?.capacity}</span>
             </div>
           </div>
         </div>
       </article>
+
       <Modal
         show={show}
-        onHide={handleClose}
+        onHide={() => setShow(false)}
         size="xl"
-        className="venue-modal"
         centered
+        className="venue-modal"
       >
         <Modal.Body>
-          <VenueInner handleClose={handleClose} />
+          <VenueInner handleClose={() => setShow(false)} />
         </Modal.Body>
       </Modal>
     </>

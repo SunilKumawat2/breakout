@@ -99,7 +99,7 @@ const AboutPage = () => {
   const [brandLogos, setBrandLogos] = useState(null);
   const [collapse, setCollapse] = useState("desktop");
   const { escaperoomLocations, loading, errors } = useGlobalContext();
-
+console.log("escaperoomLocations_escaperoomLocations",escaperoomLocations)
   const [abImages, setAbImages] = useState([
     abImg1,
     abImg2,
@@ -132,7 +132,7 @@ const AboutPage = () => {
     const fetchCorporate = async () => {
       const response = await api.get("about-us-page");
       setCorporate(response.data.data);
-      console.log("corporate_about_page", response)
+      console.log("corporate_about_page", response?.data?.data)
     };
     fetchCorporate();
     const fetchBrandLogos = async () => {
@@ -233,9 +233,6 @@ const AboutPage = () => {
                   >
                     <source src="/videos/founder-video.mp4" type="video/mp4" />
                   </video>
-
-
-
                 </div>
               </div>
               <div className="col-lg-5 col-12">

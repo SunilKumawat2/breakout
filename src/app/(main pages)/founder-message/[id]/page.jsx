@@ -27,6 +27,7 @@ export async function getData(id) {
 const SigngleBlog = async ({ params }) => {
   const { id } = params;
   const { founderMessage } = await getData(id);
+  console.log("founderMessage_founderMessage", founderMessage)
   const images =
     founderMessage?.images && founderMessage?.images?.length > 1
       ? founderMessage?.images.slice(1).map((img) => img.url)
@@ -43,6 +44,27 @@ const SigngleBlog = async ({ params }) => {
           banner={{ ...founderMessage, image: bannerImage }}
           bdayInner={true}
         />
+      )}
+
+      {founderMessage?.messagetitle && (
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-12 col-12">
+              <div className="cus-card">
+                <p
+                  className="para mb-0 yellow-text"
+                  style={{ fontStyle: "italic" }}
+                  dangerouslySetInnerHTML={{
+                    __html: founderMessage?.messagetitle?.replace(
+                      /<a /g,
+                      '<a target="_blank" rel="noopener noreferrer" '
+                    ),
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       <div className="black-gr-div">
@@ -66,7 +88,7 @@ const SigngleBlog = async ({ params }) => {
             </div>
           </div>
         </section>
-        <PartyExpertCon className="pt-80" data="founder_message"/>
+        <PartyExpertCon className="pt-80" data="founder_message" />
         <Image
           src={matterIllus}
           className="w-100 h-auto"

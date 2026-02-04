@@ -91,12 +91,12 @@ const reasons = [
 
 const page = () => {
   return (
-    <div className="section-padding">
+    <div className="carrer-page pt-80">
       <div className="black-gr-div">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <h1 className="sec-head pb-3 medium sm-head mb-5 text-center yellow-text">
+              <h1 className="sec-head medium sm-head text-center yellow-text">
                 Career
               </h1>
 
@@ -134,7 +134,7 @@ const page = () => {
                 </h3>
               </div>
 
-              <div className="row justify-content-center mb-5">
+              <div className="row justify-content-center mb-40">
                 {reasons.map((reason, idx) => (
                   <div key={idx} className="col-md-6 d-flex mb-5">
                     <div className="d-flex align-items-start">
@@ -150,7 +150,7 @@ const page = () => {
                 ))}
               </div>
 
-              <div className="main-con para mb-5">
+              <div className="main-con para mb-40">
                 <h3 className="mb-3 yellow-text" style={{ fontWeight: 500 }}>
                   How to Apply:
                 </h3>

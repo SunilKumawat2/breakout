@@ -49,16 +49,16 @@ const contactData = [
 
 const page = () => {
   return (
-    <div className="section-padding">
+    <div className="pt-80">
       <div className="black-gr-div">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <h1 className="sec-head pb-5 medium sm-head mb-5 text-center yellow-text">
+              <h1 className="sec-head medium sm-head text-center yellow-text">
                 General Enquiries
               </h1>
-              <div className="main-con mt-5 para">
-                <ol>
+              <div className="main-con para">
+                <ol className="p-0 m-0">
                   {contactData.map((item, idx) => (
                     <li key={idx} style={{ marginBottom: "1.5rem" }}>
                       <span>
@@ -78,7 +78,7 @@ const page = () => {
             </div>
           </div>
         </div>
-        <Image src={tsIllus} alt="contact" className="w-100 h-auto" />
+        <Image src={tsIllus} alt="contact" className="illus-image" />
       </div>
     </div>
   );

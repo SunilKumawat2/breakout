@@ -3691,7 +3691,8 @@ textarea:hover {
     flex-direction: column-reverse;
 
 }
-.corp-retreat .col-12 p{
+
+.corp-retreat .col-12 p {
     margin-bottom: 16px !important;
     margin-top: 0 !important;
 }
@@ -3831,6 +3832,31 @@ textarea:hover {
 
 .overlay-box .main-row .col-12:last-child .overlay-box-item {
     margin-bottom: 0 !important;
+}
+
+.book-box-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #323333;
+    border: 1px solid rgba(255, 174, 0, 0.15);
+    border-radius: 20px;
+    padding: 40px;
+    position: relative;
+}
+
+.book-box-icon {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+}
+
+.book-box-icon img {
+    max-width: 30px;
+}
+
+.row-booking {
+    row-gap: 40px;
 }
 
 // new css start 
