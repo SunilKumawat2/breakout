@@ -13,8 +13,8 @@ const PartyExpertCon = ({ title, className = "", data = "", serviceType = "corpo
 
   // Map of services to Calendly URLs
   const calendlyLinks = {
-    corporate: "https://calendly.com/sunilk-bvmsolutions/new-meeting-1",
-    birthday: "https://calendly.com/sunilk-bvmsolutions/new-meeting-1",
+    corporate: "https://calendly.com/book-breakoutimpact/corporate",
+    birthday: "https://calendly.com/book-breakoutimpact/30min",
     virtual: "https://calendly.com/sunilk-bvmsolutions/new-meeting-1", // ✅ ADD THIS
     connect_lnd: "https://calendly.com/sunilk-bvmsolutions/new-meeting-1",
     corporate_retreat: "https://calendly.com/sunilk-bvmsolutions/new-meeting-1"

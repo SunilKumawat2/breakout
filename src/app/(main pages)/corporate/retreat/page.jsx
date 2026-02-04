@@ -192,7 +192,7 @@ const page = () => {
           logos={brandLogos}
         />
 
-        <PartyExpertCon className="pt-80" data="corporate_retreat"/>
+        <PartyExpertCon className="pt-80" data="corporate"/>
 
         <Image src={bdayIllus} className={"illus-image"} alt="bday" />
       </div>
