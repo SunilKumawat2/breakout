@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 const EscapeRoomCard = ({ room, hasVirtual = false }) => {
   const router = useRouter();
-
+console.log("EscapeRoomCard_EscapeRoomCard",room)
   if (!room) return null;
 
   return (
@@ -55,7 +55,7 @@ const EscapeRoomCard = ({ room, hasVirtual = false }) => {
             )}
             <li>
               <Image src={people} className="w-100 h-auto" alt="people" />
-              <span>{room?.bannersection?.min_team || "4+"}</span>
+              <span>{room?.bannersection?.min_team || room?.bannersection?.capacity}</span>
             </li>
             <li>
               <Image src={up} className="w-100 h-auto" alt="people" />

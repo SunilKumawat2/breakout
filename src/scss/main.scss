@@ -3706,9 +3706,11 @@ textarea:hover {
 }
 
 .calendar-days {
-    display: flex;
-    align-items: center;
-    column-gap: 24px;
+	display: flex;
+	align-items: center;
+	column-gap: 24px;
+	flex-wrap: wrap;
+	row-gap: 16px;
 }
 
 .calendar-days-outer .calender-btn {
@@ -3858,7 +3860,9 @@ textarea:hover {
 .row-booking {
     row-gap: 40px;
 }
-
+.package-container.mobile-only{
+    display: none;
+}
 // new css start 
 
 // Sunil's CSS start

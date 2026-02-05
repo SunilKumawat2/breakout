@@ -31,6 +31,7 @@ import SmoothScrolling from "@/components/SmoothScroll";
 const page = () => {
   const [rooms, setRooms] = useState([]);
   const [escapeRooms, setEscapeRooms] = useState(null);
+  console.log("sdmkfhksdjfhksjdhfsd",escapeRooms)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

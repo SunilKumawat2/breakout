@@ -87,7 +87,7 @@ const BirthdayBanner = ({
 
     const isVideo = /\.(mp4|webm|mov|avi|mkv)$/i.test(media);
 
-    if (!isVideo) {
+    if (isVideo) {
       return (
         <video
           className="banner-media"

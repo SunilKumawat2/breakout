@@ -56,19 +56,30 @@ const BlogSlider = ({ className = "" }) => {
           <div className="col-lg-12">
             <div className="blog-slider position-relative">
               <Swiper
+                // modules={[Pagination, Navigation]}
+                // pagination={{ clickable: true }}
+                // loop={true}
+                // slidesPerView={1}
+                // spaceBetween={20}
+                // navigation={{
+                //   prevEl: prevRef.current,
+                //   nextEl: nextRef.current,
+                // }}
+                // onBeforeInit={(swiper) => {
+                //   swiper.params.navigation.prevEl = prevRef.current;
+                //   swiper.params.navigation.nextEl = nextRef.current;
+                // }}
                 modules={[Pagination, Navigation]}
-                pagination={{ clickable: true }}
-                loop={true}
-                slidesPerView={1}
-                spaceBetween={20}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                onBeforeInit={(swiper) => {
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  swiper.params.navigation.nextEl = nextRef.current;
-                }}
+              pagination={{
+                clickable: true,
+              }}
+              navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              }}
+              slidesPerView={1}
+              spaceBetween={20}
+              loop={true}
                 breakpoints={{
                   0: { slidesPerView: 1 },
                   640: { slidesPerView: 2 },

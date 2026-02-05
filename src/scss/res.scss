@@ -101,9 +101,47 @@
         font-size: 18px;
     }
 
+    .logo-slider-wrapper {
+        margin-top: 24px;
+    }
+
     .section-padding {
-        // padding: 3em 0px;
-        padding: 3em 0px;
+        padding: 120px 0;
+    }
+
+    .illus-image,
+    .hm-contact-illus {
+        height: 120px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .sec-padding-top {
+        padding-top: 40px;
+    }
+
+    .sec-head {
+        margin-bottom: 24px;
+    }
+
+    .pt-80 {
+        padding-top: 64px;
+    }
+
+    .row-gap-25 {
+        row-gap: 24px;
+    }
+    .g-review-swiper{
+        height: auto !important;
+        max-width: none !important;
+    }
+
+    .mb-40 {
+        margin-bottom: 24px !important;
+    }
+
+    .mt-40 {
+        margin-top: 24px !important;
     }
 
     .sec-head.medium {
@@ -161,7 +199,7 @@
 
     .package-header-cell,
     .package-row-cell {
-        min-width: 200px;
+        min-width: 160px;
         font-size: 16px !important;
         padding: 12px 15px !important;
     }
@@ -197,11 +235,11 @@
     }
 
     .counter-box.with-icon {
-	display: flex;
-	align-items: center;
-	column-gap: 24px;
-	justify-content: center;
-}
+        display: flex;
+        align-items: center;
+        column-gap: 24px;
+        justify-content: center;
+    }
 
     .counter-box.with-icon .top h4 {
         font-size: 20px;
@@ -234,6 +272,50 @@
     .trust-sec .sec-head {
         text-align: center;
     }
+
+    .package-container.mobile-only {
+        display: block !important;
+        min-width: 48%;
+        width: 48%;
+
+    }
+
+    .package-container {
+        width: 48%;
+    }
+
+    .col-package-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .package-container.mobile-only .package-header-cell {
+        min-height: 185px;
+        min-width: 100px;
+    }
+
+    .package-row-cell:first-child,
+    .package-header-cell:first-child {
+        display: none;
+    }
+
+    .package-container.mobile-only .package-row-cell {
+        min-width: 100px;
+    }
+
+    .package-row-cell h3 {
+        font-size: 16px;
+    }
+
+    .package-header,
+    .package-row {
+        gap: 16px;
+    }
+
+    .nav-inner .r-list img {
+        max-width: 36px;
+    }
+
 }
 
 @media(min-width: 1400px) {

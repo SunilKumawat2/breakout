@@ -85,7 +85,7 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
   const [corporate, setCorporate] = useState([]);
-  console.log("corporate_corporate_corporate",corporate)
+  console.log("corporate_corporate_corporate", corporate)
   const [brandLogos, setBrandLogos] = useState(null);
   useEffect(() => {
     const fetchCorporate = async () => {
@@ -136,7 +136,7 @@ const page = () => {
         )}
         {corporate && corporate?.googlereviews && (
           <div className="pt-80">
-          <GReviewSlider commonStars={false} data={corporate?.googlereviews} />
+            <GReviewSlider commonStars={false} data={corporate?.googlereviews} />
           </div>
         )}
         {corporate?.contentsection?.content && (
@@ -186,7 +186,7 @@ const page = () => {
         </section> */}
 
         <LogoSec
-        className="pb-0 pt-80"
+          className="pb-0 pt-80"
           title="Brands <span>Hosted</span>"
           link={false}
           logos={brandLogos}
@@ -245,7 +245,11 @@ const page = () => {
         {corporate && corporate?.packagesection && (
           <Packages className="pb-0" packages={corporate?.packagesection} />
         )}
-        <BreakoutXForm className="pb-0"/>
+        {/* <BreakoutXForm className="pb-0"/> */}
+        <div id="breakout-form">
+          <BreakoutXForm className="pb-0" />
+        </div>
+
         <Image src={corpIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
@@ -405,7 +409,7 @@ const page = () => {
           <FaqSection className="pb-0 section-padding" data={corporate?.faqsection} />
         )}
 
-        <BlogSlider className="pb-0"/>
+        <BlogSlider className="pb-0" />
         <LogoSec className="pt-80 pb-0" title="In the <span>News</span>" />
 
         <BirthdayGetInTouch

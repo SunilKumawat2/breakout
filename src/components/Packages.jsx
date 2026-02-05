@@ -6,11 +6,14 @@ import check from "@/images/check.svg";
 import Link from "next/link";
 import keyImg from "@/images/key.svg";
 import { CommonModal } from "@/components/CommonModal";
+import { useRouter } from "next/navigation";
 
-const Packages = ({ packages, hasEventImg = false, category = "",className="" }) => {
+
+const Packages = ({ packages, hasEventImg = false, category = "", className = "" }) => {
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
-  const [modalType, setModalType] = useState("both"); 
+  const [modalType, setModalType] = useState("both");
   const renderCol = (col) => {
     // Check for special Yes:n or No:n syntax
     let match = /^(\s*(Yes|No)\s*):\s*(\d+)\s*$/i.exec(col);
@@ -51,12 +54,26 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
     );
   };
 
-  const renderButton = (col) => {
+  // const renderButton = (col) => {
+  //   return (
+  //     <div className="package-row-cell">
+  //       <Link href={col || "#"} className="main-btn " target="_blank">
+  //         <span>Know More</span>
+  //       </Link>
+  //     </div>
+  //   );
+  // };
+  const renderButton = () => {
     return (
       <div className="package-row-cell">
-        <Link href={col || "#"} className="main-btn " target="_blank">
+        <button
+          className="main-btn"
+          onClick={() => {
+            router.push("/corporate/unwind#breakout-form");
+          }}
+        >
           <span>Know More</span>
-        </Link>
+        </button>
       </div>
     );
   };
@@ -116,7 +133,73 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
           </div>
         </div>
         <div className="row justify-content-center">
-          <div className="col-lg-12">
+          <div className="col-package-container">
+{/* <--------- New Package Conatainer-----------> */}
+          <div className="package-container mobile-only">
+            {packages?.pricing?.columns?.length > 0 && (
+              <div
+                className={`package-header mt-0`}
+                style={{ gridTemplateColumns: gridCol }}
+              >
+                <div className="package-header-cell w-100 d-block">
+                  {hasEventImg ? (
+                    <Image src={keyImg} width={80} height={80} alt={"key"} />
+                  ) : (
+                    <h3>Event Flow</h3>
+                  )}
+                </div>
+
+              </div>
+            )}
+            {packages?.pricing?.rows?.length > 0 && (
+              <div className="package-body">
+                {packages?.pricing?.rows?.map((row, index) => {
+                  if (row?.feature == "buttons") {
+                    return (
+                      <div
+                        className="package-row"
+                        key={index}
+                        style={{ gridTemplateColumns: gridCol }}
+                      >
+                        <div className="package-row-cell w-100 d-block">
+                          <h3></h3>
+                        </div>
+                        {row?.col0 &&
+                          row?.col0 != "" &&
+                          renderButton(row?.col0)}
+                        {row?.col1 &&
+                          row?.col1 != "" &&
+                          renderButton(row?.col1)}
+                        {row?.col2 &&
+                          row?.col2 != "" &&
+                          renderButton(row?.col2)}
+                        {row?.col3 &&
+                          row?.col3 != "" &&
+                          renderButton(row?.col3)}
+                        {row?.col4 &&
+                          row?.col4 != "" &&
+                          renderButton(row?.col4)}
+                      </div>
+                    );
+                  }
+                  return (
+                    <div
+                      className="package-row"
+                      key={index}
+                      style={{ gridTemplateColumns: gridCol }}
+                    >
+                      <div className="package-row-cell w-100 d-block">
+                        <h3
+                          dangerouslySetInnerHTML={{ __html: row?.feature }}
+                        ></h3>
+                      </div>
+                    </div>
+
+                  );
+                })}
+              </div>
+            )}
+          </div>
             <div className="package-container">
               {packages?.pricing?.columns?.length > 0 && (
                 <div
@@ -197,6 +280,7 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
                         {row?.col3 && row?.col3 != "" && renderCol(row?.col3)}
                         {row?.col4 && row?.col4 != "" && renderCol(row?.col4)}
                       </div>
+
                     );
                   })}
                 </div>
@@ -215,11 +299,11 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
                   dangerouslySetInnerHTML={{ __html: modifiedNote }}
                   onClick={(e) => {
                     if (e.target.classList.contains("open-compare")) {
-                      setModalType("both");  
+                      setModalType("both");
                       setShow(true);
                     }
                     if (e.target.classList.contains("open-quote")) {
-                      setModalType("quote");  
+                      setModalType("quote");
                       setShow(true);
                     }
                   }}
@@ -235,6 +319,9 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
               </Link> */}
             </div>
           </div>
+
+
+
         </div>
       </div>
 
@@ -292,16 +379,16 @@ const Packages = ({ packages, hasEventImg = false, category = "",className="" })
             </Link>
           </p>
           {modalType === "both" && (
-      <p className="para mt-4">
-        Download Comparative Packages PDF –{" "}
-        <Link
-          href={`/resources/quiz/comparative-packages?category=${category}`}
-          className="yellow-text"
-        >
-          <span>Click Here</span>
-        </Link>
-      </p>
-    )}
+            <p className="para mt-4">
+              Download Comparative Packages PDF –{" "}
+              <Link
+                href={`/resources/quiz/comparative-packages?category=${category}`}
+                className="yellow-text"
+              >
+                <span>Click Here</span>
+              </Link>
+            </p>
+          )}
         </div>
       </CommonModal>
     </section>
