@@ -286,7 +286,7 @@ const Packages = ({ packages, hasEventImg = false, category = "", className = ""
                 </div>
               )}
             </div>
-            <div className="d-flex mt-3 justify-content-between align-items-center gap-3 flex-wrap">
+            <div className="package-yellow-text">
               {packages?.note && (
                 // <p
                 //   className="yellow-text para mb-0"

@@ -395,6 +395,10 @@ console.log("page_name",page_name)
                   className="para"
                   dangerouslySetInnerHTML={{ __html: data?.description2 }}
                 />
+                 <p
+                  className="para"
+                  dangerouslySetInnerHTML={{ __html: data?.content }}
+                />
               </div>
             </div>
           </div>

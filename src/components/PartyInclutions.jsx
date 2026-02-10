@@ -67,7 +67,10 @@ const PartyInclutions = ({ data }) => {
         <div className="row">
           <div className="col-12">
             <p className="sec-head medium-20">
-              <span>{data?.note}</span>
+              {/* <span>{data?.note}</span> */}
+              <span  dangerouslySetInnerHTML={{
+                      __html: data?.note,
+                    }}/>
             </p>
           </div>
         </div>

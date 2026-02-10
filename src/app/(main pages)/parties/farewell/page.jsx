@@ -125,7 +125,7 @@ const page = () => {
         {party && party?.countersection && (
           <HmTextSec text={party?.countersection?.content} />
         )}
-        {party && party?.countersection && (
+        {/* {party && party?.countersection && (
           <div className="container">
             <div className="bday-text-wrap">
               <p
@@ -136,7 +136,7 @@ const page = () => {
               ></p>
             </div>
           </div>
-        )}
+        )} */}
 
         {party && party?.countersection && (
           <TrustedSection className="" data={party?.countersection} removeHeading={true} />
