@@ -26,6 +26,7 @@ import wh from "@/images/wh.svg";
 import locPlace from "@/images/loc-place.svg";
 import BirthdayBanner from "@/components/BirthdayBanner";
 import bdayIllus from "@/images/bday-illus.svg";
+import illus3402 from "@/images/illus3402.svg"
 
 import whicon from "@/images/wh-icon.svg";
 import phicon from "@/images/phone.svg";
@@ -112,7 +113,7 @@ const page = () => {
 
       <div className="black-gr-div">
         {party && party?.countersection && (
-          <section className="section-padding pb-0">
+          <section className="pt-80 pb-0">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -184,7 +185,7 @@ const page = () => {
           </section>
         )} */}
 
-        <Image src={coupleIllus} className={"illus-image"} alt="bday" />
+        <Image src={bdayIllus} className={"illus-image"} alt="bday" />
       </div>
 
       <div className="black-gr-div">
@@ -286,7 +287,7 @@ const page = () => {
           </div>
         )}
 
-        <Image src={bdayIllus} alt="illus3" className="illus-image" />
+        <Image src={illus3402} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
         <PartyExpertCon className="sec-padding-top" data="birthday_party_subpage" />
@@ -334,7 +335,7 @@ const page = () => {
           <Videotestimonials data={party?.videotestimonials} />
         )}
         <OurLocationSec className="section-padding pb-0" title="About Our <span>Our Location</span>" />
-        <Image src={loveIllus} className={"illus-image"} alt="bday" />
+        <Image src={movieIllus} className={"illus-image"} alt="bday" />
       </div>
       <div className="black-gr-div">
         {party && party?.faqsection &&
@@ -344,12 +345,13 @@ const page = () => {
         {party && party?.footersection && (
           <PartyGetInTouch
             img={nightIllus}
-            noTextBottom={true}
+            // noTextBottom={true}
             textData={party?.footersection}
             data={party?.footersection}
             privacyLine={true}
           />
         )}
+
       </div>
     </>
   );

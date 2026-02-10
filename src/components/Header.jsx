@@ -61,7 +61,8 @@ export default function Header() {
           <Link className="logo" href="/">
             <Image src={logo} alt="logo" />
           </Link>
-          <ul className="nav-list" onClick={()=>{sessionStorage.removeItem("home_dropdown");
+          <ul className="nav-list" onClick={() => {
+            sessionStorage.removeItem("home_dropdown");
             sessionStorage.removeItem("home_scroll")
           }}>
             {links &&
@@ -76,7 +77,7 @@ export default function Header() {
               <Link
                 href="/book-online"
                 className="main-btn"
-                // target="_blank"
+              // target="_blank"
               >
                 <span>Book Now</span>
               </Link>
@@ -120,7 +121,7 @@ export default function Header() {
                 zIndex: 10,
               }}
             >
-              <MainMenu closeMenu={() => setIsMenuOpen(false)}/>
+              <MainMenu closeMenu={() => setIsMenuOpen(false)} />
             </motion.div>
           )}
         </AnimatePresence>

@@ -233,7 +233,7 @@ const page = () => {
 
         <PartyExpertCon className="pt-80" data="birthday" />
 
-        <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
+        <Image src={bdayIllus} className={"illus-image"} alt="bday" />
       </div>
 
       <section className="pt-80 bday-sec" id="brithday-party-birthday-of-my-section">
@@ -304,7 +304,7 @@ const page = () => {
       </div>
       <div className="black-gr-div">
         {/* <PartyExpertCon /> */}
-        {data?.slidersection && <ReadyToGoPlans className="pb-0" data={data?.slidersection} />}
+        {data?.slidersection && <ReadyToGoPlans className="sec-padding-top pb-0" data={data?.slidersection} />}
         {data?.googlereviews && (
           <div className="pt-80">
             <GReviewSlider commonStars={false} data={data?.googlereviews} />
@@ -356,7 +356,7 @@ const page = () => {
       <div className="black-gr-div">
         {data?.faqsection && <FaqSection className="pt-80" data={data?.faqsection} />}
         <OurLocationSec className="sec-padding-top" title="About Our <span>Our Location</span>" />
-        <BlogSlider className="" />
+        <BlogSlider className="pb-0" />
         <LogoSec className="pt-80 pb-0" title={"In the <span>News</span>"} />
         {data?.footersection && (
           <PartyGetInTouch
