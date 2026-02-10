@@ -49,6 +49,19 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [days, setDays] = useState([]);
   const [showMonthYear, setShowMonthYear] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 991);
+    };
+
+    // initial check
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     fetchThirdPartyLocations();
@@ -207,7 +220,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
       locationId: selectedLocation,
       gameId: selectedSlotTime?.gameId,
     };
-    
+
     const fetchBookingData = async () => {
       try {
         const response = await bookASlot(bookingData);
@@ -230,7 +243,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
   };
 
 
- 
+
 
   useEffect(() => {
     const totalDays = new Date(year, month + 1, 0).getDate();
@@ -247,17 +260,18 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
     }
   }, [year, month]);
 
-  const visibleDays = days.slice(startIndex, startIndex + 7);
+  const daysToShow = isMobile ? 5 : 7;
+  const visibleDays = days.slice(startIndex, startIndex + daysToShow);
 
   const nextDays = () => {
     if (startIndex + 7 < days.length) {
-      setStartIndex(startIndex + 7);
+      setStartIndex(startIndex + daysToShow);
     }
   };
 
   const prevDays = () => {
     if (startIndex - 7 >= 0) {
-      setStartIndex(startIndex - 7);
+      setStartIndex(startIndex - daysToShow);
     }
   };
 
@@ -345,22 +359,58 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
             <p className="para">Pricing</p>
             <div className="cus-card pick-card mt-0">
               <div className="row row-gap-25">
-                {room?.pricing &&
-                  room?.pricing?.length > 0 &&
-                  room?.pricing?.map((item, index) => (
-                    <div className="col-lg-4 col-12 text-center" key={index}>
-                      <h3
-                        dangerouslySetInnerHTML={{
-                          __html: item?.day_range,
-                        }}
-                      ></h3>
-                      <p className="para">
-                        {item?.price23}
-                        <br />
-                        {item?.price46}
-                      </p>
-                    </div>
-                  ))}
+                {room?.pricing?.[0] && (
+                  <div className="col-lg-4 col-6 text-center">
+                    <h3 dangerouslySetInnerHTML={{ __html: room.pricing[0].day_range, }}></h3>
+
+                    <p className="para">
+                      {room.pricing[0].price23}
+                      <br />
+                      {room.pricing[0].price46}
+                    </p>
+                  </div>
+                )}
+
+                {room?.pricing?.[1] && (
+                  <div className={`col-lg-4 col-6 text-center ${isMobile ? "border-0" : ""}`}>
+                    <h3 dangerouslySetInnerHTML={{ __html: room.pricing[1].day_range, }}></h3>
+
+                    <p className="para">
+                      {room.pricing[1].price23}
+                      <br />
+                      {room.pricing[1].price46}
+                    </p>
+                  </div>
+                )}
+                {isMobile && (
+                  <>
+                  {room?.pricing?.[0] && (
+                  <div className="col-lg-4 col-6 text-center">
+                    <h3 dangerouslySetInnerHTML={{ __html: room.pricing[0].day_range, }}></h3>
+
+                    <p className="para">
+                      {room.pricing[0].price23}
+                    </p>
+                    <p className="para">
+                      {room.pricing[0].price46}
+                    </p>
+                  </div>
+                )}
+                  </>
+                 )
+                }
+                
+                {room?.pricing?.[2] && (
+                  <div className="col-lg-4 col-6 text-center">
+                    <h3 dangerouslySetInnerHTML={{ __html: room.pricing[2].day_range, }}></h3>
+
+                    <p className="para">
+                      {room.pricing[2].price23}
+                      <br />
+                      {room.pricing[2].price46}
+                    </p>
+                  </div>
+                )}
               </div>
               <p className="para mt-5 mb-0">
                 {room?.note}{" "}
@@ -498,102 +548,102 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
 
                 {/* ================= CALENDAR ================= */}
                 <div className="col-12 mb-4 mt-3">
-                <div className="calendar-wrapper">
-                        <div className="calendar-header">
-                          <div
-                            className="month-year-select mb-3"
-                          // onClick={() => setShowMonthYear(!showMonthYear)}
-                          >
-                            <span>
-                              {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
-                            </span>
-                            {/* <Image src={selectDrop} alt="arrow" /> */}
-                          </div>
+                  <div className="calendar-wrapper">
+                    <div className="calendar-header">
+                      <div
+                        className="month-year-select mb-3"
+                      // onClick={() => setShowMonthYear(!showMonthYear)}
+                      >
+                        <span>
+                          {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
+                        </span>
+                        {/* <Image src={selectDrop} alt="arrow" /> */}
+                      </div>
+                    </div>
+
+                    <div className="calendar-days-outer">
+                      <div className="calendar-days">
+                        <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+                          {/* ‹ */}
+                          <Image src={arrowPrev} alt="Previous" />
                         </div>
 
-                        <div className="calendar-days-outer">
-                          <div className="calendar-days">
-                            <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
-                              {/* ‹ */}
-                              <Image src={arrowPrev} alt="Previous" />
-                            </div>
+                        {visibleDays.map((day) => {
+                          const past = isPastDate(day);
 
-                            {visibleDays.map((day) => {
-                              const past = isPastDate(day);
-
-                              return (
-                                <div
-                                  key={day}
-                                  onClick={() => {
-                                    if (!past) handleDateSelect(day);
-                                  }}
-                                  className={`day ${past ? "disabled" : ""} ${selectedDate &&
-                                    selectedDate.getDate() === day &&
-                                    selectedDate.getMonth() === month &&
-                                    selectedDate.getFullYear() === year
-                                    ? "active"
-                                    : ""
-                                    }`}
-                                >
-                                  {day}
-                                </div>
-                              );
-                            })}
-
-
+                          return (
                             <div
-                              className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
-                              onClick={nextDays}
-                              disabled={startIndex + 7 >= days.length}
+                              key={day}
+                              onClick={() => {
+                                if (!past) handleDateSelect(day);
+                              }}
+                              className={`day ${past ? "disabled" : ""} ${selectedDate &&
+                                selectedDate.getDate() === day &&
+                                selectedDate.getMonth() === month &&
+                                selectedDate.getFullYear() === year
+                                ? "active"
+                                : ""
+                                }`}
                             >
-                              {/* › */}
-                              <Image src={arrowNext} alt="Next" />
+                              {day}
                             </div>
-                            <div
-                              className="calender-btn"
-                              onClick={() => setShowMonthYear(!showMonthYear)}
-                            >
-                              {/* › */}
-                              <Image src={calenderIcon} alt="Calender Icon" />
-                            </div>
-                          </div>
+                          );
+                        })}
 
-                          {showMonthYear && (
-                            <div className="month-year-dropdown">
-                              <div className="months">
-                                {Array.from({ length: 12 }).map((_, i) => (
-                                  <div
-                                    key={i}
-                                    className={`option ${month === i ? "active" : ""}`}
-                                    onClick={() => {
-                                      setMonth(i);
-                                      setShowMonthYear(false);
-                                    }}
-                                  >
-                                    {new Date(0, i).toLocaleString("default", { month: "long" })}
-                                  </div>
-                                ))}
-                              </div>
 
-                              <div className="years">
-                                {[2026, 2027, 2028, 2029,2030,2031,2032,2033].map((y) => (
-                                  <div
-                                    key={y}
-                                    className={`option ${year === y ? "active" : ""}`}
-                                    onClick={() => {
-                                      setYear(y);
-                                      setShowMonthYear(false);
-                                    }}
-                                  >
-                                    {y}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
+                        <div
+                          className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
+                          onClick={nextDays}
+                          disabled={startIndex + 7 >= days.length}
+                        >
+                          {/* › */}
+                          <Image src={arrowNext} alt="Next" />
+                        </div>
+                        <div
+                          className="calender-btn"
+                          onClick={() => setShowMonthYear(!showMonthYear)}
+                        >
+                          {/* › */}
+                          <Image src={calenderIcon} alt="Calender Icon" />
                         </div>
                       </div>
+
+                      {showMonthYear && (
+                        <div className="month-year-dropdown">
+                          <div className="months">
+                            {Array.from({ length: 12 }).map((_, i) => (
+                              <div
+                                key={i}
+                                className={`option ${month === i ? "active" : ""}`}
+                                onClick={() => {
+                                  setMonth(i);
+                                  setShowMonthYear(false);
+                                }}
+                              >
+                                {new Date(0, i).toLocaleString("default", { month: "long" })}
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="years">
+                            {[2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((y) => (
+                              <div
+                                key={y}
+                                className={`option ${year === y ? "active" : ""}`}
+                                onClick={() => {
+                                  setYear(y);
+                                  setShowMonthYear(false);
+                                }}
+                              >
+                                {y}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                    </div>
+                  </div>
                 </div>
 
                 <div className="col-lg-12 col-12">

@@ -112,7 +112,7 @@ const page = () => {
       <div className="black-gr-div mt-3">
         {rooms?.contentsection && (
           <>
-            <HmTextSec text={rooms?.contentsection?.content} />
+            <HmTextSec className="section-padding pb-0" text={rooms?.contentsection?.content} />
             <div className="container">
               <div className="bday-text-wrap">
                 <p
@@ -128,10 +128,10 @@ const page = () => {
           </>
         )}
         {rooms?.countersection && (
-          <TrustedSection data={rooms?.countersection} />
+          <TrustedSection className="pb-0" data={rooms?.countersection} />
         )}
         {rooms?.iconsection && (
-          <section className="section-padding">
+          <section className="icon-sec section-padding pb-0">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -141,7 +141,7 @@ const page = () => {
                       __html: rooms?.iconsection?.heading,
                     }}
                   />
-                  <div className="box-grid-6 mt-5">
+                  <div className="box-grid-6">
                     {rooms?.iconsection?.icons?.length > 0 &&
                       rooms?.iconsection?.icons.map((item, index) => (
                         <div className="box-grid-item" key={index}>
@@ -174,16 +174,16 @@ const page = () => {
           </section>
         )}
 
-        <PartyExpertCon className="pt-80" data="virtual"/>
+        <PartyExpertCon className="" data="virtual"/>
 
         <Image
           src={virtualIllus}
           alt="illus3"
-          className="illus-3 w-100 h-auto"
+          className="illus-image"
         />
       </div>
       <div className="black-gr-div" id="escape-rooms-section">
-        <section className="section-padding esc-sec">
+        <section className="sec-padding-top esc-sec">
           <div className="container">
             <div className="row" >
               <div className="col-lg-12 text-center">
@@ -192,7 +192,7 @@ const page = () => {
                 </h3>
               </div>
             </div>
-            <div className="row row-gap-25 mt-5" >
+            <div className="row row-gap-25" >
               {escapeRooms &&
                 escapeRooms
                   .filter((room) => room.slug !== "code-breakers")
@@ -206,12 +206,12 @@ const page = () => {
         </section>
 
         {rooms?.addonsection && (
-          <section className="section-padding">
+          <section className="addon-sec pt-80">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
                   <h3
-                    className="sec-head medium sm-head mb-5"
+                    className="sec-head medium sm-head"
                     dangerouslySetInnerHTML={{
                       __html: rooms?.addonsection?.heading,
                     }}
@@ -251,19 +251,19 @@ const page = () => {
         )}
 
         {rooms?.packagesection && (
-          <Packages hasEventImg={true} packages={rooms?.packagesection} />
+          <Packages className="pb-0" hasEventImg={true} packages={rooms?.packagesection} />
         )}
 
         <Image
           src={virtualIllus1}
           alt="illus3"
-          className="illus-3 w-100 h-auto"
+          className="illus-image"
         />
       </div>
 
       <div className="black-gr-div">
         {rooms?.gallery_images && rooms?.gallery_images?.length > 0 ? (
-          <section className="section-padding">
+          <section className="sec-padding-top section-padding gallery-sec">
             <div className="" style={{ overflow: "hidden" }}>
               <div className="row">
                 <div className="col-lg-12">
@@ -273,7 +273,7 @@ const page = () => {
             </div>
           </section>
         ):(
-        <section className="section-padding gallery-sec pb-0">
+        <section className="sec-padding-top section-padding gallery-sec">
         <StripGallery images={abImages} />
       </section>
         )
@@ -287,9 +287,9 @@ const page = () => {
           <Videotestimonials data={rooms?.videotestimonials} />
         )}
         {rooms?.faqsection && rooms?.faqsection?.length > 0 && (
-          <FaqSection data={rooms?.faqsection} />
+          <FaqSection className="section-padding pb-0" data={rooms?.faqsection} />
         )}
-        <BlogSlider />
+        <BlogSlider className="pb-0"/>
         {/* <HomeContact
           img={virtualIllus2}
           textData={rooms?.footersection}

@@ -12,10 +12,10 @@
 }
 
 @media(max-width: 992px) {
-    .pick-card .row .col-lg-4:not(:last-child) {
-        border-right: none !important;
-        border-bottom: 1px solid rgba($color: white, $alpha: 0.15) !important;
-    }
+    // .pick-card .row .col-lg-4:not(:last-child) {
+    //     border-right: none !important;
+    //     border-bottom: 1px solid rgba($color: white, $alpha: 0.15) !important;
+    // }
 
     .mob-nav-list {
         display: flex !important;
@@ -131,7 +131,8 @@
     .row-gap-25 {
         row-gap: 24px;
     }
-    .g-review-swiper{
+
+    .g-review-swiper {
         height: auto !important;
         max-width: none !important;
     }
@@ -247,6 +248,7 @@
 
     .counter-box.with-icon .top img {
         width: 20px;
+        height: auto;
     }
 
     .trust-ratings-row {
@@ -316,6 +318,58 @@
         max-width: 36px;
     }
 
+    .trust-sec .mobile-ratings {
+        text-align: center;
+        margin-top: 24px;
+    }
+
+    .ft-head {
+        font-size: 20px;
+    }
+
+    .ft-btm ul {
+        justify-content: center;
+    }
+
+    .calendar-days-outer .month-year-dropdown .months .option {
+        width: 45%;
+    }
+
+    .calendar-days {
+        column-gap: 12px;
+        row-gap: 12px;
+    }
+
+    .calendar-days .day {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .calender-btn img {
+        max-width: 32px;
+    }
+
+    .month-year-select {
+        display: flex;
+        align-items: center;
+        column-gap: 16px;
+    }
+
+    .form-label {
+        font-size: 16px;
+    }
+
+    .pick-card h3 {
+        font-size: 20px;
+    }
+
+    .pick-card p {
+        font-size: 15px;
+    }
+    .mystery-ic-grid {
+	grid-template-columns: repeat(2, 1fr);
+}
 }
 
 @media(min-width: 1400px) {
