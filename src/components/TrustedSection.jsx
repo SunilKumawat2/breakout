@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Ratings from "./Ratings";
 import Image from "next/image";
 import Happy from "@/images/happy.svg";
@@ -97,7 +97,27 @@ const AnimatedCount = ({ count, id }) => {
   );
 };
 
+
+
 const TrustedSection = ({ data = defaultData, removeHeading = false, className = "" }) => {
+
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 991);
+    };
+
+    // initial check
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
+
   return (
     <section className={`section-padding trust-sec ${className}`}>
       <div className="container">
@@ -111,16 +131,20 @@ const TrustedSection = ({ data = defaultData, removeHeading = false, className =
             </div>
           </div>
         )}
-        <div className="row row-gap-25 align-items-center">
+        <div className="row align-items-center">
           <div className="col-lg-4 col-12">
             <h3
-              className="sec-head medium mb-4"
+              className="sec-head medium"
               dangerouslySetInnerHTML={{ __html: data?.counterheading }}
             />
-            <Ratings rating={data?.counterrating} />
-            <p className="mt-3 mb-0">
-              Rated {data?.counterrating}/5 on Google!
-            </p>
+            {!isMobile && (
+              <div className="desktop-ratings">
+                <Ratings rating={data?.counterrating} />
+                <p className="mt-3 mb-0">
+                  Rated {data?.counterrating}/5 on Google!
+                </p>
+              </div>
+            )}
           </div>
           <div className="col-lg-8 col-12">
             <div className="row row-gap-25">
@@ -149,6 +173,14 @@ const TrustedSection = ({ data = defaultData, removeHeading = false, className =
                   </div>
                 ))}
             </div>
+            {isMobile && (
+              <div className="mobile-ratings">
+                <Ratings rating={data?.counterrating} />
+                <p className="mt-3 mb-0">
+                  Rated {data?.counterrating}/5 on Google!
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
