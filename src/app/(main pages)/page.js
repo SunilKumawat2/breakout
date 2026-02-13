@@ -235,13 +235,21 @@ export default function Home() {
     };
     fetchData();
   }, []);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 2000); // 1000ms = 1 second
+  
+    return () => clearTimeout(timer); // cleanup
+  }, []);
+
 
   if (pageLoading) {
     return <div className="loading-container"></div>;
   }
 
- 
-
+  
   return (
     <>
       {data && data?.bannersection && (
@@ -446,7 +454,7 @@ export default function Home() {
         />
       </div>
       <div className="black-gr-div">
-        {/* <VisitLocations /> */}
+        <VisitLocations  title="Visit <span>a Location</span>" page_name="home"/>
         <div className="home-faq">
           {data && data?.faqsection && 
           <FaqSection className="sec-padding-top" data={data?.faqsection} />}

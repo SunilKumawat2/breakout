@@ -109,7 +109,7 @@ const Videotestimonials = ({ data,className = "", }) => {
 
   return (
     <section className={`blog-slider-sec section-padding pb-0 ${className}`}>
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-lg-12 text-center">
             <h2 className="sec-head sm-head medium">

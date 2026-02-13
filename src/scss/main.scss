@@ -3534,7 +3534,8 @@ textarea:hover {
   margin-bottom: 0 !important;
 }
 
-.container {
+.container,
+.container-fluid {
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -3854,3 +3855,4 @@ textarea:hover {
   /* 🔥 NO CUTTING */
   border-radius: 8px;
 }
+

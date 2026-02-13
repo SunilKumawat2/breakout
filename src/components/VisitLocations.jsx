@@ -14,7 +14,7 @@ import GoVirtual from "@/images/go-virtual.jpg";
 import "swiper/css";
 import "swiper/css/pagination";
 
-const VisitLocations = ({ title = null, desc = null,className = "", isVirtual = true }) => {
+const VisitLocations = ({ title = null, desc = null,className = "", isVirtual = true,page_name= null }) => {
   const { escaperoomLocations, loading, errors } = useGlobalContext();
 console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
   // const [rooms, setRooms] = useState([]);
@@ -33,7 +33,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
     const fetchData = async () => {
       const res = await api.get("/virtual-escaperoom");
       const data = res.data.data;
-      console.log("sjdfhsdfhsjdfksdghf",data)
+      console.log("sjdfhsdfhsjdfksdghf",data?.isVirtual)
       setVirtualCard({
         title: "Go Virtual",
         image: GoVirtual,
@@ -72,7 +72,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
                   <LocationCard location={item} />
                 </div>
               ))}
-            {virtualCard && isVirtual && (
+            {virtualCard && isVirtual && page_name != "home" && (
               <div className="col-lg-4 col-12" onClick={()=>sessionStorage.setItem("visit_location_key",true)}>
                 <LocationCard  location={virtualCard} isVirtual={true}/>
               </div>

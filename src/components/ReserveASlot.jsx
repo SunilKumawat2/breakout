@@ -421,7 +421,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                     textDecoration: "underline",
                     fontStyle: "italic",
                   }}
-                  onClick={() => onOpenFaq(3)}   // ← index 3
+                  onClick={() => onOpenFaq(3)}   
                 >
                   Check eligibility Criteria
                 </span>
@@ -449,7 +449,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
             >
               <span className="yellow-text">T & C applied*</span>
             </button>
-            <div className="form-field mt-5">
+            {/* <div className="form-field mt-5">
               <div className="row">
                 <div className="col-lg-3 col-12">
                   <div className="form-group">
@@ -546,8 +546,180 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                   </div>
                 </div>
 
-                {/* ================= CALENDAR ================= */}
                 <div className="col-12 mb-4 mt-3">
+                  <div className="calendar-wrapper">
+                    <div className="calendar-header">
+                      <div
+                        className="month-year-select mb-3"
+                      >
+                        <span>
+                          {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="calendar-days-outer">
+                      <div className="calendar-days">
+                        <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+                          <Image src={arrowPrev} alt="Previous" />
+                        </div>
+
+                        {visibleDays.map((day) => {
+                          const past = isPastDate(day);
+
+                          return (
+                            <div
+                              key={day}
+                              onClick={() => {
+                                if (!past) handleDateSelect(day);
+                              }}
+                              className={`day ${past ? "disabled" : ""} ${selectedDate &&
+                                selectedDate.getDate() === day &&
+                                selectedDate.getMonth() === month &&
+                                selectedDate.getFullYear() === year
+                                ? "active"
+                                : ""
+                                }`}
+                            >
+                              {day}
+                            </div>
+                          );
+                        })}
+
+
+                        <div
+                          className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
+                          onClick={nextDays}
+                          disabled={startIndex + 7 >= days.length}
+                        >
+                          <Image src={arrowNext} alt="Next" />
+                        </div>
+                        <div
+                          className="calender-btn"
+                          onClick={() => setShowMonthYear(!showMonthYear)}
+                        >
+                          <Image src={calenderIcon} alt="Calender Icon" />
+                        </div>
+                      </div>
+
+                      {showMonthYear && (
+                        <div className="month-year-dropdown">
+                          <div className="months">
+                            {Array.from({ length: 12 }).map((_, i) => (
+                              <div
+                                key={i}
+                                className={`option ${month === i ? "active" : ""}`}
+                                onClick={() => {
+                                  setMonth(i);
+                                  setShowMonthYear(false);
+                                }}
+                              >
+                                {new Date(0, i).toLocaleString("default", { month: "long" })}
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="years">
+                            {[2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((y) => (
+                              <div
+                                key={y}
+                                className={`option ${year === y ? "active" : ""}`}
+                                onClick={() => {
+                                  setYear(y);
+                                  setShowMonthYear(false);
+                                }}
+                              >
+                                {y}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-lg-12 col-12">
+                  <div className="">
+                    {slotsLoading ? (
+                      <div className="text-center">
+                        <div className="spinner-border" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                    ) : availableSlots?.length > 0 && availableSlots ? (
+                      <SlotPicker
+                        handleSelect={handleSlotSelect}
+                        selectedSlotTime={selectedSlotTime}
+                        availableSlots={availableSlots}
+                      />
+                    ) : !hasSlotsFetched ? (
+                      <div className="text-center py-5">
+                        <p>
+                          Please select a location, game, start date and end
+                          date
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="text-center py-5">
+                        <p>No slots available</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+               
+                <div className="col-12">
+                  <button
+                    className="main-btn mt-4 sm"
+                    onClick={handleBookNow}
+                    disabled={bookingLoading}
+                  >
+                    <span className="">
+                      {bookingLoading ? "Booking..." : "Book Now"}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div> */}
+            <div className="form-field mt-5">
+              <div className="row">
+              <div className="col-lg-4 col-12">
+                  <div className="form-group">
+                    <label htmlFor="location" className="form-label">
+                      Choose a Location & Booking
+                    </label>
+                    <div className="input-group sel-group">
+                      <Image src={loc} alt="loc" />
+                      <Select
+                        className="basic-single"
+                        classNamePrefix="select"
+                        placeholder="Select an option"
+                        name="color"
+                        styles={{
+                          ...customStyles,
+                          control: (base, state) => ({
+                            ...customStyles.control(base, state),
+                            paddingLeft: "35px",
+                          }),
+                        }}
+                        onChange={(e) => {
+                          handleLocationSelect(e);
+                        }}
+                        options={
+                          thirdPartyLocations?.length > 0 && thirdPartyLocations
+                            ? thirdPartyLocations?.map((location) => ({
+                              value: location.locationId,
+                              label: location.locationName,
+                            }))
+                            : []
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+                 {/* ================= CALENDAR ================= */}
+                 <div className="col-12 mb-4 mt-3">
                   <div className="calendar-wrapper">
                     <div className="calendar-header">
                       <div
@@ -645,7 +817,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                     </div>
                   </div>
                 </div>
-
+                {/* ============= Slot Picker ============== */}
                 <div className="col-lg-12 col-12">
                   <div className="">
                     {slotsLoading ? (
@@ -674,7 +846,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                     )}
                   </div>
                 </div>
-                {/* <div className="col-lg-3 col-12">
+                <div className="col-lg-3 col-12">
                   <div className="form-group">
                     <div className="input-group">
                       <input
@@ -721,7 +893,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                       />
                     </div>
                   </div>
-                </div> */}
+                </div>
                 <div className="col-12">
                   <button
                     className="main-btn mt-4 sm"

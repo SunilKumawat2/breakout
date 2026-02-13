@@ -21,29 +21,29 @@ const BlogSlider = ({ className = "" }) => {
   const nextRef = useRef(null);
 
   // Update if breakpoints change
-  const maxSlidesPerView = 3.5;
+  // const maxSlidesPerView = 3.5;
 
-  // Ensure enough slides for loop
-  const adjustedBlogs = useMemo(() => {
-    if (!blogs || blogs.length === 0) return [];
+  // // Ensure enough slides for loop
+  // const adjustedBlogs = useMemo(() => {
+  //   if (!blogs || blogs.length === 0) return [];
 
-    if (blogs.length >= Math.ceil(maxSlidesPerView)) {
-      return blogs;
-    }
+  //   if (blogs.length >= Math.ceil(maxSlidesPerView)) {
+  //     return blogs;
+  //   }
 
-    let result = [];
-    const times = Math.ceil(maxSlidesPerView / blogs.length) + 1;
+  //   let result = [];
+  //   const times = Math.ceil(maxSlidesPerView / blogs.length) + 1;
 
-    for (let i = 0; i < times; i++) {
-      result = result.concat(blogs);
-    }
+  //   for (let i = 0; i < times; i++) {
+  //     result = result.concat(blogs);
+  //   }
 
-    return result.slice(0, Math.ceil(maxSlidesPerView) + 1);
-  }, [blogs]);
+  //   return result.slice(0, Math.ceil(maxSlidesPerView) + 1);
+  // }, [blogs]);
 
   return (
     <section className={`blog-slider-sec section-padding ${className}`}>
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-lg-12 text-center">
             <h2 className="sec-head sm-head medium">
@@ -54,41 +54,28 @@ const BlogSlider = ({ className = "" }) => {
 
         <div className="row">
           <div className="col-lg-12">
-            <div className="blog-slider position-relative">
+            <div className="blog-slider">
               <Swiper
-                // modules={[Pagination, Navigation]}
-                // pagination={{ clickable: true }}
-                // loop={true}
-                // slidesPerView={1}
-                // spaceBetween={20}
-                // navigation={{
-                //   prevEl: prevRef.current,
-                //   nextEl: nextRef.current,
-                // }}
-                // onBeforeInit={(swiper) => {
-                //   swiper.params.navigation.prevEl = prevRef.current;
-                //   swiper.params.navigation.nextEl = nextRef.current;
-                // }}
-                modules={[Pagination, Navigation]}
-              pagination={{
-                clickable: true,
-              }}
+                
+                modules={[ Navigation]}
+              
               navigation={{
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
               }}
-              slidesPerView={1}
+              centeredSlides={true}
+              slidesPerView={1.3}
               spaceBetween={20}
               loop={true}
                 breakpoints={{
                   0: { slidesPerView: 1 },
                   640: { slidesPerView: 2 },
-                  992: { slidesPerView: 3 },
-                  1400: { slidesPerView: 4 },
+                  992: { slidesPerView: 3.5 },
+                  1400: { slidesPerView: 4.5 },
                 }}
                 className="blog-swiper"
               >
-                {adjustedBlogs && adjustedBlogs?.map((blog, index) => (
+                {blogs && blogs?.map((blog, index) => (
                   <SwiperSlide key={index}>
                     <BlogCard blog={blog} />
                   </SwiperSlide>

@@ -145,9 +145,14 @@ useEffect(() => {
   
 
 
-useEffect(()=>{
-  window.scrollTo(0,0)
-},[])
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 2000); // 1000ms = 1 second
+  
+    return () => clearTimeout(timer); // cleanup
+  }, []);
+  
 
   return (
     <>

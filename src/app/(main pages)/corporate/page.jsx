@@ -39,9 +39,10 @@ export default function Home() {
   const scoreCard = HomePageData.scoreCard;
 
   const [data, setData] = useState(null);
-  console.log("Home_Home_Home", data)
+  console.log("Home_Home_Home_corporate", data)
   const [cards, setCards] = useState([]);
   const [brandLogos, setBrandLogos] = useState(null);
+  console.log("brandLogos",brandLogos)
 
   const lookingForOptions = [
     { value: "Koramangala", label: "Koramangala" },
@@ -52,6 +53,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await api.get("/corporate-archive");
+      console.log("sd,fsdhfkjsdhfhsdf_data",response)
       setData(response?.data?.data);
       console.log("sjdfkhsdkfhsdhfk", response?.data?.data)
       setCards([
@@ -242,8 +244,8 @@ export default function Home() {
         {data?.countersection && <TrustedSection className="sec-padding-top pb-0" data={data?.countersection} />}
         <LogoSec className="pt-80 pb-0"
           // title={"<span>Brands</span> Hosted"}
-          title={"<span>In the</span> News"}
-          logo={data?.brandlogos}
+          title={"<span>Brands</span> Hosted"}
+          logo={brandLogos}
           link={false}
         />
         <Image
@@ -255,7 +257,14 @@ export default function Home() {
       </div>
       <div className="black-gr-div">
         <OurLocationSec className="sec-padding-top" title="Choose a <span>Location</span>" />
-        {data?.faqsection && <FaqSection className="section-padding pb-0" data={data?.faqsection} />}
+        {data?.faqsection && <FaqSection className="section-padding pb-0" 
+        data={data?.faqsection} />}
+         <LogoSec className="pt-80 pb-0"
+          // title={"<span>Brands</span> Hosted"}
+          title={"<span>In the</span> News"}
+          logo={data?.brandLogo}
+          link={false}
+        />
         {data?.footersection && (
           <BirthdayGetInTouch
           className="p"
@@ -266,6 +275,7 @@ export default function Home() {
             privacyLine={true}
           />
         )}
+       
         {/* {data?.footersection && <HomeContact textData={data?.footersection} />} */}
       </div>
     </>

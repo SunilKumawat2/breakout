@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import locIcon from "@/images/loc-icon.svg";
 import { CommonModal } from "./CommonModal";
+// import escape_traler from "../../public/videos/The_Breakout_Escape_Room_Experience_720P.mp4";
 
 const InnerPageBanner = ({ banner, bdayInner }) => {
   const [showTrailer, setShowTrailer] = useState(false);
@@ -124,17 +125,27 @@ const InnerPageBanner = ({ banner, bdayInner }) => {
         </div>
       </div>
 
-    
+
       <CommonModal show={showTrailer} handleClose={() => setShowTrailer(false)}>
-  <div className="video-wrapper">
-    <video
-      src={banner.image}
+        <div className="video-wrapper">
+          {/* <video
+      src={banner.escape_traler}
       controls
       autoPlay
       playsInline
-    />
-  </div>
-</CommonModal>
+    /> */}
+          <video
+            className="w-100 h-auto"
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls={false}
+          >
+            <source src="/videos/The_Breakout_Escape_Room_Experience_720P.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </CommonModal>
 
 
 

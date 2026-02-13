@@ -31,19 +31,22 @@ import SmoothScrolling from "@/components/SmoothScroll";
 const page = () => {
   const [rooms, setRooms] = useState([]);
   const [escapeRooms, setEscapeRooms] = useState(null);
-  console.log("sdmkfhksdjfhksjdhfsd",escapeRooms)
+  console.log("sdmkfhksdjfhksjdhfsd", escapeRooms)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true)
       try {
         const res1 = await api.get("/escaperoom-archive");
         setRooms(res1.data.data);
-
+        setLoading(false)
         const res2 = await api.get("/escaperooms");
         setEscapeRooms(res2.data.data);
+        setLoading(false)
       } catch (error) {
         console.error("API Error:", error);
+        setLoading(false)
       } finally {
         setLoading(false); // ✅ stop loader when both calls finish
       }
@@ -84,7 +87,7 @@ const page = () => {
 
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("scrollToEscapeRooms");
-      }, 1000);
+      }, 500);
     }
   }, [escapeRooms]);
 
@@ -106,30 +109,35 @@ const page = () => {
 
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("visit_location_key");
-      }, 1000);
+      });
     }
   }, [escapeRooms]);
 
 
   return (
     <>
-      {/* {rooms?.bannersection && (
+      {
+        loading ? (
+          <p>loading....</p>
+        ) : (
+          <>
+            {/* {rooms?.bannersection && (
         <InnerPageBanner
           banner={{ ...rooms?.bannersection, btns: bannerLinks }}
           bdayInner={true}
         />
       )} */}
-      {!rooms?.bannersection ? (
-        <SmoothScrolling />
-      ) : (
-        <InnerPageBanner
-          banner={{ ...rooms?.bannersection, btns: bannerLinks }}
-          bdayInner={true}
-        />
-      )}
+            {!rooms?.bannersection ? (
+              <SmoothScrolling />
+            ) : (
+              <InnerPageBanner
+                banner={{ ...rooms?.bannersection, btns: bannerLinks }}
+                bdayInner={true}
+              />
+            )}
 
-      <div className="black-gr-div">
-        {/* <section className="section-padding">
+            <div className="black-gr-div">
+              {/* <section className="section-padding">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
@@ -138,80 +146,80 @@ const page = () => {
             </div>
           </div>
         </section> */}
-        {rooms?.iconsection?.description && (
-          <HmTextSec className="sec-padding-top" text={rooms?.iconsection?.description} />
-        )}
-        {rooms?.iconsection && (
-          <section className="sec-padding-top cinematic-sec">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h3
-                    className="sec-head medium sm-head"
-                    dangerouslySetInnerHTML={{
-                      __html: rooms?.iconsection?.heading,
-                    }}
-                  />
+              {rooms?.iconsection?.description && (
+                <HmTextSec className="sec-padding-top" text={rooms?.iconsection?.description} />
+              )}
+              {rooms?.iconsection && (
+                <section className="sec-padding-top cinematic-sec">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        <h3
+                          className="sec-head medium sm-head"
+                          dangerouslySetInnerHTML={{
+                            __html: rooms?.iconsection?.heading,
+                          }}
+                        />
+                        <div className="row row-gap-25">
+                          {rooms?.iconsection?.icons?.length > 0 &&
+                            rooms?.iconsection?.icons.map((item, index) => (
+                              <div className="col-lg-3 col-12" key={index}>
+                                <div className="box-item">
+                                  <div className="box-item-icon">
+                                    {item?.image && (
+                                      <Image
+                                        src={item.image}
+                                        width={100}
+                                        height={100}
+                                        alt="enc"
+                                      />
+                                    )}
+                                  </div>
+                                  <div className="box-item-content">
+                                    <h4 className="sec-head medium-20 mb-0">
+                                      {item?.heading}
+                                    </h4>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              )}
+              {rooms?.iconsection && (
+                <TrustedSection className="pb-0" removeHeading={true} data={rooms?.iconsection} />
+              )}
+              <LogoSec className="pb-0 pt-80" title="In the <span>News</span>" />
+              <Image src={hmIllus} alt="illus3" className="illus-image" />
+            </div>
+            <div className="black-gr-div">
+              <VisitLocations className="sec-padding-top" id="visit-location-section" />
+              <section className="section-padding esc-sec pb-0" id="escape-rooms-section">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-lg-12 text-center">
+                      <h3 className="sec-head medium sm-head">
+                        Escape <span>Rooms</span>
+                      </h3>
+                    </div>
+                  </div>
                   <div className="row row-gap-25">
-                    {rooms?.iconsection?.icons?.length > 0 &&
-                      rooms?.iconsection?.icons.map((item, index) => (
-                        <div className="col-lg-3 col-12" key={index}>
-                          <div className="box-item">
-                            <div className="box-item-icon">
-                              {item?.image && (
-                                <Image
-                                  src={item.image}
-                                  width={100}
-                                  height={100}
-                                  alt="enc"
-                                />
-                              )}
-                            </div>
-                            <div className="box-item-content">
-                              <h4 className="sec-head medium-20 mb-0">
-                                {item?.heading}
-                              </h4>
-                            </div>
-                          </div>
+                    {escapeRooms &&
+                      escapeRooms.map((room, index) => (
+                        <div className="col-lg-4 col-12"
+                          onClick={() => sessionStorage.setItem("scrollToEscapeRooms", true)} key={index}>
+                          <EscapeRoomCard room={room} />
                         </div>
                       ))}
                   </div>
                 </div>
-              </div>
+              </section>
+              <Image src={illus3} alt="illus3" className="illus-image" />
             </div>
-          </section>
-        )}
-        {rooms?.iconsection && (
-          <TrustedSection className="pb-0" removeHeading={true} data={rooms?.iconsection} />
-        )}
-        <LogoSec className="pb-0 pt-80" title="In the <span>News</span>" />
-        <Image src={hmIllus} alt="illus3" className="illus-image" />
-      </div>
-      <div className="black-gr-div">
-        <VisitLocations className="sec-padding-top" id="visit-location-section"/>
-        <section className="section-padding esc-sec pb-0" id="escape-rooms-section">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12 text-center">
-                <h3 className="sec-head medium sm-head">
-                  Escape <span>Rooms</span>
-                </h3>
-              </div>
-            </div>
-            <div className="row row-gap-25">
-              {escapeRooms &&
-                escapeRooms.map((room, index) => (
-                  <div className="col-lg-4 col-12" 
-                  onClick={()=> sessionStorage.setItem("scrollToEscapeRooms", true)} key={index}>
-                    <EscapeRoomCard room={room} />
-                  </div>
-                ))}
-            </div>
-          </div>
-        </section>
-        <Image src={illus3} alt="illus3" className="illus-image" />
-      </div>
-      {/* <section className="section-padding counter-sec pb-0">
+            {/* <section className="section-padding counter-sec pb-0">
           <div className="container">
             <div className="row">
               {[...Array(4)].map((_, index) => (
@@ -224,28 +232,32 @@ const page = () => {
         
         </section> */}
 
-      <div className="black-gr-div">
-        <div className="sec-padding-top">
-          {(rooms?.googlereviews || rooms?.googlereviews?.length > 0) && (
-            <GlobalReviewWidget
-              reviews={rooms?.googlereviews}
-              data={rooms?.imagesection}
-            />
-          )}
-        </div>
+            <div className="black-gr-div">
+              <div className="sec-padding-top">
+                {(rooms?.googlereviews || rooms?.googlereviews?.length > 0) && (
+                  <GlobalReviewWidget
+                    reviews={rooms?.googlereviews}
+                    data={rooms?.imagesection}
+                  />
+                )}
+              </div>
 
-        {rooms?.videotestimonials && (
-          <Videotestimonials data={rooms?.videotestimonials} />
-        )}
-        {rooms?.faqsection && <FaqSection className="section-padding" data={rooms?.faqsection} />}
-        <BlogSlider className="py-0" />
-        {rooms?.footersection && (
-          <HomeContact textData={rooms?.footersection} />
-        )}
-      </div>
-      
-      {/* <PeakExpSec /> */}
-      {/* </div> */}
+              {rooms?.videotestimonials && (
+                <Videotestimonials data={rooms?.videotestimonials} />
+              )}
+              {rooms?.faqsection && <FaqSection className="section-padding" data={rooms?.faqsection} />}
+              <BlogSlider className="py-0" />
+              {rooms?.footersection && (
+                <HomeContact textData={rooms?.footersection} />
+              )}
+            </div>
+
+            {/* <PeakExpSec /> */}
+            {/* </div> */}
+          </>
+        )
+      }
+
     </>
   );
 };

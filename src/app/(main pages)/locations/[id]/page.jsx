@@ -217,6 +217,15 @@ const page = () => {
     }
   }, [location]);
 
+   
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 2000); // 1000ms = 1 second
+  
+    return () => clearTimeout(timer); // cleanup
+  }, []);
+
   return (
     <>
       {location && location?.bannersection && (
@@ -424,7 +433,8 @@ const page = () => {
           <Videotestimonials className="pt-80" data={location?.videotestimonials} />
         )}
 
-        <VisitLocations className="section-padding" title="Escape Rooms In <span>Bangalore</span>" />
+        <VisitLocations className="section-padding" 
+        title="Escape Rooms In <span>Bangalore</span>" />
         {location && location?.faqsection && (
           <FaqSection
             title="FAQs for <span>Your Adventure</span>"
