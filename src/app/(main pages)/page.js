@@ -231,7 +231,7 @@ export default function Home() {
       }
     };
     fetchData();
-  }, []);
+  }, []);  
 
 
   useEffect(() => {

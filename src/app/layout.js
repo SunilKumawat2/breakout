@@ -7,6 +7,7 @@ import "@/scss/res.scss";
 import { ToastContainer } from "react-toastify";
 import { GlobalProvider } from "@/context/GlobalContext";
 import Script from "next/script";
+import FaviconUpdater from "@/components/FaviconUpdater";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default function RootLayout({ children }) {
       </Script>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <GlobalProvider>
+        <FaviconUpdater />
           <ToastContainer />
           {children}
         </GlobalProvider>

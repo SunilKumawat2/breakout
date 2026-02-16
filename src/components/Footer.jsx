@@ -265,6 +265,10 @@ const Footer = () => {
 
   const { escaperoomLocations } = useGlobalContext();
   const [menuItems, setMenuItems] = useState(initialColumns);
+  const { siteSettings, loading } = useGlobalContext();
+
+  console.log("siteSettings", siteSettings);
+
 
   // 🔹 Inject Escape Room locations
   useEffect(() => {
@@ -300,30 +304,83 @@ const Footer = () => {
             <div className="col-lg-3 col-12">
               <div className="ft-logo-col">
                 <Link href="/" className="ft-logo">
-                  <Image src={logo} alt="logo" />
+                  {siteSettings?.siteLogo ? (
+                    <Image
+                      src={siteSettings.siteLogo}
+                      alt="logo"
+                      width={180}
+                      height={60}
+                      priority
+                    />
+                  ) : (
+                    <Image
+                      src={logo}
+                      alt="logo"
+                      width={180}
+                      height={60}
+                      priority
+                    />
+                  )}
                 </Link>
+
 
                 <ul className="ft-contact-list">
                   <li>
-                    <Link href="mailto:info@breakout.in">
+                    <Link href={`mailto:${siteSettings?.contactEmail}`} >
                       <Image src={mailIcon} alt="mail" />
-                      <span>info@breakout.in</span>
+                      <span>{siteSettings?.contactEmail}</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="tel:+919742386781">
+                    <Link href={`tel:${siteSettings?.contactPhone}`}>
                       <Image src={phoneIcon} alt="phone" />
-                      <span>+91 974 238 6781</span>
+                      <span>{siteSettings?.contactPhone}</span>
                     </Link>
                   </li>
                 </ul>
 
                 <ul className="soc-links">
-                  <li><Link href="/"><Image src={fb} alt="fb" /></Link></li>
-                  <li><Link href="/"><Image src={yt} alt="yt" /></Link></li>
-                  <li><Link href="/"><Image src={ins} alt="insta" /></Link></li>
-                  <li><Link href="/"><Image src={lin} alt="lin" /></Link></li>
+                  {
+                    siteSettings?.facebookUrl && (
+                      <li>
+                        <a href={siteSettings?.facebookUrl} target="_blank" rel="noopener noreferrer">
+                          <Image src={fb} alt="fb" />
+                        </a>
+                      </li>
+                    )
+                  }
+
+                  {
+                    siteSettings?.youtubeUrl && (
+                      <li>
+                        <a href={siteSettings?.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                          <Image src={yt} alt="yt" />
+                        </a>
+                      </li>
+                    )
+                  }
+
+                  {
+                    siteSettings?.instagramUrl && (
+                      <li>
+                        <a href={siteSettings?.instagramUrl} target="_blank" rel="noopener noreferrer">
+                          <Image src={ins} alt="insta" />
+                        </a>
+                      </li>
+                    )
+                  }
+
+                  {
+                    siteSettings?.linkedinUrl && (
+                      <li>
+                        <a href={siteSettings?.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                          <Image src={lin} alt="lin" />
+                        </a>
+                      </li>
+                    )
+                  }
                 </ul>
+
               </div>
             </div>
 
@@ -347,7 +404,7 @@ const Footer = () => {
         </div>
 
         <div className="ft-btm">
-          <p>&copy; {new Date().getFullYear()} Breakout all rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {siteSettings?.siteName} all rights reserved.</p>
           <ul className="ft-policy-list">
             {policyLinks.map((link, index) => (
               <li key={index}>

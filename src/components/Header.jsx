@@ -7,10 +7,15 @@ import logo from "@/images/logo.png";
 import phone from "@/images/phone.svg";
 import menu from "@/images/menu.svg";
 import MainMenu from "./MainMenu";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const mainMenuRef = useRef(null);
+  const { siteSettings, loading } = useGlobalContext();
+
+  console.log("siteSettings_header", siteSettings);
+
 
   // Click outside handler
   const handleClickOutside = useCallback((event) => {
@@ -59,8 +64,15 @@ export default function Header() {
       <div className="container" style={{ position: "relative" }}>
         <div className="nav-inner">
           <Link className="logo" href="/">
-            <Image src={logo} alt="logo" />
+            <Image
+              src={siteSettings?.siteLogo || logo}
+              alt="logo"
+              width={180}
+              height={60}
+              priority
+            />
           </Link>
+
           <ul className="nav-list" onClick={() => {
             sessionStorage.removeItem("home_dropdown");
             sessionStorage.removeItem("home_scroll")

@@ -14,7 +14,9 @@ const OurLocationSec = ({ title, slug = null, locationTitle = "", className = ""
   const [locationOptions, setLocationOptions] = useState([]);
   const [locationData, setLocationData] = useState(slug || null);
   const { escaperoomLocations } = useGlobalContext();
-  
+  const { siteSettings, loading } = useGlobalContext();
+
+  console.log("siteSettings", siteSettings);
   useEffect(() => {
     if (escaperoomLocations) {
       setLocationOptions(
@@ -173,7 +175,7 @@ const OurLocationSec = ({ title, slug = null, locationTitle = "", className = ""
                     ></p>
                     <Link
                       href={
-                        "https://wa.me/919876543210?text=I want to book a slot at " +
+                        `https://wa.me/${siteSettings?.whatsappNumber}?text=I want to book a slot at ` +
                         locationTitle
                       }
                       className="wh-wrap"

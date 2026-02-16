@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import api from "@/helpers/api";
 import axios from "axios";
 import { toast } from "react-toastify";
+import test_api from "@/helpers/api/test_api";
 
 const GlobalContext = createContext();
 
@@ -23,6 +24,7 @@ export const GlobalProvider = ({ children }) => {
   const [thirdPartyGames, setThirdPartyGames] = useState(null);
   const [availableSlots, setAvailableSlots] = useState(null);
   const [venueCategories, setVenueCategories] = useState(null);
+  const [siteSettings, setSiteSettings] = useState(null);
   const [finderQuizValues, setFinderQuizValues] = useState({
     step1: {
       value: null,
@@ -90,6 +92,7 @@ export const GlobalProvider = ({ children }) => {
     thirdPartyLocations: true,
     thirdPartyGames: true,
     venueCategories: true,
+    siteSettings: true,
   });
 
   // Error states
@@ -100,6 +103,7 @@ export const GlobalProvider = ({ children }) => {
     thirdPartyLocations: null,
     thirdPartyGames: null,
     venueCategories: null,
+    siteSettings: null,
   });
 
   const updateFinderQuizValue = (step, value, error) => {
@@ -238,6 +242,23 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const fetchSiteSettings = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, siteSettings: true }));
+  
+      const response = await test_api.get("/getsitesettings");
+      setSiteSettings(response.data.data);
+  
+      setErrors((prev) => ({ ...prev, siteSettings: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, siteSettings: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, siteSettings: false }));
+    }
+  };
+  
+
+
   // Initialize data on component mount
   useEffect(() => {
     fetchEscaperoomLocations();
@@ -245,6 +266,7 @@ export const GlobalProvider = ({ children }) => {
     fetchNewsLogo();
     fetchThirdPartyLocations();
     fetchVenueCategories();
+    fetchSiteSettings();
   }, []);
 
   // Refresh functions for manual data updates
@@ -254,6 +276,7 @@ export const GlobalProvider = ({ children }) => {
     newsLogo: fetchNewsLogo,
     thirdPartyLocations: fetchThirdPartyLocations,
     venueCategories: fetchVenueCategories,
+    siteSettings:fetchSiteSettings
   };
 
   const value = {
@@ -261,6 +284,7 @@ export const GlobalProvider = ({ children }) => {
     escaperoomLocations,
     blogs,
     newsLogo,
+    siteSettings,
     thirdPartyLocations,
     thirdPartyGames,
     availableSlots,
@@ -272,6 +296,7 @@ export const GlobalProvider = ({ children }) => {
     updateQuoteCalculatorValue,
     updateCostCalculatorValue,
     bookASlot,
+    fetchSiteSettings,
     // Loading states
     loading,
 
@@ -289,6 +314,7 @@ export const GlobalProvider = ({ children }) => {
     fetchVenueCategories,
     fetchThirdPartyGames,
     fetchAvailableSlots,
+    fetchSiteSettings
   };
 
   return (
