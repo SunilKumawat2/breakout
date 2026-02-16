@@ -24,25 +24,32 @@ import { useParams } from "next/navigation";
 const page = () => {
   const { id } = useParams();
   const [escapeRooms, setEscapeRooms] = useState(null);
-
   const [room, setRoom] = useState(null);
- 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchEscapeRooms = async () => {
-      const res = await api.get(`/escaperooms`);
-      setEscapeRooms(res.data.data);
-     
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [roomsRes, roomRes] = await Promise.all([
+          api.get(`/escaperooms`),
+          api.get(`/escaperoom/${id}`)
+        ]);
+        setEscapeRooms(roomsRes?.data?.data);
+        setRoom(roomRes?.data?.data);
+        console.log("Room Data:", roomRes?.data?.data);
+      } catch (err) {
+        console.error("Error fetching escape room data:", err);
+      } finally {
+        setLoading(false);
+      }
     };
-    fetchEscapeRooms();
 
-    const fetchEscapeRoom = async () => {
-      const res = await api.get(`/escaperoom/${id}`);
-      setRoom(res.data.data);
-      console.log("skjldjsdfhskfhksj_room_123",res.data.data)
-    };
-    fetchEscapeRoom();
+    if (id) {
+      fetchData();
+    }
   }, [id]);
+
 
   const locations = [
     {
@@ -82,61 +89,72 @@ const page = () => {
 
   return (
     <>
-      <div className="black-gr-div">
-        {room?.bannersection && <Banner room={room} />}
-        {room?.bannersection?.video_trailer != "" && (
-          <section className="section-padding pb-0">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 col-12">
-                  <BigVideoPlayer
-                    room={room}
-                    video={room?.bannersection?.video_trailer}
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-        <Image src={hmIllus} className="illus-image" alt="hm-text-bg" />
-      </div>
-      <div className="black-gr-div">
-        <ReserveASlot className="sec-padding-top" room={room?.pricingsection} />
-        {room?.imagesection && (
-          <GlobalReviewWidget
-            data={room?.imagesection}
-            reviews={room?.googlereviews}
-          />
-        )}
-        <Image src={illus3} className="illus-image" alt="illus3" />
-      </div>
-      {room?.faqsection && <FaqSection className="sec-padding-top" data={room?.faqsection} />}
-      {/* <FaqSection /> */}
-      <div className="black-gr-div">
-        <section className="section-padding esc-section" id="escape-rooms-section">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12 text-center col-12">
-                <h2 className="sec-head sm-head medium">
-                  Other <span>Escape Rooms</span>
-                </h2>
-              </div>
-            </div>
-            <div className="row mt-5 row-gap-25" id="escape-rooms-section">
-              {escapeRooms &&
-                escapeRooms.map((room, index) => (
-                  <div className="col-lg-4 col-12" 
-                  // onClick={()=> sessionStorage.setItem("scrollToEscapeRooms", true)}
-                   key={index}>
-                    <EscapeRoomCard room={room} />
-                  </div>
-                ))}
-            </div>
+      {
+        loading ? (
+          <div id="preloader">
+            <div className="loader"></div>
           </div>
-        </section>
-        <VisitLocations />
-        <HomeContact noTextBottom={false} />
-      </div>
+        ) : (
+          <>
+            <div className="black-gr-div">
+              {room?.bannersection && <Banner room={room} />}
+              {room?.bannersection?.video_trailer != "" && (
+                <section className="section-padding pb-0">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 col-12">
+                        <BigVideoPlayer
+                          room={room}
+                          video={room?.bannersection?.video_trailer}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              )}
+              <Image src={hmIllus} className="illus-image" alt="hm-text-bg" />
+            </div>
+            <div className="black-gr-div">
+              <ReserveASlot className="sec-padding-top" room={room?.pricingsection} />
+              {room?.imagesection && (
+                <GlobalReviewWidget
+                  data={room?.imagesection}
+                  reviews={room?.googlereviews}
+                />
+              )}
+              <Image src={illus3} className="illus-image" alt="illus3" />
+            </div>
+            {room?.faqsection && <FaqSection className="sec-padding-top" data={room?.faqsection} />}
+            {/* <FaqSection /> */}
+            <div className="black-gr-div">
+              <section className="section-padding esc-section" id="escape-rooms-section">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-lg-12 text-center col-12">
+                      <h2 className="sec-head sm-head medium">
+                        Other <span>Escape Rooms</span>
+                      </h2>
+                    </div>
+                  </div>
+                  <div className="row mt-5 row-gap-25" id="escape-rooms-section">
+                    {escapeRooms &&
+                      escapeRooms.map((room, index) => (
+                        <div className="col-lg-4 col-12"
+                          // onClick={()=> sessionStorage.setItem("scrollToEscapeRooms", true)}
+                          key={index}>
+                          <EscapeRoomCard room={room} />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </section>
+              <VisitLocations />
+              <HomeContact noTextBottom={false} />
+            </div>
+          </>
+        )
+      }
+
     </>
   );
 };

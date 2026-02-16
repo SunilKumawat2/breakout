@@ -30,7 +30,6 @@ const OurLocationSec = ({ title, slug = null, locationTitle = "", className = ""
 
   useEffect(() => {
     // const slugToFetch = slug || selectedLocation;
-    console.log("selectedLocation", selectedLocation);
     if (selectedLocation) {
       const fetchLocation = async () => {
         const res = await api.get(`/escaperoom-location/${selectedLocation}`);

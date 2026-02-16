@@ -78,36 +78,59 @@ const page = () => {
   const { id } = useParams();
 
   const [location, setLocation] = useState(null);
-  console.log("setLocation_setLocation", location)
+  const [loading, setLoading] = useState(true);
+  const [showLocation, setShowLocation] = useState(false);
+
   useEffect(() => {
     const fetchLocation = async () => {
-      const res = await api.get(`/escaperoom-location/${id}`);
-      console.log("banner section", res.data.data);
-      const bnData = res?.data?.data?.bannersection
-        ? {
-          image: null,
-          btns: [
-            {
-              title: "Book Now",
-              link: "#book-now",
-              enc: (
-                <>
-                  <Image src={enc} alt="enc" />{" "}
-                  <span>Secure Payment Gateway</span>
-                </>
-              ),
-            },
-          ],
-          ...res.data.data.bannersection,
-        }
-        : null;
-
-      const mergedData = { ...res.data.data, bannersection: bnData };
-      console.log("mergedData", mergedData?.faqsection);
-      setLocation(mergedData);
+      try {
+        setLoading(true); // optional if using loader
+  
+        const res = await api.get(`/escaperoom-location/${id}`);
+  
+        const locationData = res?.data?.data;
+  
+        const bnData = locationData?.bannersection
+          ? {
+              image: null,
+              btns: [
+                {
+                  title: "Book Now",
+                  link: "#book-now",
+                  enc: (
+                    <>
+                      <Image src={enc} alt="enc" />
+                      <span>Secure Payment Gateway</span>
+                    </>
+                  ),
+                },
+              ],
+              ...locationData.bannersection,
+            }
+          : null;
+  
+        const mergedData = {
+          ...locationData,
+          bannersection: bnData,
+        };
+  
+        console.log("mergedData", mergedData?.faqsection);
+  
+        setLocation(mergedData);
+  
+      } catch (error) {
+        console.error("Error fetching location data:", error);
+        setError("Failed to load location data"); // optional error state
+      } finally {
+        setLoading(false); // stop loader if using
+      }
     };
-    fetchLocation();
+  
+    if (id) {
+      fetchLocation();
+    }
   }, [id]);
+  
 
   // useEffect(() => {
   //   window.scrollTo(0, 0)
@@ -217,83 +240,99 @@ const page = () => {
     }
   }, [location]);
 
-   
+
   useEffect(() => {
     const timer = setTimeout(() => {
       window.scrollTo(0, 0);
     }, 2000); // 1000ms = 1 second
-  
+
     return () => clearTimeout(timer); // cleanup
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLocation(true);
+    }, 2000); // 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
   return (
     <>
-      {location && location?.bannersection && (
-        <InnerPageBanner banner={location?.bannersection} />
-      )}
-
-      <div className="black-gr-div">
-        {location && location?.textsection?.description != "" && (
-          <HmTextlocationkoramangala text={location?.textsection?.description} />
-        )}
-        {location && location?.escaperooms?.extreme?.length > 0 && (
-          <section className="esc-sec" id="escape-rooms-section">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h3 className="sec-head medium sm-head">
-                    Escape Room at {location?.title} &nbsp;
-                    {location?.title == "Koramangala" && <span>Extreme</span>}
-                  </h3>
-                </div>
-              </div>
-              <div className="row row-gap-25">
-                {location?.escaperooms?.extreme?.map((item, index) => (
-                  <div className="col-lg-4 col-12" key={index}
-                    onClick={() => sessionStorage.setItem("scrollToEscapeRooms", true)}>
-                    <EscapeRoomCard room={item} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {location && location?.escaperooms?.ultra?.length > 0 && (
+      {
+        loading ? (
+          <div id="preloader">
+            <div className="loader"></div>
+          </div>
+        ) : (
           <>
-            <section id="escape-rooms-ultra" className="section-padding esc-sec pb-0">
-              <div className="container">
-                <div className="row">
-                  <div className="col-lg-12 text-center">
-                    <h3 className="sec-head medium sm-head">
-                      Escape Room at {location?.title} &nbsp;
-                      {location?.title == "Koramangala" && <span>Ultra</span>}
-                    </h3>
-                  </div>
-                </div>
-                <div className="row row-gap-25">
-                  {location?.escaperooms?.ultra?.map((item, index) => (
-                    <div className="col-lg-4 col-12" key={index}
-                      onClick={() => sessionStorage.setItem("scrollToEscapeRooms_ultra", true)}>
-                      <EscapeRoomCard room={item} />
+            {location && location?.bannersection && (
+              <InnerPageBanner banner={location?.bannersection} />
+            )}
+
+            <div className="black-gr-div">
+              {location && location?.textsection?.description != "" && (
+                <HmTextlocationkoramangala text={location?.textsection?.description} />
+              )}
+              {location && location?.escaperooms?.extreme?.length > 0 && (
+                <section className="esc-sec" id="escape-rooms-section">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        <h3 className="sec-head medium sm-head">
+                          Escape Room at {location?.title} &nbsp;
+                          {location?.title == "Koramangala" && <span>Extreme</span>}
+                        </h3>
+                      </div>
                     </div>
-                  ))}
-                </div>
+                    <div className="row row-gap-25">
+                      {location?.escaperooms?.extreme?.map((item, index) => (
+                        <div className="col-lg-4 col-12" key={index}
+                          onClick={() => sessionStorage.setItem("scrollToEscapeRooms", true)}>
+                          <EscapeRoomCard room={item} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {location && location?.escaperooms?.ultra?.length > 0 && (
+                <>
+                  <section id="escape-rooms-ultra" className="section-padding esc-sec pb-0">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-lg-12 text-center">
+                          <h3 className="sec-head medium sm-head">
+                            Escape Room at {location?.title} &nbsp;
+                            {location?.title == "Koramangala" && <span>Ultra</span>}
+                          </h3>
+                        </div>
+                      </div>
+                      <div className="row row-gap-25">
+                        {location?.escaperooms?.ultra?.map((item, index) => (
+                          <div className="col-lg-4 col-12" key={index}
+                            onClick={() => sessionStorage.setItem("scrollToEscapeRooms_ultra", true)}>
+                            <EscapeRoomCard room={item} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </section>
+                </>
+              )}
+              <Image src={hmIllus} alt="illus3" className="illus-image" />
+            </div>
+
+            <div className="black-gr-div">
+              <div className="sec-padding-top">
+                {location && location?.googlereviews && (
+                  <GReviewSlider commonStars={false} data={location?.googlereviews} />
+                )}
               </div>
-            </section>
-          </>
-        )}
-        <Image src={hmIllus} alt="illus3" className="illus-image" />
-      </div>
 
-      <div className="black-gr-div">
-        <div className="sec-padding-top">
-          {location && location?.googlereviews && (
-            <GReviewSlider commonStars={false} data={location?.googlereviews} />
-          )}
-        </div>
-
-        {/* <section className="section-padding namecard-sec">
+              {/* <section className="section-padding namecard-sec">
           <div className="container">
             <div className="row row-gap-25">
               {[...Array(3)].map((_, index) => (
@@ -315,21 +354,21 @@ const page = () => {
             </div>
           </div>
         </section> */}
-        {location && location?.pricingsection && (
-          <ReserveASlot
-            room={location?.pricingsection}
-            onOpenFaq={(index) => setOpenFaqIndex(index)}
-          />
+              {location && location?.pricingsection && (
+                <ReserveASlot
+                  room={location?.pricingsection}
+                  onOpenFaq={(index) => setOpenFaqIndex(index)}
+                />
 
-        )}
-        {location && location?.imagecardssection?.card?.length > 0 && (
-          <section className="overlay-sec">
-            <div className="container">
-              <div className="row">
-                <div className="col-12">
-                  <div className="overlay-box">
-                    <div className="overlay-box-row">
-                      {/* {location?.imagecardssection?.card?.map((item, index) => (
+              )}
+              {location && location?.imagecardssection?.card?.length > 0 && (
+                <section className="overlay-sec">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-12">
+                        <div className="overlay-box">
+                          <div className="overlay-box-row">
+                            {/* {location?.imagecardssection?.card?.map((item, index) => (
                         <div className="col-overlay-box" key={index}>
                           <div className="overlay-box-item">
                             <div className="ovr-img">
@@ -361,95 +400,103 @@ const page = () => {
                           </div>
                         </div>
                       ))} */}
-                      {location?.imagecardssection?.card?.map((item, index) => (
-                        <div className="col-overlay-box" id="loction-know-more-section" key={index}>
-                          <div className="overlay-box-item">
-                            <div className="ovr-img">
-                              {item?.image && (
-                                <Image
-                                  src={item?.image}
-                                  alt="fd-img1"
-                                  className="w-100 h-auto"
-                                  width={1000}
-                                  height={1000}
-                                />
-                              )}
-                            </div>
+                            {location?.imagecardssection?.card?.map((item, index) => (
+                              <div className="col-overlay-box" id="loction-know-more-section" key={index}>
+                                <div className="overlay-box-item">
+                                  <div className="ovr-img">
+                                    {item?.image && (
+                                      <Image
+                                        src={item?.image}
+                                        alt="fd-img1"
+                                        className="w-100 h-auto"
+                                        width={1000}
+                                        height={1000}
+                                      />
+                                    )}
+                                  </div>
 
-                            <h3
-                              className="sec-head h3"
-                              dangerouslySetInnerHTML={{ __html: item?.heading }}
-                            />
+                                  <h3
+                                    className="sec-head h3"
+                                    dangerouslySetInnerHTML={{ __html: item?.heading }}
+                                  />
 
-                            <p
-                              className="para"
-                              dangerouslySetInnerHTML={{ __html: item?.description }}
-                            />
+                                  <p
+                                    className="para"
+                                    dangerouslySetInnerHTML={{ __html: item?.description }}
+                                  />
 
-                            <Link
-                              href={item?.cta_link}
-                              // href={"/parties"}
-                              className="link-btn"
-                              onClick={() =>
-                                sessionStorage.setItem("location_know_more", "true")
-                              }
-                            >
-                              <span>{item?.cta_label}</span>
-                            </Link>
+                                  <Link
+                                    href={item?.cta_link}
+                                    // href={"/parties"}
+                                    className="link-btn"
+                                    onClick={() =>
+                                      sessionStorage.setItem("location_know_more", "true")
+                                    }
+                                  >
+                                    <span>{item?.cta_label}</span>
+                                  </Link>
+                                </div>
+                              </div>
+                            ))}
+
                           </div>
                         </div>
-                      ))}
-
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </section>
+              )}
+              <Image src={hmIllus} alt="illus3" className="illus-image" />
             </div>
-          </section>
-        )}
-        <Image src={hmIllus} alt="illus3" className="illus-image" />
-      </div>
 
-      <div className="black-gr-div">
+            <div className="black-gr-div">
 
-        {/* <OurLocationSec
+              {/* <OurLocationSec
           className="sec-padding-top"
           title={`About Our Breakout®  <span>${location?.title} Location</span>`}
           slug={location?.slug}
           locationTitle={location?.title}
         // slug={location?.locationdetails}
         /> */}
-        <OurLocationSec
-          className="sec-padding-top"
-          title={`About Our Breakout®  <span>${location?.title} Location</span>`}
-          slug={location?.slug}
-        />
-        {/* <div className="col-lg-12 col-12 pt-80">
+              {
+                showLocation && (
+                  <OurLocationSec
+                    className="sec-padding-top"
+                    title={`About Our Breakout®  <span>${location?.title} Location</span>`}
+                    slug={location?.slug}
+                  />
+                )
+              }
+              {/* <div className="col-lg-12 col-12 pt-80">
           {location && location?.googlereviews && (
             <GReviewSlider commonStars={false} data={location?.googlereviews} />
           )}
         </div> */}
-        {location && location?.videotestimonials && (
-          <Videotestimonials className="pt-80" data={location?.videotestimonials} />
-        )}
+              {location && location?.videotestimonials && (
+                <Videotestimonials className="pt-80" data={location?.videotestimonials} />
+              )}
 
-        <VisitLocations className="section-padding" 
-        title="Escape Rooms In <span>Bangalore</span>" />
-        {location && location?.faqsection && (
-          <FaqSection
-            title="FAQs for <span>Your Adventure</span>"
-            data={location?.faqsection}
-            openIndex={openFaqIndex}
-            onFaqChange={(index) => {
-              // Same FAQ again → close
-              setOpenFaqIndex((prev) => (prev === index ? null : index));
-            }}
-          />
-        )}
-        {/* <FaqSection title="FAQs for <span>Your Adventure</span>" /> */}
-        <BlogSlider className="pb-0" title="Read <span>Blogs</span>" />
-        <HomeContact textData={location?.footersection} />
-      </div>
+              <VisitLocations className="section-padding"
+                title="Escape Rooms In <span>Bangalore</span>" />
+              {location && location?.faqsection && (
+                <FaqSection
+                  title="FAQs for <span>Your Adventure</span>"
+                  data={location?.faqsection}
+                  openIndex={openFaqIndex}
+                  onFaqChange={(index) => {
+                    // Same FAQ again → close
+                    setOpenFaqIndex((prev) => (prev === index ? null : index));
+                  }}
+                />
+              )}
+              {/* <FaqSection title="FAQs for <span>Your Adventure</span>" /> */}
+              <BlogSlider className="pb-0" title="Read <span>Blogs</span>" />
+              <HomeContact textData={location?.footersection} />
+            </div>
+          </>
+        )
+      }
+
     </>
   );
 };

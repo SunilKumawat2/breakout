@@ -118,7 +118,9 @@ const page = () => {
     <>
       {
         loading ? (
-          <p>loading....</p>
+          <div id="preloader">
+            <div className="loader"></div>
+          </div>
         ) : (
           <>
             {/* {rooms?.bannersection && (
