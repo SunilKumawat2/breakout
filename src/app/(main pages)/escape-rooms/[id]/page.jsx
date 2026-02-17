@@ -115,7 +115,7 @@ const page = () => {
               <Image src={hmIllus} className="illus-image" alt="hm-text-bg" />
             </div>
             <div className="black-gr-div">
-              <ReserveASlot className="sec-padding-top" room={room?.pricingsection} />
+              <ReserveASlot  className="sec-padding-top" room={room?.pricingsection} />
               {room?.imagesection && (
                 <GlobalReviewWidget
                   data={room?.imagesection}

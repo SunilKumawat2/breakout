@@ -171,7 +171,7 @@ console.log("page_name",page_name)
   });
 
   return (
-    <section className={`hm-contact-sec section-padding pb-0 ${className}`} id="book-now">
+    <section className={`hm-contact-sec section-padding pb-0 ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">

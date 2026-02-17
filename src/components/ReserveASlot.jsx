@@ -682,7 +682,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                 </div>
               </div>
             </div> */}
-            <div className="form-field mt-5">
+            <div className="form-field mt-5" id="book-now">
               <div className="row">
               <div className="col-lg-4 col-12">
                   <div className="form-group">
