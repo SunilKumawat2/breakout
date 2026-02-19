@@ -73,7 +73,9 @@ import GReviewSlider from "@/components/GReviewSlider";
 import PhotographicStyledImage from "@/components/PhotographicStyledImage";
 import PartyGetInTouch from "@/components/PartyGetInTouch";
 
+
 const page = () => {
+  const [loading, setLoading] = useState(true); 
   const hmText =
     "At our one-of-a-kind birthday parties, your <span>loved one…Enjoys surprises,</span> gets crazy, has fun, creates memories.In short, they <span>feel truly</span> special – and so do you.Let’s make this birthday unforgettable—together!";
 
@@ -146,21 +148,11 @@ const page = () => {
   ];
 
   const [data, setData] = useState(null);
-  console.log("party_inclustion_data",data)
+  console.log("party_inclustion_data", data)
   const [birthdayList, setBirthdayList] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await api.get("/birthday-archive");
-      setData(response?.data?.data);
-    };
-    const fetchBirthdayList = async () => {
-      const response = await api.get("/birthday-listing");
-      setBirthdayList(response?.data?.data);
-    };
-    fetchBirthdayList();
-    fetchData();
-  }, []);
+
+ 
 
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("brithday_party_birthday_of_my");
@@ -183,14 +175,43 @@ const page = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        // Run both APIs in parallel
+        const [archiveRes, listRes] = await Promise.all([
+          api.get("/birthday-archive"),
+          api.get("/birthday-listing"),
+        ]);
+
+        setData(archiveRes?.data?.data || []);
+        setBirthdayList(listRes?.data?.data || []);
+      } catch (err) {
+        console.error("Birthday API Error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
-      {data?.bannersection && (
-        <BirthdayBanner hasBannerStars={true} data={data?.bannersection} />
-      )}
+      {
+        loading ? (
+          <div id="preloader">
+            <div className="loader"></div>
+          </div>
+        ) : (
+          <>
+            {data?.bannersection && (
+              <BirthdayBanner hasBannerStars={true} data={data?.bannersection} />
+            )}
 
-      <div className="black-gr-div">
-        {/* <section className="section-padding">
+            <div className="black-gr-div">
+              {/* <section className="section-padding">
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center">
@@ -202,24 +223,24 @@ const page = () => {
           </div>
         </section> */}
 
-        {data?.bannersection?.content && (
-          <HmTextSec className="pt-80" text={data?.bannersection?.content} />
-        )}
-        {data?.bannersection?.note && (
-          <div className="container">
-            <div className="bday-text-wrap">
-              <Link
-                href={`/founder-message/birthday-party`}
-                className="underline-big-text"
-              >
-                {data?.bannersection?.note}
-              </Link>
-            </div>
-          </div>
-        )}
-        {data?.countersection && <TrustedSection className="pb-0" data={data?.countersection} />}
+              {data?.bannersection?.content && (
+                <HmTextSec className="pt-80" text={data?.bannersection?.content} />
+              )}
+              {data?.bannersection?.note && (
+                <div className="container">
+                  <div className="bday-text-wrap">
+                    <Link
+                      href={`/founder-message/birthday-party`}
+                      className="underline-big-text"
+                    >
+                      {data?.bannersection?.note}
+                    </Link>
+                  </div>
+                </div>
+              )}
+              {data?.countersection && <TrustedSection className="pb-0" data={data?.countersection} />}
 
-        {/* <section className="section-padding bday-count-sec pb-0">
+              {/* <section className="section-padding bday-count-sec pb-0">
           <div className="container">
             <div className="row row-gap-25">
               {[...Array(4)].map((_, index) => (
@@ -231,142 +252,146 @@ const page = () => {
           </div>
         </section> */}
 
-        <PartyExpertCon className="pt-80" data="birthday" />
+              <PartyExpertCon className="pt-80" data="birthday" />
 
-        <Image src={bdayIllus} className={"illus-image"} alt="bday" />
-      </div>
-
-      <section className="pt-80 bday-sec" id="brithday-party-birthday-of-my-section">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <h3 className="sec-head medium sm-head">
-                It’s a <span>birthday of my…</span>
-              </h3>
+              <Image src={bdayIllus} className={"illus-image"} alt="bday" />
             </div>
-          </div>
-          <div className="row row-gap-25">
-            {birthdayList?.length > 0 &&
-              birthdayList?.map((bd, index) => (
-                <div className="col-lg-4 col-12"
-                  onClick={() => sessionStorage.setItem("brithday_party_birthday_of_my",true)} key={index}>
-                  <Link
-                    href={`/parties/birthday/${bd.slug}`}
-                    className="location-card"
-                  >
-                    <div className="location-card-img">
-                      {bd.image && (
-                        <Image
-                          src={bd.image}
-                          alt={bd.title}
-                          width={500}
-                          height={500}
-                        />
-                      )}
-                    </div>
-                    <div className="location-card-content">
-                      <h3>{bd.title}</h3>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-          </div>
-        </div>
-      </section>
-      <div className="black-gr-div">
-        {/* <BirthdayGetInTouch privacyLine={true} /> */}
 
-        {/* <PartyGetInTouch noImage={true} privacyLine={true} /> */}
-
-        {data?.partyinclusions && (
-          <section
-            className="section-padding bday-sec pb-0"
-            style={{ overflow: "hidden" }}
-          >
-            <div className="blog-slider-sec">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h3
-                    className="sec-head medium sm-head"
-                    dangerouslySetInnerHTML={{
-                      __html: data?.partyinclusions?.heading,
-                    }}
-                  ></h3>
-                </div>
-              </div>
-
-              <PartyInclutions data={data?.partyinclusions} />
-            </div>
-          </section>
-        )}
-
-        <Image src={bdayIllus} alt="illus3" className="illus-image" />
-      </div>
-      <div className="black-gr-div">
-        {/* <PartyExpertCon /> */}
-        {data?.slidersection && <ReadyToGoPlans className="sec-padding-top pb-0" data={data?.slidersection} />}
-        {data?.googlereviews && (
-          <div className="pt-80">
-            <GReviewSlider commonStars={false} data={data?.googlereviews} />
-          </div>
-        )}
-        {data?.imagesection && (
-          <>
-            <section className="section-padding">
+            <section className="pt-80 bday-sec" id="brithday-party-birthday-of-my-section">
               <div className="container">
                 <div className="row">
                   <div className="col-lg-12 text-center">
-                    <h3
-                      className="sec-head sm-head medium"
-                      dangerouslySetInnerHTML={{
-                        __html: "<span>Capturing</span> Happiness",
-                      }}
-                    ></h3>
+                    <h3 className="sec-head medium sm-head">
+                      It’s a <span>birthday of my…</span>
+                    </h3>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="photographic-styled-image-container">
-                    {data?.imagesection?.image1 && (
-                      <PhotographicStyledImage
-                        image={data?.imagesection?.image1}
-                      />
-                    )}
-                    {data?.imagesection?.image2 && (
-                      <PhotographicStyledImage
-                        image={data?.imagesection?.image2}
-                      />
-                    )}
-                    {data?.imagesection?.image3 && (
-                      <PhotographicStyledImage
-                        image={data?.imagesection?.image3}
-                      />
-                    )}
-                  </div>
+                <div className="row row-gap-25">
+                  {birthdayList?.length > 0 &&
+                    birthdayList?.map((bd, index) => (
+                      <div className="col-lg-4 col-12"
+                        onClick={() => sessionStorage.setItem("brithday_party_birthday_of_my", true)} key={index}>
+                        <Link
+                          href={`/parties/birthday/${bd.slug}`}
+                          className="location-card"
+                        >
+                          <div className="location-card-img">
+                            {bd.image && (
+                              <Image
+                                src={bd.image}
+                                alt={bd.title}
+                                width={500}
+                                height={500}
+                              />
+                            )}
+                          </div>
+                          <div className="location-card-content">
+                            <h3>{bd.title}</h3>
+                          </div>
+                        </Link>
+                      </div>
+                    ))}
                 </div>
               </div>
             </section>
-          </>
-        )}
-        {data?.videotestimonials && (
-          <Videotestimonials className="pt-0" data={data?.videotestimonials} />
-        )}
+            <div className="black-gr-div">
+              {/* <BirthdayGetInTouch privacyLine={true} /> */}
 
-        <Image src={movieIllus} className={"illus-image"} alt="bday" />
-      </div>
-      <div className="black-gr-div">
-        {data?.faqsection && <FaqSection className="pt-80" data={data?.faqsection} />}
-        <OurLocationSec className="sec-padding-top" title="About Our <span>Our Location</span>" />
-        <BlogSlider className="pb-0" />
-        <LogoSec className="pt-80 pb-0" title={"In the <span>News</span>"} />
-        {data?.footersection && (
-          <PartyGetInTouch
-            img={nightIllus}
-            data={data?.footersection}
-            noTextBottom={true}
-            privacyLine={true}
-          />
-        )}
-      </div>
+              {/* <PartyGetInTouch noImage={true} privacyLine={true} /> */}
+
+              {data?.partyinclusions && (
+                <section
+                  className="section-padding bday-sec pb-0"
+                  style={{ overflow: "hidden" }}
+                >
+                  <div className="blog-slider-sec">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        <h3
+                          className="sec-head medium sm-head"
+                          dangerouslySetInnerHTML={{
+                            __html: data?.partyinclusions?.heading,
+                          }}
+                        ></h3>
+                      </div>
+                    </div>
+
+                    <PartyInclutions data={data?.partyinclusions} />
+                  </div>
+                </section>
+              )}
+
+              <Image src={bdayIllus} alt="illus3" className="illus-image" />
+            </div>
+            <div className="black-gr-div">
+              {/* <PartyExpertCon /> */}
+              {data?.slidersection && <ReadyToGoPlans className="sec-padding-top pb-0" data={data?.slidersection} />}
+              {data?.googlereviews && (
+                <div className="pt-80">
+                  <GReviewSlider commonStars={false} data={data?.googlereviews} />
+                </div>
+              )}
+              {data?.imagesection && (
+                <>
+                  <section className="section-padding">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-lg-12 text-center">
+                          <h3
+                            className="sec-head sm-head medium"
+                            dangerouslySetInnerHTML={{
+                              __html: "<span>Capturing</span> Happiness",
+                            }}
+                          ></h3>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="photographic-styled-image-container">
+                          {data?.imagesection?.image1 && (
+                            <PhotographicStyledImage
+                              image={data?.imagesection?.image1}
+                            />
+                          )}
+                          {data?.imagesection?.image2 && (
+                            <PhotographicStyledImage
+                              image={data?.imagesection?.image2}
+                            />
+                          )}
+                          {data?.imagesection?.image3 && (
+                            <PhotographicStyledImage
+                              image={data?.imagesection?.image3}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </>
+              )}
+              {data?.videotestimonials && (
+                <Videotestimonials className="pt-0" data={data?.videotestimonials} />
+              )}
+
+              <Image src={movieIllus} className={"illus-image"} alt="bday" />
+            </div>
+            <div className="black-gr-div">
+              {data?.faqsection && <FaqSection className="pt-80" data={data?.faqsection} />}
+              <OurLocationSec className="sec-padding-top" title="About Our <span>Our Location</span>" />
+              <BlogSlider className="pb-0" />
+              <LogoSec className="pt-80 pb-0" title={"In the <span>News</span>"} />
+              {data?.footersection && (
+                <PartyGetInTouch
+                  img={nightIllus}
+                  data={data?.footersection}
+                  noTextBottom={true}
+                  privacyLine={true}
+                />
+              )}
+            </div>
+          </>
+        )
+      }
+
     </>
   );
 };

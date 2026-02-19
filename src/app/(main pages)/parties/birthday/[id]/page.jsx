@@ -78,11 +78,23 @@ const page = () => {
   console.log("brithday_party", party)
   const router = useRouter();
   const pathname = usePathname();
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    if (!id) return; // prevent API call if id not available
+
     const fetchParty = async () => {
-      const response = await api.get(`birthday-inner/${id}`);
-      setParty(response.data.data);
+      try {
+        setLoading(true);
+        const response = await api.get(`birthday-inner/${id}`);
+        setParty(response?.data?.data || null);
+      } catch (err) {
+        console.error("Birthday Inner API Error:", err);
+      } finally {
+        setLoading(false);
+      }
     };
+
     fetchParty();
   }, [id]);
 
@@ -107,52 +119,59 @@ const page = () => {
 
   return (
     <>
-      {party && party?.bannersection && (
-        <InnerPageBanner banner={party?.bannersection} bdayInner={true} />
-      )}
+      {
+        loading ? (
+          <div id="preloader">
+            <div className="loader"></div>
+          </div>
+        ) : (
+          <>
+            {party && party?.bannersection && (
+              <InnerPageBanner banner={party?.bannersection} bdayInner={true} />
+            )}
 
-      <div className="black-gr-div">
-        {party && party?.countersection && (
-          <section className="pt-80 pb-0">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  {/* <h3
+            <div className="black-gr-div">
+              {party && party?.countersection && (
+                <section className="pt-80 pb-0">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        {/* <h3
                     className="sec-head"
                     dangerouslySetInnerHTML={{
                       __html: party?.countersection?.heading,
                     }}
                   ></h3> */}
-                  <WordByWordAnimation headingTemplate={headingTemplate} />
+                        <WordByWordAnimation headingTemplate={headingTemplate} />
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {party && party?.countersection && (
+                <HmTextSec text={party?.countersection?.content} />
+              )}
+              {party && party?.countersection && id != "family-friends" && (
+                <div className="container">
+                  <div className="bday-text-wrap">
+                    <p
+                      className="underline-big-text"
+                      onClick={() => router.push("/founder-message/birthday-party")}
+                      style={{ cursor: "pointer" }}
+                      dangerouslySetInnerHTML={{
+                        __html: party?.countersection?.note,
+                      }}
+                    ></p>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </section>
-        )}
+              )}
 
-        {party && party?.countersection && (
-          <HmTextSec text={party?.countersection?.content} />
-        )}
-        {party && party?.countersection && id != "family-friends" && (
-          <div className="container">
-            <div className="bday-text-wrap">
-              <p
-                className="underline-big-text"
-                onClick={() => router.push("/founder-message/birthday-party")}
-                style={{ cursor: "pointer" }}
-                dangerouslySetInnerHTML={{
-                  __html: party?.countersection?.note,
-                }}
-              ></p>
-            </div>
-          </div>
-        )}
+              {party && party?.countersection && (
+                <TrustedSection className="pb-0" data={party?.countersection} removeHeading={true} />
+              )}
 
-        {party && party?.countersection && (
-          <TrustedSection className="pb-0" data={party?.countersection} removeHeading={true} />
-        )}
-
-        {/* <section className="section-padding bday-count-sec pb-0">
+              {/* <section className="section-padding bday-count-sec pb-0">
           <div className="container">
             <div className="row row-gap-25">
               {[...Array(4)].map((_, index) => (
@@ -164,7 +183,7 @@ const page = () => {
           </div>
         </section> */}
 
-        {/* {pathname === "/parties/birthday/couple" && (
+              {/* {pathname === "/parties/birthday/couple" && (
           <section className="section-padding bday-sec">
             <div className="container">
               <div className="row mt-5 row-gap-25">
@@ -185,174 +204,178 @@ const page = () => {
           </section>
         )} */}
 
-        <Image src={bdayIllus} className={"illus-image"} alt="bday" />
-      </div>
+              <Image src={bdayIllus} className={"illus-image"} alt="bday" />
+            </div>
 
-      <div className="black-gr-div">
-        {party && party?.imagecardsection && (
-          <section className="sec-padding-top bday-sec">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h3
-                    className="sec-head medium sm-head"
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        party?.imagecardsection?.heading ||
-                        "Your Party <span>Inclusions</span>",
-                    }}
-                  />
+            <div className="black-gr-div">
+              {party && party?.imagecardsection && (
+                <section className="sec-padding-top bday-sec">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        <h3
+                          className="sec-head medium sm-head"
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              party?.imagecardsection?.heading ||
+                              "Your Party <span>Inclusions</span>",
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="row row-gap-25">
+                      {party?.imagecardsection?.images &&
+                        party?.imagecardsection?.images?.length > 0 &&
+                        party?.imagecardsection?.images?.map((bd, index) => (
+                          <div className="col-lg-4 col-12" key={index}>
+                            <div className="location-card">
+                              <div className="location-card-img">
+                                {bd.image && (
+                                  <Image
+                                    src={bd.image}
+                                    width={700}
+                                    height={700}
+                                    alt={bd.heading}
+                                  />
+                                )}
+                              </div>
+                              <div className="location-card-content">
+                                <h3
+                                  dangerouslySetInnerHTML={{ __html: bd.heading }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+              {party && party?.partyinclusions && party?.partyinclusions?.heading && (
+                <section className="pt-80 bday-sec">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        <h3
+                          className="sec-head medium sm-head"
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              party?.partyinclusions?.heading ||
+                              "Your Party <span>Inclusions</span>",
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="row row-gap-25">
+                      {party?.partyinclusions?.images &&
+                        party?.partyinclusions?.images?.length > 0 &&
+                        party?.partyinclusions?.images?.map((bd, index) => (
+                          <div className="col-lg-3 col-12" key={index}>
+                            <div className="location-card">
+                              <div className="location-card-img">
+                                {bd.image && (
+                                  <Image
+                                    src={bd.image}
+                                    width={700}
+                                    height={700}
+                                    alt={bd.heading}
+                                  />
+                                )}
+                              </div>
+                              <div className="location-card-content">
+                                <h3
+                                  dangerouslySetInnerHTML={{ __html: bd.heading }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {party &&
+                party?.packagesection &&
+                party?.packagesection?.pricing?.columns?.length > 0 && (
+                  <Packages className="pb-0" packages={party?.packagesection} category="birthday" />
+                )}
+              {party && party?.googlereviews && (
+                <div className="pt-80">
+                  <GReviewSlider commonStars={false} data={party?.googlereviews} />
                 </div>
-              </div>
-              <div className="row row-gap-25">
-                {party?.imagecardsection?.images &&
-                  party?.imagecardsection?.images?.length > 0 &&
-                  party?.imagecardsection?.images?.map((bd, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
-                      <div className="location-card">
-                        <div className="location-card-img">
-                          {bd.image && (
-                            <Image
-                              src={bd.image}
-                              width={700}
-                              height={700}
-                              alt={bd.heading}
+              )}
+
+              <Image src={illus3402} alt="illus3" className="illus-image" />
+            </div>
+            <div className="black-gr-div">
+              <PartyExpertCon className="sec-padding-top" data="birthday_party_subpage" />
+              {party && party?.slidersection && (
+                <ReadyToGoPlans data={party?.slidersection} />
+              )}
+              {party && party?.imagesection && (
+                <>
+                  <section className="capture-sec">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-lg-12 text-center">
+                          <h3
+                            className="sec-head sm-head medium"
+                            dangerouslySetInnerHTML={{
+                              __html: "<span>Capturing</span> Happiness",
+                            }}
+                          ></h3>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="photographic-styled-image-container">
+                          {party?.imagesection?.image1 && (
+                            <PhotographicStyledImage
+                              image={party?.imagesection?.image1}
+                            />
+                          )}
+                          {party?.imagesection?.image2 && (
+                            <PhotographicStyledImage
+                              image={party?.imagesection?.image2}
+                            />
+                          )}
+                          {party?.imagesection?.image3 && (
+                            <PhotographicStyledImage
+                              image={party?.imagesection?.image3}
                             />
                           )}
                         </div>
-                        <div className="location-card-content">
-                          <h3
-                            dangerouslySetInnerHTML={{ __html: bd.heading }}
-                          />
-                        </div>
                       </div>
                     </div>
-                  ))}
-              </div>
+                  </section>
+                </>
+              )}
+              {party && party?.videotestimonials && (
+                <Videotestimonials data={party?.videotestimonials} />
+              )}
+              <OurLocationSec className="section-padding pb-0" title="About Our <span>Our Location</span>" />
+              <Image src={movieIllus} className={"illus-image"} alt="bday" />
             </div>
-          </section>
-        )}
-        {party && party?.partyinclusions && party?.partyinclusions?.heading && (
-          <section className="pt-80 bday-sec">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h3
-                    className="sec-head medium sm-head"
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        party?.partyinclusions?.heading ||
-                        "Your Party <span>Inclusions</span>",
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="row row-gap-25">
-                {party?.partyinclusions?.images &&
-                  party?.partyinclusions?.images?.length > 0 &&
-                  party?.partyinclusions?.images?.map((bd, index) => (
-                    <div className="col-lg-3 col-12" key={index}>
-                      <div className="location-card">
-                        <div className="location-card-img">
-                          {bd.image && (
-                            <Image
-                              src={bd.image}
-                              width={700}
-                              height={700}
-                              alt={bd.heading}
-                            />
-                          )}
-                        </div>
-                        <div className="location-card-content">
-                          <h3
-                            dangerouslySetInnerHTML={{ __html: bd.heading }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
+            <div className="black-gr-div">
+              {party && party?.faqsection &&
+                <FaqSection className="sec-padding-top" data={party?.faqsection} />}
+              <BlogSlider className="pb-0" />
+              <LogoSec className="pt-80 pb-0" />
+              {party && party?.footersection && (
+                <PartyGetInTouch
+                  img={nightIllus}
+                  // noTextBottom={true}
+                  textData={party?.footersection}
+                  data={party?.footersection}
+                  privacyLine={true}
+                />
+              )}
+
             </div>
-          </section>
-        )}
-
-        {party &&
-          party?.packagesection &&
-          party?.packagesection?.pricing?.columns?.length > 0 && (
-            <Packages className="pb-0" packages={party?.packagesection} category="birthday" />
-          )}
-        {party && party?.googlereviews && (
-          <div className="pt-80">
-            <GReviewSlider commonStars={false} data={party?.googlereviews} />
-          </div>
-        )}
-
-        <Image src={illus3402} alt="illus3" className="illus-image" />
-      </div>
-      <div className="black-gr-div">
-        <PartyExpertCon className="sec-padding-top" data="birthday_party_subpage" />
-        {party && party?.slidersection && (
-          <ReadyToGoPlans data={party?.slidersection} />
-        )}
-        {party && party?.imagesection && (
-          <>
-            <section className="capture-sec">
-              <div className="container">
-                <div className="row">
-                  <div className="col-lg-12 text-center">
-                    <h3
-                      className="sec-head sm-head medium"
-                      dangerouslySetInnerHTML={{
-                        __html: "<span>Capturing</span> Happiness",
-                      }}
-                    ></h3>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="photographic-styled-image-container">
-                    {party?.imagesection?.image1 && (
-                      <PhotographicStyledImage
-                        image={party?.imagesection?.image1}
-                      />
-                    )}
-                    {party?.imagesection?.image2 && (
-                      <PhotographicStyledImage
-                        image={party?.imagesection?.image2}
-                      />
-                    )}
-                    {party?.imagesection?.image3 && (
-                      <PhotographicStyledImage
-                        image={party?.imagesection?.image3}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </section>
           </>
-        )}
-        {party && party?.videotestimonials && (
-          <Videotestimonials data={party?.videotestimonials} />
-        )}
-        <OurLocationSec className="section-padding pb-0" title="About Our <span>Our Location</span>" />
-        <Image src={movieIllus} className={"illus-image"} alt="bday" />
-      </div>
-      <div className="black-gr-div">
-        {party && party?.faqsection &&
-          <FaqSection className="sec-padding-top" data={party?.faqsection} />}
-        <BlogSlider className="pb-0" />
-        <LogoSec className="pt-80 pb-0" />
-        {party && party?.footersection && (
-          <PartyGetInTouch
-            img={nightIllus}
-            // noTextBottom={true}
-            textData={party?.footersection}
-            data={party?.footersection}
-            privacyLine={true}
-          />
-        )}
+        )
+      }
 
-      </div>
     </>
   );
 };
