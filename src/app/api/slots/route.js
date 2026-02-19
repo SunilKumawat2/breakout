@@ -1,12 +1,12 @@
 export async function POST(req) {
   try {
-    const { locationId, gameIds, startDate, endDate } = await req.json();
+    const { locationId, gameIds, startDate} = await req.json();
 
     let apiUrl = `${process.env.BOOKING_SYSTEM_URL}/slots`;
 
     apiUrl = `${apiUrl}?locationId=${locationId}&gameIds=${gameIds.join(
       ","
-    )}&startDate=${startDate}&endDate=${endDate}`;
+    )}&startDate=${startDate}`;
 
     const res = await fetch(apiUrl, {
       headers: {

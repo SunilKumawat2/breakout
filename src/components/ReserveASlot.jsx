@@ -14,7 +14,7 @@ import arrowPrev from "@/images/chev-left.svg";
 import arrowNext from "@/images/chev-right.svg";
 import calenderIcon from "@/images/calendar-btn.svg";
 
-const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
+const ReserveASlot = ({ room, page_name, onOpenFaq, className = "", }) => {
   const {
     availableSlots,
     fetchAvailableSlots,
@@ -26,12 +26,14 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
     thirdPartyGames,
     bookASlot,
   } = useGlobalContext();
+  console.log("sdkjfhksdjfhdjkshfksdjhfksjdf", page_name)
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedSlotTime, setSelectedSlotTime] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocationOption, setSelectedLocationOption] = useState(null);
   const [selectedGame, setSelectedGame] = useState(null);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [hasSlotsFetched, setHasSlotsFetched] = useState(false);
@@ -73,21 +75,23 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
 
   const handleLocationSelect = async (e) => {
     setSelectedLocation(e.value);
+    setSelectedLocationOption(e);
     const games = await fetchThirdPartyGames(e.value);
     console.log("games", games);
   };
 
-  const handleGameSelect = async (e) => {
-    setSelectedGame(e.map((game) => game.value));
+  const handleGameSelect = (e) => {
+    setSelectedGame(e ? e.map((game) => game.value) : []);
   };
+
+
 
   useEffect(() => {
     const fetchSlots = async () => {
       if (
         !selectedLocation ||
         !selectedGame ||
-        !selectedStartDate ||
-        !selectedEndDate
+        !selectedStartDate
       ) {
         return;
       }
@@ -97,13 +101,47 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
         selectedLocation,
         selectedGame,
         selectedStartDate,
-        selectedEndDate
+        // selectedEndDate
       );
       setSlotsLoading(false);
       console.log("slots", slots);
     };
     fetchSlots();
-  }, [selectedLocation, selectedGame, selectedStartDate, selectedEndDate]);
+  }, [selectedLocation, selectedGame, selectedStartDate]);
+
+  const filteredLocations = page_name
+  ? thirdPartyLocations?.filter((loc) =>
+      loc.locationName
+        .toLowerCase()
+        .includes(page_name.replace("-", " "))
+    )
+  : thirdPartyLocations;
+
+
+
+  useEffect(() => {
+    if (!page_name || !thirdPartyLocations?.length) return;
+  
+    const matchedLocation = thirdPartyLocations.find((loc) =>
+      loc.locationName
+        .toLowerCase()
+        .includes(page_name.replace("-", " "))
+    );
+  
+    if (matchedLocation) {
+      const option = {
+        value: matchedLocation.locationId,
+        label: matchedLocation.locationName,
+      };
+      setSelectedLocationOption(option);
+      setSelectedLocation(matchedLocation.locationId);
+      fetchThirdPartyGames(matchedLocation.locationId);
+    }
+  }, [page_name, thirdPartyLocations]);
+  
+  
+
+
 
   const customStyles = {
     control: (base, state) => ({
@@ -184,63 +222,81 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
     setSelectedSlotTime(slot);
   };
 
-  const handleBookNow = () => {
+  const handleBookNow = async () => {
+    if (bookingLoading) return;
+
     setBookingLoading(true);
-    if (
-      !firstName === "" ||
-      !lastName === "" ||
-      !email === "" ||
-      !phone === "" ||
-      !selectedSlotTime ||
-      !selectedLocation
-    ) {
-      toast.error("Please fill all the fields");
-      setBookingLoading(false);
-      return;
-    }
+
+    // Trim values
+    const trimmedFirstName = firstName?.trim();
+    const trimmedLastName = lastName?.trim();
+    const trimmedEmail = email?.trim();
+    const trimmedPhone = phone?.trim();
+
+    // ================= REQUIRED FIELD CHECK =================
+    // if (
+    //   !trimmedFirstName ||
+    //   !trimmedLastName ||
+    //   !trimmedEmail ||
+    //   !trimmedPhone ||
+    //   !selectedLocation ||
+    //   !selectedSlotTime ||
+    //   !selectedDate
+    // ) {
+    //   toast.error("Please fill all the required fields");
+    //   setBookingLoading(false);
+    //   return;
+    // }
+
+    // ================= EMAIL VALIDATION =================
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email === "" || !emailRegex.test(email)) {
-      toast.error("Please enter a valid email");
+    if (!emailRegex.test(trimmedEmail)) {
+      toast.error("Please enter a valid email address");
       setBookingLoading(false);
       return;
     }
 
-    const phoneRegex = /^\d{10}$/;
-    if (phone === "" || !phoneRegex.test(phone)) {
-      toast.error("Please enter a valid phone number");
+    // ================= PHONE VALIDATION (10 digits) =================
+    const phoneRegex = /^[6-9]\d{9}$/; // Indian mobile format
+    if (!phoneRegex.test(trimmedPhone)) {
+      toast.error("Please enter a valid 10-digit phone number");
       setBookingLoading(false);
       return;
     }
+
+    // ================= BOOKING DATA =================
     const bookingData = {
-      customerFirstName: firstName,
-      customerLastName: lastName,
-      customerEmail: email,
-      customerPhone: phone,
+      customerFirstName: trimmedFirstName,
+      customerLastName: trimmedLastName,
+      customerEmail: trimmedEmail,
+      customerPhone: trimmedPhone,
       slotId: selectedSlotTime?.slotId,
       locationId: selectedLocation,
-      gameId: selectedSlotTime?.gameId,
+      gameId: selectedGame?.[0], 
+      // startDate: selectedDate,
     };
 
-    const fetchBookingData = async () => {
-      try {
-        const response = await bookASlot(bookingData);
-        if (response?.bookingId && response?.bookingId !== "") {
-          toast.success("Booking successful");
-          setBookingLoading(false);
-          window.open(
-            `https://bs.kreeda.icu/embed?cartId=${response?.bookingId}`,
-            "_blank"
-          );
-        } else {
-          toast.error("Booking failed Please try again");
-          setBookingLoading(false);
-        }
-      } catch {
-        setBookingLoading(false);
+
+    try {
+      const response = await bookASlot(bookingData);
+
+      if (response?.bookingId) {
+        toast.success("Booking successful");
+
+        window.open(
+          `https://bs.kreeda.icu/embed?cartId=${response.bookingId}`,
+          "_blank"
+        );
+      } else {
+        toast.error("Booking failed. Please try again.");
       }
-    };
-    fetchBookingData();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setBookingLoading(false);
+    }
   };
+
 
 
 
@@ -286,6 +342,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
   const handleDateSelect = (day) => {
     const dateObj = new Date(year, month, day);
     setSelectedDate(dateObj);
+    setSelectedStartDate(dateObj);
     // formik.setFieldValue("date", dateObj);
   };
 
@@ -384,22 +441,22 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                 )}
                 {isMobile && (
                   <>
-                  {room?.pricing?.[0] && (
-                  <div className="col-lg-4 col-6 text-center">
-                    <h3 dangerouslySetInnerHTML={{ __html: room.pricing[0].day_range, }}></h3>
+                    {room?.pricing?.[0] && (
+                      <div className="col-lg-4 col-6 text-center">
+                        <h3 dangerouslySetInnerHTML={{ __html: room.pricing[0].day_range, }}></h3>
 
-                    <p className="para">
-                      {room.pricing[0].price23}
-                    </p>
-                    <p className="para">
-                      {room.pricing[0].price46}
-                    </p>
-                  </div>
-                )}
+                        <p className="para">
+                          {room.pricing[0].price23}
+                        </p>
+                        <p className="para">
+                          {room.pricing[0].price46}
+                        </p>
+                      </div>
+                    )}
                   </>
-                 )
+                )
                 }
-                
+
                 {room?.pricing?.[2] && (
                   <div className="col-lg-4 col-6 text-center">
                     <h3 dangerouslySetInnerHTML={{ __html: room.pricing[2].day_range, }}></h3>
@@ -421,7 +478,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                     textDecoration: "underline",
                     fontStyle: "italic",
                   }}
-                  onClick={() => onOpenFaq(3)}   
+                  onClick={() => onOpenFaq(3)}
                 >
                   Check eligibility Criteria
                 </span>
@@ -682,9 +739,12 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                 </div>
               </div>
             </div> */}
-            <div className="form-field mt-5" id="book-now">
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              handleBookNow();
+            }} className="form-field mt-5" id="book-now">
               <div className="row">
-              <div className="col-lg-4 col-12">
+                <div className="col-lg-4 col-12">
                   <div className="form-group">
                     <label htmlFor="location" className="form-label">
                       Choose a Location & Booking
@@ -695,7 +755,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                         className="basic-single"
                         classNamePrefix="select"
                         placeholder="Select an option"
-                        name="color"
+                        value={selectedLocationOption}
                         styles={{
                           ...customStyles,
                           control: (base, state) => ({
@@ -707,10 +767,45 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                           handleLocationSelect(e);
                         }}
                         options={
-                          thirdPartyLocations?.length > 0 && thirdPartyLocations
-                            ? thirdPartyLocations?.map((location) => ({
+                          filteredLocations?.length > 0
+                            ? filteredLocations.map((location) => ({
                               value: location.locationId,
                               label: location.locationName,
+                            }))
+                            : []
+                        }
+                      />
+
+
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-4 col-12">
+                  <div className="form-group">
+                    <label htmlFor="location" className="form-label">
+                      Choose a Game
+                    </label>
+                    <div className="input-group sel-group">
+                      <Select
+                        isMulti
+                        className="basic-single"
+                        classNamePrefix="select"
+                        placeholder="Select an option"
+                        name="color"
+                        styles={{
+                          ...customStyles,
+                          control: (base, state) => ({
+                            ...customStyles.control(base, state),
+                          }),
+                        }}
+                        onChange={(e) => {
+                          handleGameSelect(e);
+                        }}
+                        options={
+                          thirdPartyGames?.length > 0 && thirdPartyGames
+                            ? thirdPartyGames?.map((game) => ({
+                              value: game.gameId,
+                              label: game.gameName,
                             }))
                             : []
                         }
@@ -718,8 +813,9 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                     </div>
                   </div>
                 </div>
-                 {/* ================= CALENDAR ================= */}
-                 <div className="col-12 mb-4 mt-3">
+
+                {/* ================= CALENDAR ================= */}
+                <div className="col-12 mb-4 mt-3">
                   <div className="calendar-wrapper">
                     <div className="calendar-header">
                       <div
@@ -834,9 +930,12 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                       />
                     ) : !hasSlotsFetched ? (
                       <div className="text-center py-5">
-                        <p>
+                        {/* <p>
                           Please select a location, game, start date and end
                           date
+                        </p> */}
+                        <p>
+                          Please select a location, game, date
                         </p>
                       </div>
                     ) : (
@@ -896,8 +995,8 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                 </div>
                 <div className="col-12">
                   <button
+                    type="submit"
                     className="main-btn mt-4 sm"
-                    onClick={handleBookNow}
                     disabled={bookingLoading}
                   >
                     <span className="">
@@ -906,7 +1005,7 @@ const ReserveASlot = ({ room, onOpenFaq, className = "", }) => {
                   </button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

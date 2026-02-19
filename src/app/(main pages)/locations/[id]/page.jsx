@@ -76,7 +76,7 @@ const page = () => {
   ];
 
   const { id } = useParams();
-
+console.log("location_slug",id)
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showLocation, setShowLocation] = useState(false);
@@ -85,39 +85,39 @@ const page = () => {
     const fetchLocation = async () => {
       try {
         setLoading(true); // optional if using loader
-  
+
         const res = await api.get(`/escaperoom-location/${id}`);
-  
+
         const locationData = res?.data?.data;
-  
+
         const bnData = locationData?.bannersection
           ? {
-              image: null,
-              btns: [
-                {
-                  title: "Book Now",
-                  link: "#book-now",
-                  enc: (
-                    <>
-                      <Image src={enc} alt="enc" />
-                      <span>Secure Payment Gateway</span>
-                    </>
-                  ),
-                },
-              ],
-              ...locationData.bannersection,
-            }
+            image: null,
+            btns: [
+              {
+                title: "Book Now",
+                link: "#book-now",
+                enc: (
+                  <>
+                    <Image src={enc} alt="enc" />
+                    <span>Secure Payment Gateway</span>
+                  </>
+                ),
+              },
+            ],
+            ...locationData.bannersection,
+          }
           : null;
-  
+
         const mergedData = {
           ...locationData,
           bannersection: bnData,
         };
-  
+
         console.log("mergedData", mergedData?.faqsection);
-  
+
         setLocation(mergedData);
-  
+
       } catch (error) {
         console.error("Error fetching location data:", error);
         setError("Failed to load location data"); // optional error state
@@ -125,12 +125,12 @@ const page = () => {
         setLoading(false); // stop loader if using
       }
     };
-  
+
     if (id) {
       fetchLocation();
     }
   }, [id]);
-  
+
 
   // useEffect(() => {
   //   window.scrollTo(0, 0)
@@ -356,6 +356,7 @@ const page = () => {
         </section> */}
               {location && location?.pricingsection && (
                 <ReserveASlot
+                page_name = {id}
                   room={location?.pricingsection}
                   onOpenFaq={(index) => setOpenFaqIndex(index)}
                 />

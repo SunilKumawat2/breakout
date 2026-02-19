@@ -83,19 +83,32 @@ import WordByWordAnimation from "@/helpers/WordByWordAnimation";
 
 const page = () => {
   const [corporate, setCorporate] = useState(null);
-  console.log("corporate_corporate_123",corporate)
+  console.log("corporate_corporate_123", corporate)
   const [brandLogos, setBrandLogos] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+
   useEffect(() => {
     const fetchCorporate = async () => {
-      const response = await api.get("corporate-retreat-archive");
-      setCorporate(response.data.data);
+      try {
+        setLoading(true);
+
+        // Call both APIs together (faster)
+        const [corporateRes, brandRes] = await Promise.all([
+          api.get("corporate-retreat-archive"),
+          api.get("logos/brands"),
+        ]);
+
+        setCorporate(corporateRes?.data?.data || []);
+        setBrandLogos(brandRes?.data?.data || []);
+      } catch (err) {
+        console.error("API Error:", err);
+      } finally {
+        setLoading(false);
+      }
     };
+
     fetchCorporate();
-    const fetchBrandLogos = async () => {
-      const response = await api.get("logos/brands");
-      setBrandLogos(response.data.data);
-    };
-    fetchBrandLogos();
   }, []);
 
   const atOptions = [
@@ -112,67 +125,74 @@ const page = () => {
 
   return (
     <>
-      {corporate && corporate?.bannersection && (
-        <InnerPageBanner banner={corporate?.bannersection} bdayInner={true} />
-      )}
-
-      <div className="black-gr-div">
-        {corporate && corporate?.contentsection && (
-          <section className="pt-80">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  {/* <h3 className="sec-head">{animatedHeading}</h3> */}
-                  <WordByWordAnimation className="sec-head mb-0" headingTemplate={headingTemplate} />
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {corporate &&
-          corporate?.googlereviews &&
-          corporate?.googlereviews?.length > 0 && (
-            <div className="pt-80">
-          <GReviewSlider
-              commonStars={false}
-              data={corporate?.googlereviews}
-            />
+      {
+        loading ? (
+          <div id="preloader">
+            <div className="loader"></div>
           </div>
-            
-          )}
+        ) : (
+          <>
+            {corporate && corporate?.bannersection && (
+              <InnerPageBanner banner={corporate?.bannersection} bdayInner={true} />
+            )}
 
-        {corporate && corporate?.contentsection && (
-          <HmTextSec className="pt-80" text={corporate?.contentsection?.content} />
-        )}
-        <section>
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12 ">
-                <div className="bday-text-wrap">
-                  <p
-                    className="underline-big-text"
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.contentsection?.note,
-                    }}
-                  />
+            <div className="black-gr-div">
+              {corporate && corporate?.contentsection && (
+                <section className="pt-80">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        {/* <h3 className="sec-head">{animatedHeading}</h3> */}
+                        <WordByWordAnimation className="sec-head mb-0" headingTemplate={headingTemplate} />
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {corporate &&
+                corporate?.googlereviews &&
+                corporate?.googlereviews?.length > 0 && (
+                  <div className="pt-80">
+                    <GReviewSlider
+                      commonStars={false}
+                      data={corporate?.googlereviews}
+                    />
+                  </div>
+
+                )}
+
+              {corporate && corporate?.contentsection && (
+                <HmTextSec className="pt-80" text={corporate?.contentsection?.content} />
+              )}
+              <section>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-lg-12 ">
+                      <div className="bday-text-wrap">
+                        <p
+                          className="underline-big-text"
+                          dangerouslySetInnerHTML={{
+                            __html: corporate?.contentsection?.note,
+                          }}
+                        />
+                      </div>
+                      <p
+                        className="sec-head medium-20 pt-80"
+                        dangerouslySetInnerHTML={{
+                          __html: corporate?.contentsection?.footer,
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <p
-                  className="sec-head medium-20 pt-80"
-                  dangerouslySetInnerHTML={{
-                    __html: corporate?.contentsection?.footer,
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+              </section>
 
-        {corporate && corporate?.countersection && (
-          <TrustedSection className="pb-0" data={corporate?.countersection} />
-        )}
+              {corporate && corporate?.countersection && (
+                <TrustedSection className="pb-0" data={corporate?.countersection} />
+              )}
 
-        {/* 
+              {/* 
         <section className="section-padding bday-count-sec pb-0">
           <div className="container">
             <div className="row row-gap-25">
@@ -185,282 +205,286 @@ const page = () => {
           </div>
         </section> */}
 
-        <LogoSec
-          className="pt-80 pb-0"
-          title="Brands <span>Hosted</span>"
-          link={false}
-          logos={brandLogos}
-        />
+              <LogoSec
+                className="pt-80 pb-0"
+                title="Brands <span>Hosted</span>"
+                link={false}
+                logos={brandLogos}
+              />
 
-        <PartyExpertCon className="pt-80" data="corporate"/>
+              <PartyExpertCon className="pt-80" data="corporate" />
 
-        <Image src={bdayIllus} className={"illus-image"} alt="bday" />
-      </div>
-
-      <div className="black-gr-div">
-        {corporate && corporate?.imagecardsection && (
-          <section className="sec-padding-top bday-sec">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h3
-                    className="sec-head medium sm-head"
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.imagecardsection?.heading,
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="row row-gap-25">
-                {corporate?.imagecardsection?.images &&
-                  corporate?.imagecardsection?.images?.length > 0 &&
-                  corporate?.imagecardsection?.images?.map((bd, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
-                      <Link href="#book-now" className="location-card">
-                        <div className="location-card-img">
-                          {bd.image && (
-                            <Image
-                              src={bd.image}
-                              width={800}
-                              height={800}
-                              alt={bd.heading}
-                            />
-                          )}
-                        </div>
-                        <div className="location-card-content">
-                          <h3
-                            dangerouslySetInnerHTML={{ __html: bd.heading }}
-                          />
-                        </div>
-                      </Link>
-                    </div>
-                  ))}
-              </div>
+              <Image src={bdayIllus} className={"illus-image"} alt="bday" />
             </div>
-          </section>
-        )}
-        {corporate && corporate?.choicessection && (
-          <section className="section-padding bday-sec">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h3
-                    className="sec-head medium sm-head"
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.choicessection?.heading,
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="row row-gap-25">
-                {corporate?.choicessection?.images &&
-                  corporate?.choicessection?.images?.length > 0 &&
-                  corporate?.choicessection?.images?.map((bd, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
-                      {
-                        bd?.heading != "Escape Rooms" && (
-                      <Link href={`escape-rooms/${bd?.slug}`}>
-                      <div className="location-card">
-                        <div className="location-card-img">
-                          {bd.image && (
-                            <Image
-                              src={bd.image}
-                              width={800}
-                              height={800}
-                              alt={bd.heading}
-                            />
-                          )}
-                        </div>
-                        <div className="location-card-content">
+
+            <div className="black-gr-div">
+              {corporate && corporate?.imagecardsection && (
+                <section className="sec-padding-top bday-sec">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        <h3
+                          className="sec-head medium sm-head"
+                          dangerouslySetInnerHTML={{
+                            __html: corporate?.imagecardsection?.heading,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="row row-gap-25">
+                      {corporate?.imagecardsection?.images &&
+                        corporate?.imagecardsection?.images?.length > 0 &&
+                        corporate?.imagecardsection?.images?.map((bd, index) => (
+                          <div className="col-lg-4 col-12" key={index}>
+                            <Link href="#book-now" className="location-card">
+                              <div className="location-card-img">
+                                {bd.image && (
+                                  <Image
+                                    src={bd.image}
+                                    width={800}
+                                    height={800}
+                                    alt={bd.heading}
+                                  />
+                                )}
+                              </div>
+                              <div className="location-card-content">
+                                <h3
+                                  dangerouslySetInnerHTML={{ __html: bd.heading }}
+                                />
+                              </div>
+                            </Link>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+              {corporate && corporate?.choicessection && (
+                <section className="section-padding bday-sec">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        <h3
+                          className="sec-head medium sm-head"
+                          dangerouslySetInnerHTML={{
+                            __html: corporate?.choicessection?.heading,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="row row-gap-25">
+                      {corporate?.choicessection?.images &&
+                        corporate?.choicessection?.images?.length > 0 &&
+                        corporate?.choicessection?.images?.map((bd, index) => (
+                          <div className="col-lg-4 col-12" key={index}>
+                            {
+                              bd?.heading != "Escape Rooms" && (
+                                <Link href={`escape-rooms/${bd?.slug}`}>
+                                  <div className="location-card">
+                                    <div className="location-card-img">
+                                      {bd.image && (
+                                        <Image
+                                          src={bd.image}
+                                          width={800}
+                                          height={800}
+                                          alt={bd.heading}
+                                        />
+                                      )}
+                                    </div>
+                                    <div className="location-card-content">
+                                      <h3
+                                        dangerouslySetInnerHTML={{ __html: bd.heading }}
+                                      />
+                                    </div>
+                                  </div>
+                                </Link>
+                              )
+                            }
+                            {
+                              bd?.heading == "Escape Rooms" && (
+                                <Link href="/escape-rooms">
+                                  <div className="location-card">
+                                    <div className="location-card-img">
+                                      {bd.image && (
+                                        <Image
+                                          src={bd.image}
+                                          width={800}
+                                          height={800}
+                                          alt={bd.heading}
+                                        />
+                                      )}
+                                    </div>
+                                    <div className="location-card-content">
+                                      <h3
+                                        dangerouslySetInnerHTML={{ __html: bd.heading }}
+                                      />
+                                    </div>
+                                  </div>
+                                </Link>
+                              )
+                            }
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+              {corporate &&
+                corporate?.readytotransformyourteamsection &&
+                corporate?.readytotransformyourteamsection?.heading && (
+                  <section className="">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-lg-12 ">
                           <h3
-                            dangerouslySetInnerHTML={{ __html: bd.heading }}
+                            className="sec-head medium text-center sm-head"
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                corporate?.readytotransformyourteamsection?.heading ||
+                                "",
+                            }}
                           />
+                          <p
+                            className="sec-head medium-20"
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                corporate?.readytotransformyourteamsection
+                                  ?.description || "",
+                            }}
+                          ></p>
                         </div>
                       </div>
-                      </Link>
-                        )
-                      }
-                      {
-                       bd?.heading == "Escape Rooms" && (
-                        <Link href="/escape-rooms">
-                        <div className="location-card">
-                          <div className="location-card-img">
-                            {bd.image && (
+                    </div>
+                  </section>
+                )}
+              {/* <HomeContact noTextBottom={false} privacyLine={false} noImage={true} /> */}
+              <BirthdayGetInTouch
+                className="pt-80 pb-0"
+                noImage={true}
+                privacyLine={true}
+                atOptions={atOptions}
+              />
+
+              <Image src={corpIllus} alt="illus3" className="illus-image" />
+            </div>
+            <div className="black-gr-div">
+              {corporate && corporate?.whychooseussection && (
+                <section className="whychoose sec-padding-top">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        <h3
+                          className="sec-head medium sm-head"
+                          dangerouslySetInnerHTML={{
+                            __html: corporate?.whychooseussection?.heading,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="why-choose-grid grid-5">
+                      {corporate?.whychooseussection?.images &&
+                        corporate?.whychooseussection?.images?.length > 0 &&
+                        corporate?.whychooseussection?.images?.map((item, index) => (
+                          <div className="why-card" key={index}>
+                            {item.image && (
                               <Image
-                                src={bd.image}
-                                width={800}
-                                height={800}
-                                alt={bd.heading}
+                                src={item.image}
+                                width={100}
+                                height={100}
+                                alt={item.heading}
                               />
                             )}
+                            <h3 dangerouslySetInnerHTML={{ __html: item.heading }} />
                           </div>
-                          <div className="location-card-content">
-                            <h3
-                              dangerouslySetInnerHTML={{ __html: bd.heading }}
-                            />
-                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {corporate && corporate?.imagesection && (
+                <>
+                  <section className="section-padding pb-0">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-lg-12 text-center">
+                          <h3
+                            className="sec-head sm-head medium"
+                            dangerouslySetInnerHTML={{
+                              __html: "<span>Sneak peek </span>into Our Programs",
+                            }}
+                          ></h3>
                         </div>
-                        </Link>
-                          ) 
-                      }
+                      </div>
+                      <div className="row">
+                        <div className="photographic-styled-image-container">
+                          {corporate?.imagesection?.image1 && (
+                            <PhotographicStyledImage
+                              image={corporate?.imagesection?.image1}
+                            />
+                          )}
+                          {corporate?.imagesection?.image2 && (
+                            <PhotographicStyledImage
+                              image={corporate?.imagesection?.image2}
+                            />
+                          )}
+                          {corporate?.imagesection?.image3 && (
+                            <PhotographicStyledImage
+                              image={corporate?.imagesection?.image3}
+                            />
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  ))}
-              </div>
-            </div>
-          </section>
-        )}
-        {corporate &&
-          corporate?.readytotransformyourteamsection &&
-          corporate?.readytotransformyourteamsection?.heading && (
-            <section className="">
-              <div className="container">
-                <div className="row">
-                  <div className="col-lg-12 ">
-                    <h3
-                      className="sec-head medium text-center sm-head"
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          corporate?.readytotransformyourteamsection?.heading ||
-                          "",
-                      }}
-                    />
-                    <p
-                      className="sec-head medium-20"
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          corporate?.readytotransformyourteamsection
-                            ?.description || "",
-                      }}
-                    ></p>
-                  </div>
-                </div>
-              </div>
-            </section>
-          )}
-        {/* <HomeContact noTextBottom={false} privacyLine={false} noImage={true} /> */}
-        <BirthdayGetInTouch
-         className="pt-80 pb-0"
-          noImage={true}
-          privacyLine={true}
-          atOptions={atOptions}
-        />
+                  </section>
+                </>
+              )}
 
-        <Image src={corpIllus} alt="illus3" className="illus-image" />
-      </div>
-      <div className="black-gr-div">
-        {corporate && corporate?.whychooseussection && (
-          <section className="whychoose sec-padding-top">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h3
-                    className="sec-head medium sm-head"
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.whychooseussection?.heading,
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="why-choose-grid grid-5">
-                {corporate?.whychooseussection?.images &&
-                  corporate?.whychooseussection?.images?.length > 0 &&
-                  corporate?.whychooseussection?.images?.map((item, index) => (
-                    <div className="why-card" key={index}>
-                      {item.image && (
-                        <Image
-                          src={item.image}
-                          width={100}
-                          height={100}
-                          alt={item.heading}
+              {corporate && corporate?.videotestimonials && (
+                <Videotestimonials className="pb-0" data={corporate?.videotestimonials} />
+              )}
+
+              <Image src={peopleIllus} className={"illus-image"} alt="bday" />
+            </div>
+            <div className="black-gr-div">
+              {corporate && corporate?.faqsection && (
+                <FaqSection className="sec-padding-top" data={corporate?.faqsection} />
+              )}
+
+              <VisitLocations className="section-padding corp-retreat"
+                title="Select Your <span>Preferred Location</span>"
+                desc="Still considering hosting an experience at one of Breakout® experiential centers?"
+                isVirtual={false}
+              />
+
+              {corporate && corporate?.footersection && (
+                <section className="">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-lg-12 text-center">
+                        <h3
+                          className="sec-head medium sm-head"
+                          dangerouslySetInnerHTML={{
+                            __html: corporate?.footersection?.heading,
+                          }}
                         />
-                      )}
-                      <h3 dangerouslySetInnerHTML={{ __html: item.heading }} />
+                        <div
+                          className="para medium-20 mt-3"
+                          dangerouslySetInnerHTML={{
+                            __html: corporate?.footersection?.content,
+                          }}
+                        />
+                      </div>
                     </div>
-                  ))}
-              </div>
+                  </div>
+                </section>
+              )}
+              <Image src={trophyIllus} className={"illus-image"} alt="bday" />
             </div>
-          </section>
-        )}
-
-        {corporate && corporate?.imagesection && (
-          <>
-            <section className="section-padding pb-0">
-              <div className="container">
-                <div className="row">
-                  <div className="col-lg-12 text-center">
-                    <h3
-                      className="sec-head sm-head medium"
-                      dangerouslySetInnerHTML={{
-                        __html: "<span>Sneak peek </span>into Our Programs",
-                      }}
-                    ></h3>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="photographic-styled-image-container">
-                    {corporate?.imagesection?.image1 && (
-                      <PhotographicStyledImage
-                        image={corporate?.imagesection?.image1}
-                      />
-                    )}
-                    {corporate?.imagesection?.image2 && (
-                      <PhotographicStyledImage
-                        image={corporate?.imagesection?.image2}
-                      />
-                    )}
-                    {corporate?.imagesection?.image3 && (
-                      <PhotographicStyledImage
-                        image={corporate?.imagesection?.image3}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </section>
           </>
-        )}
+        )
+      }
 
-        {corporate && corporate?.videotestimonials && (
-          <Videotestimonials className="pb-0" data={corporate?.videotestimonials} />
-        )}
-
-        <Image src={peopleIllus} className={"illus-image"} alt="bday" />
-      </div>
-      <div className="black-gr-div">
-        {corporate && corporate?.faqsection && (
-          <FaqSection className="sec-padding-top" data={corporate?.faqsection} />
-        )}
-
-        <VisitLocations className="section-padding corp-retreat"
-          title="Select Your <span>Preferred Location</span>"
-          desc="Still considering hosting an experience at one of Breakout® experiential centers?"
-          isVirtual={false}
-        />
-
-        {corporate && corporate?.footersection && (
-          <section className="">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12 text-center">
-                  <h3
-                    className="sec-head medium sm-head"
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.footersection?.heading,
-                    }}
-                  />
-                  <div
-                    className="para medium-20 mt-3"
-                    dangerouslySetInnerHTML={{
-                      __html: corporate?.footersection?.content,
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-        <Image src={trophyIllus} className={"illus-image"} alt="bday" />
-      </div>
     </>
   );
 };

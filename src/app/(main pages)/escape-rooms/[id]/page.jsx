@@ -23,6 +23,7 @@ import { useParams } from "next/navigation";
 
 const page = () => {
   const { id } = useParams();
+  console.log("object_id",id)
   const [escapeRooms, setEscapeRooms] = useState(null);
   const [room, setRoom] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -115,7 +116,8 @@ const page = () => {
               <Image src={hmIllus} className="illus-image" alt="hm-text-bg" />
             </div>
             <div className="black-gr-div">
-              <ReserveASlot  className="sec-padding-top" room={room?.pricingsection} />
+              <ReserveASlot  className="sec-padding-top" 
+              page_name= {id == "prison-break"} room={room?.pricingsection} />
               {room?.imagesection && (
                 <GlobalReviewWidget
                   data={room?.imagesection}

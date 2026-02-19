@@ -21,6 +21,7 @@ export const GlobalProvider = ({ children }) => {
   const [blogs, setBlogs] = useState(null);
   const [newsLogo, setNewsLogo] = useState(null);
   const [thirdPartyLocations, setThirdPartyLocations] = useState(null);
+  console.log("thirdPartyLocations_thirdPartyLocations",thirdPartyLocations)
   const [thirdPartyGames, setThirdPartyGames] = useState(null);
   const [availableSlots, setAvailableSlots] = useState(null);
   const [venueCategories, setVenueCategories] = useState(null);
@@ -180,8 +181,8 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  const fetchAvailableSlots = async (locId, gameIds, startDate, endDate) => {
-    if (!locId || !gameIds || !startDate || !endDate) {
+  const fetchAvailableSlots = async (locId, gameIds, startDate) => {
+    if (!locId || !gameIds || !startDate) {
       setErrors((prev) => ({ ...prev, availableSlots: "Invalid parameters" }));
       return;
     }
@@ -190,8 +191,8 @@ export const GlobalProvider = ({ children }) => {
       const response = await axios.post(`/api/slots/`, {
         locationId: locId,
         gameIds: gameIds,
-        startDate: startDate,
-        endDate: endDate,
+        startDate: startDate
+        // endDate: endDate,
       });
       setAvailableSlots(response.data);
       setErrors((prev) => ({ ...prev, availableSlots: null }));

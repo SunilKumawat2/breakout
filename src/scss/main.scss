@@ -1806,7 +1806,7 @@ a {
 }
 .package-yellow-text {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 16px;
 }
 .package-header {
@@ -3629,12 +3629,12 @@ textarea:hover {
 
 .package-row-cell:first-child,
 .package-header-cell:first-child {
-  width: 25%;
+  width: 100%;
 }
 
 .package-row-cell,
 .package-header-cell {
-  width: 16%;
+  width: 100%;
   padding: 24px 16px;
 }
 
