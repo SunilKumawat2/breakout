@@ -109,36 +109,47 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
     fetchSlots();
   }, [selectedLocation, selectedGame, selectedStartDate]);
 
-  const filteredLocations = page_name
-    ? thirdPartyLocations?.filter((loc) =>
+  const safePageName =
+  typeof page_name === "string"
+    ? page_name
+    : Array.isArray(page_name)
+    ? page_name[0]
+    : "";
+
+const formattedPageName = safePageName
+  ? safePageName.replace(/-/g, " ").toLowerCase()
+  : "";
+
+  const filteredLocations = formattedPageName
+  ? thirdPartyLocations?.filter((loc) =>
       loc.locationName
-        .toLowerCase()
-        .includes(page_name.replace("-", " "))
+        ?.toLowerCase()
+        .includes(formattedPageName)
     )
-    : thirdPartyLocations;
+  : thirdPartyLocations;
 
 
 
   useEffect(() => {
-    if (!page_name || !thirdPartyLocations?.length) return;
-
+    if (!formattedPageName || !thirdPartyLocations?.length) return;
+  
     const matchedLocation = thirdPartyLocations.find((loc) =>
       loc.locationName
-        .toLowerCase()
-        .includes(page_name.replace("-", " "))
+        ?.toLowerCase()
+        .includes(formattedPageName)
     );
-
+  
     if (matchedLocation) {
       const option = {
         value: matchedLocation.locationId,
         label: matchedLocation.locationName,
       };
+  
       setSelectedLocationOption(option);
       setSelectedLocation(matchedLocation.locationId);
       fetchThirdPartyGames(matchedLocation.locationId);
     }
-  }, [page_name, thirdPartyLocations]);
-
+  }, [formattedPageName, thirdPartyLocations]);
 
 
 

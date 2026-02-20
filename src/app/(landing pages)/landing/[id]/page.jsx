@@ -75,7 +75,7 @@ const boxItems = [
 
 // Next.js 13/14/15 SSR page
 const Page = async ({ params }) => {
-  const { id } = params;
+  const { id } = await params;
   const { rooms, brands } = await getData(id);
   console.log("rooms?.contentsection?.content",rooms)
   const escapeRoomsExtreme =
@@ -208,7 +208,7 @@ const Page = async ({ params }) => {
                   </div>
                   {escapeRoomsExtreme?.map((room, index) => (
                     <div className="col-lg-4 col-12" 
-                    onClick={()=> sessionStorage.setItem("scrollToEscapeRooms",true)} key={index}>
+                    key={index}>
                       <EscapeRoomCard room={room} />
                     </div>
                   ))}
