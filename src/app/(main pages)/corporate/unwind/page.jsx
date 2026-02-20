@@ -82,12 +82,19 @@ import TrustedSection from "@/components/TrustedSection";
 import PhotographicStyledImage from "@/components/PhotographicStyledImage";
 import WordByWordAnimation from "@/helpers/WordByWordAnimation";
 import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 const page = () => {
   const [corporate, setCorporate] = useState([]);
   console.log("corporate_corporate_corporate", corporate)
   const [brandLogos, setBrandLogos] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { gettncs } = useGlobalContext();
+  const corporateTnc = gettncs?.find(
+    (item) => item.reference == "corporate"
+  );
+  
+  console.log("Birthday T&C:", corporateTnc);
 
   // useEffect(() => {
   //   const fetchCorporate = async () => {
@@ -275,7 +282,7 @@ const page = () => {
                 <AddOnsSlider className="pt-80" data={corporate?.addonssection} />
               )}
               {corporate && corporate?.packagesection && (
-                <Packages className="pb-0" packages={corporate?.packagesection} />
+                <Packages className="pb-0" packages={corporate?.packagesection} data={corporateTnc} category="corporate"/>
               )}
               {/* <BreakoutXForm className="pb-0"/> */}
               <div id="breakout-form">

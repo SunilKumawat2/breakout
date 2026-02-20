@@ -9,11 +9,12 @@ import { CommonModal } from "@/components/CommonModal";
 import { useRouter } from "next/navigation";
 
 
-const Packages = ({ packages, hasEventImg = false, category = "", className = "" }) => {
+const Packages = ({ packages, hasEventImg = false, category = "", data = {}, className = "" }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [modalType, setModalType] = useState("both");
+  console.log("data_data_data", data)
   const renderCol = (col) => {
     // Check for special Yes:n or No:n syntax
     let match = /^(\s*(Yes|No)\s*):\s*(\d+)\s*$/i.exec(col);
@@ -134,27 +135,54 @@ const Packages = ({ packages, hasEventImg = false, category = "", className = ""
         </div>
         <div className="row justify-content-center">
           <div className="col-package-container">
-{/* <--------- New Package Conatainer-----------> */}
-          <div className="package-container mobile-only">
-            {packages?.pricing?.columns?.length > 0 && (
-              <div
-                className={`package-header mt-0`}
-                style={{ gridTemplateColumns: gridCol }}
-              >
-                <div className="package-header-cell w-100 d-block">
-                  {hasEventImg ? (
-                    <Image src={keyImg} width={80} height={80} alt={"key"} />
-                  ) : (
-                    <h3>Event Flow</h3>
-                  )}
-                </div>
+            {/* <--------- New Package Conatainer-----------> */}
+            <div className="package-container mobile-only">
+              {packages?.pricing?.columns?.length > 0 && (
+                <div
+                  className={`package-header mt-0`}
+                  style={{ gridTemplateColumns: gridCol }}
+                >
+                  <div className="package-header-cell w-100 d-block">
+                    {hasEventImg ? (
+                      <Image src={keyImg} width={80} height={80} alt={"key"} />
+                    ) : (
+                      <h3>Event Flow</h3>
+                    )}
+                  </div>
 
-              </div>
-            )}
-            {packages?.pricing?.rows?.length > 0 && (
-              <div className="package-body">
-                {packages?.pricing?.rows?.map((row, index) => {
-                  if (row?.feature == "buttons") {
+                </div>
+              )}
+              {packages?.pricing?.rows?.length > 0 && (
+                <div className="package-body">
+                  {packages?.pricing?.rows?.map((row, index) => {
+                    if (row?.feature == "buttons") {
+                      return (
+                        <div
+                          className="package-row"
+                          key={index}
+                          style={{ gridTemplateColumns: gridCol }}
+                        >
+                          <div className="package-row-cell w-100 d-block">
+                            <h3></h3>
+                          </div>
+                          {row?.col0 &&
+                            row?.col0 != "" &&
+                            renderButton(row?.col0)}
+                          {row?.col1 &&
+                            row?.col1 != "" &&
+                            renderButton(row?.col1)}
+                          {row?.col2 &&
+                            row?.col2 != "" &&
+                            renderButton(row?.col2)}
+                          {row?.col3 &&
+                            row?.col3 != "" &&
+                            renderButton(row?.col3)}
+                          {row?.col4 &&
+                            row?.col4 != "" &&
+                            renderButton(row?.col4)}
+                        </div>
+                      );
+                    }
                     return (
                       <div
                         className="package-row"
@@ -162,44 +190,17 @@ const Packages = ({ packages, hasEventImg = false, category = "", className = ""
                         style={{ gridTemplateColumns: gridCol }}
                       >
                         <div className="package-row-cell w-100 d-block">
-                          <h3></h3>
+                          <h3
+                            dangerouslySetInnerHTML={{ __html: row?.feature }}
+                          ></h3>
                         </div>
-                        {row?.col0 &&
-                          row?.col0 != "" &&
-                          renderButton(row?.col0)}
-                        {row?.col1 &&
-                          row?.col1 != "" &&
-                          renderButton(row?.col1)}
-                        {row?.col2 &&
-                          row?.col2 != "" &&
-                          renderButton(row?.col2)}
-                        {row?.col3 &&
-                          row?.col3 != "" &&
-                          renderButton(row?.col3)}
-                        {row?.col4 &&
-                          row?.col4 != "" &&
-                          renderButton(row?.col4)}
                       </div>
-                    );
-                  }
-                  return (
-                    <div
-                      className="package-row"
-                      key={index}
-                      style={{ gridTemplateColumns: gridCol }}
-                    >
-                      <div className="package-row-cell w-100 d-block">
-                        <h3
-                          dangerouslySetInnerHTML={{ __html: row?.feature }}
-                        ></h3>
-                      </div>
-                    </div>
 
-                  );
-                })}
-              </div>
-            )}
-          </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
             <div className="package-container">
               {packages?.pricing?.columns?.length > 0 && (
                 <div
@@ -311,63 +312,80 @@ const Packages = ({ packages, hasEventImg = false, category = "", className = ""
 
               )}
               {
-                (category == "birthday" || category == "")
+                (category == "birthday" || category == "corporate") && (
+                  <Link
+                    href="#"
+                    className="main-btn dark-btn"
+                    onClick={() => setShow1(true)}
+                  >
+                    <span>T&C Apply</span>
+                  </Link>
+                )
               }
-              <Link
-                href="#"
-                className="main-btn dark-btn"
-                onClick={() => setShow1(true)}
-              >
-                <span>T&C Apply</span>
-              </Link>
+
             </div>
           </div>
-
-
-
         </div>
       </div>
+      {
+        data && Object.keys(data)?.length > 0 ? (
+          <CommonModal show={show1} handleClose={() => setShow1(false)}>
+            <div className="esc-modal-content">
+              <h3 className="sec-head h3 yellow-text">{data?.title}</h3>
+              <p className="para mt-4 sm" dangerouslySetInnerHTML={{
+                __html: data?.content
+              }} />
 
-      <CommonModal show={show1} handleClose={() => setShow1(false)}>
-        <div className="esc-modal-content">
-          <h3 className="sec-head h3 yellow-text">Terms and Conditions</h3>
-          <p className="para mt-4 sm">
-            <strong>1. Booking Confirmation Requirement:</strong> To ensure
-            entry to your escape room experience, a booking confirmation email
-            is mandatory. If you have not received this email after payment,
-            please contact our support team for assistance. Without the
-            confirmation, entry cannot be guaranteed, but we will do our best to
-            accommodate you based on availability or issue a refund if
-            necessary.
-            <br />
-            <br />
-            <strong>2. Arrival Time:</strong> All team members must arrive at
-            least 20 minutes before the scheduled slot time to allow for form
-            filling, considering the 3 Ps: Parking time, Peeing time, and the
-            Painful Bangalore traffic.  <br />
-            <br />
-            <strong>3. Liability Form:</strong> A liability form must be
-            completed at the facility. Incomplete forms will result in denial of
-            entry by the Game Master, except for individuals aged 13 years and
-            below.  <br />
-            <br />
-            <strong>4. Game Time Reduction:</strong> If you are late for the
-            experience, your game time will be cut short accordingly.  <br />
-            <br />
-            <strong>5. Entry Restriction:</strong> If you arrive after your slot
-            timing, entry will be restricted to prevent delays for subsequent
-            teams. However, if you arrive within 10 minutes of your slot time,
-            we will make every effort to accommodate you.  <br />
-            <br />
-            <strong>6. No Cancellation and Refund Policy:</strong> Please note
-            that we have a strict no-cancellation and no-refund policy for
-            bookings.
-          </p>
-          {/* <Link href={"#"} className="main-btn">
-            <span>Book Now</span>
-          </Link> */}
-        </div>
-      </CommonModal>
+
+              {/* <Link href={"#"} className="main-btn">
+        <span>Book Now</span>
+      </Link> */}
+            </div>
+          </CommonModal>
+        ) : (
+          <CommonModal show={show1} handleClose={() => setShow1(false)}>
+            <div className="esc-modal-content">
+              <h3 className="sec-head h3 yellow-text">Terms and Conditions</h3>
+              <p className="para mt-4 sm">
+                <strong>1. Booking Confirmation Requirement:</strong> To ensure
+                entry to your escape room experience, a booking confirmation email
+                is mandatory. If you have not received this email after payment,
+                please contact our support team for assistance. Without the
+                confirmation, entry cannot be guaranteed, but we will do our best to
+                accommodate you based on availability or issue a refund if
+                necessary.
+                <br />
+                <br />
+                <strong>2. Arrival Time:</strong> All team members must arrive at
+                least 20 minutes before the scheduled slot time to allow for form
+                filling, considering the 3 Ps: Parking time, Peeing time, and the
+                Painful Bangalore traffic.  <br />
+                <br />
+                <strong>3. Liability Form:</strong> A liability form must be
+                completed at the facility. Incomplete forms will result in denial of
+                entry by the Game Master, except for individuals aged 13 years and
+                below.  <br />
+                <br />
+                <strong>4. Game Time Reduction:</strong> If you are late for the
+                experience, your game time will be cut short accordingly.  <br />
+                <br />
+                <strong>5. Entry Restriction:</strong> If you arrive after your slot
+                timing, entry will be restricted to prevent delays for subsequent
+                teams. However, if you arrive within 10 minutes of your slot time,
+                we will make every effort to accommodate you.  <br />
+                <br />
+                <strong>6. No Cancellation and Refund Policy:</strong> Please note
+                that we have a strict no-cancellation and no-refund policy for
+                bookings.
+              </p>
+              {/* <Link href={"#"} className="main-btn">
+        <span>Book Now</span>
+      </Link> */}
+            </div>
+          </CommonModal>
+        )
+      }
+
 
       <CommonModal show={show} handleClose={() => setShow(false)}>
         <div className="esc-modal-content">

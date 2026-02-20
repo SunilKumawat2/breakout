@@ -71,6 +71,8 @@ import PhotographicStyledImage from "@/components/PhotographicStyledImage";
 import PartyGetInTouch from "@/components/PartyGetInTouch";
 import WordByWordAnimation from "@/helpers/WordByWordAnimation";
 import { useRouter, usePathname } from "next/navigation";
+import { useGlobalContext } from "@/context/GlobalContext";
+import test_api from "@/helpers/api/test_api";
 
 const page = () => {
   const { id } = useParams();
@@ -79,6 +81,16 @@ const page = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
+  const { gettncs } = useGlobalContext();
+
+  const birthdayTnc = gettncs?.find(
+    (item) => item.reference == "birthdays"
+  );
+  
+  console.log("Birthday T&C:", birthdayTnc);
+
+ 
+
 
   useEffect(() => {
     if (!id) return; // prevent API call if id not available
@@ -298,7 +310,7 @@ const page = () => {
               {party &&
                 party?.packagesection &&
                 party?.packagesection?.pricing?.columns?.length > 0 && (
-                  <Packages className="pb-0" packages={party?.packagesection} category="birthday" />
+                  <Packages className="pb-0" packages={party?.packagesection} category="birthday" data={birthdayTnc}/>
                 )}
               {party && party?.googlereviews && (
                 <div className="pt-80">

@@ -20,6 +20,7 @@ import GlobalReviewWidget from "@/components/GlobalReviewWidget";
 import api from "@/app/helpers/api";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 const page = () => {
   const { id } = useParams();
@@ -27,6 +28,13 @@ const page = () => {
   const [escapeRooms, setEscapeRooms] = useState(null);
   const [room, setRoom] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { gettncs } = useGlobalContext();
+
+  const escaperoomsTnc = gettncs?.find(
+    (item) => item.reference == "escaperooms"
+  );
+  
+  console.log("Birthday T&C:", escaperoomsTnc);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,7 +125,7 @@ const page = () => {
             </div>
             <div className="black-gr-div">
               <ReserveASlot  className="sec-padding-top" 
-              page_name= {id == "prison-break"} room={room?.pricingsection} />
+              page_name= {id == "prison-break"} room={room?.pricingsection} data={escaperoomsTnc}/>
               {room?.imagesection && (
                 <GlobalReviewWidget
                   data={room?.imagesection}

@@ -32,9 +32,17 @@ import GReviewSlider from "@/components/GReviewSlider";
 import Videotestimonials from "@/components/Videotestimonials";
 import FaqSection from "@/components/FaqSection";
 import HmTextlocationkoramangala from "@/components/home/HmTextSecLocationkoramangala";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 const page = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
+  const { gettncs } = useGlobalContext();
+
+  const escaperoomsTnc = gettncs?.find(
+    (item) => item.reference == "escaperooms"
+  );
+  
+  console.log("Birthday T&C:", escaperoomsTnc);
   console.log("sjdfhjsghdfjsdf", openFaqIndex)
   const banner = {
     title:
@@ -359,6 +367,7 @@ console.log("location_slug",id)
                 page_name = {id}
                   room={location?.pricingsection}
                   onOpenFaq={(index) => setOpenFaqIndex(index)}
+                  data={escaperoomsTnc}
                 />
 
               )}

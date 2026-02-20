@@ -14,7 +14,7 @@ import arrowPrev from "@/images/chev-left.svg";
 import arrowNext from "@/images/chev-right.svg";
 import calenderIcon from "@/images/calendar-btn.svg";
 
-const ReserveASlot = ({ room, page_name, onOpenFaq, className = "", }) => {
+const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }) => {
   const {
     availableSlots,
     fetchAvailableSlots,
@@ -26,7 +26,7 @@ const ReserveASlot = ({ room, page_name, onOpenFaq, className = "", }) => {
     thirdPartyGames,
     bookASlot,
   } = useGlobalContext();
-  console.log("sdkjfhksdjfhdjkshfksdjhfksjdf", page_name)
+  console.log("sdkjfhksdjfhdjkshfksdjhfksjdf_snjkdfhksjdfsjdk", data)
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
@@ -110,24 +110,24 @@ const ReserveASlot = ({ room, page_name, onOpenFaq, className = "", }) => {
   }, [selectedLocation, selectedGame, selectedStartDate]);
 
   const filteredLocations = page_name
-  ? thirdPartyLocations?.filter((loc) =>
+    ? thirdPartyLocations?.filter((loc) =>
       loc.locationName
         .toLowerCase()
         .includes(page_name.replace("-", " "))
     )
-  : thirdPartyLocations;
+    : thirdPartyLocations;
 
 
 
   useEffect(() => {
     if (!page_name || !thirdPartyLocations?.length) return;
-  
+
     const matchedLocation = thirdPartyLocations.find((loc) =>
       loc.locationName
         .toLowerCase()
         .includes(page_name.replace("-", " "))
     );
-  
+
     if (matchedLocation) {
       const option = {
         value: matchedLocation.locationId,
@@ -138,8 +138,8 @@ const ReserveASlot = ({ room, page_name, onOpenFaq, className = "", }) => {
       fetchThirdPartyGames(matchedLocation.locationId);
     }
   }, [page_name, thirdPartyLocations]);
-  
-  
+
+
 
 
 
@@ -272,7 +272,7 @@ const ReserveASlot = ({ room, page_name, onOpenFaq, className = "", }) => {
       customerPhone: trimmedPhone,
       slotId: selectedSlotTime?.slotId,
       locationId: selectedLocation,
-      gameId: selectedGame?.[0], 
+      gameId: selectedGame?.[0],
       // startDate: selectedDate,
     };
 
@@ -358,46 +358,65 @@ const ReserveASlot = ({ room, page_name, onOpenFaq, className = "", }) => {
 
   return (
     <section className={`section-padding ${className}`} >
-      <CommonModal show={show} handleClose={() => setShow(false)}>
-        <div className="esc-modal-content">
-          <h3 className="sec-head h3 yellow-text">Terms and Conditions</h3>
-          <p className="para mt-4 sm">
-            <strong>1. Booking Confirmation Requirement:</strong> To ensure
-            entry to your escape room experience, a booking confirmation email
-            is mandatory. If you have not received this email after payment,
-            please contact our support team for assistance. Without the
-            confirmation, entry cannot be guaranteed, but we will do our best to
-            accommodate you based on availability or issue a refund if
-            necessary.
-            <br />
-            <br />
-            <strong>2. Arrival Time:</strong> All team members must arrive at
-            least 20 minutes before the scheduled slot time to allow for form
-            filling, considering the 3 Ps: Parking time, Peeing time, and the
-            Painful Bangalore traffic.  <br />
-            <br />
-            <strong>3. Liability Form:</strong> A liability form must be
-            completed at the facility. Incomplete forms will result in denial of
-            entry by the Game Master, except for individuals aged 13 years and
-            below.  <br />
-            <br />
-            <strong>4. Game Time Reduction:</strong> If you are late for the
-            experience, your game time will be cut short accordingly.  <br />
-            <br />
-            <strong>5. Entry Restriction:</strong> If you arrive after your slot
-            timing, entry will be restricted to prevent delays for subsequent
-            teams. However, if you arrive within 10 minutes of your slot time,
-            we will make every effort to accommodate you.  <br />
-            <br />
-            <strong>6. No Cancellation and Refund Policy:</strong> Please note
-            that we have a strict no-cancellation and no-refund policy for
-            bookings.
-          </p>
-          {/* <Link href={"#"} className="main-btn">
-            <span>Book Now</span>
-          </Link> */}
-        </div>
-      </CommonModal>
+      {
+        data && Object.keys(data)?.length > 0 ? (
+          <CommonModal show={show} handleClose={() => setShow(false)}>
+            <div className="esc-modal-content">
+              <h3 className="sec-head h3 yellow-text">{data?.title}</h3>
+              <p className="para mt-4 sm" dangerouslySetInnerHTML={{
+                __html: data?.content
+              }} />
+
+
+              {/* <Link href={"#"} className="main-btn">
+        <span>Book Now</span>
+      </Link> */}
+            </div>
+          </CommonModal>
+        ) : (
+          <CommonModal show={show} handleClose={() => setShow(false)}>
+            <div className="esc-modal-content">
+              <h3 className="sec-head h3 yellow-text">Terms and Conditions</h3>
+              <p className="para mt-4 sm">
+                <strong>1. Booking Confirmation Requirement:</strong> To ensure
+                entry to your escape room experience, a booking confirmation email
+                is mandatory. If you have not received this email after payment,
+                please contact our support team for assistance. Without the
+                confirmation, entry cannot be guaranteed, but we will do our best to
+                accommodate you based on availability or issue a refund if
+                necessary.
+                <br />
+                <br />
+                <strong>2. Arrival Time:</strong> All team members must arrive at
+                least 20 minutes before the scheduled slot time to allow for form
+                filling, considering the 3 Ps: Parking time, Peeing time, and the
+                Painful Bangalore traffic.  <br />
+                <br />
+                <strong>3. Liability Form:</strong> A liability form must be
+                completed at the facility. Incomplete forms will result in denial of
+                entry by the Game Master, except for individuals aged 13 years and
+                below.  <br />
+                <br />
+                <strong>4. Game Time Reduction:</strong> If you are late for the
+                experience, your game time will be cut short accordingly.  <br />
+                <br />
+                <strong>5. Entry Restriction:</strong> If you arrive after your slot
+                timing, entry will be restricted to prevent delays for subsequent
+                teams. However, if you arrive within 10 minutes of your slot time,
+                we will make every effort to accommodate you.  <br />
+                <br />
+                <strong>6. No Cancellation and Refund Policy:</strong> Please note
+                that we have a strict no-cancellation and no-refund policy for
+                bookings.
+              </p>
+              {/* <Link href={"#"} className="main-btn">
+              <span>Book Now</span>
+            </Link> */}
+            </div>
+          </CommonModal>
+        )
+      }
+      
       <div className="container">
         <div className="row">
           <div className="col-lg-12 col-12">

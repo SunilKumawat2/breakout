@@ -1,3 +1,5 @@
+"use client"
+import { useGlobalContext } from "@/context/GlobalContext";
 import tsIllus from "@/images/ts-illus.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,6 +50,8 @@ const contactData = [
 ];
 
 const page = () => {
+  const { getcontact } = useGlobalContext();
+  console.log("getcareer T&C:", getcontact);
   return (
     <div className="pt-80">
       <div className="black-gr-div">
@@ -55,10 +59,10 @@ const page = () => {
           <div className="row">
             <div className="col-lg-12">
               <h1 className="sec-head medium sm-head text-center yellow-text">
-                General Enquiries
+              {getcontact?.title}
               </h1>
               <div className="main-con para">
-                <ol className="p-0 m-0">
+                {/* <ol className="p-0 m-0">
                   {contactData.map((item, idx) => (
                     <li key={idx} style={{ marginBottom: "1.5rem" }}>
                       <span>
@@ -73,7 +77,10 @@ const page = () => {
                       </p>
                     </li>
                   ))}
-                </ol>
+                </ol> */}
+                <p className="para mt-4 sm" dangerouslySetInnerHTML={{
+                __html: getcontact?.content
+            }} />
               </div>
             </div>
           </div>

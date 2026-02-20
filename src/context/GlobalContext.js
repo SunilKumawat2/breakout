@@ -21,11 +21,13 @@ export const GlobalProvider = ({ children }) => {
   const [blogs, setBlogs] = useState(null);
   const [newsLogo, setNewsLogo] = useState(null);
   const [thirdPartyLocations, setThirdPartyLocations] = useState(null);
-  console.log("thirdPartyLocations_thirdPartyLocations",thirdPartyLocations)
   const [thirdPartyGames, setThirdPartyGames] = useState(null);
   const [availableSlots, setAvailableSlots] = useState(null);
   const [venueCategories, setVenueCategories] = useState(null);
   const [siteSettings, setSiteSettings] = useState(null);
+  const [gettncs, setGettnc] = useState(null);
+  const [getcareer, setCareer] = useState(null);
+  const [getcontact, setContact] = useState(null);
   const [finderQuizValues, setFinderQuizValues] = useState({
     step1: {
       value: null,
@@ -94,6 +96,9 @@ export const GlobalProvider = ({ children }) => {
     thirdPartyGames: true,
     venueCategories: true,
     siteSettings: true,
+    gettncs:true,
+    getcareer:true,
+    getcontact:true
   });
 
   // Error states
@@ -105,6 +110,9 @@ export const GlobalProvider = ({ children }) => {
     thirdPartyGames: null,
     venueCategories: null,
     siteSettings: null,
+    gettncs:null,
+    getcareer:null,
+    getcontact:null
   });
 
   const updateFinderQuizValue = (step, value, error) => {
@@ -257,8 +265,57 @@ export const GlobalProvider = ({ children }) => {
       setLoading((prev) => ({ ...prev, siteSettings: false }));
     }
   };
-  
 
+  const fetchgettnc = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, gettncs: true }));
+  
+      const response = await test_api.get("/gettnc");
+      console.log("jskdfjsdhfjsgfgsdfsdj",response)
+      setGettnc(response.data.data);
+  
+      setErrors((prev) => ({ ...prev, gettncs: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, gettncs: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, gettncs: false }));
+    }
+  };
+  
+  
+  const fetchcareer = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, getcareer: true }));
+  
+      const response = await test_api.get("/career");
+      console.log("jskdfjsdhfjsgfgsdfsdj",response)
+      setCareer(response.data.data);
+  
+      setErrors((prev) => ({ ...prev, getcareer: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, getcareer: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, getcareer: false }));
+    }
+  };
+
+  const fetchContact = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, getcontact: true }));
+  
+      const response = await test_api.get("/contact");
+      console.log("jskdfjsdhfjsgfgsdfsdj",response)
+      setContact(response.data.data);
+  
+      setErrors((prev) => ({ ...prev, getcontact: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, getcontact: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, getcontact: false }));
+    }
+  };
+  
+  
 
   // Initialize data on component mount
   useEffect(() => {
@@ -268,6 +325,9 @@ export const GlobalProvider = ({ children }) => {
     fetchThirdPartyLocations();
     fetchVenueCategories();
     fetchSiteSettings();
+    fetchgettnc()
+    fetchcareer()
+    fetchContact()
   }, []);
 
   // Refresh functions for manual data updates
@@ -277,7 +337,10 @@ export const GlobalProvider = ({ children }) => {
     newsLogo: fetchNewsLogo,
     thirdPartyLocations: fetchThirdPartyLocations,
     venueCategories: fetchVenueCategories,
-    siteSettings:fetchSiteSettings
+    siteSettings:fetchSiteSettings,
+    gettncs:fetchgettnc,
+    getcareer:fetchcareer,
+    getcontact:fetchContact
   };
 
   const value = {
@@ -286,6 +349,9 @@ export const GlobalProvider = ({ children }) => {
     blogs,
     newsLogo,
     siteSettings,
+    gettncs,
+    getcareer,
+    getcontact,
     thirdPartyLocations,
     thirdPartyGames,
     availableSlots,
@@ -315,7 +381,10 @@ export const GlobalProvider = ({ children }) => {
     fetchVenueCategories,
     fetchThirdPartyGames,
     fetchAvailableSlots,
-    fetchSiteSettings
+    fetchSiteSettings,
+    fetchgettnc,
+    fetchcareer,
+    fetchContact
   };
 
   return (
