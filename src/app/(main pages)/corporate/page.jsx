@@ -39,6 +39,7 @@ export default function Home() {
   const [data, setData] = useState(null);
   const [cards, setCards] = useState([]);
   const [brandLogos, setBrandLogos] = useState(null);
+  console.log("skldfksdfhhsdfkhdsk_brandLogos",brandLogos)
   const [showLocation, setShowLocation] = useState(false);
   const [loading, setLoading] = useState(true);
   const locationRef = useRef(null);
@@ -90,6 +91,7 @@ export default function Home() {
       try {
         const response = await api.get("logos/brands");
         setBrandLogos(response?.data?.data);
+        console.log("skldfjhsjkdfhskhfshf",response?.data?.data)
       } catch (error) {
         console.error("Error fetching brand logos:", error);
       }
@@ -297,7 +299,7 @@ export default function Home() {
               <LogoSec className="pt-80 pb-0"
                 // title={"<span>Brands</span> Hosted"}
                 title={"<span>Brands</span> Hosted"}
-                logo={brandLogos}
+                logos={brandLogos}
                 link={false}
               />
               <Image
@@ -324,7 +326,7 @@ export default function Home() {
               <LogoSec className="pt-80 pb-0"
                 title={"<span>In the</span> News"}
                 logo={data?.brandLogo}
-                link={false}
+                link={true}
               />
               {data?.footersection && (
                 <BirthdayGetInTouch

@@ -15,7 +15,7 @@ import Image from "next/image";
 
 const BlogSlider = ({ className = "" }) => {
   const { blogs } = useGlobalContext();
-
+  const doubledBlogs = blogs ? [...blogs, ...blogs] : [];
   // Navigation refs
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -56,17 +56,17 @@ const BlogSlider = ({ className = "" }) => {
           <div className="col-lg-12">
             <div className="blog-slider">
               <Swiper
-                
-                modules={[ Navigation]}
-              
-              navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-              }}
-              centeredSlides={true}
-              slidesPerView={1.3}
-              spaceBetween={20}
-              loop={true}
+
+                modules={[Navigation]}
+
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                centeredSlides={true}
+                slidesPerView={1.3}
+                spaceBetween={20}
+                loop={true}
                 breakpoints={{
                   0: { slidesPerView: 1 },
                   640: { slidesPerView: 2 },
@@ -75,7 +75,12 @@ const BlogSlider = ({ className = "" }) => {
                 }}
                 className="blog-swiper"
               >
-                {blogs && blogs?.map((blog, index) => (
+                {/* {blogs && blogs?.map((blog, index) => (
+                  <SwiperSlide key={index}>
+                    <BlogCard blog={blog} />
+                  </SwiperSlide>
+                ))} */}
+                {doubledBlogs.map((blog, index) => (
                   <SwiperSlide key={index}>
                     <BlogCard blog={blog} />
                   </SwiperSlide>

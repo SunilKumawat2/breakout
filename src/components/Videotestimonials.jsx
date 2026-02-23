@@ -21,6 +21,7 @@ const Videotestimonials = ({ data,className = "", }) => {
   const [activeIndex, setActiveIndex] = useState(4);
 
   let data1 = data;
+  const doubledData = data1 ? [...data1, ...data1] : [];
   if (data) {
     data1 = data;
   } else {
@@ -141,7 +142,7 @@ const Videotestimonials = ({ data,className = "", }) => {
                 0: { slidesPerView: 1.2 },
                 640: { slidesPerView: 1.5 },
                 992: { slidesPerView: 3.5 },
-                1400: { slidesPerView: 3 },
+                1400: { slidesPerView: 3.5 },
               }}
               className="blog-swiper"
               onSwiper={(swiper) => {
@@ -154,7 +155,7 @@ const Videotestimonials = ({ data,className = "", }) => {
               }}
             >
 
-              {data1.map((item, index) => (
+              {doubledData.map((item, index) => (
                 <SwiperSlide key={index}>
                   <div
                     className="video-test-card"

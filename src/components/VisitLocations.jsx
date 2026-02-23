@@ -72,7 +72,12 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
                   <LocationCard location={item} />
                 </div>
               ))}
-            {virtualCard && isVirtual && page_name != "home" && (
+            {/* {virtualCard && isVirtual && page_name != "home" && (
+              <div className="col-lg-4 col-12" onClick={()=>sessionStorage.setItem("visit_location_key",true)}>
+                <LocationCard  location={virtualCard} isVirtual={true}/>
+              </div>
+            )} */}
+            {virtualCard && isVirtual && (
               <div className="col-lg-4 col-12" onClick={()=>sessionStorage.setItem("visit_location_key",true)}>
                 <LocationCard  location={virtualCard} isVirtual={true}/>
               </div>
