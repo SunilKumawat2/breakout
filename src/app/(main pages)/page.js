@@ -48,92 +48,94 @@ export default function Home() {
   }, []);
 
   // Main scrolling logic
-  const scrollToHomeSection = useCallback(() => {
-    if (hasScrolledRef.current) return; // Already scrolled on this page load
+  // const scrollToHomeSection = useCallback(() => {
+  //   if (hasScrolledRef.current) return; // Already scrolled on this page load
 
-    const key = sessionStorage.getItem("home_set_yourself_free_key");
-    const hash = window.location.hash;
+  //   const key = sessionStorage.getItem("home_set_yourself_free_key");
+  //   const hash = window.location.hash;
 
-    if (key || hash === "#home_set_yourself_free") {
-      hasScrolledRef.current = true;
+  //   if (key || hash === "#home_set_yourself_free") {
+  //     hasScrolledRef.current = true;
 
-      // Clear any existing timeout
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
+  //     // Clear any existing timeout
+  //     if (scrollTimeoutRef.current) {
+  //       clearTimeout(scrollTimeoutRef.current);
+  //     }
 
-      scrollTimeoutRef.current = setTimeout(() => {
-        const el = document.getElementById("home_set_yourself_free");
-        if (el) {
-          // Get current scroll position
-          const currentScroll = window.pageYOffset;
+  //     scrollTimeoutRef.current = setTimeout(() => {
+  //       const el = document.getElementById("home_set_yourself_free");
+  //       if (el) {
+  //         // Get current scroll position
+  //         const currentScroll = window.pageYOffset;
 
-          // Scroll to section
-          el.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
+  //         // Scroll to section
+  //         el.scrollIntoView({
+  //           behavior: "smooth",
+  //           block: "start"
+  //         });
 
-          // Expand the escape-room section
-          handleCollapse("escape-room");
+  //         // Expand the escape-room section
+  //         handleCollapse("escape-room");
 
-          // Clear the session storage
-          if (key) {
-            sessionStorage.removeItem("home_set_yourself_free_key");
-          }
+  //         // Clear the session storage
+  //         if (key) {
+  //           sessionStorage.removeItem("home_set_yourself_free_key");
+  //         }
 
-          // Update URL hash without triggering scroll
-          if (key && window.location.hash !== "#home_set_yourself_free") {
-            history.replaceState(
-              { ...history.state, scrollPosition: currentScroll },
-              "",
-              "#home_set_yourself_free"
-            );
-          }
-        }
-      }, 1000); // Wait for page to fully load
-    }
-  }, [handleCollapse]);
+  //         // Update URL hash without triggering scroll
+  //         if (key && window.location.hash !== "#home_set_yourself_free") {
+  //           history.replaceState(
+  //             { ...history.state, scrollPosition: currentScroll },
+  //             "",
+  //             "#home_set_yourself_free"
+  //           );
+  //         }
+  //       }
+  //     }, 1500); // Wait for page to fully load
+  //   }
+  // }, [handleCollapse]);
 
-  // Single useEffect for all scroll-related logic
-  useEffect(() => {
-    // Reset scroll flag on component mount
-    hasScrolledRef.current = false;
+  // // Single useEffect for all scroll-related logic
+  // useEffect(() => {
+  //   // Reset scroll flag on component mount
+  //   hasScrolledRef.current = false;
 
-    // Initial scroll check
-    scrollToHomeSection();
+  //   // Initial scroll check
+  //   scrollToHomeSection();
 
-    // Also check when page finishes loading
-    if (document.readyState === 'complete') {
-      scrollToHomeSection();
-    } else {
-      window.addEventListener('load', scrollToHomeSection);
-    }
+  //   // Also check when page finishes loading
+  //   if (document.readyState === 'complete') {
+  //     scrollToHomeSection();
+  //   } else {
+  //     window.addEventListener('load', scrollToHomeSection);
+  //   }
 
-    // Cleanup
-    return () => {
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      window.removeEventListener('load', scrollToHomeSection);
-    };
-  }, [scrollToHomeSection]);
+  //   // Cleanup
+  //   return () => {
+  //     if (scrollTimeoutRef.current) {
+  //       clearTimeout(scrollTimeoutRef.current);
+  //     }
+  //     window.removeEventListener('load', scrollToHomeSection);
+  //   };
+  // }, [scrollToHomeSection]);
 
-  // Only for navigation - separate from initial load
-  useEffect(() => {
-    const handleRouteChange = () => {
-      // Reset the flag when navigating
-      hasScrolledRef.current = false;
-      // Scroll after navigation
-      setTimeout(scrollToHomeSection, 100);
-    };
+  // // Only for navigation - separate from initial load
+  // useEffect(() => {
+  //   const handleRouteChange = () => {
+  //     // Reset the flag when navigating
+  //     hasScrolledRef.current = false;
+  //     // Scroll after navigation
+  //     setTimeout(scrollToHomeSection, 100);
+  //   };
 
-    router.events?.on('routeChangeComplete', handleRouteChange);
+  //   router.events?.on('routeChangeComplete', handleRouteChange);
 
-    return () => {
-      router.events?.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router, scrollToHomeSection]);
+  //   return () => {
+  //     router.events?.off('routeChangeComplete', handleRouteChange);
+  //   };
+  // }, [router, scrollToHomeSection]);
+
+
 
 
   const fadeInUp = {
@@ -218,6 +220,27 @@ export default function Home() {
   }, [data]);
 
   useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("home_set_yourself_free_key");
+
+    if (shouldScroll === "true") {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("home_set_yourself_free");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("home_set_yourself_free_key");
+      }, 2000);
+    }
+  }, [data]);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         setPageLoading(true);
@@ -231,7 +254,7 @@ export default function Home() {
       }
     };
     fetchData();
-  }, []);  
+  }, []);
 
 
   useEffect(() => {
@@ -265,6 +288,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+                    id="home_set_yourself_free"
                   >
                     <div className="col-lg-12 col-12 text-center">
                       {/* <Revolvingtext text="Set Your" /> */}
@@ -312,7 +336,7 @@ export default function Home() {
                             {escaperoomLocations &&
                               escaperoomLocations?.map((link, index) => (
                                 <li key={index}
-                                  onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
+                                  onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
                                   }>
                                   <Link href={`/locations/${link.slug}`}>
                                     <span>{link.title}</span>
@@ -350,21 +374,21 @@ export default function Home() {
                             {"Parties"}
                           </h3>
                           <ul className={collapse === "parties" ? "active" : ""}>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
+                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
                             }>
                               <Link href={`/parties/birthday`}>
                                 <span>Birthday</span>
                                 <Image src={whArrow} alt={"Birthday"} />
                               </Link>
                             </li>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
+                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
                             }>
                               <Link href={`/parties/bachelor`}>
                                 <span>Bachelor(ette)</span>
                                 <Image src={whArrow} alt={"Bachelor(ette)"} />
                               </Link>
                             </li>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
+                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
                             }>
                               <Link href={`/parties/farewell`}>
                                 <span>Farewell</span>
@@ -395,21 +419,21 @@ export default function Home() {
                             {"Corporate"}
                           </h3>
                           <ul className={collapse === "corporate" ? "active" : ""}>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
+                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
                             }>
                               <Link href={`/corporate/unwind`}>
                                 <span>Unwind</span>
                                 <Image src={whArrow} alt={"Unwind"} />
                               </Link>
                             </li>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
+                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
                             }>
                               <Link href={`/corporate/retreat`}>
                                 <span>Retreat</span>
                                 <Image src={whArrow} alt={"Retreat"} />
                               </Link>
                             </li>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", "1") }
+                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
                             }>
                               <Link href={`/corporate/connect-l-n-d`}>
                                 <span>Connect L&D</span>

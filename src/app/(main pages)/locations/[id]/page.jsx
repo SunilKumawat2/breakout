@@ -42,8 +42,6 @@ const page = () => {
     (item) => item.reference == "escaperooms"
   );
   
-  console.log("Birthday T&C:", escaperoomsTnc);
-  console.log("sjdfhjsghdfjsdf", openFaqIndex)
   const banner = {
     title:
       'Escape Room in <br className="d-none d-lg-block" /> <span>Koramangala</span>',

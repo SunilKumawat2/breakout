@@ -24,7 +24,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 
 const page = () => {
   const { id } = useParams();
-  console.log("object_id",id)
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const [escapeRooms, setEscapeRooms] = useState(null);
   const [room, setRoom] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,7 +33,7 @@ const page = () => {
   const escaperoomsTnc = gettncs?.find(
     (item) => item.reference == "escaperooms"
   );
-  
+
   console.log("Birthday T&C:", escaperoomsTnc);
 
   useEffect(() => {
@@ -124,8 +124,10 @@ const page = () => {
               <Image src={hmIllus} className="illus-image" alt="hm-text-bg" />
             </div>
             <div className="black-gr-div">
-              <ReserveASlot  className="sec-padding-top" 
-              page_name= {id == "prison-break"} room={room?.pricingsection} data={escaperoomsTnc}/>
+              <ReserveASlot className="sec-padding-top"
+                page_name={id == "prison-break"}
+                onOpenFaq={(index) => setOpenFaqIndex(index)}
+                room={room?.pricingsection} data={escaperoomsTnc} />
               {room?.imagesection && (
                 <GlobalReviewWidget
                   data={room?.imagesection}
@@ -134,7 +136,14 @@ const page = () => {
               )}
               <Image src={illus3} className="illus-image" alt="illus3" />
             </div>
-            {room?.faqsection && <FaqSection className="sec-padding-top" data={room?.faqsection} />}
+            {room?.faqsection && <FaqSection className="sec-padding-top"
+              data={room?.faqsection}
+              openIndex={openFaqIndex}
+              onFaqChange={(index) => {
+                // Same FAQ again → close
+                setOpenFaqIndex((prev) => (prev === index ? null : index));
+              }}
+            />}
             {/* <FaqSection /> */}
             <div className="black-gr-div">
               <section className="section-padding esc-section" id="escape-rooms-section">

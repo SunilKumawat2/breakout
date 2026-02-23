@@ -274,12 +274,12 @@ const Page = async ({ params }) => {
                             <p
                               className="sec-para"
                               dangerouslySetInnerHTML={{
-                                __html: item?.description,
+                                __html: item?.content ?  item.content:item.description,
                               }}
                             />
-                            <button className="main-btn link-btn">
+                            {/* <button className="main-btn link-btn">
                               <span>Know More</span>
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                       ))}

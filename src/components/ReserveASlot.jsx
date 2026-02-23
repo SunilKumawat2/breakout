@@ -26,7 +26,7 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
     thirdPartyGames,
     bookASlot,
   } = useGlobalContext();
-  console.log("sdkjfhksdjfhdjkshfksdjhfksjdf_snjkdfhksjdfsjdk", data)
+  console.log("sdkjfhksdjfhdjkshfksdjhfksjdf_snjkdfhksjdfsjdk", onOpenFaq)
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
@@ -499,7 +499,7 @@ const formattedPageName = safePageName
                   </div>
                 )}
               </div>
-              <p className="para mt-5 mb-0">
+              <p className="para mt-5 mb-0" id="book-now">
                 {room?.note}{" "}
                 <span
                   className="yellow-text"
@@ -534,7 +534,7 @@ const formattedPageName = safePageName
               className="main-btn mt-4 dark-btn sm"
               onClick={() => setShow(true)}
             >
-              <span className="yellow-text">T & C applied*</span>
+              <span className="yellow-text" >T & C applied*</span>
             </button>
             {/* <div className="form-field mt-5">
               <div className="row">
@@ -772,7 +772,7 @@ const formattedPageName = safePageName
             <form onSubmit={(e) => {
               e.preventDefault();
               handleBookNow();
-            }} className="form-field mt-5" id="book-now">
+            }} className="form-field mt-5" >
               <div className="row">
                 <div className="col-lg-4 col-12">
                   <div className="form-group">

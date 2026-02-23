@@ -87,7 +87,7 @@ const page = () => {
 
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("scrollToEscapeRooms");
-      }, 500);
+      }, 1000);
     }
   }, [escapeRooms]);
 
