@@ -9,6 +9,8 @@ import { CommonModal } from "./CommonModal";
 const InnerPageBanner = ({ banner, bdayInner }) => {
   const [showTrailer, setShowTrailer] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
+  const [isTrailerMuted, setIsTrailerMuted] = useState(true);
+  const trailerVideoRef = useRef(null);
   const trailerBtnRef = useRef(null);
 
   const renderImageOrVideo = (image) => {
@@ -126,28 +128,48 @@ const InnerPageBanner = ({ banner, bdayInner }) => {
       </div>
 
 
-      <CommonModal show={showTrailer} handleClose={() => setShowTrailer(false)}>
+      {/* <CommonModal show={showTrailer} handleClose={() => setShowTrailer(false)}>
         <div className="video-wrapper">
-          {/* <video
-      src={banner.escape_traler}
-      controls
-      autoPlay
-      playsInline
-    /> */}
+       
           <video
             className="w-100 h-auto"
-            autoPlay
-            muted
-            loop
-            playsInline
-            controls={false}
+            // autoPlay
+            // muted
+            // loop
+            // playsInline
+            controls
           >
             <source src="/videos/The_Breakout_Escape_Room_Experience_720P.mp4" type="video/mp4" />
           </video>
         </div>
-      </CommonModal>
+      </CommonModal> */}
 
-
+<CommonModal
+  show={showTrailer}
+  handleClose={() => {
+    setShowTrailer(false);
+    if (trailerVideoRef.current) {
+      trailerVideoRef.current.pause();
+      trailerVideoRef.current.currentTime = 0;
+    }
+  }}
+>
+  <div className="video-wrapper">
+    <video
+      ref={trailerVideoRef}
+      className="w-100 h-auto"
+      playsInline
+      loop
+      // controls
+      autoPlay
+    >
+      <source
+        src="/videos/The_Breakout_Escape_Room_Experience_720P.mp4"
+        type="video/mp4"
+      />
+    </video>
+  </div>
+</CommonModal>
 
     </header>
   );

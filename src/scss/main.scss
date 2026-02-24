@@ -3890,3 +3890,45 @@ textarea:hover {
       transform: rotate(360deg);
   }
 }
+
+// Sunil's Css
+
+.video-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-mute-btn {
+  padding: 5px 11px;
+  border: none;
+  background: #000;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  border-radius: 50px;
+  background: #e78b00;
+}
+.founder-video-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.founder-video-wrapper video {
+  width: 100%;
+  display: block;
+}
+.founder-video-mute-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px; /* change to center if needed */
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 18px;
+  backdrop-filter: blur(5px);
+  transition: 0.3s ease;
+}

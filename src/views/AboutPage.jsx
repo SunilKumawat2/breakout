@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import InnerPageBanner from "@/components/InnerPageBanner";
 import Image from "next/image";
 import enc from "@/images/enc.svg";
@@ -99,7 +99,8 @@ const AboutPage = () => {
   const [brandLogos, setBrandLogos] = useState(null);
   const [collapse, setCollapse] = useState("desktop");
   const { escaperoomLocations, loading, errors } = useGlobalContext();
-console.log("escaperoomLocations_escaperoomLocations",escaperoomLocations)
+  const [isFounderMuted, setIsFounderMuted] = useState(true);
+  const founderVideoRef = useRef(null);
   const [abImages, setAbImages] = useState([
     abImg1,
     abImg2,
@@ -223,16 +224,43 @@ console.log("escaperoomLocations_escaperoomLocations",escaperoomLocations)
                       className="w-100 h-auto"
                     />
                   )} */}
-                  <video
+                  {/* <video
                     className="w-100 h-auto"
                     autoPlay
                     muted
                     loop
                     playsInline
-                    controls={false}
+                    controls
                   >
                     <source src="/videos/founder-video.mp4" type="video/mp4" />
-                  </video>
+                  </video> */}
+                  <div className="founder-video-wrapper">
+                    <video
+                      ref={founderVideoRef}
+                      className="w-100 h-auto"
+                      autoPlay
+                      loop
+                      playsInline
+                      muted={isFounderMuted}
+                    >
+                      <source src="/videos/founder-video.mp4" type="video/mp4" />
+                    </video>
+
+                    {/* Button INSIDE video at bottom */}
+                    <button
+                      className="founder-video-mute-btn"
+                      onClick={() => {
+                        const video = founderVideoRef.current;
+                        if (!video) return;
+
+                        const newMuteState = !isFounderMuted;
+                        video.muted = newMuteState;
+                        setIsFounderMuted(newMuteState);
+                      }}
+                    >
+                      {isFounderMuted ? "🔇" : "🔊"}
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="col-lg-5 col-12">

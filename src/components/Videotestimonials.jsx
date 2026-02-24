@@ -14,14 +14,16 @@ import pauseBtn from "@/images/pause-btn.svg";
 import swiperPrev from "@/images/chev-left.svg";
 import swiperNext from "@/images/chev-right.svg";
 
-const Videotestimonials = ({ data,className = "", }) => {
+const Videotestimonials = ({ data, className = "", }) => {
   const videoRef = useRef([]);
   const swiperRef = useRef(null); // Swiper instance ref
   const [playingVideo, setPlayingVideo] = useState(null);
   const [activeIndex, setActiveIndex] = useState(4);
-
+  const [isMuted, setIsMuted] = useState(true);
+  const [muteStates, setMuteStates] = useState({});
   let data1 = data;
   const doubledData = data1 ? [...data1, ...data1] : [];
+  console.log("doubledData_doubledData", doubledData)
   if (data) {
     data1 = data;
   } else {
@@ -118,94 +120,118 @@ const Videotestimonials = ({ data,className = "", }) => {
             </h2>
           </div>
         </div>
-      
-      <div className="row">
-        <div className="col-lg-12">
-          <div className="blog-slider video-slider">
-            <Swiper
-             modules={[Navigation]}
-             pagination={{
-               clickable: true,
-             }}
-              centeredSlides={true}
-              slidesPerView={1}
-              spaceBetween={0}
-              initialSlide={4}
-              slideToClickedSlide={true}  
-              // loop={data1?.length >= 4}
-              navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-              }}
-              loop={true}
-              breakpoints={{
-                0: { slidesPerView: 1.2 },
-                640: { slidesPerView: 1.5 },
-                992: { slidesPerView: 3.5 },
-                1400: { slidesPerView: 3.5 },
-              }}
-              className="blog-swiper"
-              onSwiper={(swiper) => {
-                swiperRef.current = swiper;
-              }}
-              onSlideChange={(swiper) => {
-                setActiveIndex(
-                  swiper.realIndex != null ? swiper.realIndex : swiper.activeIndex
-                );
-              }}
-            >
 
-              {doubledData.map((item, index) => (
-                <SwiperSlide key={index}>
-                  <div
-                    className="video-test-card"
-                    // onClick={() => handleSlideClick(index)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="video-test-img">
-                      {item && (
-                        <video
-                          className="no-swipe"
-                          src={item}
-                          ref={(el) => (videoRef.current[index] = el)}
-                          poster={item.image}
-                          onEnded={() => setPlayingVideo(null)}
-                        />
-                      )}
-                    </div>
-                    <div className="video-test-content">
-                      <button
-                        className="video-test-btn"
-                        onPointerDown={(e) => e.stopPropagation()}
-                        onTouchStart={(e) => e.stopPropagation()}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          handlePlayVideo(index);
-                        }}
-                      >
-                        {playingVideo === index ? (
-                          <Image src={pauseBtn} alt="pause-btn" />
-                        ) : (
-                          <Image src={playBtn} alt="play-btn" />
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="blog-slider video-slider">
+              <Swiper
+                modules={[Navigation]}
+                pagination={{
+                  clickable: true,
+                }}
+                centeredSlides={true}
+                slidesPerView={1}
+                spaceBetween={0}
+                initialSlide={4}
+                slideToClickedSlide={true}
+                // loop={data1?.length >= 4}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                loop={true}
+                breakpoints={{
+                  0: { slidesPerView: 1.2 },
+                  640: { slidesPerView: 1.5 },
+                  992: { slidesPerView: 3.5 },
+                  1400: { slidesPerView: 3.5 },
+                }}
+                className="blog-swiper"
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+                onSlideChange={(swiper) => {
+                  setActiveIndex(
+                    swiper.realIndex != null ? swiper.realIndex : swiper.activeIndex
+                  );
+                }}
+              >
+
+                {doubledData.map((item, index) => (
+                  <SwiperSlide key={index}>
+                    <div
+                      className="video-test-card"
+                      // onClick={() => handleSlideClick(index)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="video-test-img">
+                        {item && (
+                          <video
+                            className="no-swipe"
+                            src={item?.url}
+                            ref={(el) => (videoRef.current[index] = el)}
+                            poster={item.image}
+                            // muted={muteStates[index] ?? false}
+                            // playsInline
+                            // controls
+                            onEnded={() => setPlayingVideo(null)}
+                          />
                         )}
-                      </button>
-                      <h3>{item.title}</h3>
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <div className="swiper-button-prev custom-prev go-plan">
-              <Image src={swiperPrev} alt="Previous" />
-            </div>
+                      </div>
+                      <div className="video-test-content">
+                        <button
+                          className="video-test-btn"
+                          onPointerDown={(e) => e.stopPropagation()}
+                          onTouchStart={(e) => e.stopPropagation()}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handlePlayVideo(index);
+                          }}
+                        >
+                          {playingVideo === index ? (
+                            <Image src={pauseBtn} alt="pause-btn" />
+                          ) : (
+                            <Image src={playBtn} alt="play-btn" />
+                          )}
+                        </button>
+                        <h3>{item.title}</h3>
+                        {/* <button
+                          className="video-mute-btn"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
 
-            <div className="swiper-button-next custom-next go-plan">
-              <Image src={swiperNext} alt="Next" />
+                            const video = videoRef.current[index];
+                            if (!video) return;
+
+                            const newMuteState = !(muteStates[index] ?? false);
+
+                            video.muted = newMuteState;
+
+                            setMuteStates((prev) => ({
+                              ...prev,
+                              [index]: newMuteState,
+                            }));
+                          }}
+                        >
+                          {muteStates[index] ?? false ? "🔇" : "🔊"}
+                        </button> */}
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="swiper-button-prev custom-prev go-plan">
+                <Image src={swiperPrev} alt="Previous" />
+              </div>
+
+              <div className="swiper-button-next custom-next go-plan">
+                <Image src={swiperNext} alt="Next" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </section>
   );
