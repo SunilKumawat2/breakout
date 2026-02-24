@@ -41,7 +41,7 @@ const page = () => {
   const escaperoomsTnc = gettncs?.find(
     (item) => item.reference == "escaperooms"
   );
-  
+
   const banner = {
     title:
       'Escape Room in <br className="d-none d-lg-block" /> <span>Koramangala</span>',
@@ -82,7 +82,7 @@ const page = () => {
   ];
 
   const { id } = useParams();
-console.log("location_slug",id)
+  console.log("location_slug", id)
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showLocation, setShowLocation] = useState(false);
@@ -207,7 +207,7 @@ console.log("location_slug",id)
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
 
-    if (shouldScroll === "true" && location?.imagecardssection?.card?.length > 0) {
+    if (shouldScroll === "true") {
       // wait for DOM paint
       setTimeout(() => {
         const section = document.getElementById("escape-rooms-section");
@@ -228,7 +228,7 @@ console.log("location_slug",id)
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms_ultra");
 
-    if (shouldScroll === "true" && location?.imagecardssection?.card?.length > 0) {
+    if (shouldScroll === "true") {
       // wait for DOM paint
       setTimeout(() => {
         const section = document.getElementById("escape-rooms-ultra");
@@ -247,21 +247,21 @@ console.log("location_slug",id)
   }, [location]);
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 2000); // 1000ms = 1 second
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     window.scrollTo(0, 0);
+  //   }, 2000); // 1000ms = 1 second
 
-    return () => clearTimeout(timer); // cleanup
-  }, []);
+  //   return () => clearTimeout(timer); // cleanup
+  // }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowLocation(true);
-    }, 2000); // 3 seconds
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShowLocation(true);
+  //   }, 2000); // 3 seconds
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
 
   return (
@@ -362,7 +362,7 @@ console.log("location_slug",id)
         </section> */}
               {location && location?.pricingsection && (
                 <ReserveASlot
-                page_name = {id}
+                  page_name={id}
                   room={location?.pricingsection}
                   onOpenFaq={(index) => setOpenFaqIndex(index)}
                   data={escaperoomsTnc}

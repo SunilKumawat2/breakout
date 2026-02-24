@@ -70,10 +70,53 @@ const page = () => {
     },
   ];
 
+  // useEffect(() => {
+  //   const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
+
+  //   if (shouldScroll === "true" && escapeRooms?.length > 0) {
+  //     // wait for DOM paint
+  //     setTimeout(() => {
+  //       const section = document.getElementById("escape-rooms-section");
+
+  //       if (section) {
+  //         section.scrollIntoView({
+  //           behavior: "auto", // use "smooth" if you want animation
+  //           block: "start",
+  //         });
+  //       }
+
+  //       // remove key so it doesn't auto-scroll again
+  //       sessionStorage.removeItem("scrollToEscapeRooms");
+  //     }, 1000);
+  //   }
+  // }, [escapeRooms]);
+
+
+  // useEffect(() => {
+  //   const shouldScroll = sessionStorage.getItem("visit_location_key");
+
+  //   if (shouldScroll === "true" && escapeRooms?.length > 0) {
+  //     // wait for DOM paint
+  //     setTimeout(() => {
+  //       const section = document.getElementById("visit-location-section");
+
+  //       if (section) {
+  //         section.scrollIntoView({
+  //           behavior: "auto", // use "smooth" if you want animation
+  //           block: "start",
+  //         });
+  //       }
+
+  //       // remove key so it doesn't auto-scroll again
+  //       sessionStorage.removeItem("visit_location_key");
+  //     });
+  //   }
+  // }, [escapeRooms]);
+
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("scrollToEscapeRooms");
 
-    if (shouldScroll === "true" && escapeRooms?.length > 0) {
+    if (shouldScroll == "true") {
       // wait for DOM paint
       setTimeout(() => {
         const section = document.getElementById("escape-rooms-section");
@@ -91,11 +134,10 @@ const page = () => {
     }
   }, [escapeRooms]);
 
-
   useEffect(() => {
     const shouldScroll = sessionStorage.getItem("visit_location_key");
 
-    if (shouldScroll === "true" && escapeRooms?.length > 0) {
+    if (shouldScroll == "true") {
       // wait for DOM paint
       setTimeout(() => {
         const section = document.getElementById("visit-location-section");
@@ -109,7 +151,7 @@ const page = () => {
 
         // remove key so it doesn't auto-scroll again
         sessionStorage.removeItem("visit_location_key");
-      });
+      }, 1000);
     }
   }, [escapeRooms]);
 
