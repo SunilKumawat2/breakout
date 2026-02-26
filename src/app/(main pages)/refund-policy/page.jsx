@@ -1,23 +1,25 @@
-// "use client";
+"use client";
 // import React, { useEffect } from "react";
 import tsIllus from "@/images/ts-illus.svg";
 import Image from "next/image";
-import api from "@/helpers/api";
+import { useGlobalContext } from "@/context/GlobalContext";
 
-export async function getData() {
-  try {
-    const data = await api.get(`/refund-policy`);
-    console.log("data privacy", data?.data?.data);
-    return data?.data?.data;
-  } catch (error) {
-    console.error("Error fetching privacy policy:", error);
-    return null;
-  }
-}
+// export async function getData() {
+//   try {
+//     const data = await api.get(`/refund-policy`);
+//     console.log("data privacy", data?.data?.data);
+//     return data?.data?.data;
+//   } catch (error) {
+//     console.error("Error fetching privacy policy:", error);
+//     return null;
+//   }
+// }
 
-const page = async () => {
-  const data = await getData();
+const page = () => {
+  // const data = await getData();
+  const { getrefundpolicy, loading } = useGlobalContext();
 
+  console.log("siteSettings", getrefundpolicy);
   //   useEffect(() => {
   //     const fetchData = async () => {
   //       const data = await api.get(`/privacy-policy`);
@@ -34,13 +36,13 @@ const page = async () => {
               <h1
                 className="sec-head medium sm-head mb-0 text-center yellow-text"
                 dangerouslySetInnerHTML={{
-                  __html: data?.heading || "Refund Policy",
+                  __html: getrefundpolicy?.heading || "Refund Policy",
                 }}
               />
               <div
                 className="main-con pt-80 para"
                 dangerouslySetInnerHTML={{
-                  __html: data?.content || "Refund Policy",
+                  __html: getrefundpolicy?.content || "Refund Policy",
                 }}
               />
             </div>

@@ -267,7 +267,6 @@ const page = () => {
                 </section>
               )}
               {corporate && corporate?.slidersection && (
-
                 <AddOnsSlider className="pb-0 section-padding" data={corporate?.slidersection} />
               )}
               <PartyExpertCon title="<span>Add MAGIC</span> to your workplace" />

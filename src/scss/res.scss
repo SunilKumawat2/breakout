@@ -203,9 +203,11 @@
     font-size: 16px !important;
     padding: 12px 15px !important;
   }
+
   .package-header-cell {
     min-height: 185px;
   }
+
   .loc-map-wrap {
     padding-top: 100%;
   }
@@ -384,6 +386,17 @@
     font-size: 16px;
     padding: 15px 24px;
   }
+
+  .book-box-item {
+	flex-wrap: wrap;
+	flex-direction: column;
+	row-gap: 24px;
+}
+
+  .book-box-icon img {
+    height: auto;
+  }
+  
 }
 
 @media (min-width: 1400px) {
@@ -404,10 +417,10 @@
   .box-item img {
     max-width: 80px;
   }
-  .overlay-box {
-    padding: 32px 24px;
-}
-.col-overlay-box {
-  width: 100%;
-}
+  .mob-nav-list{
+    gap: 10px;
+  }
+  .main-btn{
+    padding: 15px 10px;
+  }
 }

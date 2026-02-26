@@ -503,10 +503,10 @@ export default function Home() {
               />
             </div>
             <div className="black-gr-div" >
-              <VisitLocations title="Visit <span>a Location</span>" onClick={() => { sessionStorage.setItem("home_visit_location_key", true) }} page_name="home" id="visit-location-section" />
+              <VisitLocations className="sec-padding-top" title="Visit <span>a Location</span>" page_name="home" />
               <div className="home-faq">
                 {data && data?.faqsection &&
-                  <FaqSection className="sec-padding-top" data={data?.faqsection} />}
+                  <FaqSection className="section-padding pb-0" data={data?.faqsection} />}
               </div>
               <section className="looking-sec section-padding d-none">
                 <div className="container">

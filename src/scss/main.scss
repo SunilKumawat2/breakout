@@ -3452,6 +3452,7 @@ article.venue-card.selected {
   height: 248px;
   width: 100%;
   object-fit: cover;
+  margin-bottom: -1px;
 }
 
 .sec-padding-top {
@@ -3905,4 +3906,14 @@ textarea:hover {
   100% {
     transform: rotate(360deg);
   }
+}
+.privacy-content * {
+  color: #ffffff !important;
+}
+.privacy-content span {
+  color: #FFAE00 !important; /* keep links yellow */
+}
+
+.privacy-content font {
+  color: #ffffff !important;
 }

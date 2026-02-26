@@ -28,6 +28,9 @@ export const GlobalProvider = ({ children }) => {
   const [gettncs, setGettnc] = useState(null);
   const [getcareer, setCareer] = useState(null);
   const [getcontact, setContact] = useState(null);
+  const [getprivacy, setPrivacy] = useState(null);
+  const [getrefundpolicy, setRefundPolicy] = useState(null);
+  const [gettermservies, setTermServies] = useState(null);
   const [finderQuizValues, setFinderQuizValues] = useState({
     step1: {
       value: null,
@@ -98,7 +101,10 @@ export const GlobalProvider = ({ children }) => {
     siteSettings: true,
     gettncs:true,
     getcareer:true,
-    getcontact:true
+    getcontact:true,
+    getprivacy:true,
+    getrefundpolicy:true,
+    gettermservies:true
   });
 
   // Error states
@@ -112,7 +118,10 @@ export const GlobalProvider = ({ children }) => {
     siteSettings: null,
     gettncs:null,
     getcareer:null,
-    getcontact:null
+    getcontact:null,
+    getprivacy:null,
+    getrefundpolicy:null,
+    gettermservies:null
   });
 
   const updateFinderQuizValue = (step, value, error) => {
@@ -149,6 +158,46 @@ export const GlobalProvider = ({ children }) => {
       setLoading((prev) => ({ ...prev, escaperoomLocations: false }));
     }
   };
+
+  const fetchPrivacyPolicy = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, getprivacy: true }));
+      const response = await api.get("/privacy-policy");
+      setPrivacy(response.data.data);
+      setErrors((prev) => ({ ...prev, getprivacy: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, getprivacy: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, getprivacy: false }));
+    }
+  };
+
+  const fetchRefundPolicy = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, getrefundpolicy: true }));
+      const response = await api.get("/refund-policy");
+      setRefundPolicy(response.data.data);
+      setErrors((prev) => ({ ...prev, getrefundpolicy: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, getrefundpolicy: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, getrefundpolicy: false }));
+    }
+  };
+
+  const fetchTermsServies = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, gettermservies: true }));
+      const response = await api.get("/terms-of-service");
+      setTermServies(response.data.data);
+      setErrors((prev) => ({ ...prev, gettermservies: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, gettermservies: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, gettermservies: false }));
+    }
+  };
+
 
   const fetchVenueCategories = async () => {
     try {
@@ -328,6 +377,9 @@ export const GlobalProvider = ({ children }) => {
     fetchgettnc()
     fetchcareer()
     fetchContact()
+    fetchPrivacyPolicy();
+    fetchRefundPolicy();
+    fetchTermsServies()
   }, []);
 
   // Refresh functions for manual data updates
@@ -340,7 +392,10 @@ export const GlobalProvider = ({ children }) => {
     siteSettings:fetchSiteSettings,
     gettncs:fetchgettnc,
     getcareer:fetchcareer,
-    getcontact:fetchContact
+    getcontact:fetchContact,
+    getprivacy:fetchPrivacyPolicy,
+    getrefundpolicy:fetchRefundPolicy,
+    gettermservies:fetchTermsServies
   };
 
   const value = {
@@ -352,6 +407,9 @@ export const GlobalProvider = ({ children }) => {
     gettncs,
     getcareer,
     getcontact,
+    getprivacy,
+    getrefundpolicy,
+    gettermservies,
     thirdPartyLocations,
     thirdPartyGames,
     availableSlots,
@@ -384,7 +442,10 @@ export const GlobalProvider = ({ children }) => {
     fetchSiteSettings,
     fetchgettnc,
     fetchcareer,
-    fetchContact
+    fetchContact,
+    fetchPrivacyPolicy,
+    fetchRefundPolicy,
+    fetchTermsServies
   };
 
   return (

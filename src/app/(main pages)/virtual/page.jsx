@@ -303,7 +303,7 @@ const page = () => {
 
             <div className="black-gr-div">
               {rooms?.gallery_images && rooms?.gallery_images?.length > 0 ? (
-                <section className="sec-padding-top section-padding gallery-sec pb-0">
+                <section className="sec-padding-top gallery-sec">
                   <div className="" style={{ overflow: "hidden" }}>
                     <div className="row">
                       <div className="col-lg-12">
@@ -313,18 +313,20 @@ const page = () => {
                   </div>
                 </section>
               ) : (
-                <section className="sec-padding-top section-padding gallery-sec pb-0">
+                <section className="sec-padding-top gallery-sec">
                   <StripGallery images={abImages} />
                 </section>
               )
               }
-              <br />
-              {rooms?.googlereviews && rooms?.googlereviews?.length > 0 && (
-                <GReviewSlider commonStars={false} data={rooms?.googlereviews} />
-              )}
-
+              <div className="section-padding pb-0">
+                {rooms?.googlereviews && rooms?.googlereviews?.length > 0 && (
+                  <div className="section-padding pt-0 google-reviews">
+                    <GReviewSlider commonStars={false} data={rooms?.googlereviews} />
+                  </div>
+                )}
+              </div>
               {rooms?.videotestimonials && (
-                <Videotestimonials data={rooms?.videotestimonials} />
+                <Videotestimonials className="pt-0" data={rooms?.videotestimonials} />
               )}
               {rooms?.faqsection && rooms?.faqsection?.length > 0 && (
                 <FaqSection className="section-padding pb-0" data={rooms?.faqsection} />

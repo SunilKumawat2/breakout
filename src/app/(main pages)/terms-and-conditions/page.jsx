@@ -1,22 +1,25 @@
-// "use client";
+"use client";
+import { useGlobalContext } from "@/context/GlobalContext";
 // import React, { useEffect } from "react";
 import tsIllus from "@/images/ts-illus.svg";
 import Image from "next/image";
-import api from "@/helpers/api";
+// import api from "@/helpers/api";
 
-export async function getData() {
-  try {
-    const data = await api.get(`/terms-of-service`);
-    return data?.data?.data;
-  } catch (error) {
-    console.error("Error fetching privacy policy:", error);
-    return null;
-  }
-}
+// export async function getData() {
+//   try {
+//     const data = await api.get(`/terms-of-service`);
+//     return data?.data?.data;
+//   } catch (error) {
+//     console.error("Error fetching privacy policy:", error);
+//     return null;
+//   }
+// }
 
-const page = async () => {
-  const data = await getData();
+const page =  () => {
+  // const data = await getData();
+  const { gettermservies, loading } = useGlobalContext();
 
+  console.log("siteSettings", gettermservies);
   //   useEffect(() => {
   //     const fetchData = async () => {
   //       const data = await api.get(`/privacy-policy`);
@@ -33,13 +36,13 @@ const page = async () => {
               <h1
                 className="sec-head medium sm-head mb-0 text-center yellow-text"
                 dangerouslySetInnerHTML={{
-                  __html: data?.heading || "Terms of Service",
+                  __html: gettermservies?.heading || "Terms of Service",
                 }}
               />
               <div
-                className="main-con pt-80 para"
+                className="main-con pt-80 para privacy-content"
                 dangerouslySetInnerHTML={{
-                  __html: data?.content || "Terms of Service",
+                  __html: gettermservies?.content || "Terms of Service",
                 }}
               />
             </div>

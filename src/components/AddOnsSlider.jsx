@@ -112,7 +112,9 @@ const AddOnsSlider = ({ data, className = "" }) => {
                 data?.images?.length > 0 &&
                 data?.images?.map((item, index) => (
                   <SwiperSlide key={index}>
-                    <Link href={`/activities/${item?.slug}`} className="blog-card" >
+                    {
+                      item?.blog_link ? (
+                    <Link href={item.blog_link ? item.blog_link : ""} target="_blank" className="blog-card" >
                       <div className="blog-card-img">
                         {item.image && (
                           <Image
@@ -129,6 +131,26 @@ const AddOnsSlider = ({ data, className = "" }) => {
                         />
                       </div>
                     </Link>
+                      ):(
+<div className="blog-card">
+<div className="blog-card-img">
+                        {item.image && (
+                          <Image
+                            src={item.image}
+                            width={500}
+                            height={500}
+                            alt={item.heading}
+                          />
+                        )}
+                      </div>
+                      <div className="blog-card-content">
+                        <h3
+                          dangerouslySetInnerHTML={{ __html: item.heading }}
+                        />
+                      </div>
+</div>
+                      )
+                    }
                   </SwiperSlide>
                 ))}
               {/* {activities&&
