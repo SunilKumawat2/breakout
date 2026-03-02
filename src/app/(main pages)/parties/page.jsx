@@ -27,6 +27,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Home() {
   const [data, setData] = useState(null);
   const [cards, setCards] = useState([]);
+  console.log("setCards_setCards_setCards",cards)
   const [collapse, setCollapse] = useState(null);
   const [animationRefreshKey, setAnimationRefreshKey] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -103,7 +104,7 @@ export default function Home() {
           {
             title: "Birthdays",
             img: partyData?.bannersection?.birthdayimage || "",
-            link: "",
+            link: "/parties/birthday",
             subItems: [
               { title: "Birthday", link: "/parties/birthday" },
               ...(birthdayListData?.length
@@ -117,7 +118,7 @@ export default function Home() {
           {
             title: "Bachelor(ette)",
             img: partyData?.bannersection?.bachelorimage || "",
-            link: "",
+            link: "/parties/bachelor",
             subItems: [
               { title: "Bachelor(ette)", link: "/parties/bachelor" },
               { title: "Bachelor", link: "/parties/bachelor" },
@@ -126,7 +127,7 @@ export default function Home() {
           {
             title: "Farewell",
             img: partyData?.bannersection?.farewellimage || "",
-            link: "",
+            link: "/parties/farewell",
             subItems: [
               { title: "Family Members", link: "/parties/farewell" },
               { title: "Classmates", link: "/parties/farewell" },
@@ -236,6 +237,26 @@ export default function Home() {
     }, 350);
   };
 
+  useEffect(() => {
+    const shouldScroll = sessionStorage.getItem("parties_hero_sections");
+
+    if (shouldScroll == "true") {
+      // wait for DOM paint
+      setTimeout(() => {
+        const section = document.getElementById("parties-hero-section");
+
+        if (section) {
+          section.scrollIntoView({
+            behavior: "auto", // use "smooth" if you want animation
+            block: "start",
+          });
+        }
+
+        // remove key so it doesn't auto-scroll again
+        sessionStorage.removeItem("parties_hero_sections");
+      }, 1000);
+    }
+  }, [data]);
 
   return (
     <>
@@ -278,15 +299,18 @@ export default function Home() {
                       variants={staggerContainer}
                       initial="initial"
                       animate="animate"
+                      onClick={()=>sessionStorage.setItem("parties_hero_sections",true)}
+                      id="parties-hero-section"
                     >
                       {cards.map((card, index) => (
                         <motion.div
-                          className="col-lg-4 col-12"
+                          className="col-lg-4 col-12" 
                           key={index}
                         // variants={fadeInUp}
                         >
                           <div className="hm-card">
-                            <div className="hm-card-img">
+                            <Link href={card?.link} className="hm-card-img">
+                           
                               {card?.img && (
                                 <Image
                                   src={card.img}
@@ -295,12 +319,13 @@ export default function Home() {
                                   alt={card.title}
                                 />
                               )}
-                            </div>
+                            </Link>
+                         
 
                             <div className="details">
-                              {card?.link ? (
+                              {/* {!card?.link ? (
                                 <Link
-                                  href={card.link}
+                                  href="#"
                                   className="main-btn wide"
                                   scroll={false}
                                 >
@@ -313,9 +338,15 @@ export default function Home() {
                                 >
                                   {card.title}
                                 </h3>
-                              )}
+                              )} */}
+                              <h3
+                                  className="sec-head h3 des2"
+                                  onClick={() => handleDropdownToggle(card.title)}
+                                >
+                                  {card.title}
+                                </h3>
 
-                              <ul className={collapse ? "active des2" : "des2"}>
+                              <ul className={collapse ? "active des2" : "des2"} >
                                 {card?.subItems?.map((link, index) => (
                                   <li key={index}>
                                     <Link href={link.link} scroll={false} >
