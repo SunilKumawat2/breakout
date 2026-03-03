@@ -196,7 +196,7 @@ export default function Home() {
 
 
   const [data, setData] = useState(null);
-  console.log("setData_setData",data)
+  console.log("setData_setData", data)
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
@@ -336,7 +336,7 @@ export default function Home() {
                   >
                     <motion.div className="col-lg-4 col-12" variants={fadeInUp} >
                       <div className="hm-card">
-                        <div className="hm-card-img">
+                        <Link href={"/escape-rooms"} className="hm-card-img">
                           {data?.bannersection?.image1 && (
                             <Image
                               src={data?.bannersection?.image1}
@@ -345,7 +345,9 @@ export default function Home() {
                               alt={"Escape Room"}
                             />
                           )}
-                        </div>
+                        </Link>
+
+
                         <div className="details">
                           <h3
                             className="sec-head h3"
@@ -377,16 +379,16 @@ export default function Home() {
                     </motion.div>
                     <motion.div className="col-lg-4 col-12" variants={fadeInUp}>
                       <div className="hm-card">
-                        <div className="hm-card-img">
+                        <Link href={"/parties"} className="hm-card-img">
                           {data?.bannersection?.image2 && (
                             <Image
-                              src={data?.bannersection?.image2}
-                              width={500}
-                              height={500}
-                              alt={"Parties"}
+                            src={data?.bannersection?.image2}
+                            width={500}
+                            height={500}
+                            alt={"Parties"}
                             />
                           )}
-                        </div>
+                          </Link>
                         <div className="details">
                           <h3
                             className="sec-head h3"
@@ -422,7 +424,7 @@ export default function Home() {
                     </motion.div>
                     <motion.div className="col-lg-4 col-12" variants={fadeInUp}>
                       <div className="hm-card">
-                        <div className="hm-card-img">
+                        <Link href={"/corporate"} className="hm-card-img">
                           {data?.bannersection?.image3 && (
                             <Image
                               src={data?.bannersection?.image3}
@@ -431,7 +433,7 @@ export default function Home() {
                               alt={"Corporate"}
                             />
                           )}
-                        </div>
+                        </Link>
                         <div className="details">
                           <h3
                             className="sec-head h3"

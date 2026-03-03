@@ -26,7 +26,7 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
     thirdPartyGames,
     bookASlot,
   } = useGlobalContext();
-  console.log("sdkjfhksdjfhdjkshfksdjhfksjdf_snjkdfhksjdfsjdk", onOpenFaq)
+  console.log("sdkjfhksdjfhdjkshfksdjhfksjdf_snjkdfhksjdfsjdk", thirdPartyLocations,)
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
@@ -110,41 +110,41 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
   }, [selectedLocation, selectedGame, selectedStartDate]);
 
   const safePageName =
-  typeof page_name === "string"
-    ? page_name
-    : Array.isArray(page_name)
-    ? page_name[0]
+    typeof page_name === "string"
+      ? page_name
+      : Array.isArray(page_name)
+        ? page_name[0]
+        : "";
+
+  const formattedPageName = safePageName
+    ? safePageName.replace(/-/g, " ").toLowerCase()
     : "";
 
-const formattedPageName = safePageName
-  ? safePageName.replace(/-/g, " ").toLowerCase()
-  : "";
-
   const filteredLocations = formattedPageName
-  ? thirdPartyLocations?.filter((loc) =>
+    ? thirdPartyLocations?.filter((loc) =>
       loc.locationName
         ?.toLowerCase()
         .includes(formattedPageName)
     )
-  : thirdPartyLocations;
+    : thirdPartyLocations;
 
 
 
   useEffect(() => {
     if (!formattedPageName || !thirdPartyLocations?.length) return;
-  
+
     const matchedLocation = thirdPartyLocations.find((loc) =>
       loc.locationName
         ?.toLowerCase()
         .includes(formattedPageName)
     );
-  
+
     if (matchedLocation) {
       const option = {
         value: matchedLocation.locationId,
         label: matchedLocation.locationName,
       };
-  
+
       setSelectedLocationOption(option);
       setSelectedLocation(matchedLocation.locationId);
       fetchThirdPartyGames(matchedLocation.locationId);
@@ -262,7 +262,7 @@ const formattedPageName = safePageName
     // ================= EMAIL VALIDATION =================
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(trimmedEmail)) {
-      toast.error("Please enter a valid email address");
+      // toast.error("Please enter a valid email address");
       setBookingLoading(false);
       return;
     }
@@ -294,8 +294,21 @@ const formattedPageName = safePageName
       if (response?.bookingId) {
         toast.success("Booking successful");
 
+        // ================= RESET FORM =================
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPhone("");
+
+        setSelectedLocation(null);
+        setSelectedLocationOption(null);
+        setSelectedGame([]);
+        setSelectedSlotTime(null);
+        setHasSlotsFetched(false);
+        setSelectedDate(null);
+
         window.open(
-          `https://bs.kreeda.icu/embed?cartId=${response.bookingId}`,
+          `https://book.breakout.in/embed?cartId=${response.bookingId}`,
           "_blank"
         );
       } else {
@@ -307,10 +320,6 @@ const formattedPageName = safePageName
       setBookingLoading(false);
     }
   };
-
-
-
-
 
   useEffect(() => {
     const totalDays = new Date(year, month + 1, 0).getDate();
@@ -427,7 +436,7 @@ const formattedPageName = safePageName
           </CommonModal>
         )
       }
-      
+
       <div className="container">
         <div className="row">
           <div className="col-lg-12 col-12">
@@ -856,17 +865,17 @@ const formattedPageName = safePageName
                           {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
                         </span>
                         <span>
-                        {isMobile && (
-                          <div
-                          className="calender-btn"
-                          onClick={() => setShowMonthYear(!showMonthYear)}
-                        >
-                          {/* › */}
-                          <Image src={calenderIcon} alt="Calender Icon" />
-                        </div>
-                        )
+                          {isMobile && (
+                            <div
+                              className="calender-btn"
+                              onClick={() => setShowMonthYear(!showMonthYear)}
+                            >
+                              {/* › */}
+                              <Image src={calenderIcon} alt="Calender Icon" />
+                            </div>
+                          )
 
-                        }
+                          }
                         </span>
                         {/* <Image src={selectDrop} alt="arrow" /> */}
                       </div>
@@ -912,16 +921,16 @@ const formattedPageName = safePageName
                         </div>
                         {!isMobile && (
                           <div
-                          className="calender-btn"
-                          onClick={() => setShowMonthYear(!showMonthYear)}
-                        >
-                          {/* › */}
-                          <Image src={calenderIcon} alt="Calender Icon" />
-                        </div>
+                            className="calender-btn"
+                            onClick={() => setShowMonthYear(!showMonthYear)}
+                          >
+                            {/* › */}
+                            <Image src={calenderIcon} alt="Calender Icon" />
+                          </div>
                         )
 
                         }
-                        
+
                       </div>
 
                       {showMonthYear && (

@@ -44,7 +44,7 @@ const Banner = ({ room,className = "", corporate = false }) => {
       </CommonModal>
       <header className={`esc-header sec-padding-top ${className}`}>
         <div className="container">
-          <div className="row align-items-center">
+          <div className="row">
             <div className="col-lg-5 col-12 text-center">
               <div className="esc-banner-img">
                 <Image

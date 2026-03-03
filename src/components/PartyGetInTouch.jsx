@@ -335,127 +335,120 @@ const PartyGetInTouch = ({
                       )}
                     </div> */}
                     {/* ================= CALENDAR ================= */}
-                    <div className="col-lg-9 col-12">
-                      <div className="calendar-wrapper">
-                        <div className="calendar-header">
+                    <div className="col-lg-12 col-12">
+                    <div className="calendar-wrapper">
+                      <div className="calendar-header">
+                        <div
+                          className="month-year-select mb-3"
+                        // onClick={() => setShowMonthYear(!showMonthYear)}
+                        >
+                          <span>
+                            {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
+                          </span>
+                          <span>
+                        {isMobile && (
                           <div
-                            className="month-year-select mb-3"
-                          // onClick={() => setShowMonthYear(!showMonthYear)}
-                          >
-                            <span>
-                              {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
-                            </span>
-                            <span>
-                              {isMobile && (
-                                <div
-                                  className="calender-btn"
-                                  onClick={() => setShowMonthYear(!showMonthYear)}
-                                >
-                                  {/* › */}
-                                  <Image src={calenderIcon} alt="Calender Icon" />
-                                </div>
-                              )
-
-                              }
-                            </span>
-                            {/* <Image src={selectDrop} alt="arrow" /> */}
-                          </div>
+                          className="calender-btn"
+                          onClick={() => setShowMonthYear(!showMonthYear)}
+                        >
+                          {/* › */}
+                          <Image src={calenderIcon} alt="Calender Icon" />
                         </div>
+                        )
 
-                        <div className="calendar-days-outer">
-                          <div className="calendar-days">
-                            <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
-                              {/* ‹ */}
-                              <Image src={arrowPrev} alt="Previous" />
-                            </div>
-
-                            {visibleDays.map((day) => {
-                              const past = isPastDate(day);
-
-                              return (
-                                <div
-                                  key={day}
-                                  onClick={() => {
-                                    if (!past) handleDateSelect(day);
-                                  }}
-                                  className={`day ${past ? "disabled" : ""} ${selectedDate &&
-                                    selectedDate.getDate() === day &&
-                                    selectedDate.getMonth() === month &&
-                                    selectedDate.getFullYear() === year
-                                    ? "active"
-                                    : ""
-                                    }`}
-                                >
-                                  {day}
-                                </div>
-                              );
-                            })}
-
-
-                            <div
-                              className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
-                              onClick={nextDays}
-                              disabled={startIndex + 7 >= days.length}
-                            >
-                              {/* › */}
-                              <Image src={arrowNext} alt="Next" />
-                            </div>
-                            {!isMobile && (
-                              <div
-                                className="calender-btn"
-                                onClick={() => setShowMonthYear(!showMonthYear)}
-                              >
-                                {/* › */}
-                                <Image src={calenderIcon} alt="Calender Icon" />
-                              </div>
-                            )
-                            }
-                            <div
-                              className="calender-btn"
-                              onClick={() => setShowMonthYear(!showMonthYear)}
-                            >
-                              {/* › */}
-                              <Image src={calenderIcon} alt="Calender Icon" />
-                            </div>
-                          </div>
-
-                          {showMonthYear && (
-                            <div className="month-year-dropdown">
-                              <div className="months">
-                                {Array.from({ length: 12 }).map((_, i) => (
-                                  <div
-                                    key={i}
-                                    className={`option ${month === i ? "active" : ""}`}
-                                    onClick={() => {
-                                      setMonth(i);
-                                      setShowMonthYear(false);
-                                    }}
-                                  >
-                                    {new Date(0, i).toLocaleString("default", { month: "long" })}
-                                  </div>
-                                ))}
-                              </div>
-
-                              <div className="years">
-                                {[2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((y) => (
-                                  <div
-                                    key={y}
-                                    className={`option ${year === y ? "active" : ""}`}
-                                    onClick={() => {
-                                      setYear(y);
-                                      setShowMonthYear(false);
-                                    }}
-                                  >
-                                    {y}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
+                        }
+                        </span>
+                          {/* <Image src={selectDrop} alt="arrow" /> */}
                         </div>
                       </div>
+
+                      <div className="calendar-days-outer">
+                        <div className="calendar-days">
+                          <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+                            {/* ‹ */}
+                            <Image src={arrowPrev} alt="Previous" />
+                          </div>
+
+                          {visibleDays.map((day) => {
+                            const past = isPastDate(day);
+
+                            return (
+                              <div
+                                key={day}
+                                onClick={() => {
+                                  if (!past) handleDateSelect(day);
+                                }}
+                                className={`day ${past ? "disabled" : ""} ${selectedDate &&
+                                  selectedDate.getDate() === day &&
+                                  selectedDate.getMonth() === month &&
+                                  selectedDate.getFullYear() === year
+                                  ? "active"
+                                  : ""
+                                  }`}
+                              >
+                                {day}
+                              </div>
+                            );
+                          })}
+
+
+                          <div
+                            className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
+                            onClick={nextDays}
+                            disabled={startIndex + 7 >= days.length}
+                          >
+                            {/* › */}
+                            <Image src={arrowNext} alt="Next" />
+                          </div>
+                          {!isMobile && (
+                          <div
+                          className="calender-btn"
+                          onClick={() => setShowMonthYear(!showMonthYear)}
+                        >
+                          {/* › */}
+                          <Image src={calenderIcon} alt="Calender Icon" />
+                        </div>
+                        )
+                        }
+                        </div>
+
+                        {showMonthYear && (
+                          <div className="month-year-dropdown">
+                            <div className="months">
+                              {Array.from({ length: 12 }).map((_, i) => (
+                                <div
+                                  key={i}
+                                  className={`option ${month === i ? "active" : ""}`}
+                                  onClick={() => {
+                                    setMonth(i);
+                                    setShowMonthYear(false);
+                                  }}
+                                >
+                                  {new Date(0, i).toLocaleString("default", { month: "long" })}
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="years">
+                              {[2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((y) => (
+                                <div
+                                  key={y}
+                                  className={`option ${year === y ? "active" : ""}`}
+                                  onClick={() => {
+                                    setYear(y);
+                                    setShowMonthYear(false);
+                                  }}
+                                >
+                                  {y}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                      </div>
                     </div>
+                  </div>
                     <div className="col-lg-4 col-12">
                       <div className="form-group">
                         <label htmlFor="iWantTo" className="form-label">

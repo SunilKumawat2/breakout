@@ -31,6 +31,7 @@ const ActivityPage = () => {
   const [escapeRooms, setEscapeRooms] = useState(null);
 
   const [room, setRoom] = useState(null);
+  console.log("sdflsjdfkhsdkf",room?.escaperooms)
 
   useEffect(() => {
     const fetchEscapeRooms = async () => {
@@ -146,8 +147,8 @@ const ActivityPage = () => {
               </div>
             </div>
             <div className="row row-gap-25" id="escape-rooms-section">
-              {escapeRooms &&
-                escapeRooms.map((room, index) => (
+              {room?.escaperooms &&
+                room?.escaperooms.map((room, index) => (
                   <div className="col-lg-4 col-12" onClick={() => sessionStorage.setItem("scrollToEscapeRooms", true)} key={index}>
                     <EscapeRoomCard room={room} />
                   </div>

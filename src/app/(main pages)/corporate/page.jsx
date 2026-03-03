@@ -231,7 +231,7 @@ export default function Home() {
                         >
                           {/* <TiltCard> */}
                           <div className="hm-card">
-                            <div className="hm-card-img">
+                            <Link href={card?.link} className="hm-card-img">
                               {card?.img && card?.img !== "" && (
                                 <Image
                                   src={card?.img}
@@ -240,7 +240,8 @@ export default function Home() {
                                   alt={card.title}
                                 />
                               )}
-                            </div>
+                            </Link>
+                        
 
                             <Link href={card.link} className="main-btn wide">
                               <span>{card.title}</span>

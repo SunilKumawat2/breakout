@@ -34,6 +34,7 @@ export async function POST(req) {
       locationId,
       gameId,
       slotId,
+      isPrivate: true,
       customerFirstName,
       customerLastName,
       customerEmail,
@@ -43,7 +44,7 @@ export async function POST(req) {
 
     console.log("Payload being sent:", payload);
 
-    const apiUrl = `${process.env.BOOKING_SYSTEM_URL}prepare-booking`;
+    const apiUrl = `${process.env.BOOKING_SYSTEM_URL}/prepare-booking`;
     console.log("Calling external API:", apiUrl);
     console.log("Using API Key:", process.env.BOOKING_SYSTEM_API_KEY);
 
