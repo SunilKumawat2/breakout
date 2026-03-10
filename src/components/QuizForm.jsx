@@ -48,7 +48,7 @@ const QuizForm = ({
  const [showMonthYear, setShowMonthYear] = useState(false);
  const [selectedDate, setSelectedDate] = useState(null);
  const [isMobile, setIsMobile] = useState(false);
-  console.log("setVenues-setVenues", venues)
+ const [blogSlug, setBlogSlug] = useState(null);
   const formik = useFormik({
     initialValues: {
       name: finderQuizValues.step5.value?.name || "",
@@ -70,7 +70,7 @@ const QuizForm = ({
 
       try {
 
-        const blog_slug = localStorage.getItem("blog_slug");
+        // const blog_slug = localStorage.getItem("blog_slug");
 
         const bookingData = {
           respondent_name: values.name,
@@ -100,7 +100,7 @@ const QuizForm = ({
 
         console.log("Final Payload:", bookingData);
 
-        const res = await quizresposesubmit(blog_slug, bookingData);
+        const res = await quizresposesubmit(blogSlug, bookingData);
 
         console.log("API Response:", res?.data?.recommendations?.venues);
         setVenues(res?.data?.recommendations?.venues)
@@ -160,6 +160,11 @@ const QuizForm = ({
     }),
   };
 
+
+
+useEffect(() => {
+  setBlogSlug(localStorage.getItem("blog_slug"));
+}, []);
 
   useEffect(() => {
     const totalDays = new Date(year, month + 1, 0).getDate();
