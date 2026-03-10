@@ -90,7 +90,7 @@ export const GlobalProvider = ({ children }) => {
       error: null,
     },
   });
-  const get_blog_id = localStorage.getItem("blog_slug")
+ const get_blog_id = localStorage.getItem("blog_slug")
   // Loading states
   const [loading, setLoading] = useState({
     escaperoomLocations: true,
@@ -100,13 +100,13 @@ export const GlobalProvider = ({ children }) => {
     thirdPartyGames: true,
     venueCategories: true,
     siteSettings: true,
-    gettncs: true,
-    getcareer: true,
-    getcontact: true,
-    getprivacy: true,
-    getrefundpolicy: true,
-    gettermservies: true,
-    venuefinderquiz: true
+    gettncs:true,
+    getcareer:true,
+    getcontact:true,
+    getprivacy:true,
+    getrefundpolicy:true,
+    gettermservies:true,
+    venuefinderquiz:true
   });
 
   // Error states
@@ -118,13 +118,13 @@ export const GlobalProvider = ({ children }) => {
     thirdPartyGames: null,
     venueCategories: null,
     siteSettings: null,
-    gettncs: null,
-    getcareer: null,
-    getcontact: null,
-    getprivacy: null,
-    getrefundpolicy: null,
-    gettermservies: null,
-    venuefinderquiz: null
+    gettncs:null,
+    getcareer:null,
+    getcontact:null,
+    getprivacy:null,
+    getrefundpolicy:null,
+    gettermservies:null,
+    venuefinderquiz:null
   });
 
   const updateFinderQuizValue = (step, value, error) => {
@@ -319,10 +319,10 @@ export const GlobalProvider = ({ children }) => {
   const fetchSiteSettings = async () => {
     try {
       setLoading((prev) => ({ ...prev, siteSettings: true }));
-
+  
       const response = await test_api.get("/getsitesettings");
       setSiteSettings(response.data.data);
-
+  
       setErrors((prev) => ({ ...prev, siteSettings: null }));
     } catch (error) {
       setErrors((prev) => ({ ...prev, siteSettings: error }));
@@ -334,11 +334,11 @@ export const GlobalProvider = ({ children }) => {
   const fetchgettnc = async () => {
     try {
       setLoading((prev) => ({ ...prev, gettncs: true }));
-
+  
       const response = await test_api.get("/gettnc");
-      console.log("jskdfjsdhfjsgfgsdfsdj", response)
+      console.log("jskdfjsdhfjsgfgsdfsdj",response)
       setGettnc(response.data.data);
-
+  
       setErrors((prev) => ({ ...prev, gettncs: null }));
     } catch (error) {
       setErrors((prev) => ({ ...prev, gettncs: error }));
@@ -346,16 +346,16 @@ export const GlobalProvider = ({ children }) => {
       setLoading((prev) => ({ ...prev, gettncs: false }));
     }
   };
-
-
+  
+  
   const fetchcareer = async () => {
     try {
       setLoading((prev) => ({ ...prev, getcareer: true }));
-
+  
       const response = await test_api.get("/career");
-      console.log("jskdfjsdhfjsgfgsdfsdj", response)
+      console.log("jskdfjsdhfjsgfgsdfsdj",response)
       setCareer(response.data.data);
-
+  
       setErrors((prev) => ({ ...prev, getcareer: null }));
     } catch (error) {
       setErrors((prev) => ({ ...prev, getcareer: error }));
@@ -367,11 +367,11 @@ export const GlobalProvider = ({ children }) => {
   const fetchContact = async () => {
     try {
       setLoading((prev) => ({ ...prev, getcontact: true }));
-
+  
       const response = await test_api.get("/contact");
-      console.log("jskdfjsdhfjsgfgsdfsdj", response)
+      console.log("jskdfjsdhfjsgfgsdfsdj",response)
       setContact(response.data.data);
-
+  
       setErrors((prev) => ({ ...prev, getcontact: null }));
     } catch (error) {
       setErrors((prev) => ({ ...prev, getcontact: error }));
@@ -379,32 +379,8 @@ export const GlobalProvider = ({ children }) => {
       setLoading((prev) => ({ ...prev, getcontact: false }));
     }
   };
-
-  const quizresposesubmit = async (blog_slug, bookingData) => {
-    try {
-
-      const response = await api.post(
-        `/quiz/${blog_slug}/respond`,
-        bookingData
-      );
-
-      return response.data;
-
-    } catch (error) {
-
-      console.log("error", error);
-
-      toast.error(
-        error?.response?.data?.error ||
-        error?.message ||
-        "Something went wrong"
-      );
-
-      throw error;
-    }
-  };
-
-
+  
+  
 
   // Initialize data on component mount
   useEffect(() => {
@@ -430,14 +406,14 @@ export const GlobalProvider = ({ children }) => {
     newsLogo: fetchNewsLogo,
     thirdPartyLocations: fetchThirdPartyLocations,
     venueCategories: fetchVenueCategories,
-    siteSettings: fetchSiteSettings,
-    gettncs: fetchgettnc,
-    getcareer: fetchcareer,
-    getcontact: fetchContact,
-    getprivacy: fetchPrivacyPolicy,
-    getrefundpolicy: fetchRefundPolicy,
-    gettermservies: fetchTermsServies,
-    venuefinderquiz: fetchVenuefinderquiz,
+    siteSettings:fetchSiteSettings,
+    gettncs:fetchgettnc,
+    getcareer:fetchcareer,
+    getcontact:fetchContact,
+    getprivacy:fetchPrivacyPolicy,
+    getrefundpolicy:fetchRefundPolicy,
+    gettermservies:fetchTermsServies,
+    venuefinderquiz:fetchVenuefinderquiz,
   };
 
   const value = {
@@ -482,7 +458,6 @@ export const GlobalProvider = ({ children }) => {
     fetchVenueCategories,
     fetchThirdPartyGames,
     fetchAvailableSlots,
-    quizresposesubmit,
     fetchSiteSettings,
     fetchgettnc,
     fetchcareer,
