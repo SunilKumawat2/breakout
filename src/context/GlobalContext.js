@@ -17,6 +17,8 @@ export const useGlobalContext = () => {
 
 export const GlobalProvider = ({ children }) => {
   // State for different API data
+    // BLOG SLUG STATE (FIX)
+    const [blogSlug, setBlogSlug] = useState(null);
   const [escaperoomLocations, setEscaperoomLocations] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const [newsLogo, setNewsLogo] = useState(null);
@@ -126,6 +128,23 @@ export const GlobalProvider = ({ children }) => {
     gettermservies:null,
     venuefinderquiz:null
   });
+
+    // -----------------------------
+  // LOAD BLOG SLUG FROM STORAGE
+  // -----------------------------
+  useEffect(() => {
+    const slug = localStorage.getItem("blog_slug");
+    if (slug) setBlogSlug(slug);
+  }, []);
+
+  // -----------------------------
+  // QUIZ FETCH WHEN SLUG READY
+  // -----------------------------
+  useEffect(() => {
+    if (blogSlug) {
+      fetchVenuefinderquiz(blogSlug);
+    }
+  }, [blogSlug]);
 
   const updateFinderQuizValue = (step, value, error) => {
     setFinderQuizValues((prev) => ({
@@ -396,7 +415,7 @@ export const GlobalProvider = ({ children }) => {
     fetchPrivacyPolicy();
     fetchRefundPolicy();
     fetchTermsServies();
-    fetchVenuefinderquiz();
+    // fetchVenuefinderquiz();
   }, []);
 
   // Refresh functions for manual data updates
@@ -416,8 +435,59 @@ export const GlobalProvider = ({ children }) => {
     venuefinderquiz:fetchVenuefinderquiz,
   };
 
+  // const value = {
+  //   // Data
+  //   escaperoomLocations,
+  //   blogs,
+  //   newsLogo,
+  //   siteSettings,
+  //   gettncs,
+  //   getcareer,
+  //   getcontact,
+  //   getprivacy,
+  //   getrefundpolicy,
+  //   gettermservies,
+  //   thirdPartyLocations,
+  //   thirdPartyGames,
+  //   availableSlots,
+  //   venueCategories,
+  //   venuefinderquiz,
+  //   finderQuizValues,
+  //   quoteCalculatorValues,
+  //   costCalculatorValues,
+  //   updateFinderQuizValue,
+  //   updateQuoteCalculatorValue,
+  //   updateCostCalculatorValue,
+  //   bookASlot,
+  //   fetchSiteSettings,
+  //   // Loading states
+  //   loading,
+
+  //   // Error states
+  //   errors,
+
+  //   // Refresh functions
+  //   refreshData,
+
+  //   // Individual fetch functions
+  //   fetchEscaperoomLocations,
+  //   fetchBlogs,
+  //   fetchNewsLogo,
+  //   fetchThirdPartyLocations,
+  //   fetchVenueCategories,
+  //   fetchThirdPartyGames,
+  //   fetchAvailableSlots,
+  //   fetchSiteSettings,
+  //   fetchgettnc,
+  //   fetchcareer,
+  //   fetchContact,
+  //   fetchPrivacyPolicy,
+  //   fetchRefundPolicy,
+  //   fetchTermsServies,
+  //   fetchVenuefinderquiz
+  // };
+
   const value = {
-    // Data
     escaperoomLocations,
     blogs,
     newsLogo,
@@ -433,40 +503,25 @@ export const GlobalProvider = ({ children }) => {
     availableSlots,
     venueCategories,
     venuefinderquiz,
+
     finderQuizValues,
     quoteCalculatorValues,
     costCalculatorValues,
+
     updateFinderQuizValue,
     updateQuoteCalculatorValue,
     updateCostCalculatorValue,
+
     bookASlot,
-    fetchSiteSettings,
-    // Loading states
-    loading,
 
-    // Error states
-    errors,
-
-    // Refresh functions
-    refreshData,
-
-    // Individual fetch functions
-    fetchEscaperoomLocations,
-    fetchBlogs,
-    fetchNewsLogo,
-    fetchThirdPartyLocations,
-    fetchVenueCategories,
     fetchThirdPartyGames,
     fetchAvailableSlots,
-    fetchSiteSettings,
-    fetchgettnc,
-    fetchcareer,
-    fetchContact,
-    fetchPrivacyPolicy,
-    fetchRefundPolicy,
-    fetchTermsServies,
-    fetchVenuefinderquiz
+    fetchVenuefinderquiz,
+
+    loading,
+    errors,
   };
+
 
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>

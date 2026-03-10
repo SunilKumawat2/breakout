@@ -115,11 +115,11 @@ const Page = () => {
   console.log("Blog Type:", type);
 
   useEffect(() => {
-    // const timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       localStorage.setItem("blog_slug", id);
-    // }, 1500);
+    }, 1500);
   
-    // return () => clearTimeout(timer);
+    return () => clearTimeout(timer);
   }, [id]);
   useEffect(() => {
     if (!id) return;
