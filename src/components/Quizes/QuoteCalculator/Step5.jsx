@@ -65,7 +65,7 @@ const Step5 = ({ setIsResult }) => {
       });
 
       setVenues(res.data.data);
-      console.log("res", res);
+      console.log("res_setVenues", res);
       setLoading(false);
     },
     enableReinitialize: true,

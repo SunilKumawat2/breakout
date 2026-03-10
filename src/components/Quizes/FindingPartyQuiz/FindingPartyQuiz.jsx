@@ -57,7 +57,7 @@ const FindingPartyQuiz = () => {
         <div className="container">
           <div className="row pb-5">
             <div className="col-12 text-center">
-              {currentStep === 5 ? (
+              {currentStep === 2 ? (
                 <>
                   {!isResult && (
                     <>

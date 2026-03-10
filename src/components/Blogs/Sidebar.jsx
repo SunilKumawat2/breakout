@@ -2,6 +2,12 @@ import React from "react";
 import Image from "next/image";
 import search from "@/images/search.svg";
 import selectDrop from "@/images/select-drop.svg";
+import linkIcon from "@/images/link-icon.svg";
+import linkedin from "@/images/linkedin.svg";
+import whatsappIcon from "@/images/whatsapp-icon.svg";
+import instaIcon from "@/images/insta-icon.svg";
+import xIcon from "@/images/x-ixon.svg";
+import gmail from "@/images/gmail.svg"
 
 const Sidebar = ({
   handleSearchChange,
@@ -98,6 +104,72 @@ const Sidebar = ({
           </div>
         </div>
       </div> */}
+
+<div className="share-blog-list">
+      <h3 className="sec-head pt-80 mb-3 medium-20 text-center">Share Blog</h3>
+        <ul className="bl-soc-list">
+          <li>
+            <button onClick={() => handleShare("copy")}>
+              <Image
+                src={linkIcon}
+                alt="copy link"
+                width={35}
+                height={35}
+              />
+            </button>
+          </li>
+          <li>
+            <button onClick={() => handleShare("whatsapp")}>
+              <Image
+                src={whatsappIcon}
+                alt="share on whatsapp"
+                width={35}
+                height={35}
+              />
+            </button>
+          </li>
+          <li>
+            <button onClick={() => handleShare("instagram")}>
+              <Image
+                src={instaIcon}
+                alt="share on instagram"
+                width={35}
+                height={35}
+              />
+            </button>
+          </li>
+          <li>
+            <button onClick={() => handleShare("twitter")}>
+              <Image
+                src={xIcon}
+                alt="share on twitter"
+                width={35}
+                height={35}
+              />
+            </button>
+          </li>
+          <li>
+            <button onClick={() => handleShare("link")}>
+              <Image
+                src={linkedin}
+                alt="share on twitter"
+                width={35}
+                height={35}
+              />
+            </button>
+          </li>
+          <li>
+            <button onClick={() => handleShare("gmail")}>
+              <Image
+                src={gmail}
+                alt="share on twitter"
+                width={35}
+                height={35}
+              />
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

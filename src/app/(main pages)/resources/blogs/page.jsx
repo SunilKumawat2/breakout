@@ -10,7 +10,7 @@ import ResourcesSidebar from "@/components/Blogs/ResourcesSidebar";
 const page = () => {
   const [blogs, setBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
-  console.log("filteredBlogs_filteredBlogs",filteredBlogs)
+  const [visibleCount, setVisibleCount] = useState(12);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -21,10 +21,12 @@ const page = () => {
     const fetchBlogs = async () => {
       setLoading(true);
       try {
-        const res = await api.get("/blogs");
+        // const res = await api.get("/blogs");
         const res2 = await api.get("/birthday-blog");
-        setBlogs([...res.data.data, ...res2.data.data]);
-        setFilteredBlogs([...res.data.data, ...res2.data.data]);
+        // setBlogs([...res.data.data, ...res2.data.data]);
+        // setFilteredBlogs([...res.data.data, ...res2.data.data]);
+        setBlogs([...res2.data.data]);
+        setFilteredBlogs([...res2.data.data]);
       } catch (err) {
         setError(err);
       } finally {
@@ -106,6 +108,10 @@ const page = () => {
     setSort(e.target.value);
   };
 
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 12);
+  };
+
   return (
     <div className="blogs-page pt-80">
       <div className="container">
@@ -128,43 +134,47 @@ const page = () => {
           <div className="col-lg-9 col-12">
             <div className="row row-gap-25">
               {filteredBlogs.length > 0 ? (
-                filteredBlogs.map((blog, index) => (
+                filteredBlogs?.slice(0, visibleCount)?.map((blog, index) => (
                   <div className="col-lg-4 col-12" key={index}>
-                    <BlogCard blog={blog} slug={blog.slug}/>
+                    <BlogCard blog={blog} slug={blog.slug} />
                   </div>
                 ))
               ) : (
-                <>
-                  <div className="col-12">
-                    <div
-                      style={{
-                        height: "50vh",
-                        // backgroundColor: "#181c1f",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <h3 className="sec-head medium-20 sm-head text-center">
-                        No blogs found
-                      </h3>
-                    </div>
+                <div className="col-12">
+                  <div
+                    style={{
+                      height: "50vh",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <h3 className="sec-head medium-20 sm-head text-center">
+                      No blogs found
+                    </h3>
                   </div>
-                </>
+                </div>
               )}
             </div>
-            {/* <div className="row text-center mt-5">
-              <div className="col-12">
-                <button className="main-btn dark-btn center">
-                  <span>Load More</span>
-                </button>
+
+            {/* Load More Button */}
+            {visibleCount < filteredBlogs.length && (
+              <div className="row text-center mt-5">
+                <div className="col-12">
+                  <button
+                    className="main-btn dark-btn center"
+                    onClick={handleLoadMore}
+                  >
+                    <span>Load More</span>
+                  </button>
+                </div>
               </div>
-            </div> */}
+            )}
           </div>
         </div>
       </div>
       <div className="black-gr-div">
-        <BrochureDownloadForm page_name="resources_blogs"/>
+        <BrochureDownloadForm page_name="resources_blogs" />
         <Image src={blogIllus} alt="black-gr" className="w-100 h-auto" />
       </div>
     </div>

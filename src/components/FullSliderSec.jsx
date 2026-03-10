@@ -15,6 +15,9 @@ import bd5 from "@/images/bd5.jpg";
 import bd6 from "@/images/bd6.jpg";
 import bd7 from "@/images/bd7.jpg";
 import Link from "next/link";
+import Rectangle_771 from "@/images/Rectangle 771.png";
+import Rectangle4 from "@/images/Rectangle4.png";
+import Rectangle1 from "@/images/Rectangle1.png";
 
 const FullSliderSec = ({ data, hasCardLinks = false }) => {
   let data1 = "";
@@ -42,7 +45,7 @@ const FullSliderSec = ({ data, hasCardLinks = false }) => {
       icons: [
         {
           heading: "Party Planning Template",
-          image: "https://breakout.bvmwebsolutions.comhttps://breakout.bvmwebsolutions.com/uploads/images/party_a3cd163f-cf17-405b-9575-256d10c59fae.jpeg",
+          image: "https://breakout.bvmwebsolutions.com/https://breakout.bvmwebsolutions.com/uploads/images/party_a3cd163f-cf17-405b-9575-256d10c59fae.jpeg",
           link: "#"
         }, {
           heading: "Ebook",
@@ -51,17 +54,17 @@ const FullSliderSec = ({ data, hasCardLinks = false }) => {
         },
         {
           heading: "Venue Discovery Quiz",
-          image: "https://breakout.bvmwebsolutions.comhttps://breakout.bvmwebsolutions.com/uploads/images/party_a3cd163f-cf17-405b-9575-256d10c59fae.jpeg",
+          image: Rectangle_771,
           link: "/resources/quiz/party-finding"
         }, {
           heading: "Party Calculator",
-          image: null,
+          image: Rectangle4,
           link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
         }
         ,
         {
           heading: "Party Planning Template",
-          image: "https://breakout.bvmwebsolutions.comhttps://breakout.bvmwebsolutions.com/uploads/images/party_a3cd163f-cf17-405b-9575-256d10c59fae.jpeg",
+          image: Rectangle1,
           link: "#"
         }, {
           heading: "Ebook",

@@ -107,10 +107,10 @@ const MainMenu = ({ closeMenu }) => {
           title: "Blogs",
           link: "/seo/blogs",
         },
-        // {
-        //   title: "Resources",
-        //   link: "#",
-        // },
+        {
+          title: "Resources",
+          link: "/resources/blogs",
+        },
         {
           title: "About Us",
           link: "/about",

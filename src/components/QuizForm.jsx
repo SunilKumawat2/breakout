@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import selDrop from "@/images/sel-drop.svg";
 import { useFormik } from "formik";
@@ -7,6 +8,10 @@ import Select from "react-select";
 import { useGlobalContext } from "@/context/GlobalContext";
 import api from "@/helpers/api";
 import QuizResult from "./Quizes/FindingPartyQuiz/QuizResult";
+import { toast } from "react-toastify";
+import arrowPrev from "@/images/chev-left.svg";
+import arrowNext from "@/images/chev-right.svg";
+import calenderIcon from "@/images/calendar-btn.svg";
 
 const forOptions = [
   { value: "kids", label: "Kids ( 5 - 10 yrs )" },
@@ -31,10 +36,19 @@ const QuizForm = ({
   textData,
   setIsResult,
 }) => {
-  const { finderQuizValues, updateFinderQuizValue } = useGlobalContext();
+  const { finderQuizValues, updateFinderQuizValue, quizresposesubmit } = useGlobalContext();
   const [loading, setLoading] = useState(false);
   const [venues, setVenues] = useState(null);
-
+   /* ================= CALENDAR LOGIC ================= */
+ const today = new Date();
+ const [year, setYear] = useState(today.getFullYear());
+ const [month, setMonth] = useState(today.getMonth());
+ const [startIndex, setStartIndex] = useState(0);
+ const [days, setDays] = useState([]);
+ const [showMonthYear, setShowMonthYear] = useState(false);
+ const [selectedDate, setSelectedDate] = useState(null);
+ const [isMobile, setIsMobile] = useState(false);
+  console.log("setVenues-setVenues", venues)
   const formik = useFormik({
     initialValues: {
       name: finderQuizValues.step5.value?.name || "",
@@ -53,33 +67,56 @@ const QuizForm = ({
         .required("Please select participants count"),
     }),
     onSubmit: async (values) => {
-      setLoading(true);
-      setIsResult(true);
-      const sendData = {
-        name: values.name,
-        forWhom: values.forWhom.value,
-        phone: values.phone,
-        participants: values.participants.value,
-        capacityMin: finderQuizValues.step1.value?.split("-")[0] || "",
-        capacityMax: finderQuizValues.step1.value?.split("-")[1] || "",
-        experienceLookingFor: finderQuizValues.step2.value?.join(",") || "",
-        suitableTime: finderQuizValues.step3.value || "",
-        experienceType: finderQuizValues.step4.value || "",
-      };
-      console.log("sendData", sendData);
-      // return;
-      const res = await api.get("/venues", {
-        params: {
-          ...sendData,
-        },
-      });
 
-      setVenues(res.data.data);
-      console.log("res", res);
-      setLoading(false);
+      try {
+
+        const blog_slug = localStorage.getItem("blog_slug");
+
+        const bookingData = {
+          respondent_name: values.name,
+          // respondent_email: "",
+          respondent_phone: values.phone,
+          expected_date: values.expected_date || "",
+          event_for: values.forWhom?.value || "",
+          participent_count: values.participants?.value || "",
+
+          answers: {
+            1: finderQuizValues.step1?.value || "",
+            2: finderQuizValues.step2?.value || [],
+            3: finderQuizValues.step3?.value || "",
+            4: finderQuizValues.step4?.value || "",
+          },
+
+          personal_details: {
+            name: values.name,
+            phone: values.phone,
+            forWhom: values.forWhom?.value,
+            participants: values.participants?.value,
+          },
+
+          time_taken: 0,
+          metadata: {}
+        };
+
+        console.log("Final Payload:", bookingData);
+
+        const res = await quizresposesubmit(blog_slug, bookingData);
+
+        console.log("API Response:", res?.data?.recommendations?.venues);
+        setVenues(res?.data?.recommendations?.venues)
+        if (res.success) {
+          toast.success(res.message || "Venue fetch successfully ")
+        }
+
+      } catch (error) {
+        console.log("Submit Error:", error);
+      }
+
     },
     enableReinitialize: true,
   });
+
+
 
   const customStyles = {
     control: (base, state) => ({
@@ -123,6 +160,66 @@ const QuizForm = ({
     }),
   };
 
+
+  useEffect(() => {
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    const arr = Array.from({ length: totalDays }, (_, i) => i + 1);
+    setDays(arr);
+
+    if (
+      year === today.getFullYear() &&
+      month === today.getMonth()
+    ) {
+      setStartIndex(today.getDate() - 1);
+    } else {
+      setStartIndex(0);
+    }
+  }, [year, month]);
+
+  const daysToShow = isMobile ? 5 : 7;
+
+  const visibleDays = days.slice(startIndex, startIndex + daysToShow);
+
+  const nextDays = () => {
+    if (startIndex + 7 < days.length) {
+      setStartIndex(startIndex + daysToShow);
+    }
+  };
+
+  const prevDays = () => {
+    if (startIndex - 7 >= 0) {
+      setStartIndex(startIndex - daysToShow);
+    }
+  };
+
+  const formatDate = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
+
+
+  const handleDateSelect = (day) => {
+    const dateObj = new Date(year, month, day);
+  
+    setSelectedDate(dateObj);
+  
+    const formatted = formatDate(dateObj);
+  
+    formik.setFieldValue("expected_date", formatted);
+  };
+
+  const isPastDate = (day) => {
+    const checkDate = new Date(year, month, day);
+    checkDate.setHours(0, 0, 0, 0);
+
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+
+    return checkDate < todayDate;
+  };
+
   if (venues) {
     return <QuizResult venues={venues} />;
   }
@@ -143,6 +240,8 @@ const QuizForm = ({
       </div>
     );
   }
+
+
 
   return (
     <section className="hm-contact-sec quiz-form-sec">
@@ -280,6 +379,120 @@ const QuizForm = ({
                             {formik.errors.participants}
                           </div>
                         )}
+                    </div>
+                  </div>
+                  <div className="col-lg-12 col-12">
+                    <div className="calendar-wrapper">
+                      <div className="calendar-header">
+                        <div
+                          className="month-year-select mb-3"
+                        // onClick={() => setShowMonthYear(!showMonthYear)}
+                        >
+                          <span>
+                            {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
+                          </span>
+                          <span>
+                            {isMobile && (
+                              <div
+                                className="calender-btn"
+                                onClick={() => setShowMonthYear(!showMonthYear)}
+                              >
+                                {/* › */}
+                                <Image src={calenderIcon} alt="Calender Icon" />
+                              </div>
+                            )
+
+                            }
+                          </span>
+                          {/* <Image src={selectDrop} alt="arrow" /> */}
+                        </div>
+                      </div>
+
+                      <div className="calendar-days-outer">
+                        <div className="calendar-days">
+                          <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+                            {/* ‹ */}
+                            <Image src={arrowPrev} alt="Previous" />
+                          </div>
+
+                          {visibleDays.map((day) => {
+                            const past = isPastDate(day);
+
+                            return (
+                              <div
+                                key={day}
+                                onClick={() => {
+                                  if (!past) handleDateSelect(day);
+                                }}
+                                className={`day ${past ? "disabled" : ""} ${selectedDate &&
+                                  selectedDate.getDate() === day &&
+                                  selectedDate.getMonth() === month &&
+                                  selectedDate.getFullYear() === year
+                                  ? "active"
+                                  : ""
+                                  }`}
+                              >
+                                {day}
+                              </div>
+                            );
+                          })}
+
+
+                          <div
+                            className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
+                            onClick={nextDays}
+                            disabled={startIndex + 7 >= days.length}
+                          >
+                            {/* › */}
+                            <Image src={arrowNext} alt="Next" />
+                          </div>
+                          {!isMobile && (
+                            <div
+                              className="calender-btn"
+                              onClick={() => setShowMonthYear(!showMonthYear)}
+                            >
+                              {/* › */}
+                              <Image src={calenderIcon} alt="Calender Icon" />
+                            </div>
+                          )
+                          }
+                        </div>
+
+                        {showMonthYear && (
+                          <div className="month-year-dropdown">
+                            <div className="months">
+                              {Array.from({ length: 12 }).map((_, i) => (
+                                <div
+                                  key={i}
+                                  className={`option ${month === i ? "active" : ""}`}
+                                  onClick={() => {
+                                    setMonth(i);
+                                    setShowMonthYear(false);
+                                  }}
+                                >
+                                  {new Date(0, i).toLocaleString("default", { month: "long" })}
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="years">
+                              {[2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((y) => (
+                                <div
+                                  key={y}
+                                  className={`option ${year === y ? "active" : ""}`}
+                                  onClick={() => {
+                                    setYear(y);
+                                    setShowMonthYear(false);
+                                  }}
+                                >
+                                  {y}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                      </div>
                     </div>
                   </div>
                   <div className="col-12 text-center mt-4">

@@ -3973,3 +3973,21 @@ textarea:hover {
 .col-form-head .form-group.style-2 .input-group .select-group img {
   width: 12px;
 }
+.form-check-input {
+  opacity: 1 !important;
+  width: 20px !important;
+  height: 20px !important;
+  z-index: 2 !important;
+  border-color: #FFAE00 !important;
+  background-color: transparent !important;
+  left: 24px !important;
+  top: 30% !important;
+  box-shadow: none !important;
+}
+.form-check-input:checked {
+    background-color: #FFAE00 !important;
+    border-color: #FFAE00 !important;
+}
+.quiz-option label {
+  padding-left: 60px !important;
+}

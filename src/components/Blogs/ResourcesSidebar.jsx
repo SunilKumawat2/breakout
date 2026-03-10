@@ -4,9 +4,11 @@ import search from "@/images/search.svg";
 import info from "@/images/info.svg";
 import selectDrop from "@/images/select-drop.svg";
 import linkIcon from "@/images/link-icon.svg";
+import linkedin from "@/images/linkedin.svg";
 import whatsappIcon from "@/images/whatsapp-icon.svg";
 import instaIcon from "@/images/insta-icon.svg";
 import xIcon from "@/images/x-ixon.svg";
+import gmail from "@/images/gmail.svg";
 
 const ResourcesSidebar = ({
   handleSearchChange,
@@ -70,12 +72,12 @@ const ResourcesSidebar = ({
           </p> */}
           <div className="select-group">
             <select name="sort" id="sort" onChange={handleSortChange}>
-              {/* <option value="">Sort by</option>
-              <option value="latest">Latest</option>
-              <option value="oldest">Oldest</option>
-              <option value="popular">Most Popular</option> */}
-              <option value="az">A-Z</option>
-              <option value="za">Z-A</option>
+            <option value="">Select Type</option>
+              <option value="">Koramangala</option>
+              <option value="">J P Nagar</option>
+              <option value="">Whitefield</option>
+              <option value="">Virtual Rooms</option>
+              
             </select>
             <Image src={selectDrop} alt="select" />
           </div>
@@ -91,11 +93,8 @@ const ResourcesSidebar = ({
       </div>
           <div className="select-group">
             <select name="" id="">
-              <option value="">Select Type</option>
-              <option value="">All</option>
-              <option value="">All</option>
-              <option value="">All</option>
-              <option value="">All</option>
+            <option value="az">A-Z</option>
+            <option value="za">Z-A</option>
             </select>
             <Image src={selectDrop} alt="select" />
           </div>
@@ -112,10 +111,12 @@ const ResourcesSidebar = ({
           <div className="select-group">
             <select name="" id="">
               <option value="">Select Option</option>
-              <option value="">All</option>
-              <option value="">All</option>
-              <option value="">All</option>
-              <option value="">All</option>
+              <option value="birthdays">Birthdays</option>
+              <option value="escape rooms">Escape Rooms</option>
+              <option value="farewells">Farewells</option>
+              <option value="bachelor">Bachelor(etta)</option>
+              <option value="things to do">Things to do</option>
+              <option value="others">Others</option>
             </select>
             <Image src={selectDrop} alt="select" />
           </div>
@@ -159,6 +160,26 @@ const ResourcesSidebar = ({
             <button onClick={() => handleShare("twitter")}>
               <Image
                 src={xIcon}
+                alt="share on twitter"
+                width={35}
+                height={35}
+              />
+            </button>
+          </li>
+          <li>
+            <button onClick={() => handleShare("link")}>
+              <Image
+                src={linkedin}
+                alt="share on twitter"
+                width={35}
+                height={35}
+              />
+            </button>
+          </li>
+          <li>
+            <button onClick={() => handleShare("gmail")}>
+              <Image
+                src={gmail}
                 alt="share on twitter"
                 width={35}
                 height={35}
