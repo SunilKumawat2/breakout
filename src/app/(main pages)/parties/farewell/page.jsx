@@ -298,7 +298,7 @@ const page = () => {
         {party &&
           party?.packagesection &&
           party?.packagesection?.pricing?.columns?.length > 0 && (
-            <Packages className="pb-0" packages={party?.packagesection} data={birthdayTnc}/>
+            <Packages className="pb-0" packages={party?.packagesection} data={birthdayTnc} category="farewell"/>
           )}
 
         {party && party?.googlereviews && (

@@ -23,7 +23,7 @@ const Banner = ({ room,className = "", corporate = false }) => {
 
   // Default values if room data is not available
   const bannerData = room?.bannersection || {};
-
+console.log("bannerData_bannerData",bannerData)
   const descriptionParts = (bannerData?.description || "").split("|");
   const description = descriptionParts[0] || "";
   const popupDescription = descriptionParts.slice(1).join(" ") || "";
@@ -37,9 +37,12 @@ const Banner = ({ room,className = "", corporate = false }) => {
             className="para mt-4"
             dangerouslySetInnerHTML={{ __html: popupDescription || "" }}
           ></p>
+          <div onClick={() => setShow(false)}>
+
           <Link href={bannerData.cta_link} className="main-btn">
             <span>{bannerData.cta_label}</span>
           </Link>
+          </div>
         </div>
       </CommonModal>
       <header className={`esc-header sec-padding-top ${className}`}>

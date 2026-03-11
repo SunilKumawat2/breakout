@@ -34,6 +34,7 @@ export const GlobalProvider = ({ children }) => {
   const [getrefundpolicy, setRefundPolicy] = useState(null);
   const [gettermservies, setTermServies] = useState(null);
   const [venuefinderquiz, setVenueFinderquiz] = useState(null);
+  const [costcalculatorquiz, setCostCalculatorquiz] = useState(null);
   const [finderQuizValues, setFinderQuizValues] = useState({
     step1: {
       value: null,
@@ -107,7 +108,8 @@ export const GlobalProvider = ({ children }) => {
     getprivacy:true,
     getrefundpolicy:true,
     gettermservies:true,
-    venuefinderquiz:true
+    venuefinderquiz:true,
+    costcalculatorquiz:true
   });
 
   // Error states
@@ -125,7 +127,8 @@ export const GlobalProvider = ({ children }) => {
     getprivacy:null,
     getrefundpolicy:null,
     gettermservies:null,
-    venuefinderquiz:null
+    venuefinderquiz:null,
+    costcalculatorquiz:null
   });
 
     // -----------------------------
@@ -247,6 +250,19 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const fetchcostcalcultorquiz = async (category) => {
+    try {
+      setLoading((prev) => ({ ...prev, costcalculatorquiz: true }));
+      const response = await api.get(`/cost-calculator/take?category=${category}`);
+      setCostCalculatorquiz(response.data.data);
+      setErrors((prev) => ({ ...prev, costcalculatorquiz: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, costcalculatorquiz: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, costcalculatorquiz: false }));
+    }
+  };
+
   const fetchThirdPartyLocations = async () => {
     try {
       setLoading((prev) => ({ ...prev, thirdPartyLocations: true }));
@@ -311,6 +327,19 @@ export const GlobalProvider = ({ children }) => {
   const quizresposesubmit = async (bookingData) => {
     try {
       const response = await api.post(`/quiz/${blogSlug}/respond`, bookingData);
+      return response.data;
+    } catch (error) {
+      console.log("error", error);
+      toast.error(
+        error?.response?.data?.error || error?.message || "Something went wrong"
+      );
+      throw error;
+    }
+  };
+
+  const costcalcultorquizresposesubmit = async (bookingData) => {
+    try {
+      const response = await api.post(`/cost-calculator/respond`, bookingData);
       return response.data;
     } catch (error) {
       console.log("error", error);
@@ -428,7 +457,7 @@ export const GlobalProvider = ({ children }) => {
     fetchPrivacyPolicy();
     fetchRefundPolicy();
     fetchTermsServies();
-    // fetchVenuefinderquiz();
+    fetchcostcalcultorquiz();
   }, []);
 
   // Refresh functions for manual data updates
@@ -446,6 +475,7 @@ export const GlobalProvider = ({ children }) => {
     getrefundpolicy:fetchRefundPolicy,
     gettermservies:fetchTermsServies,
     venuefinderquiz:fetchVenuefinderquiz,
+    costcalculatorquiz:fetchcostcalcultorquiz
   };
 
   // const value = {
@@ -516,7 +546,7 @@ export const GlobalProvider = ({ children }) => {
     availableSlots,
     venueCategories,
     venuefinderquiz,
-
+    costcalculatorquiz,
     finderQuizValues,
     quoteCalculatorValues,
     costCalculatorValues,
@@ -528,9 +558,10 @@ export const GlobalProvider = ({ children }) => {
     bookASlot,
     quizresposesubmit,
     fetchThirdPartyGames,
+    costcalcultorquizresposesubmit,
     fetchAvailableSlots,
     fetchVenuefinderquiz,
-
+     fetchcostcalcultorquiz,
     loading,
     errors,
   };

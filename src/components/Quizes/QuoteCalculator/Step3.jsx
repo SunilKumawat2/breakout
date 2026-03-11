@@ -8,7 +8,7 @@ import QuizResult from "./QuizResult";
 import axios from "axios";
 
 const Step3 = ({ setIsResult, setEstimatedQuote, category }) => {
-  const { quoteCalculatorValues } = useGlobalContext();
+  const { quoteCalculatorValues,costcalcultorquizresposesubmit } = useGlobalContext();
   const [loading, setLoading] = useState(false);
   const [packages, setPackages] = useState(null);
   const [packageTrigger, setPackageTrigger] = useState(false);
@@ -30,37 +30,84 @@ const Step3 = ({ setIsResult, setEstimatedQuote, category }) => {
         .matches(/^[0-9]{10,15}$/, "Enter a valid phone number"),
       consultation: Yup.boolean().required("Consultation is required"),
     }),
+    // onSubmit: async (values) => {
+    //   setLoading(true);
+    //   // setIsResult(true);
+
+    //   const sendData = {
+    //     name: values.name,
+    //     phone: values.phone,
+    //     consultation: values.consultation,
+    //     participants: quoteCalculatorValues.step1.value[1],
+    //     category: category || "birthday",
+    //     date: quoteCalculatorValues.step2.value
+    //       ? (() => {
+    //           const d = new Date(quoteCalculatorValues.step2.value);
+    //           const day = String(d.getDate()).padStart(2, "0");
+    //           const month = String(d.getMonth() + 1).padStart(2, "0");
+    //           const year = d.getFullYear();
+    //           return `${day}-${month}-${year}`;
+    //         })()
+    //       : "",
+    //   };
+    //   console.log("sendData", sendData);
+
+    //   const res = await api.get(
+    //     `/get-filtered-packages?participants=${sendData.participants}&date=${sendData.date}&name=${sendData.name}&phone=${sendData.phone}&category=${sendData.category}`
+    //   );
+    //   handleClickup(sendData);
+    //   console.log("res", res);
+    //   setPackageTrigger(true);
+    //   setPackages(res.data);
+
+    //   console.log("data res", res);
+    //   setLoading(false);
+    // },
     onSubmit: async (values) => {
       setLoading(true);
-      // setIsResult(true);
-
-      const sendData = {
+    
+      const formattedDate = quoteCalculatorValues.step2.value
+        ? (() => {
+            const d = new Date(quoteCalculatorValues.step2.value);
+            const day = String(d.getDate()).padStart(2, "0");
+            const month = String(d.getMonth() + 1).padStart(2, "0");
+            const year = d.getFullYear();
+            return `${day}-${month}-${year}`;
+          })()
+        : "";
+    
+      // ✅ Convert quiz steps into answers object
+      const answers = Object.keys(quoteCalculatorValues).reduce((acc, key) => {
+        if (key.startsWith("step")) {
+          const stepNumber = key.replace("step", "");
+          acc[stepNumber] = quoteCalculatorValues[key]?.value;
+        }
+        return acc;
+      }, {});
+    
+      // ✅ Final API payload
+      const bookingData = {
+        participants: 0,
+        date: formattedDate,
         name: values.name,
         phone: values.phone,
-        consultation: values.consultation,
-        participants: quoteCalculatorValues.step1.value[1],
         category: category || "birthday",
-        date: quoteCalculatorValues.step2.value
-          ? (() => {
-              const d = new Date(quoteCalculatorValues.step2.value);
-              const day = String(d.getDate()).padStart(2, "0");
-              const month = String(d.getMonth() + 1).padStart(2, "0");
-              const year = d.getFullYear();
-              return `${day}-${month}-${year}`;
-            })()
-          : "",
+        answers: answers,
       };
-      console.log("sendData", sendData);
-
+    
+      console.log("bookingData", bookingData);
+    
+      // call global context api
+      await costcalcultorquizresposesubmit(bookingData);
+    
+      // your existing package API
       const res = await api.get(
-        `/get-filtered-packages?participants=${sendData.participants}&date=${sendData.date}&name=${sendData.name}&phone=${sendData.phone}&category=${sendData.category}`
+        `/get-filtered-packages?participants=${bookingData.participants}&date=${bookingData.date}&name=${bookingData.name}&phone=${bookingData.phone}&category=${bookingData.category}`
       );
-      handleClickup(sendData);
-      console.log("res", res);
+    
+      handleClickup(bookingData);
       setPackageTrigger(true);
       setPackages(res.data);
-
-      console.log("data res", res);
       setLoading(false);
     },
     enableReinitialize: true,

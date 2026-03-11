@@ -26,35 +26,51 @@ const QuoteCalculator = ({ category }) => {
 
   let renderStep = null;
 
-  if (category === "couple") {
+  // if (category === "couple") {
+  //   renderStep = (step) => {
+  //     switch (step) {
+  //       case 1:
+  //         return <Step2 />;
+  //       case 2:
+  //         return (
+  //           <Step3 setEstimatedQuote={setEstimatedQuote} category={category} />
+  //         );
+  //       default:
+  //         return <Step2 />;
+  //     }
+  //   };
+  // } else {
+  //   renderStep = (step) => {
+  //     switch (step) {
+  //       case 1:
+  //         return <Step1 />;
+  //       case 2:
+  //         return <Step2 />;
+  //       case 3:
+  //         return (
+  //           <Step3 setEstimatedQuote={setEstimatedQuote} category={category} />
+  //         );
+  //       default:
+  //         return <Step1 />;
+  //     }
+  //   };
+  // }
+
+  if (category) {
     renderStep = (step) => {
       switch (step) {
         case 1:
-          return <Step2 />;
+          return <Step1 category={category} goToResult={() => setCurrentStep(2)}/>;
         case 2:
           return (
             <Step3 setEstimatedQuote={setEstimatedQuote} category={category} />
           );
         default:
-          return <Step2 />;
-      }
-    };
-  } else {
-    renderStep = (step) => {
-      switch (step) {
-        case 1:
-          return <Step1 />;
-        case 2:
-          return <Step2 />;
-        case 3:
-          return (
-            <Step3 setEstimatedQuote={setEstimatedQuote} category={category} />
-          );
-        default:
-          return <Step1 />;
+          return <Step1 goToResult={() => setCurrentStep(2)}/>;
       }
     };
   }
+  
 
   const renderHeader = () => {
     if (estimatedQuote > 0) {
@@ -101,7 +117,7 @@ const QuoteCalculator = ({ category }) => {
             <div className="col-12">
               <div className="quiz-container">
                 <div className="quiz-content">{renderStep(currentStep)}</div>
-                {currentStep < totalSteps && (
+                {/* {currentStep < totalSteps && (
                   <div className="quiz-navigation">
                     <button
                       onClick={handlePrev}
@@ -118,7 +134,7 @@ const QuoteCalculator = ({ category }) => {
                       <span>Next</span>
                     </button>
                   </div>
-                )}
+                )} */}
               </div>
               {/* Datepicker component previously added */}
             </div>

@@ -11,8 +11,8 @@ const options = [
 ];
 
 const Step1 = () => {
-  const { updateFinderQuizValue, finderQuizValues } = useGlobalContext();
-
+  const { updateFinderQuizValue, finderQuizValues,costcalculatorquiz } = useGlobalContext();
+console.log("costcalculatorquiz_costcalculatorquiz",costcalculatorquiz)
   // Get current value for step1 (may be null or array)
   const selectedValues = finderQuizValues?.step1?.value || [];
 

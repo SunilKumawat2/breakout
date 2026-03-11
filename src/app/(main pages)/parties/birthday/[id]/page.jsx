@@ -77,7 +77,7 @@ import test_api from "@/helpers/api/test_api";
 const page = () => {
   const { id } = useParams();
   const [party, setParty] = useState(null);
-  console.log("brithday_party", party)
+  console.log("brithday_party", id)
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
