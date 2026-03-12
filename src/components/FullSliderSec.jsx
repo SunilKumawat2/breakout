@@ -139,7 +139,7 @@ import Rectangle1 from "@/images/Rectangle1.png";
                 comibne?.map((item, index) => (
                   <SwiperSlide key={index}>
                     {hasCardLinks ? (
-                      <Link href={item?.link || "#"} className="blog-card">
+                      <Link href={item?.link || "#"} className="blog-card" target="_blank">
                         <div className="blog-card-img">
                           {item.image && (
                             <Image
