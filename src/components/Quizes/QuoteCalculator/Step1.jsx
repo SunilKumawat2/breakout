@@ -680,7 +680,7 @@ const Step1 = ({ category,goToResult }) => {
   const [rangeValue, setRangeValue] = useState(range?.min || 0);
 
   const selectedValue =
-    costcalculatorquiz?.[`step${question?.id}`]?.value || null;
+  quoteCalculatorValues?.[`step${question?.id}`]?.value || null;
   /* ================= CALENDAR LOGIC ================= */
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());

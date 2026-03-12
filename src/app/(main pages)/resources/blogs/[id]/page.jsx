@@ -102,7 +102,7 @@ import BirthdayBlog from "@/views/blogs/BirthdayBlog";
 
 const Page = () => {
   const [blogData, setBlogData] = useState(null);
-
+console.log("sdnfkhsdfgsjdgfjsh",blogData)
   // get dynamic id from url
   const params = useParams();
   const id = params?.id;
@@ -128,7 +128,7 @@ const Page = () => {
       try {
         let url = `/blog/${id}`;
 
-        if (type === "birthday") {
+        if (type == "birthday") {
           url = `/birthday-blog/${id}`;
         }
 

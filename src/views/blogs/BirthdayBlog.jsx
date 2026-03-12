@@ -67,7 +67,7 @@ import LocationCard from "@/components/LocationCard";
 import OurLocationSec from "@/components/OurLocationSec";
 import PartyGetInTouch from "@/components/PartyGetInTouch";
 
-const BirthdayBlog = ({ blogData,id= ""}) => {
+const BirthdayBlog = ({ blogData, id = "" }) => {
   // Share functionality
   const handleShare = (platform) => {
     const currentUrl = window.location.href;
@@ -76,7 +76,7 @@ const BirthdayBlog = ({ blogData,id= ""}) => {
       blogData?.description || "Interesting read! Have a look.";
 
     let shareUrl = "";
-console.log("BirthdayBlog_BirthdayBlog",id)
+
     switch (platform) {
       case "copy":
         navigator.clipboard.writeText(currentUrl).then(() => {
@@ -125,7 +125,7 @@ console.log("BirthdayBlog_BirthdayBlog",id)
       window.open(shareUrl, "_blank", "noopener,noreferrer");
     }
   };
-
+  console.log("BirthdayBlog_BirthdayBlog", blogData)
 
   const hmtext =
     "Explore <span>a curated-list</span> of best party places in Bangalore to celebrate birthdays. Estimate a budget with Party Budget Calculator or discover venues with a simple discovery quiz.";
@@ -192,6 +192,10 @@ console.log("BirthdayBlog_BirthdayBlog",id)
         {blogData?.bannersection && (
           <HmTextSec text={blogData?.bannersection?.content} />
         )}
+        <br />
+        {blogData?.glancesection && (
+          <HmTextSec text={blogData?.glancesection?.content} />
+        )}
 
         <PartyExpertCon className="pt-80" data="blog_birthday_blog" />
 
@@ -202,7 +206,7 @@ console.log("BirthdayBlog_BirthdayBlog",id)
         <Image src={toolIllus} className="illus-image" alt="tool-illus" />
       </div>
 
-      <BirthdayVenueWidget id={id}/>
+      <BirthdayVenueWidget id={id} />
 
       <GReviewSlider commonStars={false} />
 
@@ -213,7 +217,7 @@ console.log("BirthdayBlog_BirthdayBlog",id)
       /> */}
 
       {blogData?.footersection && (
-        <PartyGetInTouch data={blogData?.footersection} noImage={true}/>
+        <PartyGetInTouch data={blogData?.footersection} noImage={true} />
       )}
 
       {/* {blogData?.footersection && (

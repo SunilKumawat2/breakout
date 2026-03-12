@@ -3991,3 +3991,35 @@ textarea:hover {
 .quiz-option label {
   padding-left: 60px !important;
 }
+.select-group .dropdown-toggle::after{
+  display: none !important;
+  
+}
+.select-group .dropdown-toggle {
+  background-color: transparent !important;
+  background: #323333;
+  border: 1px solid #ffae0026 !important;
+  border-radius: 10px;
+  padding: 15px 18px;
+  -webkit-backdrop-filter: blur(28px) !important;
+  backdrop-filter: blur(28px) !important;
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  color: #fff;
+  font-size: 20px;
+  justify-content: space-between;
+}
+.select-group .dropdown-menu{
+  width: 100% !important;
+  background: #323333;
+  border: 1px solid #ffae0026 !important;
+  border-radius: 10px;  
+}
+.select-group .dropdown-item{
+  color: #fff !important;
+}
+.select-group .dropdown-item:focus,.select-group .dropdown-item:hover{
+  background-color: #040707 !important;
+}

@@ -19,62 +19,68 @@ import Rectangle_771 from "@/images/Rectangle 771.png";
 import Rectangle4 from "@/images/Rectangle4.png";
 import Rectangle1 from "@/images/Rectangle1.png";
 
-const FullSliderSec = ({ data, hasCardLinks = false }) => {
-  let data1 = "";
-  console.log("data1_data1", data)
-  if (data1) {
-    data1 = data;
-  } else {
-    data1 = {
-      // images: [
-      //   {
-      //     image: bd1,
-      //     heading: "Custom Tailored Experiences",
-      //   },
-      //   {
-      //     image: bd2,
-      //     heading: "Custom Tailored Experiences",
-      //   },
-      //   {
-      //     image: bd3,
-      //     heading: "Custom Tailored Experiences",
-      //   },
-      // ],
-      description: "Try out these seven resources that we’ve created for you to plan the perfect birthday party for your loved ones. ",
-      heading: "7 Valuable Resources to help you plan the party",
-      icons: [
-        {
-          heading: "Party Planning Template",
-          image: "https://breakout.bvmwebsolutions.com/https://breakout.bvmwebsolutions.com/uploads/images/party_a3cd163f-cf17-405b-9575-256d10c59fae.jpeg",
-          link: "#"
-        }, {
-          heading: "Ebook",
-          image: null,
-          link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
-        },
-        {
-          heading: "Venue Discovery Quiz",
-          image: Rectangle_771,
-          link: "/resources/quiz/party-finding"
-        }, {
-          heading: "Party Calculator",
-          image: Rectangle4,
-          link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
-        }
-        ,
-        {
-          heading: "Party Planning Template",
-          image: Rectangle1,
-          link: "#"
-        }, {
-          heading: "Ebook",
-          image: null,
-          link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
-        }
-      ]
+  const FullSliderSec = ({ data, hasCardLinks = false }) => {
+    let data1 = "";
+    console.log("data1_data1", data?.icons)
+    if (data1) {
+      data1 = data;
+    } else {
+      data1 = {
+        // images: [
+        //   {
+        //     image: bd1,
+        //     heading: "Custom Tailored Experiences",
+        //   },
+        //   {
+        //     image: bd2,
+        //     heading: "Custom Tailored Experiences",
+        //   },
+        //   {
+        //     image: bd3,
+        //     heading: "Custom Tailored Experiences",
+        //   },
+        // ],
+        description: "Try out these seven resources that we’ve created for you to plan the perfect birthday party for your loved ones. ",
+        heading: "7 Valuable Resources to help you plan the party",
+        icons: [
+          // {
+          //   heading: "Party Planning Template",
+          //   image: "https://breakout.bvmwebsolutions.com/https://breakout.bvmwebsolutions.com/uploads/images/party_a3cd163f-cf17-405b-9575-256d10c59fae.jpeg",
+          //   link: "#"
+          // }
+          // , {
+          //   heading: "Ebook",
+          //   image: null,
+          //   link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
+          // },
+          {
+            heading: "Venue Discovery Quiz",
+            image: Rectangle_771,
+            link: "/resources/quiz/party-finding"
+          }
+          , {
+            heading: "Party Calculator",
+            image: Rectangle4,
+            category:"birthday",
+            link: "/resources/quiz/quote-calculator?category=birthday"
+          }
+          // ,
+          // {
+          //   heading: "Party Planning Template",
+          //   image: Rectangle1,
+          //   link: "#"
+          // }, {
+          //   heading: "Ebook",
+          //   image: null,
+          //   link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
+          // }
+        ]
 
-    };
-  }
+      };
+    }
+
+    const comibne = [...(data1?.icons || []), ...(data?.icons || [])]
+    console.log("comibne_comibne",comibne)
   return (
     <section className="blog-slider-sec section-padding pb-0">
       <div className="container">
@@ -128,12 +134,12 @@ const FullSliderSec = ({ data, hasCardLinks = false }) => {
               }}
               className="blog-swiper"
             >
-              {data1 &&
-                data1?.icons?.length > 0 &&
-                data1?.icons?.map((item, index) => (
+              {comibne &&
+                comibne?.length > 0 &&
+                comibne?.map((item, index) => (
                   <SwiperSlide key={index}>
                     {hasCardLinks ? (
-                      <Link href={item.link} className="blog-card">
+                      <Link href={item?.link || "#"} className="blog-card">
                         <div className="blog-card-img">
                           {item.image && (
                             <Image

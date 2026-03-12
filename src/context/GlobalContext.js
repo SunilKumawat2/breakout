@@ -350,6 +350,20 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const bookbloggetintouch = async (bookingData,blog_slug) => {
+    try {
+      const response = await api.post(`/blog-get-in-touch/${blog_slug}`, bookingData);
+      return response.data;
+    } catch (error) {
+      console.log("error", error);
+      toast.error(
+        error?.response?.data?.error || error?.message || "Something went wrong"
+      );
+      throw error;
+    }
+  };
+
+
   const fetchBlogs = async () => {
     try {
       setLoading((prev) => ({ ...prev, blogs: true }));
@@ -562,6 +576,7 @@ export const GlobalProvider = ({ children }) => {
     fetchAvailableSlots,
     fetchVenuefinderquiz,
      fetchcostcalcultorquiz,
+     bookbloggetintouch,
     loading,
     errors,
   };

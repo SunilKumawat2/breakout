@@ -6,6 +6,11 @@ import Link from "next/link";
 import PartyExpertCon from "@/components/PartyExpertCon";
 
 const Packages = ({ packages, category, capacity }) => {
+
+  const handlerefresh = () => {
+    window.location.reload();
+  };
+
   if (category === "birthday" && capacity < 8) {
     return (
       <section className="section-padding">
@@ -40,6 +45,10 @@ const Packages = ({ packages, category, capacity }) => {
                     <div className="package-header-cell">
                       <h3 className="mb-0">Pricing</h3>
                     </div>
+
+                    <button className="main-btn sm" onClick={handlerefresh}>
+                      <span>Retake Quiz</span>
+                    </button>
                   </div>
 
                   <div className="package-body">
@@ -74,7 +83,7 @@ const Packages = ({ packages, category, capacity }) => {
           </div>
         </div>
       </section>
-      <PartyExpertCon className="pt-80" data="quato_calecultor_quiz_result"/>
+      <PartyExpertCon className="pt-80" data="quato_calecultor_quiz_result" />
       <section className="section-padding text-center">
         <div className="container">
           <div className="row">

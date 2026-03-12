@@ -180,7 +180,8 @@ const page = () => {
               )}
 
               {party && party?.countersection && (
-                <TrustedSection className="pb-0" data={party?.countersection} removeHeading={true} />
+                <TrustedSection className="pb-0" data={party?.countersection} 
+                removeHeading={true} />
               )}
 
               {/* <section className="section-padding bday-count-sec pb-0">
@@ -312,7 +313,8 @@ const page = () => {
               {party &&
                 party?.packagesection &&
                 party?.packagesection?.pricing?.columns?.length > 0 && (
-                  <Packages className="pb-0" packages={party?.packagesection} category="birthday" data={birthdayTnc} />
+                  <Packages className="pb-0" packages={party?.packagesection} 
+                  category="birthday" data={birthdayTnc} />
                 )}
               {party && party?.googlereviews && (
                 <div className="pt-80">
