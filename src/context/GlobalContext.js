@@ -477,6 +477,7 @@ export const GlobalProvider = ({ children }) => {
     fetchPrivacyPolicy();
     fetchRefundPolicy();
     fetchTermsServies();
+    fetchThirdPartyGames()
     // fetchcostcalcultorquiz();
   }, []);
 
@@ -495,62 +496,11 @@ export const GlobalProvider = ({ children }) => {
     getrefundpolicy:fetchRefundPolicy,
     gettermservies:fetchTermsServies,
     venuefinderquiz:fetchVenuefinderquiz,
-    costcalculatorquiz:fetchcostcalcultorquiz
+    costcalculatorquiz:fetchcostcalcultorquiz,
   };
 
-  // const value = {
-  //   // Data
-  //   escaperoomLocations,
-  //   blogs,
-  //   newsLogo,
-  //   siteSettings,
-  //   gettncs,
-  //   getcareer,
-  //   getcontact,
-  //   getprivacy,
-  //   getrefundpolicy,
-  //   gettermservies,
-  //   thirdPartyLocations,
-  //   thirdPartyGames,
-  //   availableSlots,
-  //   venueCategories,
-  //   venuefinderquiz,
-  //   finderQuizValues,
-  //   quoteCalculatorValues,
-  //   costCalculatorValues,
-  //   updateFinderQuizValue,
-  //   updateQuoteCalculatorValue,
-  //   updateCostCalculatorValue,
-  //   bookASlot,
-  //   fetchSiteSettings,
-  //   // Loading states
-  //   loading,
-
-  //   // Error states
-  //   errors,
-
-  //   // Refresh functions
-  //   refreshData,
-
-  //   // Individual fetch functions
-  //   fetchEscaperoomLocations,
-  //   fetchBlogs,
-  //   fetchNewsLogo,
-  //   fetchThirdPartyLocations,
-  //   fetchVenueCategories,
-  //   fetchThirdPartyGames,
-  //   fetchAvailableSlots,
-  //   fetchSiteSettings,
-  //   fetchgettnc,
-  //   fetchcareer,
-  //   fetchContact,
-  //   fetchPrivacyPolicy,
-  //   fetchRefundPolicy,
-  //   fetchTermsServies,
-  //   fetchVenuefinderquiz
-  // };
-
   const value = {
+    // Data
     escaperoomLocations,
     blogs,
     newsLogo,
@@ -566,26 +516,81 @@ export const GlobalProvider = ({ children }) => {
     availableSlots,
     venueCategories,
     venuefinderquiz,
-    costcalculatorquiz,
     finderQuizValues,
     quoteCalculatorValues,
     costCalculatorValues,
-
     updateFinderQuizValue,
     updateQuoteCalculatorValue,
     updateCostCalculatorValue,
-
     bookASlot,
-    quizresposesubmit,
+    fetchSiteSettings,
+    // Loading states
+    loading,
+
+    // Error states
+    errors,
+
+    // Refresh functions
+    refreshData,
+
+    // Individual fetch functions
+    fetchEscaperoomLocations,
+    fetchBlogs,
+    fetchNewsLogo,
+    fetchThirdPartyLocations,
+    fetchVenueCategories,
     fetchThirdPartyGames,
-    costcalcultorquizresposesubmit,
     fetchAvailableSlots,
+    fetchSiteSettings,
+    fetchgettnc,
+    fetchcareer,
+    fetchContact,
+    fetchPrivacyPolicy,
+    fetchRefundPolicy,
+    fetchTermsServies,
+    fetchVenuefinderquiz,
+    costcalcultorquizresposesubmit,
     fetchVenuefinderquiz,
      fetchcostcalcultorquiz,
-     bookbloggetintouch,
-    loading,
-    errors,
   };
+
+  // const value = {
+  //   escaperoomLocations,
+  //   blogs,
+  //   newsLogo,
+  //   siteSettings,
+  //   gettncs,
+  //   getcareer,
+  //   getcontact,
+  //   getprivacy,
+  //   getrefundpolicy,
+  //   gettermservies,
+  //   thirdPartyLocations,
+  //   thirdPartyGames,
+  //   availableSlots,
+  //   venueCategories,
+  //   venuefinderquiz,
+  //   costcalculatorquiz,
+  //   finderQuizValues,
+  //   quoteCalculatorValues,
+  //   costCalculatorValues,
+
+  //   updateFinderQuizValue,
+  //   updateQuoteCalculatorValue,
+  //   updateCostCalculatorValue,
+
+  //   bookASlot,
+  //   quizresposesubmit,
+  //   fetchThirdPartyGames,
+  //   fetchAvailableSlots,
+  //   costcalcultorquizresposesubmit,
+  //   fetchVenuefinderquiz,
+  //    fetchcostcalcultorquiz,
+  //    bookbloggetintouch,
+  //    fetchThirdPartyLocations,
+  //   loading,
+  //   errors,
+  // };
 
 
   return (
