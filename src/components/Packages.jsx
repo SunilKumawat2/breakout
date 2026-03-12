@@ -9,7 +9,7 @@ import { CommonModal } from "@/components/CommonModal";
 import { useRouter } from "next/navigation";
 
 
-const Packages = ({ packages, hasEventImg = false, category = "", data = {}, className = "" }) => {
+const Packages = ({ packages, hasEventImg = false, category = "birthday", data = {}, className = "" }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);

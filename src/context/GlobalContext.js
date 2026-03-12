@@ -254,7 +254,7 @@ export const GlobalProvider = ({ children }) => {
     try {
       setLoading((prev) => ({ ...prev, costcalculatorquiz: true }));
       const response = await api.get(`/cost-calculator/take?category=${category}`);
-      setCostCalculatorquiz(response.data.data);
+      setCostCalculatorquiz(response?.data?.data || {});
       setErrors((prev) => ({ ...prev, costcalculatorquiz: null }));
     } catch (error) {
       setErrors((prev) => ({ ...prev, costcalculatorquiz: error }));

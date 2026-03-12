@@ -735,11 +735,11 @@ const Step1 = ({ category,goToResult }) => {
 
   /* ---------------- RESET RANGE WHEN QUESTION CHANGES ---------------- */
 
-  useEffect(() => {
-    if (category && typeof fetchcostcalcultorquiz === "function") {
+    useEffect(() => {
+    if (category) {
       fetchcostcalcultorquiz(category);
     }
-  }, [category, fetchcostcalcultorquiz]);
+  }, [category]);
 
   useEffect(() => {
     if (type === "range") {
@@ -904,6 +904,10 @@ const Step1 = ({ category,goToResult }) => {
 
     return checkDate < todayDate;
   };
+
+  if (!questions.length) {
+    return <div>Loading...</div>;
+  }
 
 
   return (
