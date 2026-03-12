@@ -854,68 +854,68 @@ const Step1 = ({ category,goToResult }) => {
   };
 
 
-  useEffect(() => {
-    const totalDays = new Date(year, month + 1, 0).getDate();
-    const arr = Array.from({ length: totalDays }, (_, i) => i + 1);
-    setDays(arr);
+  // useEffect(() => {
+  //   const totalDays = new Date(year, month + 1, 0).getDate();
+  //   const arr = Array.from({ length: totalDays }, (_, i) => i + 1);
+  //   setDays(arr);
 
-    if (
-      year === today.getFullYear() &&
-      month === today.getMonth()
-    ) {
-      setStartIndex(today.getDate() - 1);
-    } else {
-      setStartIndex(0);
-    }
-  }, [year, month]);
+  //   if (
+  //     year === today.getFullYear() &&
+  //     month === today.getMonth()
+  //   ) {
+  //     setStartIndex(today.getDate() - 1);
+  //   } else {
+  //     setStartIndex(0);
+  //   }
+  // }, [year, month]);
 
-  const daysToShow = isMobile ? 5 : 7;
+  // const daysToShow = isMobile ? 5 : 7;
 
-  const visibleDays = days.slice(startIndex, startIndex + daysToShow);
+  // const visibleDays = days.slice(startIndex, startIndex + daysToShow);
 
-  const nextDays = () => {
-    if (startIndex + daysToShow < days.length) {
-      setStartIndex(startIndex + daysToShow);
-    }
-  };
+  // const nextDays = () => {
+  //   if (startIndex + daysToShow < days.length) {
+  //     setStartIndex(startIndex + daysToShow);
+  //   }
+  // };
 
-  const prevDays = () => {
-    if (startIndex - daysToShow >= 0) {
-      setStartIndex(startIndex - daysToShow);
-    }
-  };
+  // const prevDays = () => {
+  //   if (startIndex - daysToShow >= 0) {
+  //     setStartIndex(startIndex - daysToShow);
+  //   }
+  // };
 
-  const formatDate = (date) => {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-  };
+  // const formatDate = (date) => {
+  //   const y = date.getFullYear();
+  //   const m = String(date.getMonth() + 1).padStart(2, "0");
+  //   const d = String(date.getDate()).padStart(2, "0");
+  //   return `${y}-${m}-${d}`;
+  // };
 
 
-  const handleDateSelect = (day) => {
-    const dateObj = new Date(year, month, day);
+  // const handleDateSelect = (day) => {
+  //   const dateObj = new Date(year, month, day);
   
-    setSelectedDate(dateObj);
+  //   setSelectedDate(dateObj);
   
-    const formatted = formatDate(dateObj);
+  //   const formatted = formatDate(dateObj);
   
-    updateQuoteCalculatorValue(`step${question?.id}`, formatted, null);
-  };
+  //   updateQuoteCalculatorValue(`step${question?.id}`, formatted, null);
+  // };
 
-  const isPastDate = (day) => {
-    const checkDate = new Date(year, month, day);
-    checkDate.setHours(0, 0, 0, 0);
+  // const isPastDate = (day) => {
+  //   const checkDate = new Date(year, month, day);
+  //   checkDate.setHours(0, 0, 0, 0);
 
-    const todayDate = new Date();
-    todayDate.setHours(0, 0, 0, 0);
+  //   const todayDate = new Date();
+  //   todayDate.setHours(0, 0, 0, 0);
 
-    return checkDate < todayDate;
-  };
+  //   return checkDate < todayDate;
+  // };
 
-  if (!questions.length) {
-    return <div>Loading...</div>;
-  }
+  // if (!questions.length) {
+  //   return <div>Loading...</div>;
+  // }
 
 
   return (
@@ -925,7 +925,6 @@ const Step1 = ({ category,goToResult }) => {
       animate="visible"
       variants={containerVariants}
     >
-      {/* QUESTION */}
       {
         question?.id && (
           <motion.h2 className="sec-head medium" variants={itemVariants}>
@@ -937,7 +936,6 @@ const Step1 = ({ category,goToResult }) => {
       <div className="quiz-options">
         <motion.div className="row row-gap-25" variants={containerVariants}>
 
-          {/* RADIO */}
 
           {type === "radio" &&
             options.map((opt) => (
@@ -963,7 +961,6 @@ const Step1 = ({ category,goToResult }) => {
               </motion.div>
             ))}
 
-          {/* CHECKBOX */}
 
           {type === "checkbox" &&
             options.map((opt) => (
@@ -988,22 +985,15 @@ const Step1 = ({ category,goToResult }) => {
               </motion.div>
             ))}
 
-          {/* DATE */}
 
-          {type === "date" && (
+          {/* {type === "date" && (
             <motion.div variants={itemVariants} className="col-lg-6 col-12">
-              {/* <input
-                type="date"
-                className="form-control"
-                placeholder={question?.placeholder}
-                onChange={handleDateChange}
-              /> */}
+             
               <div className="col-lg-12 col-12">
                 <div className="calendar-wrapper">
                   <div className="calendar-header">
                     <div
                       className="month-year-select mb-3"
-                    // onClick={() => setShowMonthYear(!showMonthYear)}
                     >
                       <span>
                         {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
@@ -1014,21 +1004,18 @@ const Step1 = ({ category,goToResult }) => {
                             className="calender-btn"
                             onClick={() => setShowMonthYear(!showMonthYear)}
                           >
-                            {/* › */}
                             <Image src={calenderIcon} alt="Calender Icon" />
                           </div>
                         )
 
                         }
                       </span>
-                      {/* <Image src={selectDrop} alt="arrow" /> */}
                     </div>
                   </div>
 
                   <div className="calendar-days-outer">
                     <div className="calendar-days">
                       <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
-                        {/* ‹ */}
                         <Image src={arrowPrev} alt="Previous" />
                       </div>
 
@@ -1060,7 +1047,6 @@ const Step1 = ({ category,goToResult }) => {
                         onClick={nextDays}
                         disabled={startIndex + 7 >= days.length}
                       >
-                        {/* › */}
                         <Image src={arrowNext} alt="Next" />
                       </div>
                       {!isMobile && (
@@ -1068,7 +1054,6 @@ const Step1 = ({ category,goToResult }) => {
                           className="calender-btn"
                           onClick={() => setShowMonthYear(!showMonthYear)}
                         >
-                          {/* › */}
                           <Image src={calenderIcon} alt="Calender Icon" />
                         </div>
                       )
@@ -1113,9 +1098,8 @@ const Step1 = ({ category,goToResult }) => {
                 </div>
               </div>
             </motion.div>
-          )}
+          )} */}
 
-          {/* RANGE */}
 
           {type === "range" && (
             <>
@@ -1137,7 +1121,6 @@ const Step1 = ({ category,goToResult }) => {
                   />
                 </div>
 
-                {/* RANGE LABELS */}
 
                 <div
                   className="range-values"
@@ -1164,8 +1147,6 @@ const Step1 = ({ category,goToResult }) => {
                   })}
                 </div>
 
-                {/* CURRENT VALUE */}
-
                 <span
                   style={{
                     fontWeight: "bold",
@@ -1179,8 +1160,6 @@ const Step1 = ({ category,goToResult }) => {
               </motion.div>
             </>
           )}
-
-          {/* CHECKBOX */}
 
           {type === "select" &&
             options.map((opt) => (
