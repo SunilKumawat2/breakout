@@ -665,7 +665,9 @@ const Step1 = ({ category,goToResult }) => {
     useGlobalContext();
 
     console.log("costcalculatorquiz_costcalculatorquiz", costcalculatorquiz?.questions)
-  const questions = costcalculatorquiz?.questions || [];
+    const questions = Array.isArray(costcalculatorquiz?.questions)
+    ? costcalculatorquiz.questions
+    : [];
   const [currentStep, setCurrentStep] = useState(0);
 
   const question = questions[currentStep];
@@ -677,10 +679,12 @@ const Step1 = ({ category,goToResult }) => {
   const totalSteps = questions.length;
 
   const [checkboxValues, setCheckboxValues] = useState([]);
-  const [rangeValue, setRangeValue] = useState(range?.min || 0);
+  const [rangeValue, setRangeValue] = useState(0);
 
   const selectedValue =
-  quoteCalculatorValues?.[`step${question?.id}`]?.value || null;
+  question?.id
+    ? quoteCalculatorValues?.[`step${question.id}`]?.value
+    : null;
   /* ================= CALENDAR LOGIC ================= */
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
@@ -740,6 +744,10 @@ const Step1 = ({ category,goToResult }) => {
       fetchcostcalcultorquiz(category);
     }
   }, [category]);
+
+  useEffect(() => {
+    setCheckboxValues([]);
+  }, [question]);
 
   useEffect(() => {
     if (type === "range") {
@@ -817,9 +825,9 @@ const Step1 = ({ category,goToResult }) => {
   /* ---------------- FIX STEP IF API STEP IS INVALID ---------------- */
 
   const stepValue =
-    range?.step > range?.max - range?.min
-      ? Math.ceil((range?.max - range?.min) / 5)
-      : range?.step || 1;
+  range && range.step > range.max - range.min
+    ? Math.ceil((range.max - range.min) / 5)
+    : range?.step || 1;
 
   /* ---------------- DYNAMIC LABELS ---------------- */
 
@@ -866,13 +874,13 @@ const Step1 = ({ category,goToResult }) => {
   const visibleDays = days.slice(startIndex, startIndex + daysToShow);
 
   const nextDays = () => {
-    if (startIndex + 7 < days.length) {
+    if (startIndex + daysToShow < days.length) {
       setStartIndex(startIndex + daysToShow);
     }
   };
 
   const prevDays = () => {
-    if (startIndex - 7 >= 0) {
+    if (startIndex - daysToShow >= 0) {
       setStartIndex(startIndex - daysToShow);
     }
   };

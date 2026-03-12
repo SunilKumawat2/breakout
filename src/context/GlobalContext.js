@@ -253,7 +253,7 @@ export const GlobalProvider = ({ children }) => {
   const fetchcostcalcultorquiz = async (category) => {
     try {
       setLoading((prev) => ({ ...prev, costcalculatorquiz: true }));
-      const response = await api.get(`/cost-calculator/take?category="birthday`);
+      const response = await api.get(`/cost-calculator/take?category=${category}`);
       setCostCalculatorquiz(response?.data?.data || {});
       setErrors((prev) => ({ ...prev, costcalculatorquiz: null }));
     } catch (error) {
