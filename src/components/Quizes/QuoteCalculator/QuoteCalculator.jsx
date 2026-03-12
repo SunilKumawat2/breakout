@@ -66,7 +66,7 @@ const QuoteCalculator = ({ category }) => {
             <Step3 setEstimatedQuote={setEstimatedQuote} category={category} />
           );
         default:
-          return <Step1 goToResult={() => setCurrentStep(2)}/>;
+          return <Step1 category={category} goToResult={() => setCurrentStep(2)}/>;
       }
     };
   }

@@ -251,11 +251,17 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const fetchcostcalcultorquiz = async (category) => {
+    if (!category) return;   // ✅ safety
+  
     try {
       setLoading((prev) => ({ ...prev, costcalculatorquiz: true }));
-      const response = await api.get(`/cost-calculator/take?category=${category}`);
+  
+      const response = await api.get(
+        `/cost-calculator/take?category=${category}`
+      );
+  
       setCostCalculatorquiz(response?.data?.data || {});
-      setErrors((prev) => ({ ...prev, costcalculatorquiz: null }));
+  
     } catch (error) {
       setErrors((prev) => ({ ...prev, costcalculatorquiz: error }));
     } finally {
@@ -471,7 +477,7 @@ export const GlobalProvider = ({ children }) => {
     fetchPrivacyPolicy();
     fetchRefundPolicy();
     fetchTermsServies();
-    fetchcostcalcultorquiz();
+    // fetchcostcalcultorquiz();
   }, []);
 
   // Refresh functions for manual data updates
