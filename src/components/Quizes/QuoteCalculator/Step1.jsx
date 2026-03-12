@@ -735,11 +735,11 @@ const Step1 = ({ category,goToResult }) => {
 
   /* ---------------- RESET RANGE WHEN QUESTION CHANGES ---------------- */
 
-    useEffect(() => {
-    if (category) {
+  useEffect(() => {
+    if (category && typeof fetchcostcalcultorquiz === "function") {
       fetchcostcalcultorquiz(category);
     }
-  }, [category]);
+  }, [category, fetchcostcalcultorquiz]);
 
   useEffect(() => {
     if (type === "range") {
