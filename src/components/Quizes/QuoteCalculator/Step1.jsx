@@ -747,19 +747,19 @@ const Step1 = ({ category,goToResult }) => {
     }
   }, [question]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  // useEffect(() => {
+  //   if (typeof window === "undefined") return;
 
-    const refreshed = sessionStorage.getItem("page_refreshed");
+  //   const refreshed = sessionStorage.getItem("page_refreshed");
 
-    if (refreshed === null) {
-      sessionStorage.setItem("page_refreshed", "1");
+  //   if (refreshed === null) {
+  //     sessionStorage.setItem("page_refreshed", "1");
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    }
-  }, []);
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 1000);
+  //   }
+  // }, []);
   /* ---------------- NEXT / PREV ---------------- */
 
   const handleNext = () => {
