@@ -19,6 +19,7 @@ export const GlobalProvider = ({ children }) => {
   // State for different API data
     // BLOG SLUG STATE (FIX)
     const [blogSlug, setBlogSlug] = useState(null);
+    const [categorySlug, setCategorySlug] = useState(null);
   const [escaperoomLocations, setEscaperoomLocations] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const [newsLogo, setNewsLogo] = useState(null);
@@ -34,7 +35,7 @@ export const GlobalProvider = ({ children }) => {
   const [getrefundpolicy, setRefundPolicy] = useState(null);
   const [gettermservies, setTermServies] = useState(null);
   const [venuefinderquiz, setVenueFinderquiz] = useState(null);
-  const [costcalculatorquiz, setCostCalculatorquiz] = useState(null);
+  const [quotecalculatorquiz, setQuotecalculatorquiz] = useState(null);
   const [finderQuizValues, setFinderQuizValues] = useState({
     step1: {
       value: null,
@@ -59,7 +60,7 @@ export const GlobalProvider = ({ children }) => {
   });
   const [quoteCalculatorValues, setQuoteCalculatorValues] = useState({
     step1: {
-      value: [0, 5],
+      value: null,
       error: null,
     },
     step2: {
@@ -109,7 +110,7 @@ export const GlobalProvider = ({ children }) => {
     getrefundpolicy:true,
     gettermservies:true,
     venuefinderquiz:true,
-    costcalculatorquiz:true
+    quotecalculatorquiz:true
   });
 
   // Error states
@@ -128,7 +129,7 @@ export const GlobalProvider = ({ children }) => {
     getrefundpolicy:null,
     gettermservies:null,
     venuefinderquiz:null,
-    costcalculatorquiz:null
+    quotecalculatorquiz:null
   });
 
     // -----------------------------
@@ -139,6 +140,15 @@ export const GlobalProvider = ({ children }) => {
     if (slug) setBlogSlug(slug);
   }, []);
 
+      // -----------------------------
+  // LOAD BLOG SLUG FROM STORAGE
+  // -----------------------------
+  useEffect(() => {
+    const slug = sessionStorage.getItem("category");
+    if (slug) setCategorySlug(slug);
+  }, []);
+
+
   // -----------------------------
   // QUIZ FETCH WHEN SLUG READY
   // -----------------------------
@@ -147,6 +157,12 @@ export const GlobalProvider = ({ children }) => {
       fetchVenuefinderquiz(blogSlug);
     }
   }, [blogSlug]);
+
+  useEffect(() => {
+    if (categorySlug) {
+      fetchQuotecalculatorquiz(categorySlug);
+    }
+  }, [categorySlug]);
 
   const updateFinderQuizValue = (step, value, error) => {
     setFinderQuizValues((prev) => ({
@@ -237,7 +253,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const fetchVenuefinderquiz = async () => {
-    if (!blogSlug) return; // wait until blogSlug is loaded
+    if (!blogSlug) return; 
     try {
       setLoading((prev) => ({ ...prev, venuefinderquiz: true }));
       const response = await api.get(`/quiz/${blogSlug}/take`);
@@ -250,22 +266,17 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  const fetchcostcalcultorquiz = async (category) => {
-    if (!category) return;   // ✅ safety
-  
+  const fetchQuotecalculatorquiz = async () => {
+    if (!categorySlug) return;   // ✅ safety
     try {
-      setLoading((prev) => ({ ...prev, costcalculatorquiz: true }));
-  
-      const response = await api.get(
-        `/cost-calculator/take?category=${category}`
-      );
-  
-      setCostCalculatorquiz(response?.data?.data || {});
-     setErrors((prev)=>({...prev,costcalculatorquiz:null}))
+      setLoading((prev) => ({ ...prev, quotecalculatorquiz: true }));
+      const response = await api.get(`/cost-calculator/take?category=${categorySlug}`);
+      setQuotecalculatorquiz(response?.data?.data || {});
+     setErrors((prev)=>({...prev,quotecalculatorquiz:null}))
     } catch (error) {
-      setErrors((prev) => ({ ...prev, costcalculatorquiz: error }));
+      setErrors((prev) => ({ ...prev, quotecalculatorquiz: error }));
     } finally {
-      setLoading((prev) => ({ ...prev, costcalculatorquiz: false }));
+      setLoading((prev) => ({ ...prev, quotecalculatorquiz: false }));
     }
   };
 
@@ -343,7 +354,7 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  const costcalcultorquizresposesubmit = async (bookingData) => {
+  const Quotecalcultorquizresposesubmit = async (bookingData) => {
     try {
       const response = await api.post(`/cost-calculator/respond`, bookingData);
       return response.data;
@@ -478,7 +489,6 @@ export const GlobalProvider = ({ children }) => {
     fetchRefundPolicy();
     fetchTermsServies();
     fetchThirdPartyGames()
-    // fetchcostcalcultorquiz();
   }, []);
 
   // Refresh functions for manual data updates
@@ -496,7 +506,7 @@ export const GlobalProvider = ({ children }) => {
     getrefundpolicy:fetchRefundPolicy,
     gettermservies:fetchTermsServies,
     venuefinderquiz:fetchVenuefinderquiz,
-    costcalculatorquiz:fetchcostcalcultorquiz,
+    quotecalculatorquiz:fetchQuotecalculatorquiz,
   };
 
   const value = {
@@ -518,7 +528,7 @@ export const GlobalProvider = ({ children }) => {
     venuefinderquiz,
     finderQuizValues,
     quoteCalculatorValues,
-    costcalculatorquiz,
+    quotecalculatorquiz,
     costCalculatorValues,
     updateFinderQuizValue,
     updateQuoteCalculatorValue,
@@ -550,8 +560,9 @@ export const GlobalProvider = ({ children }) => {
     fetchRefundPolicy,
     fetchTermsServies,
     fetchVenuefinderquiz,
-    costcalcultorquizresposesubmit,
-     fetchcostcalcultorquiz,
+    Quotecalcultorquizresposesubmit,
+     fetchQuotecalculatorquiz,
+     quizresposesubmit
   };
 
   return (

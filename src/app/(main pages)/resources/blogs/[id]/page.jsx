@@ -121,6 +121,15 @@ console.log("sdnfkhsdfgsjdgfjsh",blogData)
   
     return () => clearTimeout(timer);
   }, [id]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      sessionStorage.setItem("category", "birthday");
+    }, 1500);
+  
+    return () => clearTimeout(timer);
+  }, ["birthday"]);
+
   useEffect(() => {
     if (!id) return;
 

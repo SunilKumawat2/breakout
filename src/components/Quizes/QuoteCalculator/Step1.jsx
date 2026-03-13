@@ -1,108 +1,27 @@
 // "use client";
-// import React, { useEffect, useState } from "react";
+// import React, { useState, useEffect } from "react";
 // import { motion } from "framer-motion";
+// import { useGlobalContext } from "@/context/GlobalContext";
 // import RangeSlider from "react-range-slider-input";
 // import "react-range-slider-input/dist/style.css";
-// import { useGlobalContext } from "@/context/GlobalContext";
+// import arrowPrev from "@/images/chev-left.svg";
+// import arrowNext from "@/images/chev-right.svg";
+// import calenderIcon from "@/images/calendar-btn.svg";
+// import Image from "next/image";
 
-// // Custom styles for the slider to match the provided image
-// const sliderStyles = `
-//   .custom-range-slider {
-//     --slider-bg: #2D3030;
-//     --slider-track-bg: #474A4A;
-//     --slider-thumb-bg: #ffb32c;
-//     --slider-thumb-border: #ffb32c;
-//     --slider-thumb-size: 24px;
-//     --slider-thumb-shadow: 0 2px 8px rgba(0,0,0,0.15);
-//     --slider-track-height: 8px;
-//     --slider-tick-color: #aaa;
-//     --slider-label-color: #fff;
-//     width: 100%;
-//     padding: 0 0px;
-//     margin-bottom: 8px;
-//   }
-    
-//     .range-slider > div:nth-child(2) {
-//     transform: translateX(-100%) translateY(-50%);
-//     }
-//   .range-slider, .range-slider__range{
-//     padding: 10px 0px;
-//     border-radius: 10px !important;
-//   }
-//     .range-slider{
-//     background: #2D3030;
-//     }
-//   .custom-range-slider .range-slider__range {
-//     background: var(--slider-track-bg);
-//     height: var(--slider-track-height);
-//     border-radius: 6px;
-//     border: 1px solid #ffb32c;
-//   }
-//   .custom-range-slider .range-slider__thumb {
-//     background: var(--slider-thumb-bg);
-//     border: 2px solid var(--slider-thumb-border);
-//     box-shadow: var(--slider-thumb-shadow);
-//     width: var(--slider-thumb-size);
-//     height: var(--slider-thumb-size);
-//     top: 50%;
-//     transform: translateY(-50%);
-//     transition: all 0.3s ease;
-//   }
-//   .custom-range-slider .range-slider__thumb[data-active="true"] {
-//     box-shadow: 0 0 0 4px rgba(255,179,44,0.2);
-//   }
-//   .custom-range-slider .range-slider__range {
-//     background: var(--slider-track-bg);
-//   }
-//   .custom-range-slider .range-slider__track {
-//     background: var(--slider-bg);
-//     height: var(--slider-track-height);
-//     border-radius: 6px;
-//   }
-//   .custom-range-slider .range-slider__range {
-//     background: var(--slider-track-bg);
-//   }
-//   .custom-range-slider .range-slider__thumb {
-//     z-index: 2;
-//   }
-//   .custom-range-slider .range-slider__range {
-//     z-index: 1;
-//   }
-//   .custom-range-slider .range-slider__track {
-//     z-index: 0;
-//   }
-//   .custom-range-slider .range-slider__range {
-//     background: var(--slider-track-bg);
-//   }
-//   .custom-range-slider .range-slider__thumb {
-//     transition: box-shadow 0.2s;
-//   }
-//   .custom-range-slider .range-slider__range {
-//     background: var(--slider-track-bg);
-//   }
-//   .custom-range-slider .range-slider__track {
-//     background: var(--slider-bg);
-//   }
-//   .custom-range-slider .range-slider__thumb {
-//     background: var(--slider-thumb-bg);
-//     border: 2px solid var(--slider-thumb-border);
-//   }
-//   .custom-range-slider .range-slider__thumb:focus {
-//     outline: none;
-//     box-shadow: 0 0 0 4px rgba(255,179,44,0.2);
-//   }
-// `;
-
-// const Step1 = ({ category }) => {
-//   // Single value, default 20
-//   const { updateQuoteCalculatorValue, quoteCalculatorValues, costcalculatorquiz, fetchcostcalcultorquiz } =
+// const Step1 = ({ category,goToResult }) => {
+//   const { updateQuoteCalculatorValue, quoteCalculatorValues,
+//      quotecalculatorquiz } =
 //     useGlobalContext();
-//   console.log("costcalculatorquiz_costcalculatorquiz", costcalculatorquiz?.questions)
-//   const questions = costcalculatorquiz?.questions || [];
+
+//     console.log("costcalculatorquiz_costcalculatorquiz", quotecalculatorquiz)
+//     const questions = Array.isArray(quotecalculatorquiz?.questions)
+//     ? quotecalculatorquiz.questions
+//     : [];
 //   const [currentStep, setCurrentStep] = useState(0);
 
 //   const question = questions[currentStep];
-//   console.log("sdbfgsdjfgsdhfjsdgf", costcalculatorquiz)
+//   console.log("sdbfgsdjfgsdhfjsdgf", quotecalculatorquiz)
 //   const options = question?.options || [];
 //   const type = question?.type;
 //   const range = question?.range;
@@ -110,11 +29,12 @@
 //   const totalSteps = questions.length;
 
 //   const [checkboxValues, setCheckboxValues] = useState([]);
-//   const [rangeValue, setRangeValue] = useState(range?.min || 0);
+//   const [rangeValue, setRangeValue] = useState(0);
 
 //   const selectedValue =
-//     costcalculatorquiz?.[`step${question?.id}`]?.value || null;
-//   const [value, setValue] = useState(quoteCalculatorValues.step1.value);
+//   question?.id
+//     ? quoteCalculatorValues?.[`step${question.id}`]?.value
+//     : null;
 //   /* ================= CALENDAR LOGIC ================= */
 //   const today = new Date();
 //   const [year, setYear] = useState(today.getFullYear());
@@ -124,34 +44,60 @@
 //   const [showMonthYear, setShowMonthYear] = useState(false);
 //   const [selectedDate, setSelectedDate] = useState(null);
 //   const [isMobile, setIsMobile] = useState(false);
-//   // const containerVariants = {
-//   //   hidden: { opacity: 0 },
-//   //   visible: {
-//   //     opacity: 1,
-//   //     transition: {
-//   //       staggerChildren: 0.1,
-//   //     },
-//   //   },
-//   // };
 
-//   // const itemVariants = {
-//   //   hidden: { y: 20, opacity: 0 },
-//   //   visible: {
-//   //     y: 0,
-//   //     opacity: 1,
-//   //     transition: {
-//   //       duration: 0.5,
-//   //     },
-//   //   },
-//   // };
+//   const sliderStyles = `
+//   .custom-range-slider {
+//     --slider-bg: #2D3030;
+//     --slider-track-bg: #474A4A;
+//     --slider-thumb-bg: #ffb32c;
+//     --slider-thumb-border: #ffb32c;
+//     --slider-thumb-size: 24px;
+//     --slider-thumb-shadow: 0 2px 8px rgba(0,0,0,0.15);
+//     --slider-track-height: 8px;
+//     width: 100%;
+//     padding: 0;
+//     margin-bottom: 8px;
+//   }
 
-//   useEffect(() => {
-//     if (category) {
-//       fetchcostcalcultorquiz(category);
-//     }
-//   }, [category]);
+//   .range-slider {
+//     background: #2D3030;
+//     padding: 10px 0;
+//     border-radius: 10px !important;
+//   }
+
+//   .range-slider__range {
+//     background: transparent !important;
+//     height: var(--slider-track-height);
+//     border-radius: 6px;
+//     border: 1px solid #ffb32c;
+//   }
+
+//   .range-slider__thumb {
+//     background: #ffb32c !important;
+//     border: 2px solid var(--slider-thumb-border);
+//     box-shadow: var(--slider-thumb-shadow);
+//     width: var(--slider-thumb-size);
+//     height: var(--slider-thumb-size);
+//     top: 50%;
+//     transform: translateY(-50%);
+//   }
+
+//   .range-slider__thumb[data-active="true"] {
+//     box-shadow: 0 0 0 4px rgba(255,179,44,0.2);
+//   }
+// `;
 
 //   /* ---------------- RESET RANGE WHEN QUESTION CHANGES ---------------- */
+
+//   //   useEffect(() => {
+//   //   if (category) {
+//   //     fetchcostcalcultorquiz(category);
+//   //   }
+//   // }, [category]);
+
+//   useEffect(() => {
+//     setCheckboxValues([]);
+//   }, [question]);
 
 //   useEffect(() => {
 //     if (type === "range") {
@@ -159,19 +105,19 @@
 //     }
 //   }, [question]);
 
-//   useEffect(() => {
-//     if (typeof window === "undefined") return;
+//   // useEffect(() => {
+//   //   if (typeof window === "undefined") return;
 
-//     const refreshed = sessionStorage.getItem("page_refreshed");
+//   //   const refreshed = sessionStorage.getItem("page_refreshed");
 
-//     if (refreshed === null) {
-//       sessionStorage.setItem("page_refreshed", "1");
+//   //   if (refreshed === null) {
+//   //     sessionStorage.setItem("page_refreshed", "1");
 
-//       setTimeout(() => {
-//         window.location.reload();
-//       }, 1000);
-//     }
-//   }, []);
+//   //     setTimeout(() => {
+//   //       window.location.reload();
+//   //     }, 1000);
+//   //   }
+//   // }, []);
 //   /* ---------------- NEXT / PREV ---------------- */
 
 //   const handleNext = () => {
@@ -229,9 +175,9 @@
 //   /* ---------------- FIX STEP IF API STEP IS INVALID ---------------- */
 
 //   const stepValue =
-//     range?.step > range?.max - range?.min
-//       ? Math.ceil((range?.max - range?.min) / 5)
-//       : range?.step || 1;
+//   range && range.step > range.max - range.min
+//     ? Math.ceil((range.max - range.min) / 5)
+//     : range?.step || 1;
 
 //   /* ---------------- DYNAMIC LABELS ---------------- */
 
@@ -278,13 +224,13 @@
 //   const visibleDays = days.slice(startIndex, startIndex + daysToShow);
 
 //   const nextDays = () => {
-//     if (startIndex + 7 < days.length) {
+//     if (startIndex + daysToShow < days.length) {
 //       setStartIndex(startIndex + daysToShow);
 //     }
 //   };
 
 //   const prevDays = () => {
-//     if (startIndex - 7 >= 0) {
+//     if (startIndex - daysToShow >= 0) {
 //       setStartIndex(startIndex - daysToShow);
 //     }
 //   };
@@ -299,11 +245,11 @@
 
 //   const handleDateSelect = (day) => {
 //     const dateObj = new Date(year, month, day);
-
+  
 //     setSelectedDate(dateObj);
-
+  
 //     const formatted = formatDate(dateObj);
-
+  
 //     updateQuoteCalculatorValue(`step${question?.id}`, formatted, null);
 //   };
 
@@ -317,336 +263,392 @@
 //     return checkDate < todayDate;
 //   };
 
-//   // Handler for single value slider
-//   // const handleSliderInput = (val) => {
-//   //   // val is a number, not an array
-//   //   setValue(val);
-//   //   updateQuoteCalculatorValue("step1", val, null);
-//   // };
+//   // if (!questions.length) {
+//   //   return <div>Loading...</div>;
+//   // }
+
 
 //   return (
-//     <>
-//       <style>{sliderStyles}</style>
-//       <motion.div
-//         className="quiz-step"
-//         initial="hidden"
-//         animate="visible"
-//         variants={containerVariants}
-//       >
-//         {/* <motion.h2 className="sec-head medium" variants={itemVariants}>
-//           <span>#1</span> How many people are attending?
-//         </motion.h2> */}
-//         {
-//           question?.id && (
-//             <motion.h2 className="sec-head medium" variants={itemVariants}>
-//               <span>Q{question?.id}:</span> {question?.text}
-//             </motion.h2>
-//           )
-//         }
-//         <motion.div className="quiz-options" variants={containerVariants}>
-//           <motion.div
-//             className="range-selector-wrapper custom-range-slider"
-//             variants={itemVariants}
-//           >
-//             {/* RADIO */}
+//     <motion.div
+//       className="quiz-step"
+//       initial="hidden"
+//       animate="visible"
+//       variants={containerVariants}
+//     >
+//       {
+//         question?.id && (
+//           <motion.h2 className="sec-head medium" variants={itemVariants}>
+//             <span>Q{question?.id}:</span> {question?.text}
+//           </motion.h2>
+//         )
+//       }
 
-//             {type === "radio" &&
-//               options.map((opt) => (
-//                 <motion.div
-//                   className="col-lg-6 col-12"
-//                   variants={itemVariants}
-//                   key={opt.id}
-//                 >
-//                   <div className="quiz-option">
-//                     <input
-//                       type="radio"
-//                       className="form-check-input"
-//                       name={`quiz-${question?.id}`}
-//                       id={opt.id}
-//                       value={opt.value}
-//                       checked={selectedValue === opt.value}
-//                       onChange={handleRadioChange}
-//                     />
-//                     <label htmlFor={opt.id}>
-//                       <span>{opt.label || opt.value}</span>
-//                     </label>
-//                   </div>
-//                 </motion.div>
-//               ))}
-
-//             {/* CHECKBOX */}
-
-//             {type === "checkbox" &&
-//               options.map((opt) => (
-//                 <motion.div
-//                   className="col-lg-6 col-12"
-//                   variants={itemVariants}
-//                   key={opt.id}
-//                 >
-//                   <div className="quiz-option">
-//                     <input
-//                       type="checkbox"
-//                       className="form-check-input"
-//                       id={opt.id}
-//                       value={opt.value}
-//                       checked={checkboxValues.includes(opt.value)}
-//                       onChange={handleCheckboxChange}
-//                     />
-//                     <label htmlFor={opt.id}>
-//                       <span>{opt.label || opt.value}</span>
-//                     </label>
-//                   </div>
-//                 </motion.div>
-//               ))}
-
-//             {/* DATE */}
-
-//             {type === "date" && (
-//               <motion.div variants={itemVariants} className="col-lg-6 col-12">
-//                 {/* <input
-//                 type="date"
-//                 className="form-control"
-//                 placeholder={question?.placeholder}
-//                 onChange={handleDateChange}
-//               /> */}
-//                 <div className="col-lg-12 col-12">
-//                   <div className="calendar-wrapper">
-//                     <div className="calendar-header">
-//                       <div
-//                         className="month-year-select mb-3"
-//                       // onClick={() => setShowMonthYear(!showMonthYear)}
-//                       >
-//                         <span>
-//                           {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
-//                         </span>
-//                         <span>
-//                           {isMobile && (
-//                             <div
-//                               className="calender-btn"
-//                               onClick={() => setShowMonthYear(!showMonthYear)}
-//                             >
-//                               {/* › */}
-//                               <Image src={calenderIcon} alt="Calender Icon" />
-//                             </div>
-//                           )
-
-//                           }
-//                         </span>
-//                         {/* <Image src={selectDrop} alt="arrow" /> */}
-//                       </div>
-//                     </div>
-
-//                     <div className="calendar-days-outer">
-//                       <div className="calendar-days">
-//                         <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
-//                           {/* ‹ */}
-//                           <Image src={arrowPrev} alt="Previous" />
-//                         </div>
-
-//                         {visibleDays.map((day) => {
-//                           const past = isPastDate(day);
-
-//                           return (
-//                             <div
-//                               key={day}
-//                               onClick={() => {
-//                                 if (!past) handleDateSelect(day);
-//                               }}
-//                               className={`day ${past ? "disabled" : ""} ${selectedDate &&
-//                                 selectedDate.getDate() === day &&
-//                                 selectedDate.getMonth() === month &&
-//                                 selectedDate.getFullYear() === year
-//                                 ? "active"
-//                                 : ""
-//                                 }`}
-//                             >
-//                               {day}
-//                             </div>
-//                           );
-//                         })}
+//       <div className="quiz-options">
+//         <motion.div className="row row-gap-25" variants={containerVariants}>
 
 
-//                         <div
-//                           className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
-//                           onClick={nextDays}
-//                           disabled={startIndex + 7 >= days.length}
-//                         >
-//                           {/* › */}
-//                           <Image src={arrowNext} alt="Next" />
-//                         </div>
-//                         {!isMobile && (
+//           {type === "radio" &&
+//             options.map((opt) => (
+//               <motion.div
+//                 className="col-lg-6 col-12"
+//                 variants={itemVariants}
+//                 key={opt.id}
+//               >
+//                 <div className="quiz-option">
+//                   <input
+//                     type="radio"
+//                     className="form-check-input"
+//                     name={`quiz-${question?.id}`}
+//                     id={opt.id}
+//                     value={opt.value}
+//                     checked={selectedValue === opt.value}
+//                     onChange={handleRadioChange}
+//                   />
+//                   <label htmlFor={opt.id}>
+//                     <span>{opt.label || opt.value}</span>
+//                   </label>
+//                 </div>
+//               </motion.div>
+//             ))}
+
+
+//           {type === "checkbox" &&
+//             options.map((opt) => (
+//               <motion.div
+//                 className="col-lg-6 col-12"
+//                 variants={itemVariants}
+//                 key={opt.id}
+//               >
+//                 <div className="quiz-option">
+//                   <input
+//                     type="checkbox"
+//                     className="form-check-input"
+//                     id={opt.id}
+//                     value={opt.value}
+//                     checked={checkboxValues.includes(opt.value)}
+//                     onChange={handleCheckboxChange}
+//                   />
+//                   <label htmlFor={opt.id}>
+//                     <span>{opt.label || opt.value}</span>
+//                   </label>
+//                 </div>
+//               </motion.div>
+//             ))}
+
+
+//           {type === "date" && (
+//             <motion.div variants={itemVariants} className="col-lg-6 col-12">
+             
+//               <div className="col-lg-12 col-12">
+//                 <div className="calendar-wrapper">
+//                   <div className="calendar-header">
+//                     <div
+//                       className="month-year-select mb-3"
+//                     >
+//                       <span>
+//                         {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
+//                       </span>
+//                       <span>
+//                         {isMobile && (
 //                           <div
 //                             className="calender-btn"
 //                             onClick={() => setShowMonthYear(!showMonthYear)}
 //                           >
-//                             {/* › */}
 //                             <Image src={calenderIcon} alt="Calender Icon" />
 //                           </div>
 //                         )
+
 //                         }
-//                       </div>
-
-//                       {showMonthYear && (
-//                         <div className="month-year-dropdown">
-//                           <div className="months">
-//                             {Array.from({ length: 12 }).map((_, i) => (
-//                               <div
-//                                 key={i}
-//                                 className={`option ${month === i ? "active" : ""}`}
-//                                 onClick={() => {
-//                                   setMonth(i);
-//                                   setShowMonthYear(false);
-//                                 }}
-//                               >
-//                                 {new Date(0, i).toLocaleString("default", { month: "long" })}
-//                               </div>
-//                             ))}
-//                           </div>
-
-//                           <div className="years">
-//                             {[2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((y) => (
-//                               <div
-//                                 key={y}
-//                                 className={`option ${year === y ? "active" : ""}`}
-//                                 onClick={() => {
-//                                   setYear(y);
-//                                   setShowMonthYear(false);
-//                                 }}
-//                               >
-//                                 {y}
-//                               </div>
-//                             ))}
-//                           </div>
-//                         </div>
-//                       )}
-
+//                       </span>
 //                     </div>
 //                   </div>
+
+//                   <div className="calendar-days-outer">
+//                     <div className="calendar-days">
+//                       <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+//                         <Image src={arrowPrev} alt="Previous" />
+//                       </div>
+
+//                       {visibleDays.map((day) => {
+//                         const past = isPastDate(day);
+
+//                         return (
+//                           <div
+//                             key={day}
+//                             onClick={() => {
+//                               if (!past) handleDateSelect(day);
+//                             }}
+//                             className={`day ${past ? "disabled" : ""} ${selectedDate &&
+//                               selectedDate.getDate() === day &&
+//                               selectedDate.getMonth() === month &&
+//                               selectedDate.getFullYear() === year
+//                               ? "active"
+//                               : ""
+//                               }`}
+//                           >
+//                             {day}
+//                           </div>
+//                         );
+//                       })}
+
+
+//                       <div
+//                         className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
+//                         onClick={nextDays}
+//                         disabled={startIndex + 7 >= days.length}
+//                       >
+//                         <Image src={arrowNext} alt="Next" />
+//                       </div>
+//                       {!isMobile && (
+//                         <div
+//                           className="calender-btn"
+//                           onClick={() => setShowMonthYear(!showMonthYear)}
+//                         >
+//                           <Image src={calenderIcon} alt="Calender Icon" />
+//                         </div>
+//                       )
+//                       }
+//                     </div>
+
+//                     {showMonthYear && (
+//                       <div className="month-year-dropdown">
+//                         <div className="months">
+//                           {Array.from({ length: 12 }).map((_, i) => (
+//                             <div
+//                               key={i}
+//                               className={`option ${month === i ? "active" : ""}`}
+//                               onClick={() => {
+//                                 setMonth(i);
+//                                 setShowMonthYear(false);
+//                               }}
+//                             >
+//                               {new Date(0, i).toLocaleString("default", { month: "long" })}
+//                             </div>
+//                           ))}
+//                         </div>
+
+//                         <div className="years">
+//                           {[2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((y) => (
+//                             <div
+//                               key={y}
+//                               className={`option ${year === y ? "active" : ""}`}
+//                               onClick={() => {
+//                                 setYear(y);
+//                                 setShowMonthYear(false);
+//                               }}
+//                             >
+//                               {y}
+//                             </div>
+//                           ))}
+//                         </div>
+//                       </div>
+//                     )}
+
+//                   </div>
+//                 </div>
+//               </div>
+//             </motion.div>
+//           )}
+
+
+//           {type === "range" && (
+//             <>
+//               <style>{sliderStyles}</style>
+//               <motion.div
+//                 className="range-selector-wrapper custom-range-slider col-lg-12"
+//                 variants={itemVariants}
+//               >
+//                 <div style={{ width: "100%", margin: "20px 0" }}>
+//                   <RangeSlider
+//                     className="single-thumb"
+//                     min={range?.min || 0}
+//                     max={range?.max || 100}
+//                     step={stepValue}
+//                     value={[range?.min || 0, rangeValue]}
+//                     thumbsDisabled={[true, false]}
+//                     rangeSlideDisabled={true}
+//                     onInput={handleSliderInput}
+//                   />
+//                 </div>
+
+
+//                 <div
+//                   className="range-values"
+//                   style={{
+//                     display: "flex",
+//                     justifyContent: "space-between",
+//                     marginTop: "10px",
+//                   }}
+//                 >
+//                   {labels.map((label) => {
+//                     const isActive = rangeValue === label;
+
+//                     return (
+//                       <span
+//                         key={label}
+//                         style={{
+//                           fontWeight: isActive ? "bold" : "normal",
+//                           color: isActive ? "#000" : "#888",
+//                         }}
+//                       >
+//                         {label}
+//                       </span>
+//                     );
+//                   })}
+//                 </div>
+
+//                 <span
+//                   style={{
+//                     fontWeight: "bold",
+//                     fontSize: "1.2em",
+//                     marginTop: "10px",
+//                     display: "block",
+//                   }}
+//                 >
+//                   {range?.prefix} {rangeValue} {range?.suffix}
+//                 </span>
+//               </motion.div>
+//             </>
+//           )}
+
+//           {type === "select" &&
+//             options.map((opt) => (
+//               <motion.div
+//                 className="col-lg-6 col-12"
+//                 variants={itemVariants}
+//                 key={opt.id}
+//               >
+//                 <div className="quiz-option">
+//                   <input
+//                     type="checkbox"
+//                     className="form-check-input"
+//                     id={opt.id}
+//                     value={opt.value}
+//                     checked={checkboxValues.includes(opt.value)}
+//                     onChange={handleCheckboxChange}
+//                   />
+//                   <label htmlFor={opt.id}>
+//                     <span>{opt.label || opt.value}</span>
+//                   </label>
 //                 </div>
 //               </motion.div>
-//             )}
-
-//             {/* RANGE */}
-
-//             {type === "range" && (
-//               <>
-//                 <style>{sliderStyles}</style>
-//                 <motion.div
-//                   className="range-selector-wrapper custom-range-slider col-lg-12"
-//                   variants={itemVariants}
-//                 >
-//                   <div style={{ width: "100%", margin: "20px 0" }}>
-//                     <RangeSlider
-//                       className="single-thumb"
-//                       min={range?.min || 0}
-//                       max={range?.max || 100}
-//                       step={stepValue}
-//                       value={[range?.min || 0, rangeValue]}
-//                       thumbsDisabled={[true, false]}
-//                       rangeSlideDisabled={true}
-//                       onInput={handleSliderInput}
-//                     />
-//                   </div>
-
-//                   {/* RANGE LABELS */}
-
-//                   <div
-//                     className="range-values"
-//                     style={{
-//                       display: "flex",
-//                       justifyContent: "space-between",
-//                       marginTop: "10px",
-//                     }}
-//                   >
-//                     {labels.map((label) => {
-//                       const isActive = rangeValue === label;
-
-//                       return (
-//                         <span
-//                           key={label}
-//                           style={{
-//                             fontWeight: isActive ? "bold" : "normal",
-//                             color: isActive ? "#000" : "#888",
-//                           }}
-//                         >
-//                           {label}
-//                         </span>
-//                       );
-//                     })}
-//                   </div>
-
-//                   {/* CURRENT VALUE */}
-
-//                   <span
-//                     style={{
-//                       fontWeight: "bold",
-//                       fontSize: "1.2em",
-//                       marginTop: "10px",
-//                       display: "block",
-//                     }}
-//                   >
-//                     {range?.prefix} {rangeValue} {range?.suffix}
-//                   </span>
-//                 </motion.div>
-//               </>
-//             )}
-
-//             {/* CHECKBOX */}
-
-//             {type === "select" &&
-//               options.map((opt) => (
-//                 <motion.div
-//                   className="col-lg-6 col-12"
-//                   variants={itemVariants}
-//                   key={opt.id}
-//                 >
-//                   <div className="quiz-option">
-//                     <input
-//                       type="checkbox"
-//                       className="form-check-input"
-//                       id={opt.id}
-//                       value={opt.value}
-//                       checked={checkboxValues.includes(opt.value)}
-//                       onChange={handleCheckboxChange}
-//                     />
-//                     <label htmlFor={opt.id}>
-//                       <span>{opt.label || opt.value}</span>
-//                     </label>
-//                   </div>
-//                 </motion.div>
-//               ))}
-
-//             {/* NAVIGATION */}
-//             {
-//               question && (
-//                 <div className="quiz-navigation" style={{ marginTop: "30px" }}>
-//                   <button
-//                     onClick={handlePrev}
-//                     disabled={currentStep === 0}
-//                     className="main-btn dark-btn wide-sm"
-//                   >
-//                     <span>Previous</span>
-//                   </button>
-
-//                   <button
-//                     onClick={handleNext}
-//                     className="main-btn wide-sm"
-//                   >
-//                     <span>{currentStep === totalSteps - 1 ? "Finish" : "Next"}</span>
-//                   </button>
-//                 </div>
-//               )
-//             }
-//           </motion.div>
+//             ))}
 //         </motion.div>
-//       </motion.div>
-//     </>
+//       </div>
+
+//       {/* NAVIGATION */}
+//       {
+//         question && (
+//           <div className="quiz-navigation" style={{ marginTop: "30px" }}>
+//             <button
+//               onClick={handlePrev}
+//               disabled={currentStep === 0}
+//               className="main-btn dark-btn wide-sm"
+//             >
+//               <span>Previous</span>
+//             </button>
+
+//             <button
+//               onClick={handleNext}
+//               className="main-btn wide-sm"
+//             >
+//               <span>{currentStep === totalSteps - 1 ? "Finish" : "Next"}</span>
+//             </button>
+//           </div>
+//         )
+//       }
+//     </motion.div>
 //   );
 // };
 
 // export default Step1;
 
+// "use client";
+// import React from "react";
+// import Image from "next/image";
+// import { motion } from "framer-motion";
+// import qIcon from "@/images/q-icon.svg";
+// import { useGlobalContext } from "@/context/GlobalContext";
 
+// const options = [
+//   { id: "quiz-option-1", label: "1 - 25", value: "1-25" },
+//   { id: "quiz-option-2", label: "26 - 50", value: "26-50" },
+//   { id: "quiz-option-3", label: "51 - 100", value: "51-100" },
+//   { id: "quiz-option-4", label: "100+", value: "100+" },
+// ];
+
+// const Step1 = () => {
+//   const { updateQuoteCalculatorValue, quoteCalculatorValues, quotecalculatorquiz} = useGlobalContext();
+//   console.log("venuefinderquiz_venuefinderquiz_venuefinderquiz",quotecalculatorquiz?.questions)
+
+//   // Get current value for step1 (may be null)
+//   const selectedValue = quoteCalculatorValues?.step1?.value || null;
+
+//   const handleChange = (e) => {
+//     updateQuoteCalculatorValue("step1", e.target.value, null);
+//   };
+
+//   const containerVariants = {
+//     hidden: { opacity: 0 },
+//     visible: {
+//       opacity: 1,
+//       transition: {
+//         staggerChildren: 0.1,
+//       },
+//     },
+//   };
+
+//   const itemVariants = {
+//     hidden: { y: 20, opacity: 0 },
+//     visible: {
+//       y: 0,
+//       opacity: 1,
+//       transition: {
+//         duration: 0.5,
+//       },
+//     },
+//   };
+
+//   return (
+//     <motion.div
+//       className="quiz-step"
+//       initial="hidden"
+//       animate="visible"
+//       variants={containerVariants}
+//     >
+//       <motion.h2 className="sec-head medium" variants={itemVariants}>
+//         <span>Q{quotecalculatorquiz?.questions[0]?.id}:</span> {quotecalculatorquiz?.questions[0]?.text}
+//       </motion.h2>
+//       <div className="quiz-options">
+//         <motion.div className="row row-gap-25" variants={containerVariants}>
+//           {options.map((opt) => (
+//             <motion.div
+//               className="col-lg-6 col-12"
+//               variants={itemVariants}
+//               key={opt.id}
+//             >
+//               <div className="quiz-option">
+//                 <input
+//                   type="radio"
+//                   name="quiz-option"
+//                   id={opt.id}
+//                   value={opt.value}
+//                   checked={selectedValue === opt.value}
+//                   onChange={handleChange}
+//                 />
+//                 <label htmlFor={opt.id}>
+//                   <span>{opt.label}</span>
+//                 </label>
+//               </div>
+//             </motion.div>
+//           ))}
+//         </motion.div>
+//       </div>
+//     </motion.div>
+//   );
+// };
+
+// export default Step1;
 
 
 "use client";
@@ -660,19 +662,15 @@ import arrowNext from "@/images/chev-right.svg";
 import calenderIcon from "@/images/calendar-btn.svg";
 import Image from "next/image";
 
-const Step1 = ({ category,goToResult }) => {
-  const { updateQuoteCalculatorValue, quoteCalculatorValues,
-     costcalculatorquiz } =
+const Step1 = ({ goToResult }) => {
+  const { updateQuoteCalculatorValue, quoteCalculatorValues, quotecalculatorquiz } =
     useGlobalContext();
 
-    console.log("costcalculatorquiz_costcalculatorquiz", costcalculatorquiz?.questions)
-    const questions = Array.isArray(costcalculatorquiz?.questions)
-    ? costcalculatorquiz.questions
-    : [];
+  const questions = quotecalculatorquiz?.questions || [];
   const [currentStep, setCurrentStep] = useState(0);
 
   const question = questions[currentStep];
-  console.log("sdbfgsdjfgsdhfjsdgf", costcalculatorquiz)
+  console.log("sdbfgsdjfgsdhfjsdgf", quotecalculatorquiz)
   const options = question?.options || [];
   const type = question?.type;
   const range = question?.range;
@@ -680,12 +678,10 @@ const Step1 = ({ category,goToResult }) => {
   const totalSteps = questions.length;
 
   const [checkboxValues, setCheckboxValues] = useState([]);
-  const [rangeValue, setRangeValue] = useState(0);
+  const [rangeValue, setRangeValue] = useState(range?.min || 0);
 
   const selectedValue =
-  question?.id
-    ? quoteCalculatorValues?.[`step${question.id}`]?.value
-    : null;
+    quoteCalculatorValues?.[`step${question?.id}`]?.value || null;
   /* ================= CALENDAR LOGIC ================= */
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
@@ -740,35 +736,25 @@ const Step1 = ({ category,goToResult }) => {
 
   /* ---------------- RESET RANGE WHEN QUESTION CHANGES ---------------- */
 
-  //   useEffect(() => {
-  //   if (category) {
-  //     fetchcostcalcultorquiz(category);
-  //   }
-  // }, [category]);
-
-  useEffect(() => {
-    setCheckboxValues([]);
-  }, [question]);
-
   useEffect(() => {
     if (type === "range") {
       setRangeValue(range?.min || 0);
     }
   }, [question]);
 
-  // useEffect(() => {
-  //   if (typeof window === "undefined") return;
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-  //   const refreshed = sessionStorage.getItem("page_refreshed");
+    const refreshed = sessionStorage.getItem("page_refreshed");
 
-  //   if (refreshed === null) {
-  //     sessionStorage.setItem("page_refreshed", "1");
+    if (refreshed === null) {
+      sessionStorage.setItem("page_refreshed", "1");
 
-  //     setTimeout(() => {
-  //       window.location.reload();
-  //     }, 1000);
-  //   }
-  // }, []);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
+  }, []);
   /* ---------------- NEXT / PREV ---------------- */
 
   const handleNext = () => {
@@ -826,9 +812,9 @@ const Step1 = ({ category,goToResult }) => {
   /* ---------------- FIX STEP IF API STEP IS INVALID ---------------- */
 
   const stepValue =
-  range && range.step > range.max - range.min
-    ? Math.ceil((range.max - range.min) / 5)
-    : range?.step || 1;
+    range?.step > range?.max - range?.min
+      ? Math.ceil((range?.max - range?.min) / 5)
+      : range?.step || 1;
 
   /* ---------------- DYNAMIC LABELS ---------------- */
 
@@ -875,13 +861,13 @@ const Step1 = ({ category,goToResult }) => {
   const visibleDays = days.slice(startIndex, startIndex + daysToShow);
 
   const nextDays = () => {
-    if (startIndex + daysToShow < days.length) {
+    if (startIndex + 7 < days.length) {
       setStartIndex(startIndex + daysToShow);
     }
   };
 
   const prevDays = () => {
-    if (startIndex - daysToShow >= 0) {
+    if (startIndex - 7 >= 0) {
       setStartIndex(startIndex - daysToShow);
     }
   };
@@ -914,10 +900,6 @@ const Step1 = ({ category,goToResult }) => {
     return checkDate < todayDate;
   };
 
-  if (!questions.length) {
-    return <div>Loading...</div>;
-  }
-
 
   return (
     <motion.div
@@ -926,6 +908,7 @@ const Step1 = ({ category,goToResult }) => {
       animate="visible"
       variants={containerVariants}
     >
+      {/* QUESTION */}
       {
         question?.id && (
           <motion.h2 className="sec-head medium" variants={itemVariants}>
@@ -937,6 +920,7 @@ const Step1 = ({ category,goToResult }) => {
       <div className="quiz-options">
         <motion.div className="row row-gap-25" variants={containerVariants}>
 
+          {/* RADIO */}
 
           {type === "radio" &&
             options.map((opt) => (
@@ -962,6 +946,7 @@ const Step1 = ({ category,goToResult }) => {
               </motion.div>
             ))}
 
+          {/* CHECKBOX */}
 
           {type === "checkbox" &&
             options.map((opt) => (
@@ -986,15 +971,22 @@ const Step1 = ({ category,goToResult }) => {
               </motion.div>
             ))}
 
+          {/* DATE */}
 
           {type === "date" && (
             <motion.div variants={itemVariants} className="col-lg-6 col-12">
-             
+              {/* <input
+                type="date"
+                className="form-control"
+                placeholder={question?.placeholder}
+                onChange={handleDateChange}
+              /> */}
               <div className="col-lg-12 col-12">
                 <div className="calendar-wrapper">
                   <div className="calendar-header">
                     <div
                       className="month-year-select mb-3"
+                    // onClick={() => setShowMonthYear(!showMonthYear)}
                     >
                       <span>
                         {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
@@ -1005,18 +997,21 @@ const Step1 = ({ category,goToResult }) => {
                             className="calender-btn"
                             onClick={() => setShowMonthYear(!showMonthYear)}
                           >
+                            {/* › */}
                             <Image src={calenderIcon} alt="Calender Icon" />
                           </div>
                         )
 
                         }
                       </span>
+                      {/* <Image src={selectDrop} alt="arrow" /> */}
                     </div>
                   </div>
 
                   <div className="calendar-days-outer">
                     <div className="calendar-days">
                       <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+                        {/* ‹ */}
                         <Image src={arrowPrev} alt="Previous" />
                       </div>
 
@@ -1048,6 +1043,7 @@ const Step1 = ({ category,goToResult }) => {
                         onClick={nextDays}
                         disabled={startIndex + 7 >= days.length}
                       >
+                        {/* › */}
                         <Image src={arrowNext} alt="Next" />
                       </div>
                       {!isMobile && (
@@ -1055,6 +1051,7 @@ const Step1 = ({ category,goToResult }) => {
                           className="calender-btn"
                           onClick={() => setShowMonthYear(!showMonthYear)}
                         >
+                          {/* › */}
                           <Image src={calenderIcon} alt="Calender Icon" />
                         </div>
                       )
@@ -1101,6 +1098,7 @@ const Step1 = ({ category,goToResult }) => {
             </motion.div>
           )}
 
+          {/* RANGE */}
 
           {type === "range" && (
             <>
@@ -1122,6 +1120,7 @@ const Step1 = ({ category,goToResult }) => {
                   />
                 </div>
 
+                {/* RANGE LABELS */}
 
                 <div
                   className="range-values"
@@ -1148,6 +1147,8 @@ const Step1 = ({ category,goToResult }) => {
                   })}
                 </div>
 
+                {/* CURRENT VALUE */}
+
                 <span
                   style={{
                     fontWeight: "bold",
@@ -1161,6 +1162,8 @@ const Step1 = ({ category,goToResult }) => {
               </motion.div>
             </>
           )}
+
+          {/* CHECKBOX */}
 
           {type === "select" &&
             options.map((opt) => (

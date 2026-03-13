@@ -8,7 +8,7 @@ import QuizResult from "./QuizResult";
 import axios from "axios";
 
 const Step3 = ({ setIsResult, setEstimatedQuote, category }) => {
-  const { quoteCalculatorValues,costcalcultorquizresposesubmit } = useGlobalContext();
+  const { quoteCalculatorValues,Quotecalcultorquizresposesubmit } = useGlobalContext();
   const [loading, setLoading] = useState(false);
   const [packages, setPackages] = useState(null);
   const [packageTrigger, setPackageTrigger] = useState(false);
@@ -98,7 +98,7 @@ const Step3 = ({ setIsResult, setEstimatedQuote, category }) => {
       console.log("bookingData", bookingData);
     
       // call global context api
-      await costcalcultorquizresposesubmit(bookingData);
+      await Quotecalcultorquizresposesubmit(bookingData);
     
       // your existing package API
       const res = await api.get(
