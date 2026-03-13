@@ -24,52 +24,34 @@ const QuoteCalculator = ({ category }) => {
     }
   };
 
-  let renderStep = null;
-
-  // if (category === "couple") {
-  //   renderStep = (step) => {
-  //     switch (step) {
-  //       case 1:
-  //         return <Step2 />;
-  //       case 2:
-  //         return (
-  //           <Step3 setEstimatedQuote={setEstimatedQuote} category={category} />
-  //         );
-  //       default:
-  //         return <Step2 />;
-  //     }
-  //   };
-  // } else {
-  //   renderStep = (step) => {
-  //     switch (step) {
-  //       case 1:
-  //         return <Step1 />;
-  //       case 2:
-  //         return <Step2 />;
-  //       case 3:
-  //         return (
-  //           <Step3 setEstimatedQuote={setEstimatedQuote} category={category} />
-  //         );
-  //       default:
-  //         return <Step1 />;
-  //     }
-  //   };
-  // }
-
-  if (category) {
-    renderStep = (step) => {
-      switch (step) {
-        case 1:
-          return <Step1 category={category} goToResult={() => setCurrentStep(2)}/>;
-        case 2:
-          return (
-            <Step3 setEstimatedQuote={setEstimatedQuote} category={category} />
-          );
-        default:
-          return <Step1 category={category} goToResult={() => setCurrentStep(2)}/>;
-      }
-    };
-  }
+  const renderStep = (step) => {
+  
+    switch (step) {
+      case 1:
+        return (
+          <Step1
+            category={category}
+            goToResult={() => setCurrentStep(2)}
+          />
+        );
+  
+      case 2:
+        return (
+          <Step3
+            setEstimatedQuote={setEstimatedQuote}
+            category={category}
+          />
+        );
+  
+      default:
+        return (
+          <Step1
+            category={category}
+            goToResult={() => setCurrentStep(2)}
+          />
+        );
+    }
+  };
   
 
   const renderHeader = () => {

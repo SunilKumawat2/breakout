@@ -669,16 +669,16 @@ const Step1 = ({ goToResult }) => {
   const questions = quotecalculatorquiz?.questions || [];
   const [currentStep, setCurrentStep] = useState(0);
 
-  const question = questions[currentStep];
+  const question = questions?.[currentStep] || null; // SAFE FIX
   console.log("sdbfgsdjfgsdhfjsdgf", quotecalculatorquiz)
-  const options = question?.options || [];
+  const options = Array.isArray(question?.options) ? question.options : []; // SAFE FIX
   const type = question?.type;
-  const range = question?.range;
+  const range = question?.range || {}; // SAFE FIX
 
   const totalSteps = questions.length;
 
   const [checkboxValues, setCheckboxValues] = useState([]);
-  const [rangeValue, setRangeValue] = useState(range?.min || 0);
+  const [rangeValue, setRangeValue] = useState(range?.min ?? 0); // SAFE FIX
 
   const selectedValue =
     quoteCalculatorValues?.[`step${question?.id}`]?.value || null;
@@ -736,25 +736,25 @@ const Step1 = ({ goToResult }) => {
 
   /* ---------------- RESET RANGE WHEN QUESTION CHANGES ---------------- */
 
-  useEffect(() => {
-    if (type === "range") {
-      setRangeValue(range?.min || 0);
-    }
-  }, [question]);
+  // useEffect(() => {
+  //   if (type === "range") {
+  //     setRangeValue(range?.min || 0);
+  //   }
+  // }, [question]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  // useEffect(() => {
+  //   if (typeof window === "undefined") return;
 
-    const refreshed = sessionStorage.getItem("page_refreshed");
+  //   const refreshed = sessionStorage.getItem("page_refreshed");
 
-    if (refreshed === null) {
-      sessionStorage.setItem("page_refreshed", "1");
+  //   if (refreshed === null) {
+  //     sessionStorage.setItem("page_refreshed", "1");
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    }
-  }, []);
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 1000);
+  //   }
+  // }, []);
   /* ---------------- NEXT / PREV ---------------- */
 
   const handleNext = () => {
@@ -858,16 +858,18 @@ const Step1 = ({ goToResult }) => {
 
   const daysToShow = isMobile ? 5 : 7;
 
-  const visibleDays = days.slice(startIndex, startIndex + daysToShow);
+  const visibleDays = Array.isArray(days)
+  ? days.slice(startIndex, startIndex + daysToShow)
+  : []; // SAFE FIX
 
   const nextDays = () => {
-    if (startIndex + 7 < days.length) {
+    if (startIndex + daysToShow < (days?.length || 0)) { // SAFE FIX
       setStartIndex(startIndex + daysToShow);
     }
   };
 
   const prevDays = () => {
-    if (startIndex - 7 >= 0) {
+    if (startIndex - daysToShow >= 0) { // SAFE FIX
       setStartIndex(startIndex - daysToShow);
     }
   };
@@ -900,6 +902,9 @@ const Step1 = ({ goToResult }) => {
     return checkDate < todayDate;
   };
 
+  if (!question) {
+    return null; // SAFE FIX
+  }
 
   return (
     <motion.div
@@ -923,7 +928,7 @@ const Step1 = ({ goToResult }) => {
           {/* RADIO */}
 
           {type === "radio" &&
-            options.map((opt) => (
+            options?.map((opt) => (
               <motion.div
                 className="col-lg-6 col-12"
                 variants={itemVariants}
@@ -949,7 +954,7 @@ const Step1 = ({ goToResult }) => {
           {/* CHECKBOX */}
 
           {type === "checkbox" &&
-            options.map((opt) => (
+            options?.map((opt) => (
               <motion.div
                 className="col-lg-6 col-12"
                 variants={itemVariants}
@@ -1010,12 +1015,12 @@ const Step1 = ({ goToResult }) => {
 
                   <div className="calendar-days-outer">
                     <div className="calendar-days">
-                      <div className="arrow" onClick={prevDays} disabled={startIndex === 0}>
+                      <div className="arrow" onClick={prevDays} disabled={startIndex == 0}>
                         {/* ‹ */}
                         <Image src={arrowPrev} alt="Previous" />
                       </div>
 
-                      {visibleDays.map((day) => {
+                      {visibleDays?.map((day) => { // SAFE FIX{visibleDays.map((day) => {
                         const past = isPastDate(day);
 
                         return (
@@ -1025,9 +1030,9 @@ const Step1 = ({ goToResult }) => {
                               if (!past) handleDateSelect(day);
                             }}
                             className={`day ${past ? "disabled" : ""} ${selectedDate &&
-                              selectedDate.getDate() === day &&
-                              selectedDate.getMonth() === month &&
-                              selectedDate.getFullYear() === year
+                              selectedDate?.getDate() === day &&
+                              selectedDate?.getMonth() === month &&
+                              selectedDate?.getFullYear() === year
                               ? "active"
                               : ""
                               }`}
@@ -1041,7 +1046,7 @@ const Step1 = ({ goToResult }) => {
                       <div
                         className={`arrow ${startIndex + 7 >= days.length ? "disabled" : ""} `}
                         onClick={nextDays}
-                        disabled={startIndex + 7 >= days.length}
+                        disabled={startIndex + daysToShow >= (days?.length || 0)}
                       >
                         {/* › */}
                         <Image src={arrowNext} alt="Next" />
@@ -1130,7 +1135,7 @@ const Step1 = ({ goToResult }) => {
                     marginTop: "10px",
                   }}
                 >
-                  {labels.map((label) => {
+                  {Array.isArray(labels) && labels.map((label) => { // SAFE FIX
                     const isActive = rangeValue === label;
 
                     return (
@@ -1166,7 +1171,7 @@ const Step1 = ({ goToResult }) => {
           {/* CHECKBOX */}
 
           {type === "select" &&
-            options.map((opt) => (
+           options?.map((opt) => ( // SAFE FIX
               <motion.div
                 className="col-lg-6 col-12"
                 variants={itemVariants}
