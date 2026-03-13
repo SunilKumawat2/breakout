@@ -21,11 +21,11 @@ const page = () => {
       setLoading(true);
       try {
         const res = await api.get("/blogs");
-        // const res2 = await api.get("/birthday-blog");
-        // setBlogs([...res.data.data, ...res2.data.data]);
-        // setFilteredBlogs([...res.data.data, ...res2.data.data]);
-        setBlogs([...res.data.data]);
-        setFilteredBlogs([...res.data.data]);
+        const res2 = await api.get("/birthday-blog");
+        setBlogs([...res.data.data, ...res2.data.data]);
+        setFilteredBlogs([...res.data.data, ...res2.data.data]);
+        // setBlogs([...res.data.data]);
+        // setFilteredBlogs([...res.data.data]);
       } catch (err) {
         setError(err);
       } finally {

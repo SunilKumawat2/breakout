@@ -295,22 +295,30 @@ const page = () => {
           </div>
         </section>
 
-        {party &&
-          party?.packagesection &&
-          party?.packagesection?.pricing?.columns?.length > 0 && (
-            <Packages className="pb-0" packages={party?.packagesection} data={birthdayTnc} category="farewell"/>
-          )}
+        {party?.packagesection?.pricing?.columns?.length > 0 &&
+          (() => {
+            sessionStorage.setItem("category", "farewell");
+
+            return (
+              <Packages
+                className="pb-0"
+                packages={party?.packagesection}
+                data={birthdayTnc}
+                category="farewell"
+              />
+            );
+          })()}
 
         {party && party?.googlereviews && (
           <div className="pt-80">
-          <GReviewSlider commonStars={false} data={party?.googlereviews} />
+            <GReviewSlider commonStars={false} data={party?.googlereviews} />
           </div>
         )}
 
         <Image src={bdayIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
-        <PartyExpertCon className="sec-padding-top" data="party_farewell"/>
+        <PartyExpertCon className="sec-padding-top" data="party_farewell" />
         {party && party?.slidersection && (
           <ReadyToGoPlans data={party?.slidersection} />
         )}
@@ -361,7 +369,7 @@ const page = () => {
         <OurLocationSec className="sec-padding-top" title="About Our <span>Our Location</span>" />
         {party && party?.faqsection && <FaqSection className="section-padding pb-0" data={party?.faqsection} />}
         <BlogSlider />
-        <LogoSec className="py-0"/>
+        <LogoSec className="py-0" />
         {party && party?.footersection && (
           <PartyGetInTouch
             img={nightIllus}

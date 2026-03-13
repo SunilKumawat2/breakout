@@ -7,13 +7,16 @@ import blogIllus from "@/images/blog-illus.png";
 import Image from "next/image";
 import api from "@/helpers/api";
 import ResourcesSidebar from "@/components/Blogs/ResourcesSidebar";
+import { useGlobalContext } from "@/context/GlobalContext";
+import ResourceCard from "@/components/ResourceCard";
 const page = () => {
+  const { getresourcelist } = useGlobalContext();
+  console.log("getresourcelist_getresourcelist",getresourcelist)
   const [blogs, setBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [visibleCount, setVisibleCount] = useState(12);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
 
@@ -133,10 +136,16 @@ const page = () => {
           </div>
           <div className="col-lg-9 col-12">
             <div className="row row-gap-25">
-              {filteredBlogs.length > 0 ? (
+              {/* {filteredBlogs.length > 0 ? (
                 filteredBlogs?.slice(0, visibleCount)?.map((blog, index) => (
                   <div className="col-lg-4 col-12" key={index}>
                     <BlogCard blog={blog} slug={blog.slug} />
+                  </div>
+                )) */}
+                 {getresourcelist.length > 0 ? (
+                getresourcelist?.slice(0, visibleCount)?.map((blog, index) => (
+                  <div className="col-lg-4 col-12" key={index}>
+                    <ResourceCard blog={blog} slug={blog.slug} link={blog?.link} />
                   </div>
                 ))
               ) : (

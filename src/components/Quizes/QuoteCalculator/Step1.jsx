@@ -662,7 +662,7 @@ import arrowNext from "@/images/chev-right.svg";
 import calenderIcon from "@/images/calendar-btn.svg";
 import Image from "next/image";
 
-const Step1 = ({ goToResult }) => {
+const Step1 = ({ category, goToResult }) => {
   const { updateQuoteCalculatorValue, quoteCalculatorValues, quotecalculatorquiz } =
     useGlobalContext();
 
@@ -734,27 +734,28 @@ const Step1 = ({ goToResult }) => {
   }
 `;
 
+
   /* ---------------- RESET RANGE WHEN QUESTION CHANGES ---------------- */
 
-  // useEffect(() => {
-  //   if (type === "range") {
-  //     setRangeValue(range?.min || 0);
-  //   }
-  // }, [question]);
+  useEffect(() => {
+    if (type === "range") {
+      setRangeValue(range?.min || 0);
+    }
+  }, [question]);
 
-  // useEffect(() => {
-  //   if (typeof window === "undefined") return;
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-  //   const refreshed = sessionStorage.getItem("page_refreshed");
+    const refreshed = sessionStorage.getItem("page_refreshed");
 
-  //   if (refreshed === null) {
-  //     sessionStorage.setItem("page_refreshed", "1");
+    if (refreshed === null) {
+      sessionStorage.setItem("page_refreshed", "1");
 
-  //     setTimeout(() => {
-  //       window.location.reload();
-  //     }, 1000);
-  //   }
-  // }, []);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
+  }, []);
   /* ---------------- NEXT / PREV ---------------- */
 
   const handleNext = () => {

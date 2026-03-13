@@ -266,10 +266,20 @@ const page = () => {
         </section>
 
         {party &&
-          party?.packagesection &&
-          party?.packagesection?.pricing?.columns?.length > 0 && (
-            <Packages packages={party?.packagesection}  data={birthdayTnc} category="bachelor"/>
-          )}
+  party?.packagesection &&
+  party?.packagesection?.pricing?.columns?.length > 0 &&
+  (() => {
+    sessionStorage.setItem("category", "bachelor");
+
+    return (
+      <Packages
+        packages={party?.packagesection}
+        data={birthdayTnc}
+        category="bachelor"
+      />
+    );
+  })()
+}
 
         {party && party?.googlereviews && (
           <GReviewSlider commonStars={false} data={party?.googlereviews} />
