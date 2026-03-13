@@ -61,8 +61,7 @@ import Rectangle1 from "@/images/Rectangle1.png";
           , {
             heading: "Party Calculator",
             image: Rectangle4,
-            category:"birthday",
-            link: "/resources/quiz/quote-calculator?category=birthday"
+            link: "/resources/quiz/quote-calculator"
           }
           // ,
           // {
