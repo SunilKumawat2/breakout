@@ -661,7 +661,8 @@ import calenderIcon from "@/images/calendar-btn.svg";
 import Image from "next/image";
 
 const Step1 = ({ category,goToResult }) => {
-  const { updateQuoteCalculatorValue, quoteCalculatorValues, costcalculatorquiz, fetchcostcalcultorquiz } =
+  const { updateQuoteCalculatorValue, quoteCalculatorValues,
+     costcalculatorquiz } =
     useGlobalContext();
 
     console.log("costcalculatorquiz_costcalculatorquiz", costcalculatorquiz?.questions)
@@ -739,11 +740,11 @@ const Step1 = ({ category,goToResult }) => {
 
   /* ---------------- RESET RANGE WHEN QUESTION CHANGES ---------------- */
 
-    useEffect(() => {
-    if (category) {
-      fetchcostcalcultorquiz(category);
-    }
-  }, [category]);
+  //   useEffect(() => {
+  //   if (category) {
+  //     fetchcostcalcultorquiz(category);
+  //   }
+  // }, [category]);
 
   useEffect(() => {
     setCheckboxValues([]);

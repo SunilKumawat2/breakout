@@ -261,7 +261,7 @@ export const GlobalProvider = ({ children }) => {
       );
   
       setCostCalculatorquiz(response?.data?.data || {});
-  
+     setErrors((prev)=>({...prev,costcalculatorquiz:null}))
     } catch (error) {
       setErrors((prev) => ({ ...prev, costcalculatorquiz: error }));
     } finally {
@@ -518,6 +518,7 @@ export const GlobalProvider = ({ children }) => {
     venuefinderquiz,
     finderQuizValues,
     quoteCalculatorValues,
+    costcalculatorquiz,
     costCalculatorValues,
     updateFinderQuizValue,
     updateQuoteCalculatorValue,
@@ -550,48 +551,8 @@ export const GlobalProvider = ({ children }) => {
     fetchTermsServies,
     fetchVenuefinderquiz,
     costcalcultorquizresposesubmit,
-    fetchVenuefinderquiz,
      fetchcostcalcultorquiz,
   };
-
-  // const value = {
-  //   escaperoomLocations,
-  //   blogs,
-  //   newsLogo,
-  //   siteSettings,
-  //   gettncs,
-  //   getcareer,
-  //   getcontact,
-  //   getprivacy,
-  //   getrefundpolicy,
-  //   gettermservies,
-  //   thirdPartyLocations,
-  //   thirdPartyGames,
-  //   availableSlots,
-  //   venueCategories,
-  //   venuefinderquiz,
-  //   costcalculatorquiz,
-  //   finderQuizValues,
-  //   quoteCalculatorValues,
-  //   costCalculatorValues,
-
-  //   updateFinderQuizValue,
-  //   updateQuoteCalculatorValue,
-  //   updateCostCalculatorValue,
-
-  //   bookASlot,
-  //   quizresposesubmit,
-  //   fetchThirdPartyGames,
-  //   fetchAvailableSlots,
-  //   costcalcultorquizresposesubmit,
-  //   fetchVenuefinderquiz,
-  //    fetchcostcalcultorquiz,
-  //    bookbloggetintouch,
-  //    fetchThirdPartyLocations,
-  //   loading,
-  //   errors,
-  // };
-
 
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
