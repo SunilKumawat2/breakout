@@ -9,6 +9,7 @@ import api from "@/helpers/api";
 const page = () => {
   const [blogs, setBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
+  console.log("setFilteredBlogs_setFilteredBlogs",filteredBlogs)
   const [visibleCount, setVisibleCount] = useState(12);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

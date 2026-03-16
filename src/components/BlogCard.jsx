@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const BlogCard = ({ blog}) => {
   if (!blog) return null;
-  console.log("BlogCard-BlogCardBlogCard",blog.slug)
+  console.log("BlogCard-BlogCardBlogCard",blog)
   return (
     <Link href={`/resources/blogs/${blog.slug}?type=${blog?.type}`}>
       <article className="blog-card">

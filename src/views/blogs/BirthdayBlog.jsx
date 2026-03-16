@@ -137,9 +137,9 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
         <div className="blog-top">
           <div className="container">
             <div className="blog-top-inner">
-              <p className="sec-head medium-20 mb-0 d-flex align-items-center gap-2">
-                Last updated on  <span className="yellow-text">{blogData?.post_date}  </span>
-              </p>
+            <p className="sec-head medium-20 mb-0 d-flex align-items-center gap-2">
+              Last updated on {blogData?.post_date}
+            </p>
               <div className="sec-head medium-20 d-flex align-items-center gap-3">
                 Share blog
                 <ul className="bl-soc-list">
@@ -215,6 +215,8 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
         // title={`About Our Breakout®  <span>${blogData?.title} Location</span>`}
         slug="koramangala"
       /> */}
+
+      {blogData?.faqsection && <FaqSection className="pt-80" data={blogData?.faqsection} />}
 
       {blogData?.footersection && (
         <PartyGetInTouch data={blogData?.footersection} noImage={true} />

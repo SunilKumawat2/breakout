@@ -65,7 +65,7 @@ const SigngleBlog = ({ blogData }) => {
     const currentUrl = window.location.href;
     const title = blogData?.heading || "Check out this blog post";
     const text = blogData?.description || "Interesting read!";
-
+console.log("SigngleBlog_blogData",blogData)
     let shareUrl = "";
 
     switch (platform) {

@@ -77,30 +77,30 @@ const boxItems = [
 const Page = async ({ params }) => {
   const { id } = await params;
   const { rooms, brands } = await getData(id);
-  console.log("rooms?.contentsection?.content",id)
+  console.log("rooms?.contentsection?.content", id)
   // const escapeRoomsExtreme =
   //   rooms?.escapeRooms?.filter((room) => room?.tag == "Extreme") || [];
   // const escapeRoomsUltra =
   //   rooms?.escapeRooms?.filter((room) => room?.tag == "Ultra") || [];
   const escapeRoomsExtreme =
-  rooms?.escapeRooms?.filter((room) => {
-    try {
-      const tags = JSON.parse(room?.tag || "[]");
-      return tags.includes("Extreme");
-    } catch {
-      return false;
-    }
-  }) || [];
+    rooms?.escapeRooms?.filter((room) => {
+      try {
+        const tags = JSON.parse(room?.tag || "[]");
+        return tags.includes("Extreme");
+      } catch {
+        return false;
+      }
+    }) || [];
 
-const escapeRoomsUltra =
-  rooms?.escapeRooms?.filter((room) => {
-    try {
-      const tags = JSON.parse(room?.tag || "[]");
-      return tags.includes("Ultra");
-    } catch {
-      return false;
-    }
-  }) || [];
+  const escapeRoomsUltra =
+    rooms?.escapeRooms?.filter((room) => {
+      try {
+        const tags = JSON.parse(room?.tag || "[]");
+        return tags.includes("Ultra");
+      } catch {
+        return false;
+      }
+    }) || [];
   return (
     <>
       <Header />
@@ -210,58 +210,73 @@ const escapeRoomsUltra =
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
-                  <h3 className="sec-head medium sm-head">
+                  {
+                    id == "things-to-do-jp-nagar" ? (
+                      <h3 className="sec-head medium sm-head">
+                        <span>Escape Rooms</span> in Jp Nagar
+                      </h3>
+                    ) : id == "things-to-do-whitefield" ? (
+                      <h3 className="sec-head medium sm-head">
+                        <span>Escape Rooms</span> in Whitefield
+                      </h3>
+                    ) : (
+                      <h3 className="sec-head medium sm-head">
+                        <span>Escape Rooms</span> in Koramanagla
+                      </h3>
+                    )
+                  }
+                  {/* <h3 className="sec-head medium sm-head">
                     <span>Escape Rooms</span> in Koramanagla
-                  </h3>
+                  </h3> */}
                 </div>
               </div>
               {
-                id != "things-to-do-in-bangalore" && (
+                (id != "things-to-do-in-bangalore" && id != "things-to-do-jp-nagar" && id != "things-to-do-whitefield") && (
                   <>
-                   {escapeRoomsExtreme && escapeRoomsExtreme?.length > 0 && (
-                <div className="row row-gap-25 mt-5">
-                  <div className="col-12">
-                    <h3 className="sec-head medium sm-head text-center">
-                      At <span>Extreme</span>
-                    </h3>
-                  </div>
-                  {escapeRoomsExtreme?.map((room, index) => (
-                    <div className="col-lg-4 col-12" 
-                    key={index}>
-                      <EscapeRoomCard room={room} />
-                    </div>
-                  ))}
-                </div>
-              )}
-              {escapeRoomsUltra && escapeRoomsUltra?.length > 0 && (
-                <div className="row row-gap-25 mt-3">
-                  <div className="col-12">
-                    <h3 className="sec-head medium sm-head text-center mt-3">
-                      At <span>Ultra</span>
-                    </h3>
-                  </div>
-                  {escapeRoomsUltra?.map((room, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
-                      <EscapeRoomCard room={room} />
-                    </div>
-                  ))}
-                </div>
-              )}
+                    {escapeRoomsExtreme && escapeRoomsExtreme?.length > 0 && (
+                      <div className="row row-gap-25 mt-5">
+                        <div className="col-12">
+                          <h3 className="sec-head medium sm-head text-center">
+                            At <span>Extreme</span>
+                          </h3>
+                        </div>
+                        {escapeRoomsExtreme?.map((room, index) => (
+                          <div className="col-lg-4 col-12"
+                            key={index}>
+                            <EscapeRoomCard room={room} />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {escapeRoomsUltra && escapeRoomsUltra?.length > 0 && (
+                      <div className="row row-gap-25 mt-3">
+                        <div className="col-12">
+                          <h3 className="sec-head medium sm-head text-center mt-3">
+                            At <span>Ultra</span>
+                          </h3>
+                        </div>
+                        {escapeRoomsUltra?.map((room, index) => (
+                          <div className="col-lg-4 col-12" key={index}>
+                            <EscapeRoomCard room={room} />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </>
                 )
               }
-             
+
 
               {
-                id == "things-to-do-in-bangalore" && (
+                (id == "things-to-do-in-bangalore" || id == "things-to-do-jp-nagar" || id == "things-to-do-whitefield") && (
                   <div className="row row-gap-25">
-                 
-                  {rooms?.escapeRooms?.map((room, index) => (
-                    <div className="col-lg-4 col-12" key={index}>
-                      <EscapeRoomCard room={room} />
-                    </div>
-                  ))}
-                </div>
+
+                    {rooms?.escapeRooms?.map((room, index) => (
+                      <div className="col-lg-4 col-12" key={index}>
+                        <EscapeRoomCard room={room} />
+                      </div>
+                    ))}
+                  </div>
                 )
               }
             </div>
@@ -293,7 +308,7 @@ const escapeRoomsUltra =
                             <p
                               className="sec-para"
                               dangerouslySetInnerHTML={{
-                                __html: item?.content ?  item.content:item.description,
+                                __html: item?.content ? item.content : item.description,
                               }}
                             />
                             {/* <button className="main-btn link-btn">
@@ -323,11 +338,28 @@ const escapeRoomsUltra =
         </section> */}
 
         <div className="black-gr-div">
-          <OurLocationSec
-          className="sec-padding-top"
-            title="Choose a <span>Location</span>"
-            //  slug={"koramangala"}
-          />
+          {
+            id == "things-to-do-jp-nagar" ? (
+              <OurLocationSec
+                className="sec-padding-top"
+                title="Choose a <span>Location</span>"
+                slug="jp-nagar"
+              />
+            ) : id == "things-to-do-whitefield" ? (
+              <OurLocationSec
+                className="sec-padding-top"
+                title="Choose a <span>Location</span>"
+                slug="whitefield"
+              />
+            ) : (
+              <OurLocationSec
+                className="sec-padding-top"
+                title="Choose a <span>Location</span>"
+                slug=""
+              />
+            )
+          }
+
           {rooms?.faqsection && rooms?.faqsection?.length > 0 && (
             <FaqSection className="section-padding pb-0" data={rooms?.faqsection} />
           )}
@@ -337,7 +369,7 @@ const escapeRoomsUltra =
           )}
           {rooms?.googlereviews && rooms?.googlereviews?.length > 0 && (
             <div className="pt-80">
-            <GReviewSlider commonStars={false} data={rooms?.googlereviews} />
+              <GReviewSlider commonStars={false} data={rooms?.googlereviews} />
             </div>
           )}
 
