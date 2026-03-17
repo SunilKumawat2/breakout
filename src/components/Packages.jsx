@@ -25,7 +25,7 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
         <div className="package-row-cell">
           {Array.from({ length: count }).map((_, idx) =>
             type === "yes" ? (
-              <Image key={idx} src={check} alt="Red Carpet" />
+              <Image key={idx} className="yes-icon" src={check} alt="Red Carpet" />
             ) : (
               <Image key={idx} src={cross} alt="Red Carpet" />
             )
@@ -36,7 +36,7 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
     if (col === "Yes") {
       return (
         <div className="package-row-cell">
-          <Image src={check} alt="Red Carpet" />
+          <Image src={check} alt="Red Carpet" className="yes-icon"/>
         </div>
       );
     }
@@ -165,7 +165,7 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
                           <div className="package-row-cell w-100 d-block">
                             <h3></h3>
                           </div>
-                          {row?.col0 &&
+                          {/* {row?.col0 &&
                             row?.col0 != "" &&
                             renderButton(row?.col0)}
                           {row?.col1 &&
@@ -179,7 +179,7 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
                             renderButton(row?.col3)}
                           {row?.col4 &&
                             row?.col4 != "" &&
-                            renderButton(row?.col4)}
+                            renderButton(row?.col4)} */}
                         </div>
                       );
                     }
@@ -287,7 +287,9 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
                 </div>
               )}
             </div>
-            <div className="package-yellow-text">
+            
+          </div>
+          <div className="package-yellow-text">
               {packages?.note && (
                 // <p
                 //   className="yellow-text para mb-0"
@@ -333,7 +335,6 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
                 
 
             </div>
-          </div>
         </div>
       </div>
       {

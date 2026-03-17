@@ -237,34 +237,8 @@ const page = () => {
                       </div>
                     </div>
                     <div className="row row-gap-25">
-                      {party?.imagecardsection?.images &&
-                        party?.imagecardsection?.images?.length > 0 &&
-                        party?.imagecardsection?.images?.map((bd, index) => (
-                          <div className="col-lg-4 col-12" key={index}>
-                            <div className="location-card">
-                              <div className="location-card-img">
-                                {bd.image && (
-                                  <Image
-                                    src={bd.image}
-                                    width={700}
-                                    height={700}
-                                    alt={bd.heading}
-                                  />
-                                )}
-                              </div>
-                              <div className="location-card-content">
-                                <h3
-                                  dangerouslySetInnerHTML={{ __html: bd.heading }}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                </section>
-              )}
-              {party && party?.partyinclusions && party?.partyinclusions?.heading && (
+
+                        {party && party?.partyinclusions && party?.partyinclusions?.heading && (
                 <section className="pt-80 bday-sec">
                   <div className="container">
                     <div className="row">
@@ -283,7 +257,7 @@ const page = () => {
                       {party?.partyinclusions?.images &&
                         party?.partyinclusions?.images?.length > 0 &&
                         party?.partyinclusions?.images?.map((bd, index) => (
-                          <Link href={bd.link} key={index} className="col-lg-3 col-12" target="_blank">
+                          <Link href={bd.link} key={index} className="col-lg-3 col-6" target="_blank">
 
                             <div className="location-card">
                               <div className="location-card-img">
@@ -309,6 +283,34 @@ const page = () => {
                   </div>
                 </section>
               )}
+                      {party?.imagecardsection?.images &&
+                        party?.imagecardsection?.images?.length > 0 &&
+                        party?.imagecardsection?.images?.map((bd, index) => (
+                          <div className="col-lg-4 col-6" key={index}>
+                            <div className="location-card">
+                              <div className="location-card-img">
+                                {bd.image && (
+                                  <Image
+                                    src={bd.image}
+                                    width={700}
+                                    height={700}
+                                    alt={bd.heading}
+                                  />
+                                )}
+                              </div>
+                              <div className="location-card-content">
+                                <h3
+                                  dangerouslySetInnerHTML={{ __html: bd.heading }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+            
 
               {party &&
                 party?.packagesection &&

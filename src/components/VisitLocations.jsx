@@ -85,7 +85,7 @@ console.log("nsdfjkshdfg_escaperoomLocations",escaperoomLocations)
           </div>
         ) : (
           <div className="row row-gap-25">
-            <div className="col-12">
+            <div className="col-12" onClick={()=>sessionStorage.setItem("visit_location_key",true)}>
               <Swiper
                 modules={[Pagination]}
                 pagination={{

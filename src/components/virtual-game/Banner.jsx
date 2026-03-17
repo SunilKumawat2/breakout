@@ -48,9 +48,9 @@ const Banner = ({ room, corporate = false }) => {
           )}
         </div>
       </CommonModal>
-      <header className="esc-header pt-80">
+      <header className="esc-header pt-80 virtual-game-banner">
         <div className="container">
-          <div className="row">
+          <div className="row row-gap-25">
             <div className="col-lg-5 col-12 text-center">
               <div className="esc-banner-img">
                 <Image
@@ -108,9 +108,19 @@ const Banner = ({ room, corporate = false }) => {
                         <p>Capacity</p>
                       </li>
                     </ul>
-                    <Link href={"#book-now"} className="main-btn">
-                      <span>{"Book Now"}</span>
-                    </Link>
+                    <button
+                      className="main-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+
+                        const el = document.getElementById("book-now");
+                        if (el) {
+                          el.scrollIntoView({ behavior: "smooth" });
+                        }
+                      }}
+                    >
+                      <span>Book Now</span>
+                    </button>
                   </>
                 )}
               </div>

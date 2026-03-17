@@ -64,19 +64,47 @@ const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
                 spaceBetween={20}
                 loop={true}
                 pagination={{ clickable: true }}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                onBeforeInit={(swiper) => {
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  swiper.params.navigation.nextEl = nextRef.current;
-                }}
+
+                // ❌ REMOVE this
+                // navigation={{
+                //   prevEl: prevRef.current,
+                //   nextEl: nextRef.current,
+                // }}
+
+                // ❌ REMOVE this
+                // onBeforeInit={(swiper) => {
+                //   swiper.params.navigation.prevEl = prevRef.current;
+                //   swiper.params.navigation.nextEl = nextRef.current;
+                // }}
+
+                // ✅ ADD THIS
+                navigation={true}
+
                 breakpoints={{
                   0: { slidesPerView: 1 },
                   992: { slidesPerView: 2 },
                 }}
                 className="blog-swiper"
+
+                // ✅ ADD THIS (IMPORTANT FIX)
+                onSwiper={(swiper) => {
+                  setTimeout(() => {
+                    if (!swiper || !swiper.params) return;
+
+                    if (!swiper.params.navigation) {
+                      swiper.params.navigation = {};
+                    }
+
+                    swiper.params.navigation.prevEl = prevRef.current;
+                    swiper.params.navigation.nextEl = nextRef.current;
+
+                    if (swiper.navigation) {
+                      swiper.navigation.destroy();
+                      swiper.navigation.init();
+                      swiper.navigation.update();
+                    }
+                  }, 0);
+                }}
               >
 
                 {reviews.map((review, index) => (

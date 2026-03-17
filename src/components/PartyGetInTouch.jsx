@@ -586,9 +586,9 @@ const PartyGetInTouch = ({
           </p>
         )}
       </div>
-      <br/>
+
       {noTextBottom && (
-        <section className="">
+        <section className="section-padding pb-0">
           <div className="container">
             <div className="row text-center justify-content-center">
               <div className="col-lg-9 col-12">

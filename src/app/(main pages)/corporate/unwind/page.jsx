@@ -255,7 +255,7 @@ const page = () => {
                       {corporate?.imagecardsection?.images &&
                         corporate?.imagecardsection?.images?.length > 0 &&
                         corporate?.imagecardsection?.images?.map((bd, index) => (
-                          <Link href={bd.game_link} target="_blank" className="col-lg-4 col-12" key={index}>
+                          <Link href={bd.game_link} target="_blank" className="col-lg-4 col-6" key={index}>
                           <div  >
                             <div className="location-card">
                               <div className="location-card-img">
