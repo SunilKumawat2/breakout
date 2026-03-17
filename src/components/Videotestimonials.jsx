@@ -1,12 +1,9 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
-import "swiper/css/navigation";
+import {Navigation } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
-import BlogCard from "./BlogCard";
-import blogImg from "@/images/blog-img.jpg";
+import "swiper/css/navigation";
 import Image from "next/image";
 import videoPoster from "@/images/video-poster.jpg";
 import playBtn from "@/images/play-btn.svg";
@@ -124,41 +121,69 @@ const Videotestimonials = ({ data, className = "", }) => {
         <div className="row">
           <div className="col-lg-12">
             <div className="blog-slider video-slider">
-              <Swiper
-                modules={[Navigation]}
-                pagination={{
-                  clickable: true,
-                }}
-                centeredSlides={true}
-                slidesPerView={1}
-                spaceBetween={0}
-                initialSlide={4}
-                slideToClickedSlide={true}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                onBeforeInit={(swiper) => {
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  swiper.params.navigation.nextEl = nextRef.current;
-                }}
-                loop={true}
-                breakpoints={{
-                  0: { slidesPerView: 1.2 },
-                  640: { slidesPerView: 1.5 },
-                  992: { slidesPerView: 3.5 },
-                  1400: { slidesPerView: 3.5 },
-                }}
-                className="blog-swiper"
-                onSwiper={(swiper) => {
-                  swiperRef.current = swiper;
-                }}
-                onSlideChange={(swiper) => {
-                  setActiveIndex(
-                    swiper.realIndex != null ? swiper.realIndex : swiper.activeIndex
-                  );
-                }}
-              >
+            <Swiper
+  modules={[Navigation]}
+  pagination={{
+    clickable: true,
+  }}
+  centeredSlides={true}
+  slidesPerView={1}
+  spaceBetween={0}
+  initialSlide={4}
+  slideToClickedSlide={true}
+
+  // ❌ REMOVE this completely
+  // navigation={{
+  //   prevEl: ".custom-prev",
+  //   nextEl: ".custom-next",
+  // }}
+
+  // ❌ REMOVE this also
+  // onBeforeInit={(swiper) => {
+  //   swiper.params.navigation.prevEl = prevRef.current;
+  //   swiper.params.navigation.nextEl = nextRef.current;
+  // }}
+
+  // ✅ ADD THIS (ONLY FIX)
+  navigation={true}
+
+  loop={true}
+  breakpoints={{
+    0: { slidesPerView: 1.2 },
+    640: { slidesPerView: 1.5 },
+    992: { slidesPerView: 3.5 },
+    1400: { slidesPerView: 3.5 },
+  }}
+  className="blog-swiper"
+
+  onSwiper={(swiper) => {
+    swiperRef.current = swiper;
+
+    // ✅ FIX FOR PRODUCTION
+    setTimeout(() => {
+      if (!swiper || !swiper.params) return;
+
+      if (!swiper.params.navigation) {
+        swiper.params.navigation = {};
+      }
+
+      swiper.params.navigation.prevEl = prevRef.current;
+      swiper.params.navigation.nextEl = nextRef.current;
+
+      if (swiper.navigation) {
+        swiper.navigation.destroy();
+        swiper.navigation.init();
+        swiper.navigation.update();
+      }
+    }, 0);
+  }}
+
+  onSlideChange={(swiper) => {
+    setActiveIndex(
+      swiper.realIndex != null ? swiper.realIndex : swiper.activeIndex
+    );
+  }}
+>
 
                 {doubledData.map((item, index) => (
                   <SwiperSlide key={index}>
