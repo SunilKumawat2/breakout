@@ -144,11 +144,11 @@ const ReadyToGoPlans = ({ data, className = "" }) => {
                     </SwiperSlide>
                   ))}
               </Swiper>
-              <div ref={prevRef} className="swiper-button-prev go-plan">
+              <div ref={prevRef} className="swiper-button-prev custom-prev go-plan">
                 <Image src={swiperPrev} alt="prev" />
               </div>
 
-              <div ref={nextRef} className="swiper-button-next go-plan">
+              <div ref={nextRef} className="swiper-button-next custom-next go-plan">
                 <Image src={swiperNext} alt="next" />
               </div>
 
