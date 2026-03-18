@@ -39,7 +39,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 const page = () => {
   // Remove scrollTo(0,0) on mount to avoid scroll jump issue
   const [party, setParty] = useState(null);
-  console.log("ksdlfgdjkshgjkdfhgkhdf",party)
+  console.log("ksdlfgdjkshgjkdfhgkhdf", party)
   const [pageLoading, setPageLoading] = useState(true);
   const { gettncs } = useGlobalContext();
 
@@ -266,20 +266,20 @@ const page = () => {
         </section>
 
         {party &&
-  party?.packagesection &&
-  party?.packagesection?.pricing?.columns?.length > 0 &&
-  (() => {
-    sessionStorage.setItem("category", "bachelor");
+          party?.packagesection &&
+          party?.packagesection?.pricing?.columns?.length > 0 &&
+          (() => {
+            sessionStorage.setItem("category", "bachelor");
 
-    return (
-      <Packages
-        packages={party?.packagesection}
-        data={birthdayTnc}
-        category="bachelor"
-      />
-    );
-  })()
-}
+            return (
+              <Packages
+                packages={party?.packagesection}
+                data={birthdayTnc}
+                category="bachelor"
+              />
+            );
+          })()
+        }
 
         {party && party?.googlereviews && (
           <GReviewSlider commonStars={false} data={party?.googlereviews} />
@@ -288,7 +288,7 @@ const page = () => {
         <Image src={bdayIllus} alt="illus3" className="illus-image" />
       </div>
       <div className="black-gr-div">
-        <PartyExpertCon className="sec-padding-top" data="party_bachelor"/>
+        <PartyExpertCon className="sec-padding-top" data="party_bachelor" />
         {party && party?.slidersection && (
           <ReadyToGoPlans data={party?.slidersection} />
         )}
@@ -337,8 +337,8 @@ const page = () => {
       <div className="black-gr-div">
         <OurLocationSec className="sec-padding-top" title="About Our <span>Our Location</span>" />
         {party && party?.faqsection && <FaqSection className="section-padding pb-0" data={party?.faqsection} />}
-        <BlogSlider className="pb-0"/>
-        <LogoSec className="pt-80 pb-0"/>
+        <BlogSlider className="pb-0" />
+        <LogoSec className="pt-80 pb-0" />
         {party && party?.footersection && (
           <PartyGetInTouch
             img={nightIllus}
@@ -346,7 +346,7 @@ const page = () => {
             data={party?.footersection}
           />
         )}
-          <HomeContact textData={location?.footersection} />
+        {/* <HomeContact textData={location?.footersection} /> */}
         {/* {party && party?.footersection && (
           <BirthdayGetInTouch
             img={nightIllus}

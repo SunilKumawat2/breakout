@@ -94,7 +94,7 @@ const SigngleBlog = async ({ params }) => {
         <PartyExpertCon className="pt-80" data="founder_message" />
         <Image
           src={matterIllus}
-          className="w-100 h-auto"
+          className="illus-image"
           alt="founder-message"
         />
       </div>

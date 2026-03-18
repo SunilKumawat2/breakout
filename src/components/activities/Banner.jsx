@@ -18,12 +18,12 @@ import duraIcon from "@/images/dura.svg";
 import { CommonModal } from "@/components/CommonModal";
 import { useState } from "react";
 
-const Banner = ({ room,className = "", corporate = false }) => {
+const Banner = ({ room, className = "", corporate = false }) => {
   const [show, setShow] = useState(false);
 
   // Default values if room data is not available
   const bannerData = room?.bannersection || {};
-console.log("bannerData_bannerData",bannerData)
+  console.log("bannerData_bannerData", bannerData)
   const descriptionParts = (bannerData?.description || "").split("|");
   const description = descriptionParts[0] || "";
   const popupDescription = descriptionParts.slice(1).join(" ") || "";
@@ -39,15 +39,15 @@ console.log("bannerData_bannerData",bannerData)
           ></p>
           <div onClick={() => setShow(false)}>
 
-          <Link href={bannerData.cta_link} className="main-btn">
-            <span>{bannerData.cta_label}</span>
-          </Link>
+            <Link href={bannerData.cta_link} className="main-btn">
+              <span>{bannerData.cta_label}</span>
+            </Link>
           </div>
         </div>
       </CommonModal>
       <header className={`esc-header sec-padding-top ${className}`}>
         <div className="container">
-          <div className="row">
+          <div className="row row-gap-25">
             <div className="col-lg-5 col-12 text-center">
               <div className="esc-banner-img">
                 <Image
@@ -69,13 +69,18 @@ console.log("bannerData_bannerData",bannerData)
                     </p>
                   </>
                 ) : (
+
                   <h1 className="sec-head yellow-text">{bannerData.heading}</h1>
                 )}
-                <p className="  para mt-3">
-                  {description}
+                <div className="para mt-3">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: description?.replace(/\n/g, "<br />"),
+                    }}
+                  />
+
                   {!corporate && popupDescription && (
                     <span
-                      className=""
                       style={{
                         cursor: "pointer",
                         textDecoration: "underline",
@@ -86,7 +91,7 @@ console.log("bannerData_bannerData",bannerData)
                       Read full Description
                     </span>
                   )}
-                </p>
+                </div>
                 {!corporate && (
                   <>
                     <ul className="mystery-ic-grid">

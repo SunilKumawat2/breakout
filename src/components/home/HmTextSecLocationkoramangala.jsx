@@ -93,7 +93,7 @@ const HmTextlocationkoramangala = ({ text,className = "", home = false }) => {
         </div>
       </div>
       {/* {
-          home && <Image src={hmIllus} className='w-100 h-auto' alt='hm-text-bg' />
+          home && <Image src={hmIllus} className='illus-image' alt='hm-text-bg' />
         } */}
     </section>
   );

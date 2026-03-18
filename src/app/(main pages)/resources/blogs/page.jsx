@@ -184,7 +184,7 @@ const page = () => {
       </div>
       <div className="black-gr-div">
         <BrochureDownloadForm page_name="resources_blogs" blog_slug={filteredBlogs}/>
-        <Image src={blogIllus} alt="black-gr" className="w-100 h-auto" />
+        <Image src={blogIllus} alt="black-gr" className="illus-image" />
       </div>
     </div>
   );

@@ -51,33 +51,11 @@ export async function getData(id) {
   }
 }
 
-const hmText =
-  "In a typical escape room, your team is <span>locked in a themed room</span> You have a <span>set time.</span> You must <span>find clues,</span> solve puzzles To <span>escape</span> from the locked room.";
-
-const boxItems = [
-  {
-    icon: icon1,
-    title: "Realistic Setup",
-  },
-  {
-    icon: icon2,
-    title: "Clues Intertwine",
-  },
-  {
-    icon: icon3,
-    title: "Storyline Emerges",
-  },
-  {
-    icon: icon4,
-    title: "Feel The Hero",
-  },
-];
-
 // Next.js 13/14/15 SSR page
 const Page = async ({ params }) => {
   const { id } = await params;
   const { rooms, brands } = await getData(id);
-  console.log("rooms?.contentsection?.content", id)
+  console.log("rooms?.contentsection?.content", rooms)
   // const escapeRoomsExtreme =
   //   rooms?.escapeRooms?.filter((room) => room?.tag == "Extreme") || [];
   // const escapeRoomsUltra =

@@ -26,6 +26,7 @@ import wh from "@/images/wh.svg";
 import locPlace from "@/images/loc-place.svg";
 import BirthdayBanner from "@/components/BirthdayBanner";
 import bdayIllus from "@/images/bday-illus.svg";
+import homeIllus from "@/images/illus-home.svg";
 
 import whicon from "@/images/wh-icon.svg";
 import phicon from "@/images/phone.svg";
@@ -214,7 +215,7 @@ const page = () => {
 
               <PartyExpertCon className="pt-80" data="corporate" />
 
-              <Image src={bdayIllus} className={"illus-image"} alt="bday" />
+              <Image src={homeIllus} className={"illus-image"} alt="bday" />
             </div>
 
             <div className="black-gr-div">

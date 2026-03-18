@@ -74,11 +74,15 @@ const Banner = ({ room, corporate = false }) => {
                 ) : (
                   <h1 className="sec-head yellow-text">{bannerData.heading}</h1>
                 )}
-                <p className="  para mt-3">
-                  {bannerData.description}
+                <div className="para mt-3">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: bannerData.description?.replace(/\n/g, "<br />"),
+                    }}
+                  />
+
                   {!corporate && (
                     <span
-                      className=""
                       style={{
                         cursor: "pointer",
                         textDecoration: "underline",
@@ -89,7 +93,7 @@ const Banner = ({ room, corporate = false }) => {
                       Read full Description
                     </span>
                   )}
-                </p>
+                </div>
                 {!corporate && (
                   <>
                     <ul className="mystery-ic-grid">

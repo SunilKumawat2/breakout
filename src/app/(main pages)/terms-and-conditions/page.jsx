@@ -48,7 +48,7 @@ const page =  () => {
             </div>
           </div>
         </div>
-        <Image src={tsIllus} alt="privacy-policy" className="w-100 h-auto" />
+        <Image src={tsIllus} alt="privacy-policy" className="illus-image" />
       </div>
     </div>
   );

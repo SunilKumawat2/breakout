@@ -154,7 +154,7 @@ const page = () => {
                 </div>
             </section>
             
-            <Image src={bdayIllus} className={'w-100 h-auto'} alt="bday" />
+            <Image src={bdayIllus} className={'illus-image'} alt="bday" />
 
         </div>
 
@@ -242,14 +242,14 @@ const page = () => {
 
             
             
-            <Image src={partyillus} alt="illus3" className='illus-3 w-100 h-auto' />
+            <Image src={partyillus} alt="illus3" className='illus-3 illus-image' />
         </div>
         <div className='black-gr-div'>
             <PartyExpertCon className="pt-80" data="kids_birthday"/>
             <ReadyToGoPlans />
             <Videotestimonials />
             <FaqSection />
-            <Image src={movieIllus} className={'w-100 h-auto'} alt="bday" />
+            <Image src={movieIllus} className={'illus-image'} alt="bday" />
         </div>
         <div className='black-gr-div'>
             <OurLocationSec title="About Our <span>Our Location</span>" />

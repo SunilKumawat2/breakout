@@ -104,7 +104,7 @@ const FindingPartyQuiz = () => {
           </div>
         </div>
       </section>
-      <Image src={partyQuizIllus} alt="black-gr" className="w-100 h-auto" />
+      <Image src={partyQuizIllus} alt="black-gr" className="illus-image" />
     </div>
   );
 };

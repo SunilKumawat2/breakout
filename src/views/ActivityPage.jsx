@@ -137,6 +137,8 @@ const ActivityPage = () => {
       </div>
       {/* <FaqSection /> */}
       <div className="black-gr-div">
+        {
+          room?.escaperooms?.length > 0 && (
         <section className="section-padding esc-section pb-0">
           <div className="container">
             <div className="row">
@@ -156,6 +158,9 @@ const ActivityPage = () => {
             </div>
           </div>
         </section>
+
+          )
+        }
         <VisitLocations className="section-padding pb-0" isVirtual={false} />
         {/* <PartyExpertCon /> */}
         {/* <PartyEpertForActivity
@@ -166,7 +171,7 @@ const ActivityPage = () => {
           privacyLine={true}
           noImage={true}
         />
-        <Image src={activity3Illus} className="w-100 h-auto" alt="illus3" />
+        <Image src={activity3Illus} className="illus-image" alt="illus3" />
       </div>
     </>
   );

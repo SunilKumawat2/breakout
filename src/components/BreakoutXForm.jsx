@@ -373,7 +373,7 @@ const BirthdayGetInTouch = ({ img,className="" }) => {
           </div>
         </div>
       </div>
-      {img && <Image src={img} alt="illus" className="w-100 h-auto" />}
+      {img && <Image src={img} alt="illus" className="illus-image" />}
     </section>
   );
 };
