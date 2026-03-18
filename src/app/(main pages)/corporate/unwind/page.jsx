@@ -343,7 +343,7 @@ const page = () => {
                       </div>
                     </div>
                     <div className="row row-gap-25">
-                      <div className="col-lg-6 col-12">
+                      <div className="col-lg-6 col-6">
                         <div className="vs-col">
                           <div className="vs-col-card">
                             <h3>
@@ -361,7 +361,7 @@ const page = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-6 col-12">
+                      <div className="col-lg-6 col-6">
                         <div className="vs-col break">
                           <div className="vs-col-card">
                             <h3>
