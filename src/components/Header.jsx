@@ -85,15 +85,22 @@ export default function Header() {
               ))}
           </ul>
           <ul className="r-list">
-            <li>
-              <Link
-                href="/book-online"
-                className="main-btn"
-              // target="_blank"
-              >
-                <span>Book Now</span>
-              </Link>
-            </li>
+          <li>
+  <Link
+    href="/book-online"
+    className="main-btn"
+    onClick={() => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "cta_click",
+        button_name: "Book Now",
+        destination: "/book-online",
+      });
+    }}
+  >
+    <span>Book Now</span>
+  </Link>
+</li>
             <li>
               <Link href="tel:+919742386781">
                 <Image src={phone} alt="menu" />

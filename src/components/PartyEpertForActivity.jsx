@@ -79,8 +79,18 @@ const PartyEpertForActivity = ({ title }) => {
                     </Link>
                     <Link
                       href="https://www.facebook.com/EscapeRoom.co.uk"
-                      className="main-btn  dark-btn yellow-text white-border"
+                      className="main-btn dark-btn yellow-text white-border"
                       target="_blank"
+                      onClick={() => {
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                          event: "cta_click",
+                          button_name: "Book a call",
+                          destination: "facebook",
+                          link_url: "https://www.facebook.com/EscapeRoom.co.uk",
+                          page: window.location.pathname,
+                        });
+                      }}
                     >
                       <span>Book a call</span>
                     </Link>

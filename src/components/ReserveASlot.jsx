@@ -363,7 +363,7 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
       const response = await bookASlot(bookingData);
   
       if (response?.bookingId) {
-        toast.success("Booking successful");
+        // toast.success("Booking successful");
   
         // ✅ 🔥 GTM CONVERSION EVENT
         window.dataLayer = window.dataLayer || [];
