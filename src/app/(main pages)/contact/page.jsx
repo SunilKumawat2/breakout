@@ -59,7 +59,7 @@ const page = () => {
           <div className="row">
             <div className="col-lg-12">
               <h1 className="sec-head medium sm-head text-center yellow-text">
-              {getcontact?.title}
+              {getcontact?.heading}
               </h1>
               <div className="main-con para">
                 {/* <ol className="p-0 m-0">
@@ -78,7 +78,7 @@ const page = () => {
                     </li>
                   ))}
                 </ol> */}
-                <p className="para mt-4 sm" dangerouslySetInnerHTML={{
+                <p className="para mt-4 sm bg-transparent" dangerouslySetInnerHTML={{
                 __html: getcontact?.content
             }} />
               </div>

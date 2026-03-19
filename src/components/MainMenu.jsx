@@ -105,7 +105,7 @@ const MainMenu = ({ closeMenu }) => {
       subItems: [
         {
           title: "Blogs",
-          link: "/seo/blogs",
+          link: "/blogs",
         },
         {
           title: "Resources",

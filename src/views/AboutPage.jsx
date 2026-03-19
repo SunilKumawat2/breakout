@@ -331,10 +331,12 @@ const AboutPage = () => {
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center">
-                <h3 className="sec-head medium sm-head">
-                  {
+                <h3 className="sec-head medium sm-head" dangerouslySetInnerHTML={{
+                                __html: corporate?.cardssection?.heading,
+                              }}>
+                  {/* {
                     corporate?.cardssection?.heading
-                  }
+                  } */}
                   {/* Every Moment We Create <span>Follows the FBI Standards</span> */}
                 </h3>
               </div>
@@ -346,12 +348,16 @@ const AboutPage = () => {
                     <div className="col-lg-4 col-12" key={id}>
                       <div className="ab-card">
                         <img src={about_card_fun_result?.image} alt="icon1" />
-                        <h3>
+                        <h3 className="para" dangerouslySetInnerHTML={{
+                                __html: about_card_fun_result?.heading,
+                              }}>
                           {/* <span>F</span>un */}
-                          {about_card_fun_result?.heading}
+                          {/* {about_card_fun_result?.heading} */}
                         </h3>
-                        <p className="para">
-                          {about_card_fun_result?.description}
+                        <p className="para" dangerouslySetInnerHTML={{
+                                __html: about_card_fun_result?.description,
+                              }}>
+                          {/* {about_card_fun_result?.description} */}
                         </p>
                       </div>
                     </div>

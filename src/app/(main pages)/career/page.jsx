@@ -235,8 +235,8 @@ export default function CareerClient() {
     <div className="carrer-page pt-80">
       <div className="black-gr-div">
         <div className="container">
-          <h1 className="sec-head text-center yellow-text">{getcareer?.title}</h1>
-          <p className="para mt-4 sm" dangerouslySetInnerHTML={{
+          <h3 className="sec-head text-center yellow-text">{getcareer?.heading}</h3>
+          <div className="para mt-4 sm" dangerouslySetInnerHTML={{
             __html: getcareer?.content
           }} />
           <CareerForm />

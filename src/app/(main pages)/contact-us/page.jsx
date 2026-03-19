@@ -8,8 +8,10 @@ const page = () => {
 
     return (
         <div className='container mb-5 mt-5'>
-        
-            <p className="para mt-4 sm" dangerouslySetInnerHTML={{
+        {/* <h1 className="sec-head medium sm-head text-center yellow-text">
+              {getcareer?.heading}
+              </h1> */}
+            <div className="para mt-4 sm" dangerouslySetInnerHTML={{
                 __html: getcareer?.content
             }} />
         </div>
