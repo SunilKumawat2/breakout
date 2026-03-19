@@ -176,15 +176,16 @@ const Page = async ({ params }) => {
             </section>
           )}
 
-          {/* {brands && brands?.length > 0 && (
+          {brands && brands?.length > 0 && (
             <LogoSec
               title="<span>Brands</span> Hosted"
               logos={brands}
               link={false}
+              className="pb-0"
             />
-          )} */}
+          )}
 
-          <section className="section-padding esc-sec">
+          <section className="sec-padding-top esc-sec">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center">
@@ -212,9 +213,10 @@ const Page = async ({ params }) => {
                 (id != "things-to-do-in-bangalore" && id != "things-to-do-jp-nagar" && id != "things-to-do-whitefield") && (
                   <>
                     {escapeRoomsExtreme && escapeRoomsExtreme?.length > 0 && (
-                      <div className="row row-gap-25 mt-5">
+                      <div>
+                      <div className="row row-booking">
                         <div className="col-12">
-                          <h3 className="sec-head medium sm-head text-center">
+                          <h3 className="sec-head medium mb-0 sm-head text-center">
                             At <span>Extreme</span>
                           </h3>
                         </div>
@@ -225,11 +227,13 @@ const Page = async ({ params }) => {
                           </div>
                         ))}
                       </div>
+                      </div>
                     )}
                     {escapeRoomsUltra && escapeRoomsUltra?.length > 0 && (
-                      <div className="row row-gap-25 mt-3">
+                      <div className="pt-80">
+                      <div className="row row-booking">
                         <div className="col-12">
-                          <h3 className="sec-head medium sm-head text-center mt-3">
+                          <h3 className="sec-head medium mb-0 sm-head text-center">
                             At <span>Ultra</span>
                           </h3>
                         </div>
@@ -238,6 +242,7 @@ const Page = async ({ params }) => {
                             <EscapeRoomCard room={room} />
                           </div>
                         ))}
+                      </div>
                       </div>
                     )}
                   </>
@@ -262,7 +267,7 @@ const Page = async ({ params }) => {
           {rooms?.cardsection &&
             rooms?.cardsection?.length > 0 &&
             rooms?.cardsection[0]?.heading !== "" && (
-              <section className="card-sec">
+              <section className="card-sec section-padding pb-0">
                 <div className="container">
                   <div className="cpr-card-container">
                     <div className="row row-gap-25">
@@ -350,7 +355,11 @@ const Page = async ({ params }) => {
               <GReviewSlider commonStars={false} data={rooms?.googlereviews} />
             </div>
           )}
-
+              <LogoSec className="pt-80 pb-0"
+                title={"<span>In the</span> News"}
+                logo={rooms?.brandLogo}
+                link={true}
+              />
           <HomeContact img={illus} page_name="landing" noTextBottom={false} />
         </div>
 

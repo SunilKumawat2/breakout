@@ -26,7 +26,7 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
     thirdPartyGames,
     bookASlot,
   } = useGlobalContext();
-  console.log("sdkjfhksdjfhdjkshfksdjhfksjdf_snjkdfhksjdfsjdk", thirdPartyLocations,)
+  console.log("sdkjfhksdjfhdjkshfksdjhfksjdf_snjkdfhksjdfsjdk", availableSlots,)
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
@@ -325,6 +325,10 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
       setBookingLoading(false);
     }
   };
+
+  const filteredSlots = availableSlots?.filter(
+    (slot) => slot.isAvailable === true
+  );
 
   useEffect(() => {
     const totalDays = new Date(year, month + 1, 0).getDate();
@@ -984,21 +988,15 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
                           <span className="visually-hidden">Loading...</span>
                         </div>
                       </div>
-                    ) : availableSlots?.length > 0 && availableSlots ? (
+                    ) : filteredSlots?.length > 0 ? (
                       <SlotPicker
                         handleSelect={handleSlotSelect}
                         selectedSlotTime={selectedSlotTime}
-                        availableSlots={availableSlots}
+                        availableSlots={filteredSlots}
                       />
                     ) : !hasSlotsFetched ? (
                       <div className="text-center py-5">
-                        {/* <p>
-                          Please select a location, game, start date and end
-                          date
-                        </p> */}
-                        <p>
-                          Please select a location, game, date
-                        </p>
+                        <p>Please select a location, game, date</p>
                       </div>
                     ) : (
                       <div className="text-center py-5">
