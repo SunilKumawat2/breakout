@@ -113,16 +113,16 @@ const page = () => {
   };
 
   return (
-    <div className="blogs-page section-padding">
+    <div className="blogs-page pt-80">
       <div className="container">
-        <div className="row text-center pb-5">
+        <div className="row text-center">
           <div className="col-12">
-            <h3 className="sec-head medium">
+            <h3 className="sec-head medium mb-0">
               Blog to <span>Plan Celebrations</span>
             </h3>
           </div>
         </div>
-        <div className="row pt-4">
+        <div className="row pt-80">
           <div className="col-lg-3 col-12">
             <Sidebar
               handleSearchChange={handleSearchChange}

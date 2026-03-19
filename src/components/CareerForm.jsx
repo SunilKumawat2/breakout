@@ -109,6 +109,7 @@ const CareerForm = ({
       experience: "",
       interest: "",
     },
+  
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
       phone: Yup.string()
@@ -125,10 +126,11 @@ const CareerForm = ({
       ),
       interest: Yup.string().required("Please tell us why you are interested"),
     }),
+  
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
       setSubmitSuccess(false);
-
+  
       try {
         const formData = new FormData();
         formData.append("name", values.name);
@@ -140,25 +142,36 @@ const CareerForm = ({
         formData.append("interest", values.interest);
         if (resumeFile) formData.append("resume", resumeFile);
         formData.append("page", page);
-
-        // Note: Posting to a backend API endpoint for handling file + text
+  
         await axios.post("/api/careerForm", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-
+  
+        // ✅ 🔥 GTM TRACKING (ADD THIS)
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "career_form_submit",   // 👈 DIFFERENT EVENT NAME
+          form_name: "career_form",
+          page: page,
+          role: values.role?.value,
+          looking_for: values.lookingFor?.value,
+          experience: values.experience || "0",
+          has_resume: !!resumeFile,
+        });
+  
         setSubmitSuccess(true);
+  
         toast.success("Thank you for applying! We'll get in touch soon.", {
           position: "bottom-center",
           autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
         });
+  
         resetForm();
         setResumeFile(null);
+  
       } catch (error) {
         setSubmitSuccess(false);
+  
         toast.error("Submission failed. Please try again.", {
           position: "bottom-center",
         });

@@ -240,6 +240,7 @@ const AboutPage = () => {
                       className="w-100 h-auto"
                       autoPlay
                       loop
+                      controls
                       playsInline
                       muted={isFounderMuted}
                     >
@@ -247,7 +248,7 @@ const AboutPage = () => {
                     </video>
 
                     {/* Button INSIDE video at bottom */}
-                    <button
+                    {/* <button
                       className="founder-video-mute-btn"
                       onClick={() => {
                         const video = founderVideoRef.current;
@@ -259,7 +260,7 @@ const AboutPage = () => {
                       }}
                     >
                       {isFounderMuted ? "🔇" : "🔊"}
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
@@ -306,7 +307,7 @@ const AboutPage = () => {
               <div className="row">
                 <div className="col-lg-12 ">
                   <h3
-                    className="sec-head medium sm-head"
+                    className="sec-head medium sm-head text-center"
                     dangerouslySetInnerHTML={{
                       __html: corporate?.contentsection?.heading,
                     }}
@@ -396,14 +397,14 @@ const AboutPage = () => {
         {corporate && corporate?.ourstorysection && (
           <section className="section-padding our-story-sec">
             <div className="container">
-              <div className="row  align-items-center">
+              <div className="row">
                 <div className="col-lg-5 col-12">
-                  <div className="vis-img">
+                  <div className="vis-img h-100">
                     {corporate?.ourstorysection?.image && (
                       <img
                         src={corporate?.ourstorysection?.image}
                         alt="vis-img"
-                        className="w-100 h-auto"
+                        className="w-100 h-100"
                       />
                     )}
                   </div>
@@ -452,7 +453,7 @@ const AboutPage = () => {
           </section>
         )}
         {corporate && corporate?.ourleaderssection && (
-          <section className="leader-sec section-padding pb-0">
+          <section className="leader-sec pt-80 pb-0">
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-lg-12 text-center">
@@ -481,7 +482,7 @@ const AboutPage = () => {
           </section>
         )}
         {corporate && corporate?.ouradvisorssection && (
-          <section className="section-padding pb-0 advisor-sec">
+          <section className="pt-80 pb-0 advisor-sec">
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-lg-12 text-center">

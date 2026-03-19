@@ -133,7 +133,7 @@ const page = () => {
       phone: "",
       email: "",
     },
-
+  
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
       phone: Yup.string()
@@ -141,14 +141,25 @@ const page = () => {
         .matches(/^[0-9]{10}$/, "Enter valid phone number"),
       email: Yup.string().email("Invalid email").required("Email is required"),
     }),
-
+  
     onSubmit: async (values, { setSubmitting, resetForm }) => {
-
-      await submitResourceForm(values);
-
-      setSubmitting(false);
-      resetForm();
-
+      try {
+        await submitResourceForm(values);
+  
+        // ✅ 🔥 ADD THIS (GTM EVENT)
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "form_submit",
+          form_name: "resource_form",
+          user_email: values.email,
+        });
+  
+        resetForm();
+      } catch (error) {
+        console.error("Form submission failed", error);
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
 

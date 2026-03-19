@@ -237,14 +237,16 @@
 //             )}
 //           </div>
 //         </div>
-       
+
 //       </div>
-     
+
 //     </section>
 //   );
 // };
 
 // export default BirthdayVenueWidget;
+
+
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Select from "react-select";
@@ -309,13 +311,147 @@ const BirthdayVenueWidget = () => {
     requestAnimationFrame(runWhenReady);
   }, [selectedVenue, activeAccordion, venueCards]);
 
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      background: "rgba(243, 244, 244, 0.1)",
+      borderColor: state.isFocused ? "#FFAE00" : "rgba(255, 174, 0, 0.15)",
+      borderRadius: "20px",
+      padding: "8px",
+      color: "#FFFFFF",
+      cursor: "pointer",
+      "&:hover": {
+        borderColor: "rgba(255, 174, 0, 0.3)",
+      },
+      input: {
+        color: "#FFFFFF",
+      },
+    }),
+    menu: (base) => ({
+      ...base,
+      background: "#272727",
+      borderRadius: "10px",
+      zIndex: 9999,
+    }),
+    option: (base, state) => ({
+      ...base,
+      background: state.isFocused ? "rgba(255, 174, 0, 0.1)" : "transparent",
+      color: state.isFocused ? "#FFAE00" : "#FFFFFF",
+      cursor: "pointer",
+      "&:hover": {
+        background: "rgba(255, 174, 0, 0.1)",
+        color: "#FFAE00",
+      },
+    }),
+    singleValue: (base) => ({
+      ...base,
+      color: "#FFFFFF",
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: "rgba(255, 255, 255, 0.5)",
+    }),
+  };
+
   return (
     <section className="section-padding">
       <div className="container">
         <h3 className="sec-head text-center sm-head medium">
           <span>Best Party Places in Bangalore</span>
         </h3>
-
+        <div className="b-flt-wrap mt-5">
+          <div className="b-flt-item">
+            <label htmlFor="category" className="form-label">
+              Category
+            </label>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              placeholder="Select an option"
+              name="color"
+              styles={{
+                ...customStyles,
+                control: (base, state) => ({
+                  ...customStyles.control(base, state),
+                  paddingLeft: "35px",
+                }),
+              }}
+              options={venueCategories?.map((category) => ({
+                value: category?.category,
+                label: category?.category,
+              }))}
+            />
+          </div>
+          <div className="b-flt-item">
+            <label htmlFor="Location" className="form-label">
+              Location
+            </label>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              placeholder="Select an option"
+              name="color"
+              styles={{
+                ...customStyles,
+                control: (base, state) => ({
+                  ...customStyles.control(base, state),
+                  paddingLeft: "35px",
+                }),
+              }}
+              options={[
+                { value: "Koramangala", label: "Koramangala" },
+                { value: "Koramangala", label: "Koramangala" },
+                { value: "Koramangala", label: "Koramangala" },
+              ]}
+            />
+          </div>
+          <div className="b-flt-item">
+            <label htmlFor="Capacity" className="form-label">
+              Capacity
+            </label>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              placeholder="Select an option"
+              name="color"
+              styles={{
+                ...customStyles,
+                control: (base, state) => ({
+                  ...customStyles.control(base, state),
+                  paddingLeft: "35px",
+                }),
+              }}
+              options={[
+                { value: "Koramangala", label: "Koramangala" },
+                { value: "Koramangala", label: "Koramangala" },
+                { value: "Koramangala", label: "Koramangala" },
+              ]}
+            />
+          </div>
+          <div className="b-flt-item">
+            <label htmlFor="Party Type" className="form-label">
+              Party Type
+            </label>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              placeholder="Select an option"
+              name="color"
+              styles={{
+                ...customStyles,
+                control: (base, state) => ({
+                  ...customStyles.control(base, state),
+                  paddingLeft: "35px",
+                }),
+              }}
+              options={[
+                { value: "Koramangala", label: "Koramangala" },
+                { value: "Koramangala", label: "Koramangala" },
+                { value: "Koramangala", label: "Koramangala" },
+              ]}
+            />
+          </div>
+        </div>
         {venueCards.length > 0 && (
           <Accordion
             className="b-venue-cards-accordion mt-5 acc"

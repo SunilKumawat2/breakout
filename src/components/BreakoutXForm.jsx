@@ -104,35 +104,46 @@ const BirthdayGetInTouch = ({ img,className="" }) => {
       location: null,
     },
     validate,
+  
     onSubmit: async (values, { resetForm }) => {
       setSubmitStatus(null);
+  
       const sendData = {
         ...values,
         location: values.location?.value ?? "",
         date: values.date ? values.date.toISOString() : null,
         page: page,
       };
+  
       try {
         await axios.post("/api/contactFormClickup", JSON.stringify(sendData));
+  
+        // ✅ 🔥 GTM TRACKING (ADD THIS)
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "form_submit",
+          form_name: "contact_form_v2",
+          page: page,
+          location: values.location?.value ?? "",
+          applyX: values.applyX,
+          has_date: !!values.date,
+        });
+  
         setSubmitStatus("success");
+  
         toast.success("Thank you! We'll be in touch soon.", {
           position: "bottom-center",
           autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
         });
+  
         resetForm();
+  
       } catch (err) {
         setSubmitStatus("error");
+  
         toast.error("Something went wrong. Please try again.", {
           position: "bottom-center",
           autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
         });
       }
     },

@@ -40,6 +40,7 @@ const ConnectContact = ({
       email: "",
       phone: "",
     },
+  
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
       email: Yup.string()
@@ -49,8 +50,10 @@ const ConnectContact = ({
         .required("Phone number is required")
         .matches(/^[0-9]{10,15}$/, "Enter a valid phone number"),
     }),
+  
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
+  
       try {
         const sendData = {
           name: values.name,
@@ -58,18 +61,28 @@ const ConnectContact = ({
           phone: values.phone,
           page: page,
         };
+  
         await axios.post("/api/contactFormClickup", JSON.stringify(sendData));
+  
+        // ✅ 🔥 GTM TRACKING (ADD THIS)
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "form_submit",
+          form_name: "simple_contact_form",
+          page: page,
+          user_email: values.email,
+          phone: values.phone,
+        });
+  
         toast.success("Thank you! We'll be in touch soon.", {
           position: "bottom-center",
           autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
         });
+  
         resetForm();
+  
       } catch (error) {
-        // Optionally, handle errors here
+        // optional error handling
       } finally {
         setLoading(false);
       }

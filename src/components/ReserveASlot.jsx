@@ -236,49 +236,119 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
     setSelectedSlotTime(slot);
   };
 
+  // const handleBookNow = async () => {
+  //   if (bookingLoading) return;
+
+  //   setBookingLoading(true);
+
+  //   // Trim values
+  //   const trimmedFirstName = firstName?.trim();
+  //   const trimmedLastName = lastName?.trim();
+  //   const trimmedEmail = email?.trim();
+  //   const trimmedPhone = phone?.trim();
+
+  //   // ================= REQUIRED FIELD CHECK =================
+  //   // if (
+  //   //   !trimmedFirstName ||
+  //   //   !trimmedLastName ||
+  //   //   !trimmedEmail ||
+  //   //   !trimmedPhone ||
+  //   //   !selectedLocation ||
+  //   //   !selectedSlotTime ||
+  //   //   !selectedDate
+  //   // ) {
+  //   //   toast.error("Please fill all the required fields");
+  //   //   setBookingLoading(false);
+  //   //   return;
+  //   // }
+
+  //   // ================= EMAIL VALIDATION =================
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   if (!emailRegex.test(trimmedEmail)) {
+  //     // toast.error("Please enter a valid email address");
+  //     setBookingLoading(false);
+  //     return;
+  //   }
+
+  //   // ================= PHONE VALIDATION (10 digits) =================
+  //   const phoneRegex = /^[6-9]\d{9}$/; // Indian mobile format
+  //   if (!phoneRegex.test(trimmedPhone)) {
+  //     toast.error("Please enter a valid 10-digit phone number");
+  //     setBookingLoading(false);
+  //     return;
+  //   }
+
+  //   // ================= BOOKING DATA =================
+  //   const bookingData = {
+  //     customerFirstName: trimmedFirstName,
+  //     customerLastName: trimmedLastName,
+  //     customerEmail: trimmedEmail,
+  //     customerPhone: trimmedPhone,
+  //     slotId: selectedSlotTime?.slotId,
+  //     locationId: selectedLocation,
+  //     gameId: selectedGame?.[0],
+  //     // startDate: selectedDate,
+  //   };
+
+
+  //   try {
+  //     const response = await bookASlot(bookingData);
+
+  //     if (response?.bookingId) {
+  //       toast.success("Booking successful");
+
+  //       // ================= RESET FORM =================
+  //       setFirstName("");
+  //       setLastName("");
+  //       setEmail("");
+  //       setPhone("");
+
+  //       setSelectedLocation(null);
+  //       setSelectedLocationOption(null);
+  //       setSelectedGame([]);
+  //       setSelectedSlotTime(null);
+  //       setHasSlotsFetched(false);
+  //       setSelectedDate(null);
+
+  //       // window.open(
+  //       //   `https://book.breakout.in/embed?cartId=${response.bookingId}`,
+  //       //   "_blank"
+  //       // );
+  //       setCartId(response.bookingId);
+  //       setShowIframe(true);
+  //     } else {
+  //       toast.error("Booking failed. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setBookingLoading(false);
+  //   }
+  // };
+
   const handleBookNow = async () => {
     if (bookingLoading) return;
-
+  
     setBookingLoading(true);
-
-    // Trim values
+  
     const trimmedFirstName = firstName?.trim();
     const trimmedLastName = lastName?.trim();
     const trimmedEmail = email?.trim();
     const trimmedPhone = phone?.trim();
-
-    // ================= REQUIRED FIELD CHECK =================
-    // if (
-    //   !trimmedFirstName ||
-    //   !trimmedLastName ||
-    //   !trimmedEmail ||
-    //   !trimmedPhone ||
-    //   !selectedLocation ||
-    //   !selectedSlotTime ||
-    //   !selectedDate
-    // ) {
-    //   toast.error("Please fill all the required fields");
-    //   setBookingLoading(false);
-    //   return;
-    // }
-
-    // ================= EMAIL VALIDATION =================
+  
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(trimmedEmail)) {
-      // toast.error("Please enter a valid email address");
       setBookingLoading(false);
       return;
     }
-
-    // ================= PHONE VALIDATION (10 digits) =================
-    const phoneRegex = /^[6-9]\d{9}$/; // Indian mobile format
+  
+    const phoneRegex = /^[6-9]\d{9}$/;
     if (!phoneRegex.test(trimmedPhone)) {
       toast.error("Please enter a valid 10-digit phone number");
       setBookingLoading(false);
       return;
     }
-
-    // ================= BOOKING DATA =================
+  
     const bookingData = {
       customerFirstName: trimmedFirstName,
       customerLastName: trimmedLastName,
@@ -287,35 +357,41 @@ const ReserveASlot = ({ room, page_name, data = {}, onOpenFaq, className = "", }
       slotId: selectedSlotTime?.slotId,
       locationId: selectedLocation,
       gameId: selectedGame?.[0],
-      // startDate: selectedDate,
     };
-
-
+  
     try {
       const response = await bookASlot(bookingData);
-
+  
       if (response?.bookingId) {
         toast.success("Booking successful");
-
+  
+        // ✅ 🔥 GTM CONVERSION EVENT
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "booking_success",
+          event_type: "conversion",
+          booking_id: response.bookingId,
+          user_email: trimmedEmail,
+          location_id: selectedLocation,
+          game_id: selectedGame?.[0],
+        });
+  
         // ================= RESET FORM =================
         setFirstName("");
         setLastName("");
         setEmail("");
         setPhone("");
-
+  
         setSelectedLocation(null);
         setSelectedLocationOption(null);
         setSelectedGame([]);
         setSelectedSlotTime(null);
         setHasSlotsFetched(false);
         setSelectedDate(null);
-
-        // window.open(
-        //   `https://book.breakout.in/embed?cartId=${response.bookingId}`,
-        //   "_blank"
-        // );
+  
         setCartId(response.bookingId);
         setShowIframe(true);
+  
       } else {
         toast.error("Booking failed. Please try again.");
       }

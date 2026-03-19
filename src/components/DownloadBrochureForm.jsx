@@ -65,7 +65,9 @@ const DownloadBrochureForm = ({img = false}) => {
                            
                             <div className='col-lg-12 col-12'>
                                 <div className=''>
-                                    <button className='main-btn dark-btn'><span className='yellow-text'>Book a call</span></button>
+                                    <button className='main-btn dark-btn'>
+                                        <span className='yellow-text'>Book a call</span>
+                                        </button>
                                 </div>
                             </div>
                         </div>
