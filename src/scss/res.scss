@@ -410,6 +410,12 @@
 .col-load-more-blogs button {
   min-width: auto;
 }
+.blog-slider-sec.arrows-diff .custom-prev {
+  left: 0;
+}
+.blog-slider-sec.arrows-diff .custom-next {
+  right: 0;
+}
 }
 
 @media (min-width: 1400px) {

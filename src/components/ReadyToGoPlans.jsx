@@ -50,7 +50,7 @@ const ReadyToGoPlans = ({ data, className = "" }) => {
   }
   const totalSlides = data1?.images?.length || 0;
   return (
-    <section className={`blog-slider-sec section-padding ${className}`}>
+    <section className={`blog-slider-sec section-padding arrows-diff ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
