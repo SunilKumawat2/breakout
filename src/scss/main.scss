@@ -3963,7 +3963,10 @@ textarea:hover {
 .share-blog-list .bl-soc-list li {
   text-align: center;
 }
-
+.share-blog-list .bl-soc-list li button{
+  width: 55px;
+  height: 55px;
+}
 .col-form-head .form-group.style-2 .input-group .select-group select {
   border-radius: 12px !important;
   background-color: transparent !important;
@@ -4024,3 +4027,84 @@ textarea:hover {
   background-color: #040707 !important;
 }
 
+.sec-head.sidebar-heading{
+  font-size: 24px;
+}
+.blogs-page .box-row{
+  row-gap: 40px;
+}
+.col-load-more-blogs button{
+  min-width: 200px;
+}
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  position: absolute;
+  bottom: 125%; /* above button */
+  left: 50%;
+  transform: translateX(-50%);
+  
+  background-color: black;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  // white-space: nowrap;
+  width: 520px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+
+  z-index: 10;
+}
+
+/* show on hover */
+.tooltip-container:hover .tooltip-text {
+  opacity: 1;
+  visibility: visible;
+}
+.b-venue-cards-accordion.acc .accordion-item button{
+  position: relative;
+  border-radius: 32px;
+}
+.b-venue-cards-accordion.acc .accordion-item button::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 30px;
+  padding: 1px;
+  background: radial-gradient(50% 70% at 100% 100%, rgba(255, 174, 0, 0.65), rgba(255, 255, 255, 0.25));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.b-venue-cards-accordion.acc .accordion-item{
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.b-venue-cards-accordion.acc .accordion-item::before {
+  display: none !important;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 30px;
+  padding: 0.5px;
+  background: radial-gradient(50% 70% at 100% 100%, rgba(255, 174, 0, 0.65), rgba(255, 255, 255, 0.25));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.b-venue-cards-accordion.acc:not(.activity-acc) .accordion-body {
+  background-color: transparent !important;
+  padding-top: 80px !important;
+}
+.b-venue-cards-accordion.acc .b-venue-cards{
+  padding-bottom: 120px;
+}

@@ -261,7 +261,7 @@ import VenueInner from "./VenueInner";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
-const BirthdayVenueWidget = () => {
+const BirthdayVenueWidget = ({className=""}) => {
   const { venueCategories } = useGlobalContext();
 
   const [venueCards, setVenueCards] = useState([]);
@@ -354,7 +354,7 @@ const BirthdayVenueWidget = () => {
   };
 
   return (
-    <section className="section-padding">
+    <section className={`section-padding ${className}`}>
       <div className="container">
         <h3 className="sec-head text-center sm-head medium">
           <span>Best Party Places in Bangalore</span>

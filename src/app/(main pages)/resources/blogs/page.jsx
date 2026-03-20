@@ -126,7 +126,7 @@ const page = () => {
           </div>
         </div>
         <div className="row pt-4">
-          <div className="col-lg-3 col-12">
+          <div className="col-lg-3 col-6">
             <ResourcesSidebar
               handleSearchChange={handleSearchChange}
               totalResources={filteredBlogs.length}
@@ -134,8 +134,8 @@ const page = () => {
               searchRef={searchRef}
             />
           </div>
-          <div className="col-lg-9 col-12">
-            <div className="row row-gap-25">
+          <div className="col-lg-9 col-6 col-blog-card">
+            <div className="row box-row">
               {/* {filteredBlogs.length > 0 ? (
                 filteredBlogs?.slice(0, visibleCount)?.map((blog, index) => (
                   <div className="col-lg-4 col-12" key={index}>
@@ -169,7 +169,7 @@ const page = () => {
             {/* Load More Button */}
             {visibleCount < filteredBlogs.length && (
               <div className="row text-center mt-5">
-                <div className="col-12">
+                <div className="col-load-more-blogs">
                   <button
                     className="main-btn dark-btn center"
                     onClick={handleLoadMore}
@@ -183,7 +183,7 @@ const page = () => {
         </div>
       </div>
       <div className="black-gr-div">
-        <BrochureDownloadForm page_name="resources_blogs" blog_slug={filteredBlogs}/>
+        <BrochureDownloadForm className="pb-0" page_name="resources_blogs" blog_slug={filteredBlogs}/>
         <Image src={blogIllus} alt="black-gr" className="illus-image" />
       </div>
     </div>

@@ -404,6 +404,12 @@
   .why-choose-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .blogs-page {
+    overflow: hidden;
+}
+.col-load-more-blogs button {
+  min-width: auto;
+}
 }
 
 @media (min-width: 1400px) {
@@ -485,4 +491,38 @@
   .vs-col .vs-col-card ul li span {
     font-size: 13px;
   }
+  .blog-card p{
+    font-size: 12px;
+    padding: 0 12px;
+  }
+  .share-blog-list .bl-soc-list li button {
+    width: 35px;
+    height: 35px;
+}
+.resource-sidebar .css-2fnke1-placeholder,
+.resource-sidebar .form-group .input-group input,
+.resource-sidebar p.para{
+  font-size: 14px !important;
+}
+.resource-sidebar .css-2fnke1-placeholder{
+  white-space: nowrap;
+}
+.col-blog-card .col-12{
+  padding-left: 0;
+  padding-right: 0;
+}
+.resource-sidebar .css-n8jlg8-control{
+  padding: 5px 10px !important;
+}
+.outer-row .col-lg-3{
+  padding-left: 0;
+}
+.outer-row{
+  margin: 0;
+}
+
+}
+.vis-img img{
+  border-radius: 16px;
+  object-fit: cover;
 }

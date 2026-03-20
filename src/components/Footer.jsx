@@ -168,13 +168,29 @@ const Footer = () => {
 
             <div className="col-lg-9 col-12">
               <div className="row row-gap-25">
-                {menuItems.map((item, index) => (
+                {menuItems?.map((item, index) => (
                   <div className="col-lg-4 col-6" key={index}>
                     <h4 className="ft-head">{item.title}</h4>
+
                     <ul className="ft-list">
                       {item.links.map((link, idx) => (
                         <li key={idx}>
-                          <Link href={link.link}>{link.title}</Link>
+                          <Link
+                            href={link.link}
+                            onClick={() => {
+                              window.dataLayer = window.dataLayer || [];
+                              window.dataLayer.push({
+                                event: "cta_click",
+                                button_name: link.title,
+                                destination: link.link,
+                                parent_menu: item.title,
+                                page: window.location.pathname,
+                                section: "footer_menu",
+                              });
+                            }}
+                          >
+                            {link.title}
+                          </Link>
                         </li>
                       ))}
                     </ul>

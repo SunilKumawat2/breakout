@@ -90,11 +90,11 @@ const page = () => {
   const [brandLogos, setBrandLogos] = useState(null);
   const [loading, setLoading] = useState(true);
   const { gettncs } = useGlobalContext();
-  console.log("sjkdfhjsdhfhsdfhsdf_gettncs",gettncs)
+  console.log("sjkdfhjsdhfhsdfhsdf_gettncs", gettncs)
   const corporateTnc = gettncs?.find(
     (item) => item.reference == "corporate"
   );
-  
+
   console.log("Birthday T&C:", corporateTnc);
 
   // useEffect(() => {
@@ -255,26 +255,43 @@ const page = () => {
                       {corporate?.imagecardsection?.images &&
                         corporate?.imagecardsection?.images?.length > 0 &&
                         corporate?.imagecardsection?.images?.map((bd, index) => (
-                          <Link href={bd.game_link} target="_blank" className="col-lg-4 col-6" key={index}>
-                          <div  >
-                            <div className="location-card">
-                              <div className="location-card-img">
-                                {bd.image && (
-                                  <Image
-                                    src={bd.image}
-                                    width={800}
-                                    height={800}
-                                    alt={bd.heading}
+                          <Link
+                            href={bd.game_link}
+                            target="_blank"
+                            className="col-lg-4 col-6"
+                            key={index}
+                            onClick={() => {
+                              window.dataLayer = window.dataLayer || [];
+                              window.dataLayer.push({
+                                event: "cta_click",
+                                button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
+                                destination: "external_game_link",
+                                link_url: bd?.game_link,
+                                page: window.location.pathname,
+                                section: "game_cards",
+                              });
+                            }}
+                          >
+                            <div>
+                              <div className="location-card">
+                                <div className="location-card-img">
+                                  {bd.image && (
+                                    <Image
+                                      src={bd.image}
+                                      width={800}
+                                      height={800}
+                                      alt={bd.heading}
+                                    />
+                                  )}
+                                </div>
+
+                                <div className="location-card-content">
+                                  <h3
+                                    dangerouslySetInnerHTML={{ __html: bd.heading }}
                                   />
-                                )}
-                              </div>
-                              <div className="location-card-content">
-                                <h3
-                                  dangerouslySetInnerHTML={{ __html: bd.heading }}
-                                />
+                                </div>
                               </div>
                             </div>
-                          </div>
                           </Link>
                         ))}
                     </div>
@@ -285,7 +302,7 @@ const page = () => {
                 <AddOnsSlider className="pt-80" data={corporate?.addonssection} />
               )}
               {corporate && corporate?.packagesection && (
-                <Packages className="pb-0" packages={corporate?.packagesection} data={corporateTnc} category="corporate"/>
+                <Packages className="pb-0" packages={corporate?.packagesection} data={corporateTnc} category="corporate" />
               )}
               {/* <BreakoutXForm className="pb-0"/> */}
               <div id="breakout-form">

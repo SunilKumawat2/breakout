@@ -115,15 +115,15 @@ const page = () => {
   return (
     <div className="blogs-page pt-80">
       <div className="container">
-        <div className="row text-center">
+        <div className="row text-center m-0">
           <div className="col-12">
             <h3 className="sec-head medium mb-0">
               Blog to <span>Plan Celebrations</span>
             </h3>
           </div>
         </div>
-        <div className="row pt-80">
-          <div className="col-lg-3 col-12">
+        <div className="row pt-80 outer-row">
+          <div className="col-lg-3 col-6">
             <Sidebar
               handleSearchChange={handleSearchChange}
               totalResources={filteredBlogs.length}
@@ -131,8 +131,8 @@ const page = () => {
               searchRef={searchRef}
             />
           </div>
-          <div className="col-lg-9 col-12">
-            <div className="row row-gap-25">
+          <div className="col-lg-9 col-6 col-blog-card">
+            <div className="row box-row">
               {filteredBlogs.length > 0 ? (
                 filteredBlogs.slice(0, visibleCount).map((blog, index) => (
                   <div className="col-lg-4 col-12" key={index}>
@@ -159,7 +159,7 @@ const page = () => {
 
             {visibleCount < filteredBlogs.length && (
               <div className="row text-center mt-5">
-                <div className="col-12">
+                <div className="col-load-more-blogs">
                   <button
                     className="main-btn dark-btn center"
                     onClick={handleLoadMore}

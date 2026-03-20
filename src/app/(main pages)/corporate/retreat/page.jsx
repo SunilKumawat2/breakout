@@ -237,7 +237,20 @@ const page = () => {
                         corporate?.imagecardsection?.images?.length > 0 &&
                         corporate?.imagecardsection?.images?.map((bd, index) => (
                           <div className="col-lg-4 col-12" key={index}>
-                            <Link href="#book-now" className="location-card">
+                            <Link
+                              href="#book-now"
+                              className="location-card"
+                              onClick={() => {
+                                window.dataLayer = window.dataLayer || [];
+                                window.dataLayer.push({
+                                  event: "cta_click",
+                                  button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
+                                  destination: "#book-now",
+                                  page: window.location.pathname,
+                                  section: "book_now_scroll",
+                                });
+                              }}
+                            >
                               <div className="location-card-img">
                                 {bd.image && (
                                   <Image
@@ -248,6 +261,7 @@ const page = () => {
                                   />
                                 )}
                               </div>
+
                               <div className="location-card-content">
                                 <h3
                                   dangerouslySetInnerHTML={{ __html: bd.heading }}
@@ -280,7 +294,19 @@ const page = () => {
                           <div className="col-lg-4 col-12" key={index}>
                             {
                               bd?.heading != "Escape Rooms" && (
-                                <Link href={`escape-rooms/${bd?.slug}`}>
+                                <Link
+                                  href={`escape-rooms/${bd?.slug}`}
+                                  onClick={() => {
+                                    window.dataLayer = window.dataLayer || [];
+                                    window.dataLayer.push({
+                                      event: "cta_click",
+                                      button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
+                                      destination: `escape-rooms/${bd?.slug}`,
+                                      page: window.location.pathname,
+                                      section: "escape_rooms_cards",
+                                    });
+                                  }}
+                                >
                                   <div className="location-card">
                                     <div className="location-card-img">
                                       {bd.image && (
@@ -292,6 +318,7 @@ const page = () => {
                                         />
                                       )}
                                     </div>
+
                                     <div className="location-card-content">
                                       <h3
                                         dangerouslySetInnerHTML={{ __html: bd.heading }}
@@ -303,7 +330,19 @@ const page = () => {
                             }
                             {
                               bd?.heading == "Escape Rooms" && (
-                                <Link href="/escape-rooms">
+                                <Link
+                                  href="/escape-rooms"
+                                  onClick={() => {
+                                    window.dataLayer = window.dataLayer || [];
+                                    window.dataLayer.push({
+                                      event: "cta_click",
+                                      button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
+                                      destination: "/escape-rooms",
+                                      page: window.location.pathname,
+                                      section: "escape_rooms_main_card",
+                                    });
+                                  }}
+                                >
                                   <div className="location-card">
                                     <div className="location-card-img">
                                       {bd.image && (
@@ -315,6 +354,7 @@ const page = () => {
                                         />
                                       )}
                                     </div>
+
                                     <div className="location-card-content">
                                       <h3
                                         dangerouslySetInnerHTML={{ __html: bd.heading }}

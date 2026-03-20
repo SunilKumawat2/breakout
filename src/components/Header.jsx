@@ -85,22 +85,22 @@ export default function Header() {
               ))}
           </ul>
           <ul className="r-list">
-          <li>
-  <Link
-    href="/book-online"
-    className="main-btn"
-    onClick={() => {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: "cta_click",
-        button_name: "Book Now",
-        destination: "/book-online",
-      });
-    }}
-  >
-    <span>Book Now</span>
-  </Link>
-</li>
+            <li>
+              <Link
+                href="/book-online"
+                className="main-btn"
+                onClick={() => {
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push({
+                    event: "cta_click",
+                    button_name: "Book Now",
+                    destination: "/book-online",
+                  });
+                }}
+              >
+                <span>Book Now</span>
+              </Link>
+            </li>
             <li>
               <Link href="tel:+919742386781">
                 <Image src={phone} alt="menu" />
@@ -120,7 +120,21 @@ export default function Header() {
           {links &&
             links.map((link) => (
               <li key={link.name}>
-                <Link href={link.link}>{link.name}</Link>
+                <Link
+                  href={link.link}
+                  onClick={() => {
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                      event: "cta_click",
+                      button_name: link.name,
+                      destination: link.link,
+                      page: window.location.pathname,
+                      section: "mobile_nav_menu",
+                    });
+                  }}
+                >
+                  {link.name}
+                </Link>
               </li>
             ))}
         </ul>

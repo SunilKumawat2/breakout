@@ -206,10 +206,11 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
         <Image src={toolIllus} className="illus-image" alt="tool-illus" />
       </div>
 
-      <BirthdayVenueWidget id={id} />
+      <BirthdayVenueWidget className="pt-80 pb-0" id={id} />
 
+<div className="pt-80">
       <GReviewSlider commonStars={false} />
-
+      </div>
       {/* <OurLocationSec
         className="sec-padding-top"
         // title={`About Our Breakout®  <span>${blogData?.title} Location</span>`}

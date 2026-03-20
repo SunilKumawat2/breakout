@@ -9,7 +9,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import { toast } from "react-toastify";
 import Select from "react-select";
 
-const BrochureDownloadForm = ({ page_name = "", blog_slug = {} }) => {
+const BrochureDownloadForm = ({ page_name = "",className = "", blog_slug = {} }) => {
   const { bookbloggetintouch } = useGlobalContext();
   /* ================= CALENDAR LOGIC ================= */
   const today = new Date();
@@ -252,7 +252,7 @@ const BrochureDownloadForm = ({ page_name = "", blog_slug = {} }) => {
 
   /* ================= UI ================= */
   return (
-    <section className="brochure-download-form section-padding">
+    <section className={`brochure-download-form section-padding ${className}`}>
       <div className="container">
         <div className="row">
           <div className="col-form-head d-flex justify-content-between mb-40">

@@ -27,13 +27,13 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Home() {
   const [data, setData] = useState(null);
   const [cards, setCards] = useState([]);
-  console.log("setCards_setCards_setCards",cards)
+  console.log("setCards_setCards_setCards", cards)
   const [collapse, setCollapse] = useState(null);
   const [animationRefreshKey, setAnimationRefreshKey] = useState(0);
   const [loading, setLoading] = useState(true);
   const locationRef = useRef(null);
   const [locationReady, setLocationReady] = useState(false);
-  console.log("dlsjdflkjsdflkjsf",locationReady)
+  console.log("dlsjdflkjsdflkjsf", locationReady)
 
 
   /* ========================= FETCH DATA ========================= */
@@ -180,14 +180,14 @@ export default function Home() {
 
   useEffect(() => {
     if (loading) return; // ⛔ wait until page content renders
-  
+
     const element = locationRef.current;
     if (!element) return;
-  
+
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-  
+
         if (entry.isIntersecting) {
           console.log("LOCATION SECTION VISIBLE ✅");
           setLocationReady(true);
@@ -198,12 +198,12 @@ export default function Home() {
         threshold: 0.2,
       }
     );
-  
+
     observer.observe(element);
-  
+
     return () => observer.disconnect();
   }, [loading]); // 👈 depend only on loading
-  
+
 
 
   /* ========================= ANIMATION VARIANTS ========================= */
@@ -299,18 +299,31 @@ export default function Home() {
                       variants={staggerContainer}
                       initial="initial"
                       animate="animate"
-                      onClick={()=>sessionStorage.setItem("parties_hero_sections",true)}
+                      onClick={() => sessionStorage.setItem("parties_hero_sections", true)}
                       id="parties-hero-section"
                     >
                       {cards.map((card, index) => (
                         <motion.div
-                          className="col-lg-4 col-12" 
+                          className="col-lg-4 col-12"
                           key={index}
-                        // variants={fadeInUp}
                         >
                           <div className="hm-card">
-                            <Link href={card?.link} className="hm-card-img">
-                           
+
+                            {/* ✅ Image Click */}
+                            <Link
+                              href={card?.link}
+                              className="hm-card-img"
+                              onClick={() => {
+                                window.dataLayer = window.dataLayer || [];
+                                window.dataLayer.push({
+                                  event: "cta_click",
+                                  button_name: `${card.title} - Image`,
+                                  destination: card?.link,
+                                  page: window.location.pathname,
+                                  section: "home_cards_dropdown",
+                                });
+                              }}
+                            >
                               {card?.img && (
                                 <Image
                                   src={card.img}
@@ -320,42 +333,53 @@ export default function Home() {
                                 />
                               )}
                             </Link>
-                         
 
                             <div className="details">
-                              {/* {!card?.link ? (
-                                <Link
-                                  href="#"
-                                  className="main-btn wide"
-                                  scroll={false}
-                                >
-                                  <span>{card.title}</span>
-                                </Link>
-                              ) : (
-                                <h3
-                                  className="sec-head h3 des2"
-                                  onClick={() => handleDropdownToggle(card.title)}
-                                >
-                                  {card.title}
-                                </h3>
-                              )} */}
-                              <h3
-                                  className="sec-head h3 des2"
-                                  onClick={() => handleDropdownToggle(card.title)}
-                                >
-                                  {card.title}
-                                </h3>
 
-                              <ul className={collapse ? "active des2" : "des2"} >
+                              {/* ✅ Title Click (Dropdown Open) */}
+                              <h3
+                                className="sec-head h3 des2"
+                                onClick={() => {
+                                  handleDropdownToggle(card.title);
+
+                                  window.dataLayer = window.dataLayer || [];
+                                  window.dataLayer.push({
+                                    event: "dropdown_click",
+                                    button_name: card.title,
+                                    page: window.location.pathname,
+                                    section: "home_cards_dropdown",
+                                  });
+                                }}
+                              >
+                                {card.title}
+                              </h3>
+
+                              {/* ✅ Sub Links */}
+                              <ul className={collapse ? "active des2" : "des2"}>
                                 {card?.subItems?.map((link, index) => (
                                   <li key={index}>
-                                    <Link href={link.link} scroll={false} >
+                                    <Link
+                                      href={link.link}
+                                      scroll={false}
+                                      onClick={() => {
+                                        window.dataLayer = window.dataLayer || [];
+                                        window.dataLayer.push({
+                                          event: "cta_click",
+                                          button_name: link.title,
+                                          destination: link.link,
+                                          parent_card: card.title,
+                                          page: window.location.pathname,
+                                          section: "home_cards_dropdown",
+                                        });
+                                      }}
+                                    >
                                       <span>{link.title}</span>
                                       <Image src={whArrow} alt={link.title} />
                                     </Link>
                                   </li>
                                 ))}
                               </ul>
+
                             </div>
                           </div>
                         </motion.div>

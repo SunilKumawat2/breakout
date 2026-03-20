@@ -173,6 +173,16 @@ const page = () => {
                         <Link
                           href={`/activities/${item?.slug}`}
                           className="location-card text-sm"
+                          onClick={() => {
+                            window.dataLayer = window.dataLayer || [];
+                            window.dataLayer.push({
+                              event: "cta_click",
+                              button_name: item?.title,
+                              destination: `/activities/${item?.slug}`,
+                              page: window.location.pathname,
+                              section: "activities_cards",
+                            });
+                          }}
                         >
                           <div className="location-card-img">
                             {item?.image && (
@@ -184,6 +194,7 @@ const page = () => {
                               />
                             )}
                           </div>
+
                           <div className="location-card-content">
                             <h3 className="sec-head sm-head medium">
                               {item?.title}

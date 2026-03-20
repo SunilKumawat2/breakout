@@ -39,7 +39,7 @@ export default function Home() {
   const [data, setData] = useState(null);
   const [cards, setCards] = useState([]);
   const [brandLogos, setBrandLogos] = useState(null);
-  console.log("skldfksdfhhsdfkhdsk_brandLogos",brandLogos)
+  console.log("skldfksdfhhsdfkhdsk_brandLogos", brandLogos)
   const [showLocation, setShowLocation] = useState(false);
   const [loading, setLoading] = useState(true);
   const locationRef = useRef(null);
@@ -91,7 +91,7 @@ export default function Home() {
       try {
         const response = await api.get("logos/brands");
         setBrandLogos(response?.data?.data);
-        console.log("skldfjhsjkdfhskhfshf",response?.data?.data)
+        console.log("skldfjhsjkdfhskhfshf", response?.data?.data)
       } catch (error) {
         console.error("Error fetching brand logos:", error);
       }
@@ -231,7 +231,21 @@ export default function Home() {
                         >
                           {/* <TiltCard> */}
                           <div className="hm-card">
-                            <Link href={card?.link} className="hm-card-img">
+                            {/* Image Click */}
+                            <Link
+                              href={card?.link}
+                              className="hm-card-img"
+                              onClick={() => {
+                                window.dataLayer = window.dataLayer || [];
+                                window.dataLayer.push({
+                                  event: "cta_click",
+                                  button_name: `${card.title} - Image`,
+                                  destination: card?.link,
+                                  page: window.location.pathname,
+                                  section: "home_cards",
+                                });
+                              }}
+                            >
                               {card?.img && card?.img !== "" && (
                                 <Image
                                   src={card?.img}
@@ -241,9 +255,22 @@ export default function Home() {
                                 />
                               )}
                             </Link>
-                        
 
-                            <Link href={card.link} className="main-btn wide">
+                            {/* Button Click */}
+                            <Link
+                              href={card.link}
+                              className="main-btn wide"
+                              onClick={() => {
+                                window.dataLayer = window.dataLayer || [];
+                                window.dataLayer.push({
+                                  event: "cta_click",
+                                  button_name: `${card.title} - Button`,
+                                  destination: card?.link,
+                                  page: window.location.pathname,
+                                  section: "home_cards",
+                                });
+                              }}
+                            >
                               <span>{card.title}</span>
                             </Link>
                           </div>

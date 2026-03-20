@@ -109,7 +109,7 @@ const MainMenu = ({ closeMenu }) => {
         },
         {
           title: "Resources",
-          link: "/resources/blogs",
+          link: "/resources",
         },
         {
           title: "About Us",
@@ -293,26 +293,51 @@ const MainMenu = ({ closeMenu }) => {
                                   style={{ marginLeft: 10 }}
                                 >
                                   <Nav className="flex-column subsubmenu">
-                                    {subItem.subItems.map(
-                                      (thirdItem, thirdIndex) => (
-                                        <Nav.Item key={thirdIndex}>
-                                          <Link
-                                            href={thirdItem.link}
-                                            className="nav-link"
-                                            onClick={closeMenu}
-                                          >
-                                            {thirdItem.title}
-                                          </Link>
-                                        </Nav.Item>
-                                      )
-                                    )}
+                                    {subItem.subItems.map((thirdItem, thirdIndex) => (
+                                      <Nav.Item key={thirdIndex}>
+                                        <Link
+                                          href={thirdItem.link}
+                                          className="nav-link"
+                                          onClick={() => {
+                                            closeMenu();
+
+                                            window.dataLayer = window.dataLayer || [];
+                                            window.dataLayer.push({
+                                              event: "cta_click",
+                                              button_name: thirdItem.title,
+                                              destination: thirdItem.link,
+                                              parent_menu: subItem.title,
+                                              page: window.location.pathname,
+                                              section: "sub_sub_menu",
+                                            });
+                                          }}
+                                        >
+                                          {thirdItem.title}
+                                        </Link>
+                                      </Nav.Item>
+                                    ))}
                                   </Nav>
                                 </div>
                               </Collapse>
                             </>
                           )
                         ) : (
-                          <Link onClick={closeMenu} href={subItem.link} className="nav-link">
+                          <Link
+                            onClick={() => {
+                              closeMenu();
+
+                              window.dataLayer = window.dataLayer || [];
+                              window.dataLayer.push({
+                                event: "cta_click",
+                                button_name: subItem.title,
+                                destination: subItem.link,
+                                page: window.location.pathname,
+                                section: "sub_menu",
+                              });
+                            }}
+                            href={subItem.link}
+                            className="nav-link"
+                          >
                             {subItem.title}
                           </Link>
                         )}

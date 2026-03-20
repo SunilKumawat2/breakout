@@ -133,7 +133,7 @@ const page = () => {
       phone: "",
       email: "",
     },
-  
+
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
       phone: Yup.string()
@@ -141,11 +141,11 @@ const page = () => {
         .matches(/^[0-9]{10}$/, "Enter valid phone number"),
       email: Yup.string().email("Invalid email").required("Email is required"),
     }),
-  
+
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         await submitResourceForm(values);
-  
+
         // ✅ 🔥 ADD THIS (GTM EVENT)
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
@@ -153,7 +153,7 @@ const page = () => {
           form_name: "resource_form",
           user_email: values.email,
         });
-  
+
         resetForm();
       } catch (error) {
         console.error("Form submission failed", error);
@@ -329,6 +329,16 @@ const page = () => {
                             <Link
                               href={`/corporate/connect-l-n-d/${bd?.slug}`}
                               className="location-card"
+                              onClick={() => {
+                                window.dataLayer = window.dataLayer || [];
+                                window.dataLayer.push({
+                                  event: "cta_click",
+                                  button_name: bd?.title,
+                                  destination: `/corporate/connect-l-n-d/${bd?.slug}`,
+                                  page: window.location.pathname,
+                                  section: "corporate_connect_lnd",
+                                });
+                              }}
                             >
                               <div className="location-card-img">
                                 {bd?.bannersection?.image && (
@@ -340,6 +350,7 @@ const page = () => {
                                   />
                                 )}
                               </div>
+
                               <div className="location-card-content">
                                 <h3 dangerouslySetInnerHTML={{ __html: bd.title }} />
                               </div>
@@ -379,8 +390,8 @@ const page = () => {
                             corporate?.keyresourcessection?.images?.map(
                               (item, index) => (
                                 <div className="col-lg-3 col-12" key={index}>
-                                  <div className="blog-card" 
-                                  onClick={() => handleFreeConsultationCardClick(item)}>
+                                  <div className="blog-card"
+                                    onClick={() => handleFreeConsultationCardClick(item)}>
                                     <div className="blog-card-img">
                                       {item.image && (
                                         <Image

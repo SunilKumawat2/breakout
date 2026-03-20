@@ -19,7 +19,16 @@ const TeamCard = ({ type, data }) => {
       !data?.link
     )
       return null;
-  
+
+    const trackGTMClick = (platform, url) => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "social_click",
+        social_platform: platform,
+        link_url: url,
+      });
+    };
+
     return (
       <ul className="social-links">
         {data?.whatsapp && (
@@ -28,62 +37,70 @@ const TeamCard = ({ type, data }) => {
               href={`https://wa.me/${data.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackGTMClick("WhatsApp", `https://wa.me/${data.whatsapp}`)}
             >
               <Image src={tWh} alt="WhatsApp" />
             </Link>
           </li>
         )}
-  
+
         {data?.instagram && (
           <li>
             <Link
               href={data.instagram}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackGTMClick("Instagram", data.instagram)}
             >
               <Image src={tIns} alt="Instagram" />
             </Link>
           </li>
         )}
-  
+
         {data?.linkedin && (
           <li>
             <Link
               href={data.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackGTMClick("LinkedIn", data.linkedin)}
             >
               <Image src={tLink} alt="LinkedIn" />
             </Link>
           </li>
         )}
-  
+
         {data?.twitter && (
           <li>
             <Link
               href={data.twitter}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackGTMClick("Twitter", data.twitter)}
             >
               <Image src={tX} alt="Twitter / X" />
             </Link>
           </li>
         )}
-  
+
         {data?.gmail && (
           <li>
-            <a href={`mailto:${data.gmail}`}>
+            <a
+              href={`mailto:${data.gmail}`}
+              onClick={() => trackGTMClick("Email", `mailto:${data.gmail}`)}
+            >
               <Image src={tEmail} alt="Email" />
             </a>
           </li>
         )}
-  
+
         {data?.link && (
           <li>
             <Link
               href={data.link}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackGTMClick("Website", data.link)}
             >
               <Image src={tShare} alt="Website" />
             </Link>

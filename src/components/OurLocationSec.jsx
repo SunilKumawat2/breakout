@@ -37,7 +37,7 @@ const OurLocationSec = ({ title, slug = null, locationTitle = "", className = ""
         const res = await api.get(`/escaperoom-location/${selectedLocation}`);
         console.log("banner section", res.data.data);
         setLocationData(res.data?.data?.locationdetails);
-        console.log("setLocationData_setLocationData",res)
+        console.log("setLocationData_setLocationData", res)
       };
       fetchLocation();
     }
@@ -174,12 +174,21 @@ const OurLocationSec = ({ title, slug = null, locationTitle = "", className = ""
                       }}
                     ></p>
                     <Link
-                      href={
-                        `https://wa.me/${siteSettings?.whatsappNumber}?text=I want to book a slot at ` +
-                        locationTitle
-                      }
+                      href={`https://wa.me/${siteSettings?.whatsappNumber}?text=I want to book a slot at ${locationTitle}`}
                       className="wh-wrap"
                       target="_blank"
+                      onClick={() => {
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                          event: "cta_click",
+                          button_name: "WhatsApp Contact",
+                          action_type: "whatsapp_click",
+                          link_url: `https://wa.me/${siteSettings?.whatsappNumber}`,
+                          location: locationTitle,
+                          page: window.location.pathname,
+                          section: "whatsapp_cta",
+                        });
+                      }}
                     >
                       <Image src={wh} alt="" />
                       <span>Contact Us</span>

@@ -242,8 +242,23 @@ const page = () => {
                         {party?.partyinclusions?.images &&
                           party?.partyinclusions?.images?.length > 0 &&
                           party?.partyinclusions?.images?.map((bd, index) => (
-                            <Link href={bd.link} key={index} className="col-lg-3 col-6" target="_blank">
-
+                            <Link
+                              href={bd.link}
+                              key={index}
+                              className="col-lg-3 col-6"
+                              target="_blank"
+                              onClick={() => {
+                                window.dataLayer = window.dataLayer || [];
+                                window.dataLayer.push({
+                                  event: "cta_click",
+                                  button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
+                                  destination: "external_party_inclusion",
+                                  link_url: bd?.link,
+                                  page: window.location.pathname,
+                                  section: "party_inclusions",
+                                });
+                              }}
+                            >
                               <div className="location-card">
                                 <div className="location-card-img">
                                   {bd.image && (
@@ -255,13 +270,13 @@ const page = () => {
                                     />
                                   )}
                                 </div>
+
                                 <div className="location-card-content">
                                   <h3
                                     dangerouslySetInnerHTML={{ __html: bd.heading }}
                                   />
                                 </div>
                               </div>
-
                             </Link>
                           ))}
                       </div>

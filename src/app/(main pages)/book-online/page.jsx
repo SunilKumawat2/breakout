@@ -1,3 +1,4 @@
+"use client";
 import React from 'react'
 import Image from "next/image";
 
@@ -5,6 +6,19 @@ import location from "@/images/location.svg";
 import Link from 'next/link';
 
 const page = () => {
+
+    const trackBookingClick = (name, url) => {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: "cta_click",
+            button_name: name,
+            destination: "external_booking",
+            link_url: url,
+            page: window.location.pathname,
+            section: "booking_cta",
+        });
+    };
+
     return (
         <div className="book-now-page pt-80">
             <section className="booking-sec">
@@ -35,7 +49,14 @@ const page = () => {
                                 <Link href="https://book.breakout.in/breakout-in/blr-koramangala"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="main-btn">
+                                    className="main-btn"
+                                    onClick={() =>
+                                        trackBookingClick(
+                                            "Book Now - koramangala",
+                                            "https://book.breakout.in/breakout-in/blr-koramangala"
+                                        )
+                                    }
+                                >
                                     Book Now
                                 </Link>
                             </div>
@@ -54,10 +75,18 @@ const page = () => {
                                     </h4>
                                 </div>
 
-                                <Link href="https://book.breakout.in/breakout-in/blr-whitefield"
+                                <Link
+                                    href="https://book.breakout.in/breakout-in/blr-whitefield"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="main-btn">
+                                    className="main-btn"
+                                    onClick={() =>
+                                        trackBookingClick(
+                                            "Book Now - Whitefield",
+                                            "https://book.breakout.in/breakout-in/blr-whitefield"
+                                        )
+                                    }
+                                >
                                     Book Now
                                 </Link>
                             </div>
@@ -79,6 +108,12 @@ const page = () => {
                                 <Link href="https://book.breakout.in/breakout-in/blr-jp-nagar" className="main-btn"
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    onClick={() =>
+                                        trackBookingClick(
+                                          "Book Now - jp-nagar",
+                                          "https://book.breakout.in/breakout-in/blr-jp-nagar"
+                                        )
+                                      }
                                 >
                                     Book Now
                                 </Link>

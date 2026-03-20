@@ -154,7 +154,7 @@ const page = () => {
           </div>
         </section> */}
         {/* <ReserveASlot /> */}
-        <PartyExpertCon className="pt-80" data="birthday"/>
+        <PartyExpertCon className="pt-80" data="birthday" />
 
         <Image src={bdayIllus} className={"w-100 h-auto"} alt="bday" />
       </div>
@@ -176,6 +176,16 @@ const page = () => {
                     <Link
                       href={`/parties/birthday/${bd.slug}`}
                       className="location-card"
+                      onClick={() => {
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                          event: "cta_click",
+                          button_name: bd.title,
+                          destination: `/parties/birthday/${bd.slug}`,
+                          page: window.location.pathname,
+                          section: "birthday_locations",
+                        });
+                      }}
                     >
                       <div className="location-card-img">
                         {bd.image && (
@@ -187,6 +197,7 @@ const page = () => {
                           />
                         )}
                       </div>
+
                       <div className="location-card-content">
                         <h3>{bd.title}</h3>
                       </div>

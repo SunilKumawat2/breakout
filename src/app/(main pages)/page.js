@@ -336,7 +336,20 @@ export default function Home() {
                   >
                     <motion.div className="col-lg-4 col-12" variants={fadeInUp} >
                       <div className="hm-card">
-                        <Link href={"/escape-rooms"} className="hm-card-img">
+                        <Link
+                          href={"/escape-rooms"}
+                          className="hm-card-img"
+                          onClick={() => {
+                            window.dataLayer = window.dataLayer || [];
+                            window.dataLayer.push({
+                              event: "cta_click",
+                              button_name: "Escape Room Card",
+                              destination: "/escape-rooms",
+                              page: window.location.pathname,
+                              section: "home_banner", // optional (very useful)
+                            });
+                          }}
+                        >
                           {data?.bannersection?.image1 && (
                             <Image
                               src={data?.bannersection?.image1}
@@ -358,17 +371,45 @@ export default function Home() {
                           <ul className={collapse === "escape-room" ? "active" : ""}>
                             {escaperoomLocations &&
                               escaperoomLocations?.map((link, index) => (
-                                <li key={index}
-                                  onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
-                                  }>
-                                  <Link href={`/${link.slug}`}>
+                                <li
+                                  key={index}
+                                  onClick={() => {
+                                    sessionStorage.setItem("home_set_yourself_free_key", true);
+                                  }}
+                                >
+                                  <Link
+                                    href={`/${link.slug}`}
+                                    onClick={() => {
+                                      window.dataLayer = window.dataLayer || [];
+                                      window.dataLayer.push({
+                                        event: "cta_click",
+                                        button_name: link.title,
+                                        destination: `/${link.slug}`,
+                                        page: window.location.pathname,
+                                        section: "escape_room_menu",
+                                      });
+                                    }}
+                                  >
                                     <span>{link.title}</span>
                                     <Image src={whArrow} alt={link.title} />
                                   </Link>
                                 </li>
                               ))}
+
                             <li>
-                              <Link href={`/virtual`}>
+                              <Link
+                                href={`/virtual`}
+                                onClick={() => {
+                                  window.dataLayer = window.dataLayer || [];
+                                  window.dataLayer.push({
+                                    event: "cta_click",
+                                    button_name: "Virtual Rooms",
+                                    destination: "/virtual",
+                                    page: window.location.pathname,
+                                    section: "escape_room_menu",
+                                  });
+                                }}
+                              >
                                 <span>Virtual Rooms</span>
                                 <Image src={whArrow} alt={"Virtual Rooms"} />
                               </Link>
@@ -382,13 +423,13 @@ export default function Home() {
                         <Link href={"/parties"} className="hm-card-img">
                           {data?.bannersection?.image2 && (
                             <Image
-                            src={data?.bannersection?.image2}
-                            width={500}
-                            height={500}
-                            alt={"Parties"}
+                              src={data?.bannersection?.image2}
+                              width={500}
+                              height={500}
+                              alt={"Parties"}
                             />
                           )}
-                          </Link>
+                        </Link>
                         <div className="details">
                           <h3
                             className="sec-head h3"
@@ -397,23 +438,70 @@ export default function Home() {
                             {"Parties"}
                           </h3>
                           <ul className={collapse === "parties" ? "active" : ""}>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
-                            }>
-                              <Link href={`/parties/birthday`}>
+                            <li
+                              onClick={() => {
+                                sessionStorage.setItem("home_set_yourself_free_key", true);
+                              }}
+                            >
+                              <Link
+                                href={`/parties/birthday`}
+                                onClick={() => {
+                                  window.dataLayer = window.dataLayer || [];
+                                  window.dataLayer.push({
+                                    event: "cta_click",
+                                    button_name: "Birthday",
+                                    destination: "/parties/birthday",
+                                    page: window.location.pathname,
+                                    section: "parties_menu",
+                                  });
+                                }}
+                              >
                                 <span>Birthday</span>
                                 <Image src={whArrow} alt={"Birthday"} />
                               </Link>
                             </li>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
-                            }>
-                              <Link href={`/parties/bachelor`}>
+
+                            <li
+                              onClick={() => {
+                                sessionStorage.setItem("home_set_yourself_free_key", true);
+                              }}
+                            >
+                              <Link
+                                href={`/parties/bachelor`}
+                                onClick={() => {
+                                  window.dataLayer = window.dataLayer || [];
+                                  window.dataLayer.push({
+                                    event: "cta_click",
+                                    button_name: "Bachelor(ette)",
+                                    destination: "/parties/bachelor",
+                                    page: window.location.pathname,
+                                    section: "parties_menu",
+                                  });
+                                }}
+                              >
                                 <span>Bachelor(ette)</span>
                                 <Image src={whArrow} alt={"Bachelor(ette)"} />
                               </Link>
                             </li>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
-                            }>
-                              <Link href={`/parties/farewell`}>
+
+                            <li
+                              onClick={() => {
+                                sessionStorage.setItem("home_set_yourself_free_key", true);
+                              }}
+                            >
+                              <Link
+                                href={`/parties/farewell`}
+                                onClick={() => {
+                                  window.dataLayer = window.dataLayer || [];
+                                  window.dataLayer.push({
+                                    event: "cta_click",
+                                    button_name: "Farewell",
+                                    destination: "/parties/farewell",
+                                    page: window.location.pathname,
+                                    section: "parties_menu",
+                                  });
+                                }}
+                              >
                                 <span>Farewell</span>
                                 <Image src={whArrow} alt={"Farewell"} />
                               </Link>
@@ -442,23 +530,70 @@ export default function Home() {
                             {"Corporate"}
                           </h3>
                           <ul className={collapse === "corporate" ? "active" : ""}>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
-                            }>
-                              <Link href={`/corporate/unwind`}>
+                            <li
+                              onClick={() => {
+                                sessionStorage.setItem("home_set_yourself_free_key", true);
+                              }}
+                            >
+                              <Link
+                                href={`/corporate/unwind`}
+                                onClick={() => {
+                                  window.dataLayer = window.dataLayer || [];
+                                  window.dataLayer.push({
+                                    event: "cta_click",
+                                    button_name: "Unwind",
+                                    destination: "/corporate/unwind",
+                                    page: window.location.pathname,
+                                    section: "corporate_menu",
+                                  });
+                                }}
+                              >
                                 <span>Unwind</span>
                                 <Image src={whArrow} alt={"Unwind"} />
                               </Link>
                             </li>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
-                            }>
-                              <Link href={`/corporate/retreat`}>
+
+                            <li
+                              onClick={() => {
+                                sessionStorage.setItem("home_set_yourself_free_key", true);
+                              }}
+                            >
+                              <Link
+                                href={`/corporate/retreat`}
+                                onClick={() => {
+                                  window.dataLayer = window.dataLayer || [];
+                                  window.dataLayer.push({
+                                    event: "cta_click",
+                                    button_name: "Retreat",
+                                    destination: "/corporate/retreat",
+                                    page: window.location.pathname,
+                                    section: "corporate_menu",
+                                  });
+                                }}
+                              >
                                 <span>Retreat</span>
                                 <Image src={whArrow} alt={"Retreat"} />
                               </Link>
                             </li>
-                            <li onClick={() => { sessionStorage.setItem("home_set_yourself_free_key", true) }
-                            }>
-                              <Link href={`/corporate/connect-l-n-d`}>
+
+                            <li
+                              onClick={() => {
+                                sessionStorage.setItem("home_set_yourself_free_key", true);
+                              }}
+                            >
+                              <Link
+                                href={`/corporate/connect-l-n-d`}
+                                onClick={() => {
+                                  window.dataLayer = window.dataLayer || [];
+                                  window.dataLayer.push({
+                                    event: "cta_click",
+                                    button_name: "Connect L&D",
+                                    destination: "/corporate/connect-l-n-d",
+                                    page: window.location.pathname,
+                                    section: "corporate_menu",
+                                  });
+                                }}
+                              >
                                 <span>Connect L&D</span>
                                 <Image src={whArrow} alt={"Connect L&D"} />
                               </Link>

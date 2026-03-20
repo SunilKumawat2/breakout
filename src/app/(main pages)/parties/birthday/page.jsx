@@ -268,11 +268,26 @@ const page = () => {
                 <div className="row row-gap-25">
                   {birthdayList?.length > 0 &&
                     birthdayList?.map((bd, index) => (
-                      <div className="col-lg-4 col-12"
-                        onClick={() => sessionStorage.setItem("brithday_party_birthday_of_my", true)} key={index}>
+                      <div
+                        className="col-lg-4 col-12"
+                        key={index}
+                        onClick={() =>
+                          sessionStorage.setItem("brithday_party_birthday_of_my", true)
+                        }
+                      >
                         <Link
                           href={`/parties/birthday/${bd.slug}`}
                           className="location-card"
+                          onClick={() => {
+                            window.dataLayer = window.dataLayer || [];
+                            window.dataLayer.push({
+                              event: "cta_click",
+                              button_name: bd?.title,
+                              destination: `/parties/birthday/${bd.slug}`,
+                              page: window.location.pathname,
+                              section: "birthday_cards",
+                            });
+                          }}
                         >
                           <div className="location-card-img">
                             {bd.image && (
@@ -284,6 +299,7 @@ const page = () => {
                               />
                             )}
                           </div>
+
                           <div className="location-card-content">
                             <h3>{bd.title}</h3>
                           </div>
