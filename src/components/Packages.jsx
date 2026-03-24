@@ -36,7 +36,7 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
     if (col === "Yes") {
       return (
         <div className="package-row-cell">
-          <Image src={check} alt="Red Carpet" className="yes-icon"/>
+          <Image src={check} alt="Red Carpet" className="yes-icon" />
         </div>
       );
     }
@@ -119,17 +119,9 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
       <div className="container">
         <div className="row">
           <div className="col-lg-12 text-center">
-            <h3
-              className="sec-head medium sm-head"
-              dangerouslySetInnerHTML={{
-                __html: packages?.heading || "Packages",
-              }}
-            ></h3>
+            <h3 className="sec-head medium sm-head" dangerouslySetInnerHTML={{ __html: packages?.heading || "Packages", }}></h3>
             {packages?.description && (
-              <p
-                className="para"
-                dangerouslySetInnerHTML={{ __html: packages?.description }}
-              ></p>
+              <p className="para" dangerouslySetInnerHTML={{ __html: packages?.description }}></p>
             )}
           </div>
         </div>
@@ -287,33 +279,33 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
                 </div>
               )}
             </div>
-            
+
           </div>
           <div className="package-yellow-text">
-              {packages?.note && (
-                // <p
-                //   className="yellow-text para mb-0"
-                //   dangerouslySetInnerHTML={{ __html: packages?.note }}
-                //   onClick={() => setShow(true)}
-                //   style={{ cursor: "pointer" }}
-                // ></p>
-                <p
-                  className="yellow-text para mb-0"
-                  dangerouslySetInnerHTML={{ __html: modifiedNote }}
-                  onClick={(e) => {
-                    if (e.target.classList.contains("open-compare")) {
-                      setModalType("both");
-                      setShow(true);
-                    }
-                    if (e.target.classList.contains("open-quote")) {
-                      setModalType("quote");
-                      setShow(true);
-                    }
-                  }}
-                ></p>
+            {packages?.note && (
+              // <p
+              //   className="yellow-text para mb-0"
+              //   dangerouslySetInnerHTML={{ __html: packages?.note }}
+              //   onClick={() => setShow(true)}
+              //   style={{ cursor: "pointer" }}
+              // ></p>
+              <p
+                className="yellow-text para mb-0"
+                dangerouslySetInnerHTML={{ __html: modifiedNote }}
+                onClick={(e) => {
+                  if (e.target.classList.contains("open-compare")) {
+                    setModalType("both");
+                    setShow(true);
+                  }
+                  if (e.target.classList.contains("open-quote")) {
+                    setModalType("quote");
+                    setShow(true);
+                  }
+                }}
+              ></p>
 
-              )}
-              {/* {
+            )}
+            {/* {
                 (category == "birthday" || category == "corporate") && (
                   <Link
                     href="#"
@@ -324,17 +316,17 @@ const Packages = ({ packages, hasEventImg = false, category = "", data = {}, cla
                   </Link>
                 )
               } */}
-             
-                  <Link
-                    href="#"
-                    className="main-btn dark-btn"
-                    onClick={() => setShow1(true)}
-                  >
-                    <span>T&C Apply</span>
-                  </Link>
-                
 
-            </div>
+            <Link
+              href="#"
+              className="main-btn dark-btn"
+              onClick={() => setShow1(true)}
+            >
+              <span>T&C Apply</span>
+            </Link>
+
+
+          </div>
         </div>
       </div>
       {

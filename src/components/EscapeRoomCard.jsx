@@ -25,6 +25,17 @@ console.log("EscapeRoomCard_EscapeRoomCard",room)
       //   )
       // }
       onClick={() => {
+        // ✅ GTM event fire
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "cta_click",
+          room_name: room?.title || "unknown",
+          room_slug: room?.slug,
+          page: window.location.pathname,
+          section: "escape_rooms_listing",
+        });
+      
+        // ✅ Navigation
         router.push(
           `/${hasVirtual ? "virtual" : "escape-rooms"}/${
             room?.slug || "murder-mystery"
