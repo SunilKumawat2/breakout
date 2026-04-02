@@ -31,9 +31,11 @@ const page = () => {
   const { id } = useParams();
   const [escapeRooms, setEscapeRooms] = useState(null);
   const [activities, setActivities] = useState(null);
+  console.log("sjkdfhsdhkfshf",activities)
   const [show1, setShow1] = useState(false);
   const [selectedLink, setSelectedLink] = useState(null);
   const [room, setRoom] = useState(null);
+  console.log("sjkdfhsdhkfshf_123",room)
 
   useEffect(() => {
     const fetchEscapeRooms = async () => {
@@ -165,9 +167,9 @@ const page = () => {
               </div>
               <div className="row mt-4 row-gap-25">
                 {/* {JSON.stringify(activities)} */}
-                {activities &&
-                  activities?.length > 0 &&
-                  activities?.map((item, index) => {
+                {room &&
+                  room.imagecardsection.images?.length > 0 &&
+                  room.imagecardsection.images?.map((item, index) => {
                     return (
                       <div className="col-lg-4 col-12" key={index}>
                         <Link
@@ -188,7 +190,7 @@ const page = () => {
                             {item?.image && (
                               <Image
                                 src={item?.image}
-                                alt={item?.title}
+                                alt={item?.title || "activities"}
                                 width={500}
                                 height={500}
                               />
@@ -197,7 +199,7 @@ const page = () => {
 
                           <div className="location-card-content">
                             <h3 className="sec-head sm-head medium">
-                              {item?.title}
+                              {item?.heading}
                             </h3>
                           </div>
                         </Link>

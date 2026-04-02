@@ -23,7 +23,7 @@ import api from "@/app/helpers/api";
 
 const AddOnsSlider = ({ data, className = "" }) => {
   const [activities, setActivities] = useState(null);
-  console.log("activities_activities_activities", activities)
+  console.log("activities_activities_activities", data)
   const addOns = [
     {
       image: cv1,
@@ -108,7 +108,7 @@ const AddOnsSlider = ({ data, className = "" }) => {
               }}
               className="blog-swiper"
             >
-              {data?.images &&
+              {/* {data?.images &&
                 data?.images?.length > 0 &&
                 data?.images?.map((item, index) => (
                   <SwiperSlide key={index}>
@@ -152,17 +152,18 @@ const AddOnsSlider = ({ data, className = "" }) => {
                       )
                     }
                   </SwiperSlide>
-                ))}
-              {/* {activities&&
-                activities?.length > 0 &&
-                activities?.map((item, index) => (
+                ))} */}
+
+              {data?.images &&
+                data?.images?.length > 0 &&
+                data?.images?.map((item, index) => (
                   <SwiperSlide key={index}>
-                    <Link href={`/activities/${item?.slug}`} className="blog-card" >
+                    <Link href={`/activities/${item?.slug}`} target="_blank" className="blog-card" >
                       <div className="blog-card-img">
-                        {item?.bannersection?.image && (
+                        {item?.image && (
                           <Image
-                          src={item?.bannersection?.image}
-                          alt={item?.title}
+                          src={item?.image}
+                          alt={item?.heading}
                             width={500}
                             height={500}
                             // alt={item.heading}
@@ -171,12 +172,12 @@ const AddOnsSlider = ({ data, className = "" }) => {
                       </div>
                       <div className="blog-card-content">
                         <h3
-                          dangerouslySetInnerHTML={{ __html: item?.title }}
+                          dangerouslySetInnerHTML={{ __html: item?.heading }}
                         />
                       </div>
                     </Link>
                   </SwiperSlide>
-                ))} */}
+                ))}
             </Swiper>
             <div className="add-button-prev custom-prev go-plan">
               <Image src={swiperPrev} alt="Previous" />
