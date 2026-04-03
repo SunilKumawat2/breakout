@@ -162,11 +162,10 @@ const AddOnsSlider = ({ data, className = "" }) => {
                       <div className="blog-card-img">
                         {item?.image && (
                           <Image
-                          src={item?.image}
-                          alt={item?.heading}
+                            src={item?.image}
+                            alt={item?.heading}
                             width={500}
                             height={500}
-                            // alt={item.heading}
                           />
                         )}
                       </div>

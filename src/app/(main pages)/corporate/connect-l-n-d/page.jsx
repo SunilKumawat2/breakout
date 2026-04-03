@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import InnerPageBanner from "@/components/InnerPageBanner";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import enc from "@/images/enc.svg";
 import mBox from "@/images/m-box.png";
@@ -86,6 +87,7 @@ import PhotographicStyledImage from "@/components/PhotographicStyledImage";
 import ConnectContact from "@/components/ConnectContact";
 
 const page = () => {
+  const router = useRouter();
   const [corporate, setCorporate] = useState(null);
   console.log("sdjkfsdfhjdsf", corporate?.keyresourcessection)
   const [brandLogos, setBrandLogos] = useState(null);
@@ -165,24 +167,26 @@ const page = () => {
 
   const handleFreeConsultationCardClick = (item) => {
     const cleanHeading = item?.heading?.replace(/<[^>]*>/g, "");
-
-    if (cleanHeading == "Free Consultation with Expert") {
+  
+    if (cleanHeading === "Free Consultation with Expert") {
       const section = document.getElementById("get-in-touch");
       section?.scrollIntoView({ behavior: "smooth" });
-    }
+    } 
     else if (cleanHeading.includes("Ebook")) {
-
       let link = "";
-
+  
       if (cleanHeading == "Ebook - Why 88% of Training Fails") {
         link = "https://1drv.ms/b/c/033f28a2603d05d2/IQBMuwcPxoSpRLSMZOUTNQbkAZ5gYVsaWqjJ2puTzVDgrbI?e=8ce5YQ";
-      }
+      } 
       else if (cleanHeading == "Ebook - Exposing L&D’s Biggest Failures") {
         link = "https://1drv.ms/b/c/033f28a2603d05d2/IQALhxqdOD3vSqqg-OajZ9_NAaXFzWRLWLPkFaiCnx0n93U?e=pPK76A2";
       }
-
-      setSelectedLink(link); // ✅ store link
-      setShow1(true);        // ✅ open modal
+  
+      setSelectedLink(link);
+      setShow1(true);
+    } 
+    else if (cleanHeading == "Discovery Quiz") {
+      router.push("/corporate/connect-l-n-d/discovery_quiz"); // ✅ navigation
     }
   };
 
