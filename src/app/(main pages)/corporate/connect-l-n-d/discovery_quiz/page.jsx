@@ -125,6 +125,7 @@ const Page = () => {
 
             setTimeout(() => {
                 router.push("/corporate/connect-l-n-d");
+                window.location.reload()
             }, 4000);
         },
     });

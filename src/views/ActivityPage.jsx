@@ -157,7 +157,7 @@ const ActivityPage = () => {
                          */}
                         <div
                           id="escape-rooms-section"
-                          className="esc-card"
+                          className="location-card"
                           style={{ cursor: "pointer" }}
                           onClick={() => {
                             // ✅ GTM event fire
@@ -174,7 +174,7 @@ const ActivityPage = () => {
                             router.push(`/activities/${room?.slug}`);
                           }}
                         >
-                          <div className="esc-card-img">
+                          <div className="location-card-img">
                             {room?.image && (
                               <Image
                                 src={room?.image}
@@ -185,7 +185,7 @@ const ActivityPage = () => {
                               />
                             )}
                           </div>
-                          <div className="esc-card-content">
+                          <div className="location-card-content">
                             <h3>{room?.heading || "Murder Mystery"}</h3>
                             {/* <div className="bt">
                               <ul>
