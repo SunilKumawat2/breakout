@@ -10,6 +10,7 @@ import whatsappIcon from "@/images/whatsapp-icon.svg";
 import instaIcon from "@/images/insta-icon.svg";
 import xIcon from "@/images/x-ixon.svg";
 import gmail from "@/images/gmail.svg";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 const Sidebar = ({
   handleSearchChange,
@@ -19,28 +20,53 @@ const Sidebar = ({
   selectedLocation,
   setSelectedLocation,
   selectedOption,
-  setSelectedOption
+  setSelectedOption,
+  selectedTag,
+  setSelectedTag
+
 }) => {
+  const { blogLocations, blogLookingFor, blogTags, loading } = useGlobalContext();
 
-  const locationOptions = [
-    { value: "bangalore", label: "Bangalore" },
-    { value: "whitefield", label: "Whitefield" },
-    { value: "koramangala", label: "Koramangala" },
-    { value: "jp_nagar", label: "JP Nagar" },
-    { value: "north_bangalore", label: "North Bangalore" },
-  ];
+  console.log("sjkdfjksdhfksdf", blogLocations)
 
-  const optionOptions = [
-    { value: "birthdays", label: "Birthdays" },
-    { value: "corporate", label: "Corporate" },
-    { value: "bachelor", label: "Bachelor(etta)" },
-    { value: "things_to_do", label: "Things to do" },
-    { value: "escape_rooms", label: "Escape Rooms" },
-    { value: "farewells", label: "Farewells" },
-    { value: "couples", label: "Couples" },
-    { value: "virtual", label: "Virtual" },
-    { value: "others", label: "Others" },
-  ];
+  const locationOptions = blogLocations?.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
+
+  const optionOptions = blogLookingFor?.map((item) => ({
+    value: item,
+    label: item
+      .replaceAll("_", " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase()), // Capitalize
+  }));
+
+  const TagOptions = blogTags?.map((item) => ({
+    value: item,
+    label: item
+      .replaceAll("_", " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase()), // Capitalize
+  }));
+
+  // const locationOptions = [
+  //   { value: "bangalore", label: "Bangalore" },
+  //   { value: "whitefield", label: "Whitefield" },
+  //   { value: "koramangala", label: "Koramangala" },
+  //   { value: "jp_nagar", label: "JP Nagar" },
+  //   { value: "north_bangalore", label: "North Bangalore" },
+  // ];
+
+  // const optionOptions = [
+  //   { value: "birthdays", label: "Birthdays" },
+  //   { value: "corporate", label: "Corporate" },
+  //   { value: "bachelor", label: "Bachelor(etta)" },
+  //   { value: "things_to_do", label: "Things to do" },
+  //   { value: "escape_rooms", label: "Escape Rooms" },
+  //   { value: "farewells", label: "Farewells" },
+  //   { value: "couples", label: "Couples" },
+  //   { value: "virtual", label: "Virtual" },
+  //   { value: "others", label: "Others" },
+  // ];
 
   // Custom styles to match your existing design
   const customStyles = {
@@ -67,7 +93,7 @@ const Sidebar = ({
         color: "#FFAE00",
       },
     }),
-  
+
     indicatorSeparator: () => ({
       display: "none", // optional: line hata deta hai
     }),
@@ -103,49 +129,49 @@ const Sidebar = ({
     const currentUrl = window.location.href;
     const title = "Check out this blog post";
     const text = "Interesting read! Have a look.";
-  
+
     let shareUrl = "";
-  
+
     switch (platform) {
       case "copy":
         navigator.clipboard.writeText(currentUrl).then(() => {
           alert("Link copied to clipboard!");
         });
         return;
-  
+
       case "whatsapp":
         shareUrl = `https://wa.me/?text=${encodeURIComponent(
           `${title} - ${currentUrl}`
         )}`;
         break;
-  
+
       case "instagram":
         // Instagram sharing is limited; fallback to copying
         shareUrl = `https://www.instagram.com/?url=${encodeURIComponent(currentUrl)}`;
         break;
-  
+
       case "twitter": // X
         shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
           title
         )}&url=${encodeURIComponent(currentUrl)}`;
         break;
-  
+
       case "linkedin":
         shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
           currentUrl
         )}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(text)}`;
         break;
-  
+
       case "gmail":
         shareUrl = `https://mail.google.com/mail/?view=cm&fs=1&su=${encodeURIComponent(
           title
         )}&body=${encodeURIComponent(`${text}\n\n${currentUrl}`)}`;
         break;
-  
+
       default:
         return;
     }
-  
+
     if (shareUrl) {
       window.open(shareUrl, "_blank", "noopener,noreferrer");
     }
@@ -175,19 +201,26 @@ const Sidebar = ({
           </button>
 
           <div className="tooltip-text">
-          This is your tooltipThis is your tooltipThis is your tooltipThis 
-          is your tooltipThis is your tooltip
+            This is your tooltipThis is your tooltipThis is your tooltipThis
+            is your tooltipThis is your tooltip
           </div>
         </div>
       </div>
 
       <div className="form-group search-group style-2 mt-4">
         <div className="input-group">
-          <input
+          {/* <input
             type="text"
             placeholder="Select tag"
             onKeyDown={handleSearchChange}
             ref={searchRef}
+          /> */}
+          <Select
+            placeholder="Select Tag"
+            options={TagOptions}
+            value={selectedTag}
+            onChange={(option) => setSelectedTag(option)}
+            styles={customStyles}
           />
           <Image src={search} alt="search" />
         </div>
@@ -203,11 +236,11 @@ const Sidebar = ({
           </button>
 
           <div className="tooltip-text">
-          This is your tooltipThis is your tooltipThis is your tooltipThis 
-          is your tooltipThis is your tooltip
+            This is your tooltipThis is your tooltipThis is your tooltipThis
+            is your tooltipThis is your tooltip
           </div>
         </div>
-        
+
       </div>
       <div className="form-group mt-4 style-2">
         <div className="input-group select-group">
@@ -230,8 +263,8 @@ const Sidebar = ({
           </button>
 
           <div className="tooltip-text">
-          This is your tooltipThis is your tooltipThis is your tooltipThis 
-          is your tooltipThis is your tooltip
+            This is your tooltipThis is your tooltipThis is your tooltipThis
+            is your tooltipThis is your tooltip
           </div>
         </div>
       </div>

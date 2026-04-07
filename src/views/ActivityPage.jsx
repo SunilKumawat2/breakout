@@ -178,7 +178,7 @@ const ActivityPage = () => {
                             {room?.image && (
                               <Image
                                 src={room?.image}
-                                className="w-100 "
+                                className="w-100"
                                 width={700}
                                 height={700}
                                 alt="hm-text-bg"

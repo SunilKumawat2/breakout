@@ -264,7 +264,9 @@ import "swiper/css";
 const BirthdayVenueWidget = ({className=""}) => {
   const { venueCategories } = useGlobalContext();
 
-  const [venueCards, setVenueCards] = useState([]);
+  // const [venueCards, setVenueCards] = useState([]);
+  const [loading, setLoading] = useState(false);
+const [error, setError] = useState(null);
   const [selectedVenue, setSelectedVenue] = useState(null);
   const [activeAccordion, setActiveAccordion] = useState(null);
 
@@ -272,44 +274,56 @@ const BirthdayVenueWidget = ({className=""}) => {
   const sliderRefs = useRef({});
 
   // Fetch venues
-  useEffect(() => {
-    const fetchVenueCards = async () => {
-      const response = await api.get("/birthdayblogfaqs");
-      setVenueCards(response?.data?.data || []);
-    };
-    fetchVenueCards();
-  }, []);
+  // useEffect(() => {
+  //   const fetchVenueCards = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await api.get("/birthdayblogfaqs");
+  
+  //       console.log("API Venue Data:", response?.data?.data);
+  
+  //       setVenueCards(response?.data?.data || []);
+  //     } catch (err) {
+  //       console.error("Error fetching venue cards:", err);
+  //       setError(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  
+  //   fetchVenueCards();
+  // }, []);
 
   // Slide + scroll safely
-  useEffect(() => {
-    if (!selectedVenue || activeAccordion === null) return;
+  // useEffect(() => {
+  //   if (!selectedVenue || activeAccordion === null) return;
 
-    const accIndex = Number(activeAccordion);
-    const venues = venueCards[accIndex]?.venues || [];
-    const slideIndex = venues.findIndex(
-      (v) => v.id === selectedVenue.id
-    );
+  //   const accIndex = Number(activeAccordion);
+  //   const venues = venueCards[accIndex]?.venues || [];
+  //   const slideIndex = venues.findIndex(
+  //     (v) => v.id === selectedVenue.id
+  //   );
 
-    if (slideIndex === -1) return;
+  //   if (slideIndex === -1) return;
 
-    const runWhenReady = () => {
-      const swiper = swiperRefs.current[accIndex];
-      const sliderEl = sliderRefs.current[accIndex];
+  //   const runWhenReady = () => {
+  //     const swiper = swiperRefs.current[accIndex];
+  //     const sliderEl = sliderRefs.current[accIndex];
 
-      if (!swiper || !sliderEl) {
-        requestAnimationFrame(runWhenReady);
-        return;
-      }
+  //     if (!swiper || !sliderEl) {
+  //       requestAnimationFrame(runWhenReady);
+  //       return;
+  //     }
 
-      swiper.slideTo(slideIndex, 0);
-      sliderEl.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    };
+  //     swiper.slideTo(slideIndex, 0);
+  //     sliderEl.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "start",
+  //     });
+  //   };
 
-    requestAnimationFrame(runWhenReady);
-  }, [selectedVenue, activeAccordion, venueCards]);
+  //   requestAnimationFrame(runWhenReady);
+  // }, [selectedVenue, activeAccordion, venueCards]);
 
   const customStyles = {
     control: (base, state) => ({
@@ -452,7 +466,7 @@ const BirthdayVenueWidget = ({className=""}) => {
             />
           </div>
         </div>
-        {venueCards.length > 0 && (
+        {/* {venueCards.length > 0 && (
           <Accordion
             className="b-venue-cards-accordion mt-5 acc"
             activeKey={activeAccordion}
@@ -470,7 +484,6 @@ const BirthdayVenueWidget = ({className=""}) => {
                 </Accordion.Header>
 
                 <Accordion.Body>
-                  {/* CARDS */}
                   <div className="b-venue-cards">
                     <div className="row row-gap-25">
                       {venue.venues.map((venueItem, vIndex) => (
@@ -488,8 +501,6 @@ const BirthdayVenueWidget = ({className=""}) => {
                       ))}
                     </div>
                   </div>
-
-                  {/* SLIDER */}
                   <div
                     className="venue-card-slider"
                     ref={(el) =>
@@ -514,7 +525,7 @@ const BirthdayVenueWidget = ({className=""}) => {
               </Accordion.Item>
             ))}
           </Accordion>
-        )}
+        )} */}
       </div>
     </section>
   );

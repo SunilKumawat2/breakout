@@ -68,6 +68,7 @@ import OurLocationSec from "@/components/OurLocationSec";
 import PartyGetInTouch from "@/components/PartyGetInTouch";
 
 const BirthdayBlog = ({ blogData, id = "" }) => {
+  console.log("sjdkfhjkshdfjsdjf", blogData)
   // Share functionality
   const handleShare = (platform) => {
     const currentUrl = window.location.href;
@@ -132,14 +133,18 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
 
   return (
     <>
-      {blogData && <BirthdayBanner data={blogData?.bannersection} />}
+      {blogData && <BirthdayBanner data={blogData?.banner} />}
       <div className="black-gr-div">
         <div className="blog-top">
           <div className="container">
             <div className="blog-top-inner">
-            <p className="sec-head medium-20 mb-0 d-flex align-items-center gap-2">
-              Last updated on {blogData?.post_date}
-            </p>
+              <p className="sec-head medium-20 mb-0 d-flex align-items-center gap-2">
+                Last updated on{" "}
+                {blogData?.createdAt &&
+                  new Date(blogData.createdAt)
+                    .toLocaleDateString("en-GB")
+                    .replace(/\//g, "-")}
+              </p>
               <div className="sec-head medium-20 d-flex align-items-center gap-3">
                 Share blog
                 <ul className="bl-soc-list">
@@ -189,17 +194,20 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
           </div>
         </div>
 
-        {blogData?.bannersection && (
-          <HmTextSec text={blogData?.bannersection?.content} />
+        {blogData?.description_text && (
+          <HmTextSec text={blogData?.description_text} />
         )}
         <br />
-        {blogData?.glancesection && (
-          <HmTextSec text={blogData?.glancesection?.content} />
+        {blogData?.at_a_glance_summary && (
+          <HmTextSec text={blogData?.at_a_glance_summary} />
         )}
-
+        <br />
+        {blogData?.additional_content && (
+          <HmTextSec text={blogData?.additional_content} />
+        )}
         <PartyExpertCon className="pt-80" data="blog_birthday_blog" />
 
-        {blogData?.iconsection && (
+        {blogData && (
           <FullSliderSec data={blogData?.iconsection} hasCardLinks={true} />
         )}
 
@@ -208,8 +216,8 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
 
       <BirthdayVenueWidget className="pt-80 pb-0" id={id} />
 
-<div className="pt-80">
-      <GReviewSlider commonStars={false} />
+      <div className="pt-80">
+        <GReviewSlider commonStars={false} />
       </div>
       {/* <OurLocationSec
         className="sec-padding-top"
@@ -252,7 +260,7 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
               <div className="col-lg-12">
                 <div
                   className="blog-content"
-                  dangerouslySetInnerHTML={{ __html: blogData?.content }}
+                  dangerouslySetInnerHTML={{ __html: blogData?.conclusion_text }}
                 />
               </div>
             </div>

@@ -71,8 +71,8 @@ const page = () => {
   useEffect(() => {
     const fetchBlogData = async () => {
       var url = `/blog/${id}`;
-      if (type === "birthday") {
-        url = `/birthday-blog/${id}`;
+      if (type == "seo") {
+        url = `/blog/${id}`;
       }
       const res = await api.get(url);
       setBlogData(res.data.data);

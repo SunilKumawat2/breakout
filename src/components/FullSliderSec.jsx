@@ -43,16 +43,16 @@ import Rectangle1 from "@/images/Rectangle1.png";
         description: "Try out these seven resources that we’ve created for you to plan the perfect birthday party for your loved ones. ",
         heading: "7 Valuable Resources to help you plan the party",
         icons: [
-          // {
-          //   heading: "Party Planning Template",
-          //   image: "https://breakout.bvmwebsolutions.com/https://breakout.bvmwebsolutions.com/uploads/images/party_a3cd163f-cf17-405b-9575-256d10c59fae.jpeg",
-          //   link: "#"
-          // }
-          // , {
-          //   heading: "Ebook",
-          //   image: null,
-          //   link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
-          // },
+          {
+            heading: "Party Planning Template",
+            image: "https://breakout.bvmwebsolutions.com/https://breakout.bvmwebsolutions.com/uploads/images/party_a3cd163f-cf17-405b-9575-256d10c59fae.jpeg",
+            link: "#"
+          }
+          , {
+            heading: "Ebook",
+            image: null,
+            link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
+          },
           {
             heading: "Venue Discovery Quiz",
             image: Rectangle_771,
@@ -63,16 +63,16 @@ import Rectangle1 from "@/images/Rectangle1.png";
             image: Rectangle4,
             link: "/resources/quiz/quote-calculator"
           }
-          // ,
-          // {
-          //   heading: "Party Planning Template",
-          //   image: Rectangle1,
-          //   link: "#"
-          // }, {
-          //   heading: "Ebook",
-          //   image: null,
-          //   link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
-          // }
+          ,
+          {
+            heading: "Party Planning Template",
+            image: Rectangle1,
+            link: "#"
+          }, {
+            heading: "Ebook",
+            image: null,
+            link: "https://1drv.ms/b/c/033f28a2603d05d2/IQD0muffutStQ4k0IlgvEXloAWci224sAK0HWWSMyr4mgCo?e=393vcE"
+          }
         ]
 
       };

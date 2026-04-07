@@ -25,7 +25,7 @@ const page = () => {
       setLoading(true);
       try {
         // const res = await api.get("/blogs");
-        const res2 = await api.get("/birthday-blog");
+        const res2 = await api.get("/blog");
         // setBlogs([...res.data.data, ...res2.data.data]);
         // setFilteredBlogs([...res.data.data, ...res2.data.data]);
         setBlogs([...res2.data.data]);

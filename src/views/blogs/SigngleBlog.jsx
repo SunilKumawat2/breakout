@@ -65,7 +65,7 @@ const SigngleBlog = ({ blogData }) => {
     const currentUrl = window.location.href;
     const title = blogData?.heading || "Check out this blog post";
     const text = blogData?.description || "Interesting read!";
-console.log("SigngleBlog_blogData",blogData)
+    console.log("SigngleBlog_blogData", blogData)
     let shareUrl = "";
 
     switch (platform) {
@@ -101,13 +101,17 @@ console.log("SigngleBlog_blogData",blogData)
 
   return (
     <>
-      {blogData && <BirthdayBanner data={blogData} />}
+      {blogData && <BirthdayBanner data={blogData?.banner} />}
 
       <div className="blog-top">
         <div className="container">
           <div className="blog-top-inner">
             <p className="sec-head medium-20 mb-0 d-flex align-items-center gap-2">
-              Last updated on {blogData?.post_date}
+              Last updated on{" "}
+              {blogData?.post_date &&
+                new Date(blogData.post_date)
+                  .toLocaleDateString("en-GB")
+                  .replace(/\//g, "-")}
             </p>
             <div className="sec-head medium-20 d-flex align-items-center gap-3">
               Share blog
@@ -158,7 +162,7 @@ console.log("SigngleBlog_blogData",blogData)
         </div>
       </div>
 
-      <section className="section-padding">
+      {/* <section className="">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
@@ -169,10 +173,37 @@ console.log("SigngleBlog_blogData",blogData)
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      {blogData?.description_text && (
+        <HmTextSec text={blogData?.description_text} />
+      )}
+      <br/>
+         {blogData?.at_a_glance_summary && (
+        <HmTextSec className="mb-4 section-padding pb-0" text={blogData?.at_a_glance_summary} />
+      )}
+         <PartyExpertCon className="sec-padding-top" data="party_bachelor" />
+         <br/>
+         {blogData?.additional_content && (
+        <HmTextSec className="mb-4 section-padding pb-0" text={blogData?.additional_content} />
+      )}
+      {/* <div className="container">
+        <div className="video-outer">
+
+      <video
+          className="w-100"
+          src="https://breakout.bvmwebsolutions.com/uploads/videos/connect-founders-video102_bac2d099-247a-4b36-af8c-d740fabffeab.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+        </div>
+
+      </div> */}
       <OurLocationSec title="Visit a <span>Location</span>" />
       <HomeContact noTextBottom={false} privacyLine={false} noImage={true} />
-      
+
     </>
   );
 };

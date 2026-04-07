@@ -55,7 +55,7 @@ export async function getData(id) {
 const Page = async ({ params }) => {
   const { id } = await params;
   const { rooms, brands } = await getData(id);
-  console.log("rooms?.contentsection?.content", rooms)
+  console.log("crooms?.contentsection?.content", rooms)
   // const escapeRoomsExtreme =
   //   rooms?.escapeRooms?.filter((room) => room?.tag == "Extreme") || [];
   // const escapeRoomsUltra =

@@ -17,10 +17,13 @@ export const useGlobalContext = () => {
 
 export const GlobalProvider = ({ children }) => {
   // State for different API data
-    // BLOG SLUG STATE (FIX)
-    const [blogSlug, setBlogSlug] = useState(null);
-    const [categorySlug, setCategorySlug] = useState(null);
+  // BLOG SLUG STATE (FIX)
+  const [blogSlug, setBlogSlug] = useState(null);
+  const [categorySlug, setCategorySlug] = useState(null);
   const [escaperoomLocations, setEscaperoomLocations] = useState(null);
+  const [blogLocations, setBlogLocations] = useState(null);
+  const [blogLookingFor, setBlogLookingFor] = useState(null);
+  const [blogTags, setBlogTags] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const [newsLogo, setNewsLogo] = useState(null);
   const [thirdPartyLocations, setThirdPartyLocations] = useState(null);
@@ -104,15 +107,18 @@ export const GlobalProvider = ({ children }) => {
     thirdPartyGames: true,
     venueCategories: true,
     siteSettings: true,
-    gettncs:true,
-    getcareer:true,
-    getcontact:true,
-    getprivacy:true,
-    getrefundpolicy:true,
-    gettermservies:true,
-    venuefinderquiz:true,
-    quotecalculatorquiz:true,
-    getresourcelist:true
+    gettncs: true,
+    getcareer: true,
+    getcontact: true,
+    getprivacy: true,
+    getrefundpolicy: true,
+    gettermservies: true,
+    venuefinderquiz: true,
+    quotecalculatorquiz: true,
+    getresourcelist: true,
+    blogLocations: true,
+    blogLookingFor: true,
+    blogTags: true,
   });
 
   // Error states
@@ -124,18 +130,21 @@ export const GlobalProvider = ({ children }) => {
     thirdPartyGames: null,
     venueCategories: null,
     siteSettings: null,
-    gettncs:null,
-    getcareer:null,
-    getcontact:null,
-    getprivacy:null,
-    getrefundpolicy:null,
-    gettermservies:null,
-    venuefinderquiz:null,
-    quotecalculatorquiz:null,
-    getresourcelist:null
+    gettncs: null,
+    getcareer: null,
+    getcontact: null,
+    getprivacy: null,
+    getrefundpolicy: null,
+    gettermservies: null,
+    venuefinderquiz: null,
+    quotecalculatorquiz: null,
+    getresourcelist: null,
+    blogLocations: null,
+    blogLookingFor: null,
+    blogTags: null
   });
 
-    // -----------------------------
+  // -----------------------------
   // LOAD BLOG SLUG FROM STORAGE
   // -----------------------------
   useEffect(() => {
@@ -143,7 +152,7 @@ export const GlobalProvider = ({ children }) => {
     if (slug) setBlogSlug(slug);
   }, []);
 
-      // -----------------------------// LOAD BLOG SLUG FROM STORAGE// -----------------------------
+  // -----------------------------// LOAD BLOG SLUG FROM STORAGE// -----------------------------
   useEffect(() => {
     const slug = sessionStorage.getItem("category");
     if (slug) setCategorySlug(slug);
@@ -197,6 +206,45 @@ export const GlobalProvider = ({ children }) => {
       setErrors((prev) => ({ ...prev, escaperoomLocations: error }));
     } finally {
       setLoading((prev) => ({ ...prev, escaperoomLocations: false }));
+    }
+  };
+
+  const fetchBlogLocations = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, home: true }));
+      const response = await api.get("/blog-locations");
+      setBlogLocations(response.data.data);
+      setErrors((prev) => ({ ...prev, blogLocations: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, blogLocations: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, blogLocations: false }));
+    }
+  };
+
+  const fetchBlogLookingFor = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, blogLookingFor: true }));
+      const response = await api.get("/blog-related-to");
+      setBlogLookingFor(response.data.data);
+      setErrors((prev) => ({ ...prev, blogLookingFor: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, blogLookingFor: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, blogLookingFor: false }));
+    }
+  };
+
+  const fetchBlogTags = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, blogTags: true }));
+      const response = await api.get("/blog-tags");
+      setBlogTags(response.data.data);
+      setErrors((prev) => ({ ...prev, blogTags: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, blogTags: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, blogTags: false }));
     }
   };
 
@@ -267,7 +315,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const fetchVenuefinderquiz = async () => {
-    if (!blogSlug) return; 
+    if (!blogSlug) return;
     try {
       setLoading((prev) => ({ ...prev, venuefinderquiz: true }));
       const response = await api.get(`/quiz/${blogSlug}/take`);
@@ -286,7 +334,7 @@ export const GlobalProvider = ({ children }) => {
       setLoading((prev) => ({ ...prev, quotecalculatorquiz: true }));
       const response = await api.get(`/cost-calculator/take?category=${categorySlug}`);
       setQuotecalculatorquiz(response?.data?.data || {});
-     setErrors((prev)=>({...prev,quotecalculatorquiz:null}))
+      setErrors((prev) => ({ ...prev, quotecalculatorquiz: null }))
     } catch (error) {
       setErrors((prev) => ({ ...prev, quotecalculatorquiz: error }));
     } finally {
@@ -381,7 +429,7 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  const bookbloggetintouch = async (bookingData,blog_slug) => {
+  const bookbloggetintouch = async (bookingData, blog_slug) => {
     try {
       const response = await api.post(`/blog-get-in-touch/${blog_slug}`, bookingData);
       return response.data;
@@ -425,10 +473,10 @@ export const GlobalProvider = ({ children }) => {
   const fetchSiteSettings = async () => {
     try {
       setLoading((prev) => ({ ...prev, siteSettings: true }));
-  
+
       const response = await test_api.get("/getsitesettings");
       setSiteSettings(response.data.data);
-  
+
       setErrors((prev) => ({ ...prev, siteSettings: null }));
     } catch (error) {
       setErrors((prev) => ({ ...prev, siteSettings: error }));
@@ -440,11 +488,11 @@ export const GlobalProvider = ({ children }) => {
   const fetchgettnc = async () => {
     try {
       setLoading((prev) => ({ ...prev, gettncs: true }));
-  
+
       const response = await test_api.get("/gettnc");
-      console.log("jskdfjsdhfjsgfgsdfsdj",response)
+      console.log("jskdfjsdhfjsgfgsdfsdj", response)
       setGettnc(response.data.data);
-  
+
       setErrors((prev) => ({ ...prev, gettncs: null }));
     } catch (error) {
       setErrors((prev) => ({ ...prev, gettncs: error }));
@@ -452,16 +500,16 @@ export const GlobalProvider = ({ children }) => {
       setLoading((prev) => ({ ...prev, gettncs: false }));
     }
   };
-  
-  
+
+
   const fetchcareer = async () => {
     try {
       setLoading((prev) => ({ ...prev, getcareer: true }));
-  
+
       const response = await test_api.get("/career");
-      console.log("jskdfjsdhfjsgfgsdfsdj",response)
+      console.log("jskdfjsdhfjsgfgsdfsdj", response)
       setCareer(response.data.data);
-  
+
       setErrors((prev) => ({ ...prev, getcareer: null }));
     } catch (error) {
       setErrors((prev) => ({ ...prev, getcareer: error }));
@@ -473,11 +521,11 @@ export const GlobalProvider = ({ children }) => {
   const fetchContact = async () => {
     try {
       setLoading((prev) => ({ ...prev, getcontact: true }));
-  
+
       const response = await test_api.get("/contact");
-      console.log("jskdfjsdhfjsgfgsdfsdj",response)
+      console.log("jskdfjsdhfjsgfgsdfsdj", response)
       setContact(response.data.data);
-  
+
       setErrors((prev) => ({ ...prev, getcontact: null }));
     } catch (error) {
       setErrors((prev) => ({ ...prev, getcontact: error }));
@@ -485,8 +533,8 @@ export const GlobalProvider = ({ children }) => {
       setLoading((prev) => ({ ...prev, getcontact: false }));
     }
   };
-  
-  
+
+
 
   // Initialize data on component mount
   useEffect(() => {
@@ -504,6 +552,9 @@ export const GlobalProvider = ({ children }) => {
     fetchTermsServies();
     fetchThirdPartyGames();
     fetchresources();
+    fetchBlogLocations();
+    fetchBlogLookingFor();
+    fetchBlogTags();
   }, []);
 
   // Refresh functions for manual data updates
@@ -513,16 +564,19 @@ export const GlobalProvider = ({ children }) => {
     newsLogo: fetchNewsLogo,
     thirdPartyLocations: fetchThirdPartyLocations,
     venueCategories: fetchVenueCategories,
-    siteSettings:fetchSiteSettings,
-    gettncs:fetchgettnc,
-    getcareer:fetchcareer,
-    getcontact:fetchContact,
-    getprivacy:fetchPrivacyPolicy,
-    getrefundpolicy:fetchRefundPolicy,
-    gettermservies:fetchTermsServies,
-    venuefinderquiz:fetchVenuefinderquiz,
-    quotecalculatorquiz:fetchQuotecalculatorquiz,
-    getresourcelist:fetchresources
+    siteSettings: fetchSiteSettings,
+    gettncs: fetchgettnc,
+    getcareer: fetchcareer,
+    getcontact: fetchContact,
+    getprivacy: fetchPrivacyPolicy,
+    getrefundpolicy: fetchRefundPolicy,
+    gettermservies: fetchTermsServies,
+    venuefinderquiz: fetchVenuefinderquiz,
+    quotecalculatorquiz: fetchQuotecalculatorquiz,
+    getresourcelist: fetchresources,
+    blogLocations: fetchBlogLocations,
+    blogLookingFor: fetchBlogLookingFor,
+    blogTags: fetchBlogTags
   };
 
   const value = {
@@ -538,7 +592,10 @@ export const GlobalProvider = ({ children }) => {
     getrefundpolicy,
     gettermservies,
     getresourcelist,
+    blogLocations,
+    blogLookingFor,
     thirdPartyLocations,
+    blogTags,
     thirdPartyGames,
     availableSlots,
     venueCategories,
@@ -578,9 +635,12 @@ export const GlobalProvider = ({ children }) => {
     fetchTermsServies,
     fetchVenuefinderquiz,
     Quotecalcultorquizresposesubmit,
-     fetchQuotecalculatorquiz,
-     quizresposesubmit,
-     fetchresources
+    fetchQuotecalculatorquiz,
+    quizresposesubmit,
+    fetchresources,
+    fetchBlogLocations,
+    fetchBlogLookingFor,
+    fetchBlogTags,
   };
 
   return (

@@ -9,7 +9,10 @@ import api from "@/helpers/api";
 const page = () => {
   const [blogs, setBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
-  console.log("setFilteredBlogs_setFilteredBlogs",filteredBlogs)
+  console.log("setFilteredBlogs_setFilteredBlogs", blogs)
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedTag, setSelectedTag] = useState(null);
   const [visibleCount, setVisibleCount] = useState(12);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -17,24 +20,91 @@ const page = () => {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
 
+  // useEffect(() => {
+  //   const fetchBlogs = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const res = await api.get("/blogs");
+  //       console.log("sjdkfhdjskfhjsdhgf",res?.data?.data)
+  //       const res2 = await api.get("/blog");
+  //       // setBlogs([...res.data.data, ...res2.data.data]);
+  //       // setFilteredBlogs([...res.data.data, ...res2.data.data]);
+  //       setBlogs(res.data.data);
+  //       setFilteredBlogs([...res.data.data]);
+  //     } catch (err) {
+  //       setError(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchBlogs();
+  // }, []);
+
+  const buildQuery = () => {
+    const params = new URLSearchParams();
+  
+    if (search) params.append("search", search);
+  
+    if (selectedTag) params.append("tag", selectedTag.value);
+  
+    if (selectedLocation)
+      params.append("location", selectedLocation.value);
+  
+    if (selectedOption)
+      params.append("related_to", selectedOption.value);
+  
+    // pagination optional
+    params.append("page", 1);
+    params.append("limit", 10);
+  
+    return params.toString();
+  };
+
   useEffect(() => {
     const fetchBlogs = async () => {
       setLoading(true);
       try {
-        const res = await api.get("/blogs");
-        const res2 = await api.get("/birthday-blog");
-        setBlogs([...res.data.data, ...res2.data.data]);
-        setFilteredBlogs([...res.data.data, ...res2.data.data]);
-        // setBlogs([...res.data.data]);
-        // setFilteredBlogs([...res.data.data]);
+        const query = buildQuery();
+  
+        const res = await api.get(`/blogs?${query}`);
+  
+        console.log("API DATA", res?.data?.data);
+  
+        setBlogs(res.data.data);
+        setFilteredBlogs(res.data.data);
       } catch (err) {
         setError(err);
       } finally {
         setLoading(false);
       }
     };
+  
     fetchBlogs();
-  }, []);
+  }, [search, selectedLocation, selectedOption, selectedTag]); // 🔥 important
+  
+  // useEffect(() => {
+  //   const fetchBlogs = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const res = await api.get("/blogs");
+  //       console.log("API DATA", res?.data?.data);
+
+  //       setBlogs(res.data.data);
+  //       setFilteredBlogs(res.data.data);
+  //     } catch (err) {
+  //       setError(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchBlogs();
+  // }, []);
+
+  // ✅ Track updated state
+  useEffect(() => {
+    console.log("Updated blogs:", blogs);
+  }, [blogs]);
 
   useEffect(() => {
     // if (search || sort) {
@@ -124,11 +194,23 @@ const page = () => {
         </div>
         <div className="row pt-80 outer-row">
           <div className="col-lg-3 col-6">
+            {/* <Sidebar
+              handleSearchChange={handleSearchChange}
+              totalResources={filteredBlogs.length}
+              handleSortChange={handleSortChange}
+              searchRef={searchRef}
+            /> */}
             <Sidebar
               handleSearchChange={handleSearchChange}
               totalResources={filteredBlogs.length}
               handleSortChange={handleSortChange}
               searchRef={searchRef}
+              selectedLocation={selectedLocation}
+              setSelectedLocation={setSelectedLocation}
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+              selectedTag={selectedTag}
+              setSelectedTag={setSelectedTag}
             />
           </div>
           <div className="col-lg-9 col-6 col-blog-card">

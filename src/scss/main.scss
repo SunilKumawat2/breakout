@@ -3963,7 +3963,7 @@ textarea:hover {
 .share-blog-list .bl-soc-list li {
   text-align: center;
 }
-.share-blog-list .bl-soc-list li button{
+.share-blog-list .bl-soc-list li button {
   width: 55px;
   height: 55px;
 }
@@ -3981,22 +3981,21 @@ textarea:hover {
   width: 20px !important;
   height: 20px !important;
   z-index: 2 !important;
-  border-color: #FFAE00 !important;
+  border-color: #ffae00 !important;
   background-color: transparent !important;
   left: 24px !important;
   top: 30% !important;
   box-shadow: none !important;
 }
 .form-check-input:checked {
-    background-color: #FFAE00 !important;
-    border-color: #FFAE00 !important;
+  background-color: #ffae00 !important;
+  border-color: #ffae00 !important;
 }
 .quiz-option label {
   padding-left: 60px !important;
 }
-.select-group .dropdown-toggle::after{
+.select-group .dropdown-toggle::after {
   display: none !important;
-  
 }
 .select-group .dropdown-toggle {
   background-color: transparent !important;
@@ -4014,26 +4013,27 @@ textarea:hover {
   font-size: 20px;
   justify-content: space-between;
 }
-.select-group .dropdown-menu{
+.select-group .dropdown-menu {
   width: 100% !important;
   background: #323333;
   border: 1px solid #ffae0026 !important;
-  border-radius: 10px;  
+  border-radius: 10px;
 }
-.select-group .dropdown-item{
+.select-group .dropdown-item {
   color: #fff !important;
 }
-.select-group .dropdown-item:focus,.select-group .dropdown-item:hover{
+.select-group .dropdown-item:focus,
+.select-group .dropdown-item:hover {
   background-color: #040707 !important;
 }
 
-.sec-head.sidebar-heading{
+.sec-head.sidebar-heading {
   font-size: 24px;
 }
-.blogs-page .box-row{
+.blogs-page .box-row {
   row-gap: 40px;
 }
-.col-load-more-blogs button{
+.col-load-more-blogs button {
   min-width: 200px;
 }
 .tooltip-container {
@@ -4046,7 +4046,7 @@ textarea:hover {
   bottom: 125%; /* above button */
   left: 50%;
   transform: translateX(-50%);
-  
+
   background-color: black;
   color: white;
   padding: 6px 10px;
@@ -4066,24 +4066,28 @@ textarea:hover {
   opacity: 1;
   visibility: visible;
 }
-.b-venue-cards-accordion.acc .accordion-item button{
+.b-venue-cards-accordion.acc .accordion-item button {
   position: relative;
   border-radius: 32px;
 }
-.b-venue-cards-accordion.acc .accordion-item button::before{
+.b-venue-cards-accordion.acc .accordion-item button::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
   border-radius: 30px;
   padding: 1px;
-  background: radial-gradient(50% 70% at 100% 100%, rgba(255, 174, 0, 0.65), rgba(255, 255, 255, 0.25));
+  background: radial-gradient(
+    50% 70% at 100% 100%,
+    rgba(255, 174, 0, 0.65),
+    rgba(255, 255, 255, 0.25)
+  );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
 }
-.b-venue-cards-accordion.acc .accordion-item{
+.b-venue-cards-accordion.acc .accordion-item {
   background-color: transparent !important;
   box-shadow: none !important;
 }
@@ -4095,7 +4099,11 @@ textarea:hover {
   z-index: 0;
   border-radius: 30px;
   padding: 0.5px;
-  background: radial-gradient(50% 70% at 100% 100%, rgba(255, 174, 0, 0.65), rgba(255, 255, 255, 0.25));
+  background: radial-gradient(
+    50% 70% at 100% 100%,
+    rgba(255, 174, 0, 0.65),
+    rgba(255, 255, 255, 0.25)
+  );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -4105,7 +4113,7 @@ textarea:hover {
   background-color: transparent !important;
   padding-top: 80px !important;
 }
-.b-venue-cards-accordion.acc .b-venue-cards{
+.b-venue-cards-accordion.acc .b-venue-cards {
   padding-bottom: 120px;
 }
 .blog-slider-sec.arrows-diff .custom-prev {
@@ -4114,7 +4122,16 @@ textarea:hover {
 .blog-slider-sec.arrows-diff .custom-next {
   right: -40px;
 }
-.quiz-step h2.sec-head.medium{
+.quiz-step h2.sec-head.medium {
   font-size: 30px;
   line-height: 1.5;
+}
+.video-outer {
+  padding-bottom: 80px;
+}
+.video-outer video {
+  height: 500px;
+  border-radius: 20px;
+  width: 100%;
+  object-fit: cover;
 }

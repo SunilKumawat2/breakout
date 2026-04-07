@@ -73,7 +73,7 @@
 //     const fetchBlogData = async () => {
 //       var url = `/blog/${id}`;
 //       if (type == "birthday") {
-//         url = `/birthday-blog/${id}`;
+//         url = `/blog/${id}`;
 //       }
 //       const res = await api.get(url);
 //       setBlogData(res.data.data);
@@ -124,11 +124,11 @@ console.log("sdnfkhsdfgsjdgfjsh",blogData)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      sessionStorage.setItem("category", "birthday");
+      sessionStorage.setItem("category", "seo");
     }, 1500);
   
     return () => clearTimeout(timer);
-  }, ["birthday"]);
+  }, ["seo"]);
 
   useEffect(() => {
     if (!id) return;
@@ -137,8 +137,8 @@ console.log("sdnfkhsdfgsjdgfjsh",blogData)
       try {
         let url = `/blog/${id}`;
 
-        if (type == "birthday") {
-          url = `/birthday-blog/${id}`;
+        if (type == "seo") {
+          url = `/blog/${id}`;
         }
 
         const res = await api.get(url);
@@ -153,13 +153,13 @@ console.log("sdnfkhsdfgsjdgfjsh",blogData)
   }, [id, type]);
 
   // loading state
-  if (!blogData) {
-    return <div>Loading...</div>;
-  }
+  // if (!blogData) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <>
-      {type === "birthday" ? (
+      {type == "seo" ? (
         <BirthdayBlog blogData={blogData} id={id} />
       ) : (
         <SigngleBlog blogData={blogData} id={id}/>
