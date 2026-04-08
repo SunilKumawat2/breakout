@@ -86,53 +86,90 @@ import { Modal } from "react-bootstrap";
 import VenueInner from "./VenueInner";
 import { useRouter } from "next/navigation";
 
-const VenueCard = ({ venue, clickable, selectedVenue, onClick }) => {
+const VenueCard = ({
+  venue,
+  item,
+  clickable,
+  selectedVenue,
+  onClick,
+}) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
 
+  const isItem = !!item;
+  const data = isItem ? item : venue;
+
   const handleClick = () => {
     if (clickable) {
-      onClick?.(); // 🔥 important
+      onClick?.();
       return;
     }
-    router.push(`/resources/venue/${venue?.slug}`);
+
+    if (!isItem) {
+      router.push(`/resources/venue/${venue?.slug}`);
+    }
   };
 
   return (
     <>
       <article
-        className={`venue-card ${clickable && selectedVenue?.id === venue?.id ? "selected" : ""
+        className={`venue-card ${clickable && selectedVenue?.id === venue?.id
+            ? "selected"
+            : ""
           }`}
         onClick={handleClick}
       >
+        {/* ✅ IMAGE */}
         <div className="venue-card-img">
-          {venue.image && (
-            <Image
-              src={venue.image}
-              alt={venue?.name}
-              width={300}
-              height={300}
-            />
-          )}
+          {(data?.image ||
+            data?.coverimage ||
+            data?.image_url) && (
+              <Image
+                src={
+                  data?.image ||
+                  data?.coverimage ||
+                  data?.image_url
+                }
+                alt={data?.name || data?.title}
+                width={300}
+                height={300}
+              />
+            )}
         </div>
 
+        {/* ✅ CONTENT */}
         <div className="venue-card-content">
-          <h3 className="venue-card-title">{venue?.name}</h3>
+          <h3 className="venue-card-title">
+            {data?.name || data?.title}
+          </h3>
 
-          <div className="venue-card-info">
-            <div className="venue-card-info-item">
-              <Image src={rupeeIcon} alt="" />
-              <span>{venue?.price}</span>
+          {/* ❌ Hide this for items */}
+          {!isItem && (
+            <div className="venue-card-info">
+              <div className="venue-card-info-item">
+                <Image src={rupeeIcon} alt="" />
+                <span>
+                  {/* ₹ */}
+                  {venue?.price ||
+                    `${venue?.price_min} - ${venue?.price_max}`}
+                </span>
+              </div>
+              <div className="d-flex gap-5">
+                <div className="venue-card-info-item">
+                  <Image src={strokeStarIcon} alt="" />
+                  <span>{venue?.rating}</span>
+                </div>
+
+                <div className="venue-card-info-item">
+                  <Image src={publicIcon} alt="" />
+                  <span>
+                    {venue?.capacity ||
+                      `${venue?.capacity_min} - ${venue?.capacity_max}`}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="venue-card-info-item">
-              <Image src={strokeStarIcon} alt="" />
-              <span>{venue?.rating}</span>
-            </div>
-            <div className="venue-card-info-item">
-              <Image src={publicIcon} alt="" />
-              <span>{venue?.capacity}</span>
-            </div>
-          </div>
+          )}
         </div>
       </article>
 

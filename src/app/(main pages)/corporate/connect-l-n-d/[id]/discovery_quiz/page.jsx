@@ -3,13 +3,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useGlobalContext } from "@/context/GlobalContext";
 import partyQuizIllus from "@/images/party-quiz-illus.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const Page = () => {
+    const {id} = useParams()
     const router = useRouter();
     const { updateFinderQuizValue, finderQuizValues } = useGlobalContext();
 
@@ -124,11 +125,11 @@ const Page = () => {
             setSubmitted(true);
 
             setTimeout(() => {
-                router.push("/corporate/connect-l-n-d");
+                router.push(`/corporate/connect-l-n-d/${id}`);
             }, 3000);
-            setTimeout(() => {
-                window.location.reload()
-            }, 4000);
+            setTimeout(()=>{
+                window.location.reload();
+            },4000)
         },
     });
 

@@ -261,69 +261,90 @@ import VenueInner from "./VenueInner";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
-const BirthdayVenueWidget = ({className=""}) => {
-  const { venueCategories } = useGlobalContext();
+const BirthdayVenueWidget = ({ className = "" }) => {
+    const { venueCategories,venueCapacity } = useGlobalContext();
 
-  // const [venueCards, setVenueCards] = useState([]);
+  const [venueCards, setVenueCards] = useState([]);
+  console.log("venueCards_venueCards", venueCards)
   const [loading, setLoading] = useState(false);
-const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [selectedVenue, setSelectedVenue] = useState(null);
+  const [selectedVenueDetails, setSelectedVenueDetails] = useState(null);
   const [activeAccordion, setActiveAccordion] = useState(null);
 
   const swiperRefs = useRef({});
   const sliderRefs = useRef({});
 
   // Fetch venues
-  // useEffect(() => {
-  //   const fetchVenueCards = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await api.get("/birthdayblogfaqs");
+  useEffect(() => {
+    const fetchVenueCards = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get("/blog-venue-groups/5");
+
+        console.log("API Venue Data:", response?.data?.data);
+
+        setVenueCards(response?.data?.data || []);
+      } catch (err) {
+        console.error("Error fetching venue cards:", err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVenueCards();
+  }, []);
+
   
-  //       console.log("API Venue Data:", response?.data?.data);
-  
-  //       setVenueCards(response?.data?.data || []);
-  //     } catch (err) {
-  //       console.error("Error fetching venue cards:", err);
-  //       setError(err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  
-  //   fetchVenueCards();
-  // }, []);
+
+  const fetchVenueCardsDetails = async (slug) => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/venue/${slug}`);
+
+      console.log("API Venue Data:", response?.data?.data);
+
+      // ✅ store details separately
+      setSelectedVenueDetails(response?.data?.data);
+    } catch (err) {
+      console.error("Error fetching venue details:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Slide + scroll safely
-  // useEffect(() => {
-  //   if (!selectedVenue || activeAccordion === null) return;
+  useEffect(() => {
+    if (!selectedVenue || activeAccordion === null) return;
 
-  //   const accIndex = Number(activeAccordion);
-  //   const venues = venueCards[accIndex]?.venues || [];
-  //   const slideIndex = venues.findIndex(
-  //     (v) => v.id === selectedVenue.id
-  //   );
+    const accIndex = Number(activeAccordion);
+    const venues = venueCards[accIndex]?.venues || [];
+    const slideIndex = venues.findIndex(
+      (v) => v.id === selectedVenue.id
+    );
 
-  //   if (slideIndex === -1) return;
+    if (slideIndex === -1) return;
 
-  //   const runWhenReady = () => {
-  //     const swiper = swiperRefs.current[accIndex];
-  //     const sliderEl = sliderRefs.current[accIndex];
+    const runWhenReady = () => {
+      const swiper = swiperRefs.current[accIndex];
+      const sliderEl = sliderRefs.current[accIndex];
 
-  //     if (!swiper || !sliderEl) {
-  //       requestAnimationFrame(runWhenReady);
-  //       return;
-  //     }
+      if (!swiper || !sliderEl) {
+        requestAnimationFrame(runWhenReady);
+        return;
+      }
 
-  //     swiper.slideTo(slideIndex, 0);
-  //     sliderEl.scrollIntoView({
-  //       behavior: "smooth",
-  //       block: "start",
-  //     });
-  //   };
+      swiper.slideTo(slideIndex, 0);
+      sliderEl.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    };
 
-  //   requestAnimationFrame(runWhenReady);
-  // }, [selectedVenue, activeAccordion, venueCards]);
+    requestAnimationFrame(runWhenReady);
+  }, [selectedVenue, activeAccordion, venueCards]);
 
   const customStyles = {
     control: (base, state) => ({
@@ -391,8 +412,8 @@ const [error, setError] = useState(null);
                 }),
               }}
               options={venueCategories?.map((category) => ({
-                value: category?.category,
-                label: category?.category,
+                value: category,
+                label: category,
               }))}
             />
           </div>
@@ -435,11 +456,10 @@ const [error, setError] = useState(null);
                   paddingLeft: "35px",
                 }),
               }}
-              options={[
-                { value: "Koramangala", label: "Koramangala" },
-                { value: "Koramangala", label: "Koramangala" },
-                { value: "Koramangala", label: "Koramangala" },
-              ]}
+              options={venueCapacity?.map((category) => ({
+                value: category,
+                label: category,
+              }))}
             />
           </div>
           <div className="b-flt-item">
@@ -466,19 +486,19 @@ const [error, setError] = useState(null);
             />
           </div>
         </div>
-        {/* {venueCards.length > 0 && (
+        {venueCards?.length > 0 && (
           <Accordion
             className="b-venue-cards-accordion mt-5 acc"
             activeKey={activeAccordion}
             onSelect={(key) => setActiveAccordion(key)}
           >
-            {venueCards.map((venue, accIndex) => (
+            {venueCards?.map((venue, accIndex) => (
               <Accordion.Item
                 eventKey={String(accIndex)}
                 key={accIndex}
               >
                 <Accordion.Header>
-                  <span>{venue?.question}</span>
+                  <span>{venue?.heading}</span>
                   <Image src={arrow} className="acc-arrow" alt="" />
                   <Image src={minus} className="acc-minus" alt="" />
                 </Accordion.Header>
@@ -486,7 +506,7 @@ const [error, setError] = useState(null);
                 <Accordion.Body>
                   <div className="b-venue-cards">
                     <div className="row row-gap-25">
-                      {venue.venues.map((venueItem, vIndex) => (
+                      {venue?.venues?.map((venueItem, vIndex) => (
                         <div className="col-lg-3 col-12" key={vIndex}>
                           <VenueCard
                             venue={venueItem}
@@ -494,9 +514,15 @@ const [error, setError] = useState(null);
                             selectedVenue={selectedVenue}
                             onClick={() => {
                               setActiveAccordion(String(accIndex));
-                              setSelectedVenue(venueItem);
+                              setSelectedVenue(venueItem); // optional highlight
+                              fetchVenueCardsDetails(venueItem?.slug);
                             }}
                           />
+                        </div>
+                      ))}
+                      {venue?.items?.map((item, i) => (
+                        <div className="col-lg-3 col-12" key={i}>
+                          <VenueCard item={item} />
                         </div>
                       ))}
                     </div>
@@ -507,7 +533,7 @@ const [error, setError] = useState(null);
                       (sliderRefs.current[accIndex] = el)
                     }
                   >
-                    <Swiper
+                    {/* <Swiper
                       slidesPerView={1}
                       spaceBetween={10}
                       onSwiper={(swiper) => {
@@ -519,13 +545,34 @@ const [error, setError] = useState(null);
                           <VenueInner venue={venueItem} />
                         </SwiperSlide>
                       ))}
+                    </Swiper> */}
+                    <Swiper
+                      slidesPerView={1}
+                      spaceBetween={10}
+                      onSwiper={(swiper) => {
+                        swiperRefs.current[accIndex] = swiper;
+                      }}
+                    >
+                      {selectedVenueDetails ? (
+                        // ✅ Show clicked venue details
+                        <SwiperSlide key={selectedVenueDetails.id}>
+                          <VenueInner venue={selectedVenueDetails} />
+                        </SwiperSlide>
+                      ) : (
+                        // ✅ Default list (before click)
+                        venue?.venues?.map((venueItem, vIndex) => (
+                          <SwiperSlide key={vIndex}>
+                            <VenueInner venue={venueItem} />
+                          </SwiperSlide>
+                        ))
+                      )}
                     </Swiper>
                   </div>
                 </Accordion.Body>
               </Accordion.Item>
             ))}
           </Accordion>
-        )} */}
+        )}
       </div>
     </section>
   );

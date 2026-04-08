@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import InnerPageBanner from "@/components/InnerPageBanner";
 import Image from "next/image";
 import enc from "@/images/enc.svg";
@@ -40,9 +40,10 @@ import PartySlider from "@/components/PartySlider";
 import ReadyToGoPlans from "@/components/ReadyToGoPlans";
 import Videotestimonials from "@/components/Videotestimonials";
 import FaqSection from "@/components/FaqSection";
-
+import gmail from "@/images/gmail.svg";
+import linkedin from "@/images/linkedin.svg";
 import nightIllus from "@/images/night-illus.svg";
-
+import IllusPartyBottom from "@/images/illus-party-bottom.svg";
 import bdayBanner from "@/images/bday-banner1.jpg";
 import PartyExpertCon from "@/components/PartyExpertCon";
 
@@ -52,14 +53,27 @@ import GReviewSlider from "@/components/GReviewSlider";
 import PhotographicStyledImage from "@/components/PhotographicStyledImage";
 
 import { useParams } from "next/navigation";
-
+import swiperPrev from "@/images/chev-left.svg";
+import swiperNext from "@/images/chev-right.svg";
 import linkIcon from "@/images/link-icon.svg";
 import whatsappIcon from "@/images/whatsapp-icon.svg";
 import instaIcon from "@/images/insta-icon.svg";
 import xIcon from "@/images/x-ixon.svg";
 import OurLocationSec from "@/components/OurLocationSec";
+import { Accordion } from "react-bootstrap";
+import arrow from "@/images/acc-plus.svg";
+import minus from "@/images/acc-minus.svg";
+import PartyGetInTouch from "@/components/PartyGetInTouch";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const SigngleBlog = ({ blogData }) => {
+  const [activeAccordion, setActiveAccordion] = useState("0");
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
   // Share functionality
   const handleShare = (platform) => {
     const currentUrl = window.location.href;
@@ -177,15 +191,49 @@ const SigngleBlog = ({ blogData }) => {
       {blogData?.description_text && (
         <HmTextSec text={blogData?.description_text} />
       )}
-      <br/>
-         {blogData?.at_a_glance_summary && (
+      <br />
+      {blogData?.at_a_glance_summary && (
         <HmTextSec className="mb-4 section-padding pb-0" text={blogData?.at_a_glance_summary} />
       )}
-         <PartyExpertCon className="sec-padding-top" data="party_bachelor" />
-         <br/>
-         {blogData?.additional_content && (
+      <PartyExpertCon className="sec-padding-top" data="party_bachelor" />
+      <br />
+      {blogData?.additional_content && (
         <HmTextSec className="mb-4 section-padding pb-0" text={blogData?.additional_content} />
       )}
+
+
+      {
+        blogData?.decoration_options?.length > 0 && (
+          <Accordion
+            className="b-venue-cards-accordion mt-5 acc container"
+            activeKey={activeAccordion}
+            onSelect={(key) => setActiveAccordion(key)}
+          >
+            {blogData.decoration_options.map((item, index) => (
+              <Accordion.Item eventKey={String(index)} key={index}>
+
+                {/* ✅ HEADER (Heading here) */}
+                <Accordion.Header>
+                  {item?.heading}
+                  <Image src={arrow} className="acc-arrow" alt="" />
+                  <Image src={minus} className="acc-minus" alt="" />
+                </Accordion.Header>
+
+                {/* ✅ BODY (Description here) */}
+                <Accordion.Body>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: item?.content_description,
+                    }}
+                  />
+                </Accordion.Body>
+
+              </Accordion.Item>
+            ))}
+          </Accordion>
+        )
+      }
+      <br />
       {/* <div className="container">
         <div className="video-outer">
 
@@ -201,8 +249,456 @@ const SigngleBlog = ({ blogData }) => {
         </div>
 
       </div> */}
-      <OurLocationSec title="Visit a <span>Location</span>" />
-      <HomeContact noTextBottom={false} privacyLine={false} noImage={true} />
+      {/* <OurLocationSec title="Visit a <span>Location</span>" /> */}
+      <section className="found-sec pt-80">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div
+                className="blog-content"
+                dangerouslySetInnerHTML={{ __html: blogData?.conclusion_text }}
+              />
+            </div>
+          </div>
+          <div className="sec-head mb-0 medium-20 d-flex w-100 flex-column justify-content-center align-items-center gap-3">
+            <h3>
+              Found it useful? <span>Spread the word</span>
+            </h3>
+            <ul className="bl-soc-list">
+
+              <li>
+                <button onClick={() => handleShare("whatsapp")}>
+                  <Image
+                    src={whatsappIcon}
+                    alt="share on whatsapp"
+                    width={65}
+                    height={65}
+                  />
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleShare("instagram")}>
+                  <Image
+                    src={instaIcon}
+                    alt="share on instagram"
+                    width={65}
+                    height={65}
+                  />
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleShare("twitter")}>
+                  <Image
+                    src={xIcon}
+                    alt="share on twitter"
+                    width={65}
+                    height={65}
+                  />
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleShare("linkedin")}>
+                  <Image
+                    src={linkedin}
+                    alt="copy link"
+                    width={65}
+                    height={65}
+                  />
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleShare("gmail")}>
+                  <Image
+                    src={gmail}
+                    alt="copy link"
+                    width={65}
+                    height={65}
+                  />
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleShare("copy")}>
+                  <Image
+                    src={linkIcon}
+                    alt="copy link"
+                    width={65}
+                    height={65}
+                  />
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+
+      <div className="black-gr-div">
+
+
+        <section className="pt-80 bday-sec">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <h3
+                  className="sec-head medium sm-head"
+                  dangerouslySetInnerHTML={{
+                    __html:
+
+                      "Your Party <span>Inclusions</span>",
+                  }}
+                />
+              </div>
+            </div>
+            <div className="row row-gap-25">
+
+              <Link
+                href={"#"}
+                // key={index}
+                className="col-lg-3 col-6"
+                target="_blank"
+              // onClick={() => {
+              //   window.dataLayer = window.dataLayer || [];
+              //   window.dataLayer.push({
+              //     event: "cta_click",
+              //     // button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
+              //     destination: "external_party_inclusion",
+              //     link_url: bd?.link,
+              //     page: window.location.pathname,
+              //     section: "party_inclusions",
+              //   });
+              // }}
+              >
+                <div className="location-card">
+                  <div className="location-card-img">
+
+                    <Image
+                      src={bdayImg1}
+                      width={700}
+                      height={700}
+                      alt={"bd.heading"}
+                    />
+
+                  </div>
+
+                  <div className="location-card-content">
+                    <h3
+                      dangerouslySetInnerHTML={{ __html: "bd.heading" }}
+                    />
+                  </div>
+                </div>
+              </Link>
+              <Link
+                href={"#"}
+                // key={index}
+                className="col-lg-3 col-6"
+                target="_blank"
+              // onClick={() => {
+              //   window.dataLayer = window.dataLayer || [];
+              //   window.dataLayer.push({
+              //     event: "cta_click",
+              //     // button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
+              //     destination: "external_party_inclusion",
+              //     link_url: bd?.link,
+              //     page: window.location.pathname,
+              //     section: "party_inclusions",
+              //   });
+              // }}
+              >
+                <div className="location-card">
+                  <div className="location-card-img">
+
+                    <Image
+                      src={bdayImg1}
+                      width={700}
+                      height={700}
+                      alt={"bd.heading"}
+                    />
+
+                  </div>
+
+                  <div className="location-card-content">
+                    <h3
+                      dangerouslySetInnerHTML={{ __html: "bd.heading" }}
+                    />
+                  </div>
+                </div>
+              </Link>
+              <Link
+                href={"#"}
+                // key={index}
+                className="col-lg-3 col-6"
+                target="_blank"
+              // onClick={() => {
+              //   window.dataLayer = window.dataLayer || [];
+              //   window.dataLayer.push({
+              //     event: "cta_click",
+              //     // button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
+              //     destination: "external_party_inclusion",
+              //     link_url: bd?.link,
+              //     page: window.location.pathname,
+              //     section: "party_inclusions",
+              //   });
+              // }}
+              >
+                <div className="location-card">
+                  <div className="location-card-img">
+
+                    <Image
+                      src={bdayImg1}
+                      width={700}
+                      height={700}
+                      alt={"bd.heading"}
+                    />
+
+                  </div>
+
+                  <div className="location-card-content">
+                    <h3
+                      dangerouslySetInnerHTML={{ __html: "bd.heading" }}
+                    />
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+        <br />
+      </div>
+      <div className="black-gr-div">
+        <VisitLocations className="sec-padding-top"
+          title="Visit <span>a Location</span>" page_name="home" />
+        {blogData?.faqs && (
+          <FaqSection
+            className="section-padding pb-0"
+            data={blogData?.faqs}
+          />
+        )}
+          <section className={`blog-slider-sec mt-5 arrows-diff`}>
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+              <div className="esc-content text-center position-relative">
+              <h2 className="sec-head sm-head medium">
+                Read <span>More Blogs</span>
+              </h2>
+            </div>
+                <div className="blog-slider">
+                  <Swiper
+                    modules={[Pagination, Navigation]}
+                    pagination={{ clickable: true }}
+                    loop={true}
+                    slidesPerView={1}
+                    spaceBetween={20}
+                    navigation={{
+                      prevEl: prevRef.current,
+                      nextEl: nextRef.current,
+                    }}
+                    onBeforeInit={(swiper) => {
+                      swiper.params.navigation.prevEl = prevRef.current;
+                      swiper.params.navigation.nextEl = nextRef.current;
+                    }}
+                    breakpoints={{
+                      0: { slidesPerView: 1 },
+                      640: { slidesPerView: 2 },
+                      992: { slidesPerView: 3 },
+                      1400: { slidesPerView: 4 },
+                    }}
+                    className="blog-swiper"
+                  >
+                    {/* {data1 &&
+                      data1?.images?.length > 0 &&
+                      data1?.images?.map((item, index) => ( */}
+                        <SwiperSlide>
+                          <div
+                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
+                            //   }`}
+                            // onMouseEnter={() => setActive(index)}
+                            // onMouseLeave={() => setActive(!index)}
+                            className="blog-card click-anim-card"
+                          >
+                            <div className="blog-card-img">
+                              <Image
+                                src={bdayImg1}
+                                width={500}
+                                height={500}
+                                alt="blog"
+                              />
+                            </div>
+                            <div className="blog-card-content">
+                              <h3
+                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
+                              ></h3>
+                              <p className="para">
+                                Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. Quisquam, quos.
+
+                              </p>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <div
+                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
+                            //   }`}
+                            // onMouseEnter={() => setActive(index)}
+                            // onMouseLeave={() => setActive(!index)}
+                            className="blog-card click-anim-card"
+                          >
+                            <div className="blog-card-img">
+                              <Image
+                                src={bdayImg2}
+                                width={500}
+                                height={500}
+                                alt="blog"
+                              />
+                            </div>
+                            <div className="blog-card-content">
+                              <h3
+                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
+                              ></h3>
+                              <p className="para">
+                                Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. Quisquam, quos.
+
+                              </p>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <div
+                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
+                            //   }`}
+                            // onMouseEnter={() => setActive(index)}
+                            // onMouseLeave={() => setActive(!index)}
+                            className="blog-card click-anim-card"
+                          >
+                            <div className="blog-card-img">
+                              <Image
+                                src={bdayImg3}
+                                width={500}
+                                height={500}
+                                alt="blog"
+                              />
+                            </div>
+                            <div className="blog-card-content">
+                              <h3
+                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
+                              ></h3>
+                              <p className="para">
+                                Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. Quisquam, quos.
+
+                              </p>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <div
+                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
+                            //   }`}
+                            // onMouseEnter={() => setActive(index)}
+                            // onMouseLeave={() => setActive(!index)}
+                            className="blog-card click-anim-card"
+                          >
+                            <div className="blog-card-img">
+                              <Image
+                                src={bdayImg4}
+                                width={500}
+                                height={500}
+                                alt="blog"
+                              />
+                            </div>
+                            <div className="blog-card-content">
+                              <h3
+                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
+                              ></h3>
+                              <p className="para">
+                                Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. Quisquam, quos.
+
+                              </p>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <div
+                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
+                            //   }`}
+                            // onMouseEnter={() => setActive(index)}
+                            // onMouseLeave={() => setActive(!index)}
+                            className="blog-card click-anim-card"
+                          >
+                            <div className="blog-card-img">
+                              <Image
+                                src={bdayImg5}
+                                width={500}
+                                height={500}
+                                alt="blog"
+                              />
+                            </div>
+                            <div className="blog-card-content">
+                              <h3
+                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
+                              ></h3>
+                              <p className="para">
+                                Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. Quisquam, quos.
+
+                              </p>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                          <div
+                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
+                            //   }`}
+                            // onMouseEnter={() => setActive(index)}
+                            // onMouseLeave={() => setActive(!index)}
+                            className="blog-card click-anim-card"
+                          >
+                            <div className="blog-card-img">
+                              <Image
+                                src={bdayImg1}
+                                width={500}
+                                height={500}
+                                alt="blog"
+                              />
+                            </div>
+                            <div className="blog-card-content">
+                              <h3
+                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
+                              ></h3>
+                              <p className="para">
+                                Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. Quisquam, quos.
+
+                              </p>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                      {/* // ))} */}
+                  </Swiper>
+                  <div ref={prevRef} className="swiper-button-prev custom-prev go-plan">
+                    <Image src={swiperPrev} alt="prev" />
+                  </div>
+
+                  <div ref={nextRef} className="swiper-button-next custom-next go-plan">
+                    <Image src={swiperNext} alt="next" />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+        <PartyGetInTouch
+          // data={data?.footersection}
+          img={IllusPartyBottom}
+          privacyLine={true}
+        />
+        {/* <HomeContact noTextBottom={false} privacyLine={false} noImage={true} /> */}
+      </div>
 
     </>
   );

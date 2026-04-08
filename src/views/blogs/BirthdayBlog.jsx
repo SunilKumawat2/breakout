@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import InnerPageBanner from "@/components/InnerPageBanner";
 import Image from "next/image";
 import enc from "@/images/enc.svg";
@@ -33,7 +33,8 @@ import bdayImg3 from "@/images/bday3.jpg";
 import bdayImg4 from "@/images/bday4.jpg";
 import bdayImg5 from "@/images/bday5.jpg";
 import bdayImg6 from "@/images/bday6.jpg";
-
+import swiperPrev from "@/images/chev-left.svg";
+import swiperNext from "@/images/chev-right.svg";
 import partyillus from "@/images/party-illus.svg";
 import BirthdayGetInTouch from "@/components/BirthdayGetInTouch";
 import PartySlider from "@/components/PartySlider";
@@ -50,7 +51,7 @@ import api from "@/helpers/api";
 import TrustedSection from "@/components/TrustedSection";
 import GReviewSlider from "@/components/GReviewSlider";
 import PhotographicStyledImage from "@/components/PhotographicStyledImage";
-
+import IllusPartyBottom from "@/images/illus-party-bottom.svg";
 import { useParams } from "next/navigation";
 
 import linkIcon from "@/images/link-icon.svg";
@@ -66,8 +67,17 @@ import bdayblogIllus from "@/images/bdayblog-illus.svg";
 import LocationCard from "@/components/LocationCard";
 import OurLocationSec from "@/components/OurLocationSec";
 import PartyGetInTouch from "@/components/PartyGetInTouch";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const BirthdayBlog = ({ blogData, id = "" }) => {
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+
+  const [active, setActive] = useState(null);
   console.log("sjdkfhjkshdfjsdjf", blogData)
   // Share functionality
   const handleShare = (platform) => {
@@ -140,8 +150,8 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
             <div className="blog-top-inner">
               <p className="sec-head medium-20 mb-0 d-flex align-items-center gap-2">
                 Last updated on{" "}
-                {blogData?.createdAt &&
-                  new Date(blogData.createdAt)
+                {blogData?.post_date &&
+                  new Date(blogData.post_date)
                     .toLocaleDateString("en-GB")
                     .replace(/\//g, "-")}
               </p>
@@ -334,7 +344,102 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
             </div>
           </div>
         </section>
-        <Image src={bdayblogIllus} className="illus-image" alt="hm-illus" />
+          <Image src={bdayblogIllus} className="illus-image" alt="hm-illus" />
+        {blogData?.faqs && (
+          <FaqSection
+            className="section-padding pb-0"
+            data={blogData?.faqs}
+          />
+        )}
+        <section className={`blog-slider-sec mt-5 arrows-diff`}>
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="esc-content text-center position-relative">
+                  <h2 className="sec-head sm-head medium">
+                    Read <span>More Blogs</span>
+                  </h2>
+                </div>
+                <div className="blog-slider">
+                  <Swiper
+                    modules={[Pagination, Navigation]}
+                    pagination={{ clickable: true }}
+                    loop={true}
+                    slidesPerView={1}
+                    spaceBetween={20}
+                    navigation={{
+                      prevEl: prevRef.current,
+                      nextEl: nextRef.current,
+                    }}
+                    onBeforeInit={(swiper) => {
+                      swiper.params.navigation.prevEl = prevRef.current;
+                      swiper.params.navigation.nextEl = nextRef.current;
+                    }}
+                    breakpoints={{
+                      0: { slidesPerView: 1 },
+                      640: { slidesPerView: 2 },
+                      992: { slidesPerView: 3 },
+                      1400: { slidesPerView: 4 },
+                    }}
+                    className="blog-swiper"
+                  >
+
+
+                    {/* {data1 &&
+                      data1?.images?.length > 0 &&
+                      data1?.images?.map((item, index) => ( */}
+                    <SwiperSlide>
+                      <div
+                        // className={`blog-card click-anim-card ${active === index ? "active" : ""
+                        //   }`}
+                        // onMouseEnter={() => setActive(index)}
+                        // onMouseLeave={() => setActive(!index)}
+                        className="blog-card click-anim-card"
+                      // onMouseEnter={() => setActive(index)}
+                      // onMouseLeave={() => setActive(!index)}
+                      >
+                        <div className="blog-card-img">
+                          <Image
+                            src={bdayImg1}
+                            width={500}
+                            height={500}
+                            alt="blog"
+                          />
+                        </div>
+                        <div className="blog-card-content">
+                          <h3
+                            dangerouslySetInnerHTML={{ __html: "item.heading" }}
+                          ></h3>
+                          <p className="para">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Quisquam, quos.
+
+                          </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                    {/* // ))} */}
+                  </Swiper>
+                  <div ref={prevRef} className="swiper-button-prev custom-prev go-plan">
+                    <Image src={swiperPrev} alt="prev" />
+                  </div>
+
+                  <div ref={nextRef} className="swiper-button-next custom-next go-plan">
+                    <Image src={swiperNext} alt="next" />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+        <PartyGetInTouch
+          // data="{data?.footersection}"
+          img={bdayblogIllus}
+          privacyLine={true}
+        />
+        {/* <Image src={bdayblogIllus} className="illus-image" alt="hm-illus" /> */}
       </div>
     </>
   );

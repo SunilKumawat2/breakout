@@ -16,12 +16,18 @@ import locY from "@/images/loc-y.svg";
 import GReviewSlider from "./GReviewSlider";
 
 const VenueInner = ({ venue }) => {
-  const images =
-    venue?.images &&
-    venue?.images.length > 0 &&
-    typeof venue?.images === "string"
-      ? venue?.images?.split(",")
-      : [];
+  // const images =
+  //   venue?.images &&
+  //   venue?.images.length > 0 &&
+  //   typeof venue?.images === "string"
+  //     ? venue?.images?.split(",")
+  //     : [];
+  const images = Array.isArray(venue?.images)
+    ? venue.images
+    : [];
+  const parsedContent = Array.isArray(venue?.content)
+    ? venue.content
+    : [];
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -42,6 +48,7 @@ const VenueInner = ({ venue }) => {
     }
     return stars;
   };
+
   return (
     <div className="venue-inner-container">
       <div className="top-area">
@@ -73,13 +80,13 @@ const VenueInner = ({ venue }) => {
             <div className="col-lg-6 col-12">
               <div className="venue-inner-item-list">
                 <Image src={clockIcon} alt="venue-inner-item-list" />
-                <span>{venue?.time}</span>
+                <span>{venue?.hours_open}</span>
               </div>
             </div>
             <div className="col-lg-6 col-12">
               <div className="venue-inner-item-list">
                 <Image src={moneyIcon} alt="venue-inner-item-list" />
-                <span>{venue?.price}</span>
+                <span>Starts from ₹{venue?.price_min} to ₹{venue?.price_max}</span>
               </div>
             </div>
             <div className="col-lg-6 col-12">
@@ -102,17 +109,21 @@ const VenueInner = ({ venue }) => {
             </div>
           </div>
         </div>
-        <div className="content-box mb-5">
-          <div className="row row-gap-25">
-            <div
-              className="col-lg-6 col-12"
-              dangerouslySetInnerHTML={{ __html: venue?.content_left }}
-            ></div>
-            <div
+        {parsedContent?.map((html, index) => (
+          <div className="content-box mb-5" key={index + 1}>
+            <div className="row row-gap-25" >
+              <div className="col-lg-6 col-12">
+                <div
+                  key={index}
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
+
+              </div>
+              {/* <div
               className="col-lg-6 col-12"
               dangerouslySetInnerHTML={{ __html: venue?.content_right }}
-            ></div>
-            {/* <div className="col-lg-6 col-12">
+            ></div> */}
+              {/* <div className="col-lg-6 col-12">
               <p className="para">Best Nearby: 60-90 minutes of play</p>
               <p className="para">
                 Must-Try: The Ultimate Birthday Bash Destination!
@@ -155,8 +166,9 @@ const VenueInner = ({ venue }) => {
                 nap!
               </p>
             </div> */}
+            </div>
           </div>
-        </div>
+        ))}
       </div>
       {venue?.reviews && venue?.reviews.length > 0 && (
         <GReviewSlider commonStars={false} reviews={venue?.reviews} />

@@ -32,11 +32,11 @@ const page = () => {
   const router = useRouter();
   const [escapeRooms, setEscapeRooms] = useState(null);
   const [activities, setActivities] = useState(null);
-  console.log("sjkdfhsdhkfshf",activities)
+  console.log("sjkdfhsdhkfshf", activities)
   const [show1, setShow1] = useState(false);
   const [selectedLink, setSelectedLink] = useState(null);
   const [room, setRoom] = useState(null);
-  console.log("sjkdfhsdhkfshf_123",room)
+  console.log("sjkdfhsdhkfshf_123", room)
 
   useEffect(() => {
     const fetchEscapeRooms = async () => {
@@ -85,26 +85,26 @@ const page = () => {
 
   const handleFreeConsultationCardClick = (item) => {
     const cleanHeading = item?.heading?.replace(/<[^>]*>/g, "");
-  
+
     if (cleanHeading === "Free Consultation with Expert") {
       const section = document.getElementById("get-in-touch");
       section?.scrollIntoView({ behavior: "smooth" });
-    } 
+    }
     else if (cleanHeading.includes("Ebook")) {
       let link = "";
-  
+
       if (cleanHeading == "Ebook - Why 88% of Training Fails") {
         link = "https://1drv.ms/b/c/033f28a2603d05d2/IQBMuwcPxoSpRLSMZOUTNQbkAZ5gYVsaWqjJ2puTzVDgrbI?e=8ce5YQ";
-      } 
+      }
       else if (cleanHeading == "Ebook - Exposing L&D’s Biggest Failures") {
         link = "https://1drv.ms/b/c/033f28a2603d05d2/IQALhxqdOD3vSqqg-OajZ9_NAaXFzWRLWLPkFaiCnx0n93U?e=pPK76A2";
       }
-  
+
       setSelectedLink(link);
       setShow1(true);
-    } 
+    }
     else if (cleanHeading == "Discovery Quiz") {
-      router.push("/corporate/connect-l-n-d/discovery_quiz"); // ✅ navigation
+      router.push(`/corporate/connect-l-n-d/${id}/discovery_quiz`); // ✅ navigation
     }
   };
 
@@ -333,56 +333,56 @@ const page = () => {
             </div>
           </section>
         )} */}
-         {room?.keyresourcessection && (
-                <section className="sec-padding-top">
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-lg-12 text-center">
-                        <h3
-                          className="sec-head sm-head medium"
-                          dangerouslySetInnerHTML={{
-                            __html: room?.keyresourcessection?.heading,
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <div className="row row-gap-25">
-                          {room?.keyresourcessection?.images &&
-                            room?.keyresourcessection?.images?.length > 0 &&
-                            room?.keyresourcessection?.images?.map(
-                              (item, index) => (
-                                <div className="col-lg-3 col-12" key={index}>
-                                  <div className="blog-card"
-                                    onClick={() => handleFreeConsultationCardClick(item)}>
-                                    <div className="blog-card-img">
-                                      {item.image && (
-                                        <Image
-                                          src={item.image}
-                                          alt={item.heading}
-                                          width={500}
-                                          height={500}
-                                        />
-                                      )}
-                                    </div>
-                                    <div className="blog-card-content">
-                                      <h3 style={{ fontSize: "16px", }}
-                                        dangerouslySetInnerHTML={{
-                                          __html: item.heading,
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            )}
-                        </div>
-                      </div>
-                    </div>
+        {room?.keyresourcessection && (
+          <section className="sec-padding-top">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-12 text-center">
+                  <h3
+                    className="sec-head sm-head medium"
+                    dangerouslySetInnerHTML={{
+                      __html: room?.keyresourcessection?.heading,
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="row row-gap-25">
+                    {room?.keyresourcessection?.images &&
+                      room?.keyresourcessection?.images?.length > 0 &&
+                      room?.keyresourcessection?.images?.map(
+                        (item, index) => (
+                          <div className="col-lg-3 col-12" key={index}>
+                            <div className="blog-card"
+                              onClick={() => handleFreeConsultationCardClick(item)}>
+                              <div className="blog-card-img">
+                                {item.image && (
+                                  <Image
+                                    src={item.image}
+                                    alt={item.heading}
+                                    width={500}
+                                    height={500}
+                                  />
+                                )}
+                              </div>
+                              <div className="blog-card-content">
+                                <h3 style={{ fontSize: "16px", }}
+                                  dangerouslySetInnerHTML={{
+                                    __html: item.heading,
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      )}
                   </div>
-                </section>
-              )}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
 
         <Image src={marketingIllus} className="illus-image" alt="hm-text-bg" />

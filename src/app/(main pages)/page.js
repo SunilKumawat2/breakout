@@ -641,7 +641,8 @@ export default function Home() {
               />
             </div>
             <div className="black-gr-div" >
-              <VisitLocations className="sec-padding-top" title="Visit <span>a Location</span>" page_name="home" />
+              <VisitLocations className="sec-padding-top" 
+              title="Visit <span>a Location</span>" page_name="home" />
               <div className="home-faq">
                 {data && data?.faqsection &&
                   <FaqSection className="section-padding pb-0" data={data?.faqsection} />}
