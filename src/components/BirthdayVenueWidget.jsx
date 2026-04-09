@@ -261,42 +261,64 @@ import VenueInner from "./VenueInner";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
-const BirthdayVenueWidget = ({ className = "" }) => {
-    const { venueCategories,venueCapacity } = useGlobalContext();
+const BirthdayVenueWidget = ({ blogData = {}, className = "" }) => {
+  const swiperRefs = useRef({});
+  const sliderRefs = useRef({});
+  const { venueCategories, venueCapacity } = useGlobalContext();
 
   const [venueCards, setVenueCards] = useState([]);
-  console.log("venueCards_venueCards", venueCards)
+  console.log("venueCards_venueCards", blogData)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedVenue, setSelectedVenue] = useState(null);
   const [selectedVenueDetails, setSelectedVenueDetails] = useState(null);
   const [activeAccordion, setActiveAccordion] = useState(null);
-
-  const swiperRefs = useRef({});
-  const sliderRefs = useRef({});
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCapacity, setSelectedCapacity] = useState(null);
 
   // Fetch venues
-  useEffect(() => {
-    const fetchVenueCards = async () => {
-      setLoading(true);
-      try {
-        const response = await api.get("/blog-venue-groups/5");
+  const fetchVenueCards = async () => {
+    if (!blogData?.id) return;
 
-        console.log("API Venue Data:", response?.data?.data);
+    setLoading(true);
+    try {
+      let query = "";
 
-        setVenueCards(response?.data?.data || []);
-      } catch (err) {
-        console.error("Error fetching venue cards:", err);
-        setError(err);
-      } finally {
-        setLoading(false);
+      const params = new URLSearchParams();
+
+      if (selectedCategory) {
+        params.append("venue_category", selectedCategory);
       }
-    };
 
+      if (selectedCapacity) {
+        params.append(
+          "venue_capacity_range_option",
+          selectedCapacity
+        );
+      }
+
+      if (params.toString()) {
+        query = `?${params.toString()}`;
+      }
+
+      const response = await api.get(
+        `/blog-venue-groups/${blogData?.id}${query}`
+      );
+
+      console.log("API Venue Data:", response?.data?.data);
+
+      setVenueCards(response?.data?.data || []);
+    } catch (err) {
+      console.error("Error fetching venue cards:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchVenueCards();
-  }, []);
-
-  
+  }, [blogData?.id, selectedCategory, selectedCapacity]);
 
   const fetchVenueCardsDetails = async (slug) => {
     setLoading(true);
@@ -314,6 +336,27 @@ const BirthdayVenueWidget = ({ className = "" }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (venueCards?.length > 0) {
+      const firstAccordion = venueCards[0];
+  
+      const firstVenue = firstAccordion?.venues?.[0];
+      const firstItem = firstAccordion?.items?.[0];
+  
+      setActiveAccordion("0"); // open first accordion
+  
+      if (firstVenue) {
+        // ✅ VENUE CASE
+        setSelectedVenue(firstVenue);
+        fetchVenueCardsDetails(firstVenue?.slug);
+      } else if (firstItem) {
+        // ✅ ITEM CASE (NEW)
+        setSelectedVenue(firstItem);
+        setSelectedVenueDetails(null); // important
+      }
+    }
+  }, [venueCards]);
 
   // Slide + scroll safely
   useEffect(() => {
@@ -415,9 +458,10 @@ const BirthdayVenueWidget = ({ className = "" }) => {
                 value: category,
                 label: category,
               }))}
+              onChange={(option) => setSelectedCategory(option?.value)}
             />
           </div>
-          <div className="b-flt-item">
+          {/* <div className="b-flt-item">
             <label htmlFor="Location" className="form-label">
               Location
             </label>
@@ -439,7 +483,7 @@ const BirthdayVenueWidget = ({ className = "" }) => {
                 { value: "Koramangala", label: "Koramangala" },
               ]}
             />
-          </div>
+          </div> */}
           <div className="b-flt-item">
             <label htmlFor="Capacity" className="form-label">
               Capacity
@@ -460,9 +504,10 @@ const BirthdayVenueWidget = ({ className = "" }) => {
                 value: category,
                 label: category,
               }))}
+              onChange={(option) => setSelectedCapacity(option?.value)}
             />
           </div>
-          <div className="b-flt-item">
+          {/* <div className="b-flt-item">
             <label htmlFor="Party Type" className="form-label">
               Party Type
             </label>
@@ -484,13 +529,33 @@ const BirthdayVenueWidget = ({ className = "" }) => {
                 { value: "Koramangala", label: "Koramangala" },
               ]}
             />
-          </div>
+          </div> */}
         </div>
         {venueCards?.length > 0 && (
           <Accordion
             className="b-venue-cards-accordion mt-5 acc"
             activeKey={activeAccordion}
-            onSelect={(key) => setActiveAccordion(key)}
+            // onSelect={(key) => setActiveAccordion(key)}
+            onSelect={(key) => {
+              setActiveAccordion(key);
+            
+              const index = Number(key);
+              const selectedAccordion = venueCards[index];
+            
+              const firstVenue = selectedAccordion?.venues?.[0];
+              const firstItem = selectedAccordion?.items?.[0];
+            
+              // reset
+              setSelectedVenue(null);
+              setSelectedVenueDetails(null);
+            
+              if (firstVenue) {
+                setSelectedVenue(firstVenue);
+                fetchVenueCardsDetails(firstVenue?.slug);
+              } else if (firstItem) {
+                setSelectedVenue(firstItem);
+              }
+            }}
           >
             {venueCards?.map((venue, accIndex) => (
               <Accordion.Item
@@ -522,7 +587,20 @@ const BirthdayVenueWidget = ({ className = "" }) => {
                       ))}
                       {venue?.items?.map((item, i) => (
                         <div className="col-lg-3 col-12" key={i}>
-                          <VenueCard item={item} />
+                          <VenueCard
+                            item={item}
+                            clickable
+                            selectedVenue={selectedVenue}
+                            onClick={() => {
+                              setActiveAccordion(String(accIndex));
+
+                              // ✅ IMPORTANT: clear previous venue data
+                              setSelectedVenueDetails(null);
+
+                              // ✅ set item as selected
+                              setSelectedVenue(item);
+                            }}
+                          />
                         </div>
                       ))}
                     </div>
@@ -540,13 +618,20 @@ const BirthdayVenueWidget = ({ className = "" }) => {
                         swiperRefs.current[accIndex] = swiper;
                       }}
                     >
-                      {venue.venues.map((venueItem, vIndex) => (
-                        <SwiperSlide key={vIndex}>
-                          <VenueInner venue={venueItem} />
+                      {selectedVenueDetails ? (
+                        <SwiperSlide key={selectedVenueDetails.id}>
+                          <VenueInner venue={selectedVenueDetails} />
                         </SwiperSlide>
-                      ))}
+                      ) : (
+                        venue?.venues?.map((venueItem, vIndex) => (
+                          <SwiperSlide key={vIndex}>
+                            <VenueInner venue={venueItem} />
+                          </SwiperSlide>
+                        ))
+                      )}
                     </Swiper> */}
                     <Swiper
+                      key={`${activeAccordion}-${selectedVenue?.id || "default"}`}
                       slidesPerView={1}
                       spaceBetween={10}
                       onSwiper={(swiper) => {
@@ -554,18 +639,31 @@ const BirthdayVenueWidget = ({ className = "" }) => {
                       }}
                     >
                       {selectedVenueDetails ? (
-                        // ✅ Show clicked venue details
-                        <SwiperSlide key={selectedVenueDetails.id}>
-                          <VenueInner venue={selectedVenueDetails} />
+                        <SwiperSlide key={`selected-${selectedVenueDetails?.id}`}>
+                          <VenueInner
+                            key={`selected-${selectedVenueDetails?.id}`}
+                            venue={selectedVenueDetails}
+                          />
                         </SwiperSlide>
-                      ) : (
-                        // ✅ Default list (before click)
-                        venue?.venues?.map((venueItem, vIndex) => (
-                          <SwiperSlide key={vIndex}>
-                            <VenueInner venue={venueItem} />
+                      ) : venue?.venues?.length > 0 ? (
+                        venue.venues.map((venueItem) => (
+                          <SwiperSlide key={`venue-${venueItem?.id}`}>
+                            <VenueInner
+                              key={`venue-${venueItem?.id}`}
+                              venue={venueItem}
+                            />
                           </SwiperSlide>
                         ))
-                      )}
+                      ) : venue?.items?.length > 0 ? (
+                        venue.items.map((item, i) => (
+                          <SwiperSlide key={`item-${i}`}>
+                            <VenueInner
+                              key={`item-${i}`}
+                              venue={item}
+                            />
+                          </SwiperSlide>
+                        ))
+                      ) : null}
                     </Swiper>
                   </div>
                 </Accordion.Body>

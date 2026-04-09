@@ -31,6 +31,7 @@ export const GlobalProvider = ({ children }) => {
   const [availableSlots, setAvailableSlots] = useState(null);
   const [venueCategories, setVenueCategories] = useState(null);
   const [venueCapacity, setVenueCapacity] = useState(null);
+  const [getinclusions, setInclusions] = useState(null);
   const [siteSettings, setSiteSettings] = useState(null);
   const [gettncs, setGettnc] = useState(null);
   const [getcareer, setCareer] = useState(null);
@@ -120,7 +121,8 @@ export const GlobalProvider = ({ children }) => {
     blogLocations: true,
     blogLookingFor: true,
     blogTags: true,
-    venueCapacity:true
+    venueCapacity:true,
+    getinclusions:true
   });
 
   // Error states
@@ -144,7 +146,8 @@ export const GlobalProvider = ({ children }) => {
     blogLocations: null,
     blogLookingFor: null,
     blogTags: null,
-    venueCapacity:null
+    venueCapacity:null,
+    getinclusions:null
   });
 
   // -----------------------------
@@ -327,6 +330,19 @@ export const GlobalProvider = ({ children }) => {
       setErrors((prev) => ({ ...prev, venueCapacity: error }));
     } finally {
       setLoading((prev) => ({ ...prev, venueCapacity: false }));
+    }
+  };
+
+  const fetchBlogsInclusion = async () => {
+    try {
+      setLoading((prev) => ({ ...prev, getinclusions: true }));
+      const response = await api.get("/inclusions");
+      setInclusions(response.data.data);
+      setErrors((prev) => ({ ...prev, getinclusions: null }));
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, getinclusions: error }));
+    } finally {
+      setLoading((prev) => ({ ...prev, getinclusions: false }));
     }
   };
 
@@ -560,6 +576,7 @@ export const GlobalProvider = ({ children }) => {
     fetchThirdPartyLocations();
     fetchVenueCategories();
     fetchVenuevenuescapacity();
+    fetchBlogsInclusion();
     fetchSiteSettings();
     fetchgettnc()
     fetchcareer()
@@ -582,6 +599,7 @@ export const GlobalProvider = ({ children }) => {
     thirdPartyLocations: fetchThirdPartyLocations,
     venueCategories: fetchVenueCategories,
     venueCapacity:fetchVenuevenuescapacity,
+    getinclusions:fetchBlogsInclusion,
     siteSettings: fetchSiteSettings,
     gettncs: fetchgettnc,
     getcareer: fetchcareer,
@@ -619,6 +637,7 @@ export const GlobalProvider = ({ children }) => {
     venueCategories,
     venueCapacity,
     venuefinderquiz,
+    getinclusions,
     finderQuizValues,
     quoteCalculatorValues,
     quotecalculatorquiz,
@@ -644,6 +663,7 @@ export const GlobalProvider = ({ children }) => {
     fetchThirdPartyLocations,
     fetchVenueCategories,
     fetchVenuevenuescapacity,
+    fetchBlogsInclusion,
     fetchThirdPartyGames,
     fetchAvailableSlots,
     fetchSiteSettings,

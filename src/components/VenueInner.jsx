@@ -11,9 +11,10 @@ import moneyIcon from "@/images/rupee.svg";
 import phoneIcon from "@/images/ph.svg";
 import locIcon from "@/images/loc-y.svg";
 import webIcon from "@/images/web.svg";
-
+import bdayblogIllus from "@/images/bdayblog-illus.svg";
 import locY from "@/images/loc-y.svg";
 import GReviewSlider from "./GReviewSlider";
+import PartyGetInTouch from "./PartyGetInTouch";
 
 const VenueInner = ({ venue }) => {
   // const images =
@@ -22,12 +23,25 @@ const VenueInner = ({ venue }) => {
   //   typeof venue?.images === "string"
   //     ? venue?.images?.split(",")
   //     : [];
-  const images = Array.isArray(venue?.images)
-    ? venue.images
-    : [];
-  const parsedContent = Array.isArray(venue?.content)
-    ? venue.content
-    : [];
+  console.log("smdfsdhfkdshkf", venue)
+  // const images = Array.isArray(venue?.images)
+  //   ? venue.images
+  //   : [];
+  // ✅ ADD THIS
+  const isItem = !!venue?.title;
+  const images = isItem
+    ? [venue?.image_url] // item case
+    : Array.isArray(venue?.images)
+      ? venue.images
+      : [];
+  // const parsedContent = Array.isArray(venue?.content)
+  //   ? venue.content
+  //   : [];
+  const parsedContent = isItem
+    ? [venue?.description] // item case
+    : Array.isArray(venue?.content)
+      ? venue.content
+      : [];
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -53,19 +67,28 @@ const VenueInner = ({ venue }) => {
     <div className="venue-inner-container">
       <div className="top-area">
         <div className="l-part">
-          <h3>{venue?.name}</h3>
-          <div className="stars-container">
-            <div className="rating-stars">{renderStars(venue?.rating)}</div>
-            <span>
-              {venue?.rating}/5 (based on {venue?.reviews} Google reviews)
-            </span>
-          </div>
+          {/* <h3>{venue?.name}</h3> */}
+          <h3>{isItem ? venue?.title : venue?.name}</h3>
+          {
+            venue?.rating && (
+              <div className="stars-container">
+                <div className="rating-stars">{renderStars(venue?.rating)}</div>
+                <span>
+                  {venue?.rating}/5 (based on {venue?.reviews} Google reviews)
+                </span>
+              </div>
+            )
+          }
         </div>
         <div className="r-part">
-          <div className="loc-con">
-            <Image src={locY} alt="loc-y" />
-            <span>{venue?.address}</span>
-          </div>
+          {
+            venue?.address && (
+              <div className="loc-con">
+                <Image src={locY} alt="loc-y" />
+                <span>{venue?.address}</span>
+              </div>
+            )
+          }
           {venue?.google_map && (
             <Link href={venue?.google_map} target="_blank" className="main-btn">
               <span>View on Google Map</span>
@@ -75,104 +98,81 @@ const VenueInner = ({ venue }) => {
       </div>
       {images.length > 0 && <VenueImgSlider images={images} />}
       <div className="bottom-area">
-        <div className="">
-          <div className="row ">
-            <div className="col-lg-6 col-12">
-              <div className="venue-inner-item-list">
-                <Image src={clockIcon} alt="venue-inner-item-list" />
-                <span>{venue?.hours_open}</span>
+        {
+          !isItem && (
+            <div className="">
+              <div className="row ">
+                <div className="col-lg-6 col-12">
+                  <div className="venue-inner-item-list">
+                    <Image src={clockIcon} alt="venue-inner-item-list" />
+                    <span>{venue?.hours_open}</span>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12">
+                  <div className="venue-inner-item-list">
+                    <Image src={moneyIcon} alt="venue-inner-item-list" />
+                    <span>Starts from ₹{venue?.price_min} to ₹{venue?.price_max}</span>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12">
+                  <div className="venue-inner-item-list">
+                    <Image src={phoneIcon} alt="venue-inner-item-list" />
+                    <span>{venue?.phone}</span>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12">
+                  <div className="venue-inner-item-list">
+                    <Image src={locY} alt="venue-inner-item-list" />
+                    <span>{venue?.address}</span>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12">
+                  <div className="venue-inner-item-list">
+                    <Image src={webIcon} alt="venue-inner-item-list" />
+                    <span>{venue?.website}</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="col-lg-6 col-12">
-              <div className="venue-inner-item-list">
-                <Image src={moneyIcon} alt="venue-inner-item-list" />
-                <span>Starts from ₹{venue?.price_min} to ₹{venue?.price_max}</span>
-              </div>
-            </div>
-            <div className="col-lg-6 col-12">
-              <div className="venue-inner-item-list">
-                <Image src={phoneIcon} alt="venue-inner-item-list" />
-                <span>{venue?.phone}</span>
-              </div>
-            </div>
-            <div className="col-lg-6 col-12">
-              <div className="venue-inner-item-list">
-                <Image src={locY} alt="venue-inner-item-list" />
-                <span>{venue?.address}</span>
-              </div>
-            </div>
-            <div className="col-lg-6 col-12">
-              <div className="venue-inner-item-list">
-                <Image src={webIcon} alt="venue-inner-item-list" />
-                <span>{venue?.website}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+          )
+        }
         {parsedContent?.map((html, index) => (
           <div className="content-box mb-5" key={index + 1}>
             <div className="row row-gap-25" >
-              <div className="col-lg-6 col-12">
+              <div className="col-lg-12 col-12">
                 <div
                   key={index}
                   dangerouslySetInnerHTML={{ __html: html }}
                 />
 
               </div>
-              {/* <div
-              className="col-lg-6 col-12"
-              dangerouslySetInnerHTML={{ __html: venue?.content_right }}
-            ></div> */}
-              {/* <div className="col-lg-6 col-12">
-              <p className="para">Best Nearby: 60-90 minutes of play</p>
-              <p className="para">
-                Must-Try: The Ultimate Birthday Bash Destination!
-              </p>
-              <p className="para">
-                Looking for the most epic kids' birthday party place in
-                Bangalore? Well, stop the cake search because Funky Monkeys
-                Bangalore is where the magic (and monkey business) happens!
-                🍌🎈There’s an actual Funky Monkey who might just crash your
-                party! Imagine the birthday photos!
-              </p>
-              <p className="para">
-                The place doesn’t only serve drinks and dishes for celebrations
-                but strives to make your birthday eccentric.
-              </p>
-            </div>
-            <div className="col-lg-6 col-12">
-              <h3 className="sec-head sm-head medium-20">
-                <span>What Makes Funky Monkeys Special?</span>
-              </h3>
-              <p className="para">
-                Funky Monkeys isn’t just an indoor play area—it’s a full-blown
-                adventure zone. With slides, tunnels, ball pits, and climbing
-                walls, it is basically a mini jungle gym for kids; it is
-                designed to keep your little ones entertained.
-              </p>
-              <h3 className="sec-head sm-head medium-20">
-                <span>Why Visit Funky Monkeys for a Birthday Party?</span>
-              </h3>
-              <p className="para">
-                At Funky Monkeys, we provide stress-free, mess-free, and 100%
-                FUN birthday celebrations. So, if your child wants a wild,
-                action-packed birthday party, book a date at Funky Monkeys
-                Bangalore and let them swing into a celebration they’ll never
-                forget! 🎉🐵
-              </p>
-              <p className="para">
-                P.S. No actual monkeys were harmed in the making of this fun
-                zone, but plenty of parents have left feeling like they need a
-                nap!
-              </p>
-            </div> */}
+
             </div>
           </div>
         ))}
+        {
+          venue?.is_breakout && (
+            <>
+              {venue?.googlereviews && venue?.googlereviews.length > 0 && (
+                <GReviewSlider reviews={venue?.googlereviews} data={venue?.googlereviews} />
+              )}
+            </>
+          )
+        }
+        {
+          venue?.is_breakout && (
+            <PartyGetInTouch
+              // data="{data?.footersection}"
+              // img={bdayblogIllus}
+              noImage={true}
+              privacyLine={true}
+              noTextBottom={false}
+              className="pt-80"
+            />
+          )
+        }
       </div>
-      {venue?.reviews && venue?.reviews.length > 0 && (
-        <GReviewSlider commonStars={false} reviews={venue?.reviews} />
-      )}
+
     </div>
   );
 };

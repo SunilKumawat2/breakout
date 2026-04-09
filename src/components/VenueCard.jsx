@@ -135,6 +135,13 @@ const VenueCard = ({
                 height={300}
               />
             )}
+            {
+              data?.is_featured && (
+            <span className="tag">
+              Featured
+            </span>
+              )
+            }
         </div>
 
         {/* ✅ CONTENT */}

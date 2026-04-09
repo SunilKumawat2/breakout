@@ -26,7 +26,7 @@ import wh from "@/images/wh.svg";
 import locPlace from "@/images/loc-place.svg";
 import BirthdayBanner from "@/components/BirthdayBanner";
 import bdayIllus from "@/images/bday-illus.svg";
-
+import bdayblogIllus from "@/images/bdayblog-illus.svg";
 import bdayImg1 from "@/images/bday1.jpg";
 import bdayImg2 from "@/images/bday2.jpg";
 import bdayImg3 from "@/images/bday3.jpg";
@@ -69,11 +69,43 @@ import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 const SigngleBlog = ({ blogData }) => {
+  const { getinclusions } = useGlobalContext();
+  console.log("jhsdgfjdgsfjgsdjfg", getinclusions)
   const [activeAccordion, setActiveAccordion] = useState("0");
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const router = useRouter();
+  const [MoreBlogs, setMoreBlogs] = useState(null)
+  const [active, setActive] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Fetch venues
+  useEffect(() => {
+    fetchMoreBlogs();
+  }, [blogData?.id]);
+
+  const fetchMoreBlogs = async () => {
+    if (!blogData?.id) return; // safety check
+
+    setLoading(true);
+    try {
+      const response = await api.get(`/blogs/${blogData.id}/related`);
+
+      console.log("API Venue Data:", response?.data?.data);
+
+      setMoreBlogs(response?.data?.data || []);
+    } catch (err) {
+      console.error("Error fetching venue cards:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
   // Share functionality
   const handleShare = (platform) => {
     const currentUrl = window.location.href;
@@ -333,8 +365,6 @@ const SigngleBlog = ({ blogData }) => {
 
 
       <div className="black-gr-div">
-
-
         <section className="pt-80 bday-sec">
           <div className="container">
             <div className="row">
@@ -350,115 +380,50 @@ const SigngleBlog = ({ blogData }) => {
               </div>
             </div>
             <div className="row row-gap-25">
+              {
+                getinclusions?.map((getinclusions_result,index) => {
+                  return (
+                  
+                    <Link
+                    key={index+1}
+                      href={`/resources/blogs/${getinclusions_result?.redireted_to?.slug}`}
+                      className="col-lg-3 col-6"
+                      target="_blank"
+                    onClick={() => {
+                      window.dataLayer = window.dataLayer || [];
+                      window.dataLayer.push({
+                        event: "cta_click",
+                        button_name: getinclusions_result?.title?.replace(/<[^>]*>/g, ""), // clean HTML
+                        destination: "external_party_inclusion",
+                        link_url: getinclusions_result?.link,
+                        page: window.location.pathname,
+                        section: "party_inclusions",
+                      });
+                    }}
+                    >
+                      <div className="location-card">
+                        <div className="location-card-img">
 
-              <Link
-                href={"#"}
-                // key={index}
-                className="col-lg-3 col-6"
-                target="_blank"
-              // onClick={() => {
-              //   window.dataLayer = window.dataLayer || [];
-              //   window.dataLayer.push({
-              //     event: "cta_click",
-              //     // button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
-              //     destination: "external_party_inclusion",
-              //     link_url: bd?.link,
-              //     page: window.location.pathname,
-              //     section: "party_inclusions",
-              //   });
-              // }}
-              >
-                <div className="location-card">
-                  <div className="location-card-img">
+                          <Image
+                            src={getinclusions_result?.image}
+                            width={700}
+                            height={700}
+                            alt={"bd.heading"}
+                          />
 
-                    <Image
-                      src={bdayImg1}
-                      width={700}
-                      height={700}
-                      alt={"bd.heading"}
-                    />
+                        </div>
 
-                  </div>
-
-                  <div className="location-card-content">
-                    <h3
-                      dangerouslySetInnerHTML={{ __html: "bd.heading" }}
-                    />
-                  </div>
-                </div>
-              </Link>
-              <Link
-                href={"#"}
-                // key={index}
-                className="col-lg-3 col-6"
-                target="_blank"
-              // onClick={() => {
-              //   window.dataLayer = window.dataLayer || [];
-              //   window.dataLayer.push({
-              //     event: "cta_click",
-              //     // button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
-              //     destination: "external_party_inclusion",
-              //     link_url: bd?.link,
-              //     page: window.location.pathname,
-              //     section: "party_inclusions",
-              //   });
-              // }}
-              >
-                <div className="location-card">
-                  <div className="location-card-img">
-
-                    <Image
-                      src={bdayImg1}
-                      width={700}
-                      height={700}
-                      alt={"bd.heading"}
-                    />
-
-                  </div>
-
-                  <div className="location-card-content">
-                    <h3
-                      dangerouslySetInnerHTML={{ __html: "bd.heading" }}
-                    />
-                  </div>
-                </div>
-              </Link>
-              <Link
-                href={"#"}
-                // key={index}
-                className="col-lg-3 col-6"
-                target="_blank"
-              // onClick={() => {
-              //   window.dataLayer = window.dataLayer || [];
-              //   window.dataLayer.push({
-              //     event: "cta_click",
-              //     // button_name: bd?.heading?.replace(/<[^>]*>/g, ""), // clean HTML
-              //     destination: "external_party_inclusion",
-              //     link_url: bd?.link,
-              //     page: window.location.pathname,
-              //     section: "party_inclusions",
-              //   });
-              // }}
-              >
-                <div className="location-card">
-                  <div className="location-card-img">
-
-                    <Image
-                      src={bdayImg1}
-                      width={700}
-                      height={700}
-                      alt={"bd.heading"}
-                    />
-
-                  </div>
-
-                  <div className="location-card-content">
-                    <h3
-                      dangerouslySetInnerHTML={{ __html: "bd.heading" }}
-                    />
-                  </div>
-                </div>
-              </Link>
+                        <div className="location-card-content">
+                          <h3
+                            dangerouslySetInnerHTML={{ __html: getinclusions_result?.title }}
+                          />
+                        </div>
+                      </div>
+                    </Link>
+             
+                  )
+                })
+              }
             </div>
           </div>
         </section>
@@ -473,15 +438,23 @@ const SigngleBlog = ({ blogData }) => {
             data={blogData?.faqs}
           />
         )}
-          <section className={`blog-slider-sec mt-5 arrows-diff`}>
+        
+        <PartyGetInTouch
+          // data="{data?.footersection}"
+          // img={bdayblogIllus}
+          noImage={true}
+          noTextBottom={false}
+          privacyLine={true}
+        />
+        <section className={`blog-slider-sec section-padding pb-0 arrows-diff`}>
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
-              <div className="esc-content text-center position-relative">
-              <h2 className="sec-head sm-head medium">
-                Read <span>More Blogs</span>
-              </h2>
-            </div>
+                <div className="esc-content text-center position-relative">
+                  <h2 className="sec-head sm-head medium">
+                    Read <span>More Blogs</span>
+                  </h2>
+                </div>
                 <div className="blog-slider">
                   <Swiper
                     modules={[Pagination, Navigation]}
@@ -505,178 +478,35 @@ const SigngleBlog = ({ blogData }) => {
                     }}
                     className="blog-swiper"
                   >
-                    {/* {data1 &&
-                      data1?.images?.length > 0 &&
-                      data1?.images?.map((item, index) => ( */}
-                        <SwiperSlide>
-                          <div
-                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
-                            //   }`}
-                            // onMouseEnter={() => setActive(index)}
-                            // onMouseLeave={() => setActive(!index)}
-                            className="blog-card click-anim-card"
-                          >
-                            <div className="blog-card-img">
-                              <Image
-                                src={bdayImg1}
-                                width={500}
-                                height={500}
-                                alt="blog"
-                              />
-                            </div>
-                            <div className="blog-card-content">
-                              <h3
-                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
-                              ></h3>
-                              <p className="para">
-                                Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit. Quisquam, quos.
-
-                              </p>
-                            </div>
+                    {MoreBlogs?.map((item, index) => (
+                      <SwiperSlide key={item?.id || index}>
+                        <div
+                          className={`blog-card click-anim-card ${active == index ? "active" : ""
+                            }`}
+                          onMouseEnter={() => setActive(index)}
+                          onMouseLeave={() => setActive(null)}
+                          onClick={() =>
+                            router.push(`/resources/blogs/${item?.slug}?type=${item?.type}`)
+                          }
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className="blog-card-img">
+                            <Image
+                              src={item?.featured_image}
+                              width={500}
+                              height={500}
+                              alt="blog"
+                            />
                           </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <div
-                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
-                            //   }`}
-                            // onMouseEnter={() => setActive(index)}
-                            // onMouseLeave={() => setActive(!index)}
-                            className="blog-card click-anim-card"
-                          >
-                            <div className="blog-card-img">
-                              <Image
-                                src={bdayImg2}
-                                width={500}
-                                height={500}
-                                alt="blog"
-                              />
-                            </div>
-                            <div className="blog-card-content">
-                              <h3
-                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
-                              ></h3>
-                              <p className="para">
-                                Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit. Quisquam, quos.
 
-                              </p>
-                            </div>
+                          <div className="blog-card-content">
+                            <h3
+                              dangerouslySetInnerHTML={{ __html: item?.title }}
+                            ></h3>
                           </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <div
-                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
-                            //   }`}
-                            // onMouseEnter={() => setActive(index)}
-                            // onMouseLeave={() => setActive(!index)}
-                            className="blog-card click-anim-card"
-                          >
-                            <div className="blog-card-img">
-                              <Image
-                                src={bdayImg3}
-                                width={500}
-                                height={500}
-                                alt="blog"
-                              />
-                            </div>
-                            <div className="blog-card-content">
-                              <h3
-                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
-                              ></h3>
-                              <p className="para">
-                                Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit. Quisquam, quos.
-
-                              </p>
-                            </div>
-                          </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <div
-                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
-                            //   }`}
-                            // onMouseEnter={() => setActive(index)}
-                            // onMouseLeave={() => setActive(!index)}
-                            className="blog-card click-anim-card"
-                          >
-                            <div className="blog-card-img">
-                              <Image
-                                src={bdayImg4}
-                                width={500}
-                                height={500}
-                                alt="blog"
-                              />
-                            </div>
-                            <div className="blog-card-content">
-                              <h3
-                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
-                              ></h3>
-                              <p className="para">
-                                Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit. Quisquam, quos.
-
-                              </p>
-                            </div>
-                          </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <div
-                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
-                            //   }`}
-                            // onMouseEnter={() => setActive(index)}
-                            // onMouseLeave={() => setActive(!index)}
-                            className="blog-card click-anim-card"
-                          >
-                            <div className="blog-card-img">
-                              <Image
-                                src={bdayImg5}
-                                width={500}
-                                height={500}
-                                alt="blog"
-                              />
-                            </div>
-                            <div className="blog-card-content">
-                              <h3
-                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
-                              ></h3>
-                              <p className="para">
-                                Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit. Quisquam, quos.
-
-                              </p>
-                            </div>
-                          </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                          <div
-                            // className={`blog-card click-anim-card ${active === index ? "active" : ""
-                            //   }`}
-                            // onMouseEnter={() => setActive(index)}
-                            // onMouseLeave={() => setActive(!index)}
-                            className="blog-card click-anim-card"
-                          >
-                            <div className="blog-card-img">
-                              <Image
-                                src={bdayImg1}
-                                width={500}
-                                height={500}
-                                alt="blog"
-                              />
-                            </div>
-                            <div className="blog-card-content">
-                              <h3
-                                dangerouslySetInnerHTML={{ __html: "item.heading" }}
-                              ></h3>
-                              <p className="para">
-                                Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit. Quisquam, quos.
-
-                              </p>
-                            </div>
-                          </div>
-                        </SwiperSlide>
-                      {/* // ))} */}
+                        </div>
+                      </SwiperSlide>
+                    ))}
                   </Swiper>
                   <div ref={prevRef} className="swiper-button-prev custom-prev go-plan">
                     <Image src={swiperPrev} alt="prev" />
@@ -692,12 +522,7 @@ const SigngleBlog = ({ blogData }) => {
           </div>
 
         </section>
-        <PartyGetInTouch
-          // data={data?.footersection}
-          img={IllusPartyBottom}
-          privacyLine={true}
-        />
-        {/* <HomeContact noTextBottom={false} privacyLine={false} noImage={true} /> */}
+        <Image src={bdayblogIllus} className="illus-image" alt="hm-illus" />
       </div>
 
     </>

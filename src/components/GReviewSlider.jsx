@@ -29,28 +29,28 @@ const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
     return stars;
   };
 
-  const dummyData = [
-    {
-      name: "John Doe",
-      stars: "4",
-      heading: "Great Experience",
-      description: "Had an amazing time with friends!",
-    },
-    {
-      name: "Jane Smith",
-      stars: "5",
-      heading: "Fantastic Event",
-      description: "Best birthday party ever!",
-    },
-    {
-      name: "Mike Johnson",
-      stars: "4",
-      heading: "Wonderful Time",
-      description: "Highly recommended!",
-    },
-  ];
+  // const dummyData = [
+  //   {
+  //     name: "John Doe",
+  //     stars: "4",
+  //     heading: "Great Experience",
+  //     description: "Had an amazing time with friends!",
+  //   },
+  //   {
+  //     name: "Jane Smith",
+  //     stars: "5",
+  //     heading: "Fantastic Event",
+  //     description: "Best birthday party ever!",
+  //   },
+  //   {
+  //     name: "Mike Johnson",
+  //     stars: "4",
+  //     heading: "Wonderful Time",
+  //     description: "Highly recommended!",
+  //   },
+  // ];
 
-  const reviews = data?.length > 0 ? data : dummyData;
+  const reviews = data?.length > 0 && data ;
 
   return (
     <div className="container">
@@ -129,7 +129,7 @@ const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
             </div>
           </div>
         </div>
-        {commonStars && (
+        {/* {commonStars && (
           <div className="row">
             <p className="sec-head book-20 text-center mb-2 mt-5">
               7.8k+ people loved our events!
@@ -138,7 +138,7 @@ const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
               {renderStars(4)}
             </ul>
           </div>
-        )}
+        )} */}
       </section>
     </div>
 

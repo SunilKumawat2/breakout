@@ -46,7 +46,7 @@ import nightIllus from "@/images/night-illus.svg";
 
 import bdayBanner from "@/images/bday-banner1.jpg";
 import PartyExpertCon from "@/components/PartyExpertCon";
-
+import { useRouter } from "next/navigation";
 import api from "@/helpers/api";
 import TrustedSection from "@/components/TrustedSection";
 import GReviewSlider from "@/components/GReviewSlider";
@@ -76,9 +76,34 @@ import "swiper/css/navigation";
 const BirthdayBlog = ({ blogData, id = "" }) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
-
+  const router = useRouter();
+  const [MoreBlogs, setMoreBlogs] = useState(null)
   const [active, setActive] = useState(null);
-  console.log("sjdkfhjkshdfjsdjf", blogData)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  // Fetch venues
+  useEffect(() => {
+    fetchMoreBlogs();
+  }, [blogData?.id]);
+
+  const fetchMoreBlogs = async () => {
+    if (!blogData?.id) return; // safety check
+
+    setLoading(true);
+    try {
+      const response = await api.get(`/blogs/${blogData.id}/related`);
+
+      console.log("API Venue Data:", response?.data?.data);
+
+      setMoreBlogs(response?.data?.data || []);
+    } catch (err) {
+      console.error("Error fetching venue cards:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Share functionality
   const handleShare = (platform) => {
     const currentUrl = window.location.href;
@@ -223,12 +248,15 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
 
         <Image src={toolIllus} className="illus-image" alt="tool-illus" />
       </div>
+      {
+        blogData && (
+          <BirthdayVenueWidget className="pt-80 pb-0" blogData={blogData} />
+        )
+      }
 
-      <BirthdayVenueWidget className="pt-80 pb-0" id={id} />
-
-      <div className="pt-80">
+      {/* <div className="pt-80">
         <GReviewSlider commonStars={false} />
-      </div>
+      </div> */}
       {/* <OurLocationSec
         className="sec-padding-top"
         // title={`About Our Breakout®  <span>${blogData?.title} Location</span>`}
@@ -274,6 +302,7 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
                 />
               </div>
             </div>
+            <br />
             <div className="sec-head mb-0 medium-20 d-flex w-100 flex-column justify-content-center align-items-center gap-3">
               <h3>
                 Found it useful? <span>Spread the word</span>
@@ -344,14 +373,24 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
             </div>
           </div>
         </section>
-          <Image src={bdayblogIllus} className="illus-image" alt="hm-illus" />
+        <Image src={bdayblogIllus} className="illus-image" alt="hm-illus" />
+      </div>
+      <div className="black-gr-div">
         {blogData?.faqs && (
           <FaqSection
             className="section-padding pb-0"
             data={blogData?.faqs}
           />
         )}
-        <section className={`blog-slider-sec mt-5 arrows-diff`}>
+
+        <PartyGetInTouch
+          // data="{data?.footersection}"
+          // img={bdayblogIllus}
+          noImage={true}
+          noTextBottom={false}
+          privacyLine={true}
+        />
+        <section className={`blog-slider-sec section-padding pb-0 arrows-diff`}>
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
@@ -383,42 +422,35 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
                     }}
                     className="blog-swiper"
                   >
+                    {MoreBlogs?.map((item, index) => (
+                      <SwiperSlide key={item?.id || index}>
+                        <div
+                          className={`blog-card click-anim-card ${active == index ? "active" : ""
+                            }`}
+                          onMouseEnter={() => setActive(index)}
+                          onMouseLeave={() => setActive(null)}
+                          onClick={() =>
+                            router.push(`/resources/blogs/${item?.slug}?type=${item?.type}`)
+                          }
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className="blog-card-img">
+                            <Image
+                              src={item?.featured_image}
+                              width={500}
+                              height={500}
+                              alt="blog"
+                            />
+                          </div>
 
-
-                    {/* {data1 &&
-                      data1?.images?.length > 0 &&
-                      data1?.images?.map((item, index) => ( */}
-                    <SwiperSlide>
-                      <div
-                        // className={`blog-card click-anim-card ${active === index ? "active" : ""
-                        //   }`}
-                        // onMouseEnter={() => setActive(index)}
-                        // onMouseLeave={() => setActive(!index)}
-                        className="blog-card click-anim-card"
-                      // onMouseEnter={() => setActive(index)}
-                      // onMouseLeave={() => setActive(!index)}
-                      >
-                        <div className="blog-card-img">
-                          <Image
-                            src={bdayImg1}
-                            width={500}
-                            height={500}
-                            alt="blog"
-                          />
+                          <div className="blog-card-content">
+                            <h3
+                              dangerouslySetInnerHTML={{ __html: item?.title }}
+                            ></h3>
+                          </div>
                         </div>
-                        <div className="blog-card-content">
-                          <h3
-                            dangerouslySetInnerHTML={{ __html: "item.heading" }}
-                          ></h3>
-                          <p className="para">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Quisquam, quos.
-
-                          </p>
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                    {/* // ))} */}
+                      </SwiperSlide>
+                    ))}
                   </Swiper>
                   <div ref={prevRef} className="swiper-button-prev custom-prev go-plan">
                     <Image src={swiperPrev} alt="prev" />
@@ -434,12 +466,7 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
           </div>
 
         </section>
-        <PartyGetInTouch
-          // data="{data?.footersection}"
-          img={bdayblogIllus}
-          privacyLine={true}
-        />
-        {/* <Image src={bdayblogIllus} className="illus-image" alt="hm-illus" /> */}
+        <Image src={bdayblogIllus} className="illus-image" alt="hm-illus" />
       </div>
     </>
   );

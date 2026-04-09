@@ -44,7 +44,7 @@ const BirthdayBanner = ({
   // ✅ Use correct data fallback
   const heading = data?.heading || title || "";
   const subheading = data?.subheading || subTitle || "";
-  const media = data?.image || img;
+  const media = data?.video || img;
 
   const description = hasBannerStars
     ? `<img src="${bannerStars.src}" width="20" height="20" style="vertical-align:middle;margin-right:4px;" />

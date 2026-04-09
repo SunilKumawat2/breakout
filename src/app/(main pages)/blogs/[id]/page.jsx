@@ -82,8 +82,8 @@ const page = () => {
 
   return (
     <>
-      {type === "birthday" && blogData && <BirthdayBlog blogData={blogData} />}
-      {type !== "birthday" && blogData && <SigngleBlog blogData={blogData} />}
+      {type == "seo" && blogData && <BirthdayBlog blogData={blogData} />}
+      {type != "seo" && blogData && <SigngleBlog blogData={blogData} />}
     </>
   );
 };
