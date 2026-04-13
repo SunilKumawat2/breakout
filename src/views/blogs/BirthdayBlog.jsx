@@ -296,7 +296,7 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
             <div className="row">
               <div className="col-lg-12">
                 <div
-                  className="blog-content bullet-list"
+                  className="blog-content bullet-list "
 
                   dangerouslySetInnerHTML={{ __html: blogData?.conclusion_text }}
                 />
