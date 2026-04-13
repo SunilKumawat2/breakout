@@ -41,7 +41,7 @@ const page = () => {
 
   useEffect(() => {
     // if (search || sort) {
-    if (blogs.length > 0) {
+    if (blogs?.length > 0) {
       console.log("search", search);
       if (search === "") {
         setFilteredBlogs(blogs);
@@ -129,7 +129,7 @@ const page = () => {
           <div className="col-lg-3 col-6">
             <ResourcesSidebar
               handleSearchChange={handleSearchChange}
-              totalResources={filteredBlogs.length}
+              totalResources={filteredBlogs?.length}
               handleSortChange={handleSortChange}
               searchRef={searchRef}
             />
@@ -142,7 +142,7 @@ const page = () => {
                     <BlogCard blog={blog} slug={blog.slug} />
                   </div>
                 )) */}
-                 {getresourcelist.length > 0 ? (
+                 {getresourcelist?.length > 0 ? (
                 getresourcelist?.slice(0, visibleCount)?.map((blog, index) => (
                   <div className="col-lg-4 col-12" key={index}>
                     <ResourceCard blog={blog} slug={blog.slug} link={blog?.link} />
@@ -167,7 +167,7 @@ const page = () => {
             </div>
 
             {/* Load More Button */}
-            {visibleCount < filteredBlogs.length && (
+            {visibleCount < filteredBlogs?.length && (
               <div className="row text-center mt-5">
                 <div className="col-load-more-blogs">
                   <button

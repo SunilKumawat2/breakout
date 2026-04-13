@@ -230,7 +230,17 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
         </div>
 
         {blogData?.description_text && (
-          <HmTextSec text={blogData?.description_text} />
+          // <HmTextSec text={blogData?.description_text} />
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-lg-12 col-12">
+                <div
+                  className="big-text bullet-list"
+                  dangerouslySetInnerHTML={{ __html: blogData?.description_text }}
+                />
+              </div>
+            </div>
+          </div>
         )}
         <br />
         {blogData?.at_a_glance_summary && (

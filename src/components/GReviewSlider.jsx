@@ -50,7 +50,7 @@ const GReviewSlider = ({ commonStars = true, data, className = "", }) => {
   //   },
   // ];
 
-  const reviews = data?.length > 0 && data ;
+  const reviews = data?.length > 0 ? data : dummyData;
 
   return (
     <div className="container">
