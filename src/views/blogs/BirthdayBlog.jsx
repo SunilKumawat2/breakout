@@ -234,11 +234,31 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
         )}
         <br />
         {blogData?.at_a_glance_summary && (
-          <HmTextSec text={blogData?.at_a_glance_summary} />
+          // <HmTextSec text={blogData?.at_a_glance_summary} />
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-lg-12 col-12">
+                <div
+                  className="big-text bullet-list"
+                  dangerouslySetInnerHTML={{ __html: blogData?.at_a_glance_summary }}
+                />
+              </div>
+            </div>
+          </div>
         )}
         <br />
         {blogData?.additional_content && (
-          <HmTextSec text={blogData?.additional_content} />
+          // <HmTextSec text={blogData?.additional_content} />
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-lg-12 col-12">
+                <div
+                  className="big-text bullet-list"
+                  dangerouslySetInnerHTML={{ __html: blogData?.additional_content }}
+                />
+              </div>
+            </div>
+          </div>
         )}
         <PartyExpertCon className="pt-80" data="blog_birthday_blog" />
 
@@ -269,35 +289,15 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
         <PartyGetInTouch data={blogData?.footersection} noImage={true} />
       )}
 
-      {/* {blogData?.footersection && (
-        <section className="section-padding Conclusion-sec pb-0">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-8 col-12 text-center">
-                <h3
-                  className="sec-head sm-head medium yellow-text"
-                  dangerouslySetInnerHTML={{
-                    __html: blogData?.footersection?.heading,
-                  }}
-                />
-                <div
-                  className="para"
-                  dangerouslySetInnerHTML={{
-                    __html: blogData?.footersection?.content,
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-      )} */}
+
       <div className="black-gr-div">
         <section className="found-sec pt-80">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
                 <div
-                  className="blog-content"
+                  className="blog-content bullet-list"
+
                   dangerouslySetInnerHTML={{ __html: blogData?.conclusion_text }}
                 />
               </div>
@@ -442,8 +442,8 @@ const BirthdayBlog = ({ blogData, id = "" }) => {
                               alt="blog"
                             />
                           </div>
+                          <div className="blog-card-content bullet-list">
 
-                          <div className="blog-card-content">
                             <h3
                               dangerouslySetInnerHTML={{ __html: item?.title }}
                             ></h3>
